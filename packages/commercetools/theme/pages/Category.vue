@@ -210,7 +210,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   SfSidebar,
   SfButton,
