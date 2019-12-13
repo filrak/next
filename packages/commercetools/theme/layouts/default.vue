@@ -1,18 +1,18 @@
 <template>
   <div>
-    <Header />
+    <AppHeader />
     <nuxt />
     <BottomNavigation />
   </div>
 </template>
 
 <script>
-import Header from '~/components/Header.vue'
+import AppHeader from '~/components/AppHeader.vue'
 import BottomNavigation from '~/components/BottomNavigation.vue'
 
 export default {
   components: {
-    Header,
+    AppHeader,
     BottomNavigation
   }
 }
