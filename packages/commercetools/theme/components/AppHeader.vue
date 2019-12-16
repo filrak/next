@@ -2,7 +2,7 @@
   <SfHeader active-sidebar="activeSidebar">
     <template #logo>
       <nuxt-link to="/" class="sf-header__logo">
-        <SfImage src="/icons/logo.svg" alt="Next" class="sf-header__logo-image"/>
+        <SfImage src="/icons/logo.svg" alt="Vue Storefront Next" class="sf-header__logo-image"/>
       </nuxt-link>
     </template>
     <template #navigation>
