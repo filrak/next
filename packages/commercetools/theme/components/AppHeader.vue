@@ -1,5 +1,10 @@
 <template>
-  <SfHeader logo="/icons/logo.svg">
+  <SfHeader active-sidebar="activeSidebar">
+    <template #logo>
+      <nuxt-link to="/" class="sf-header__logo">
+        <SfImage src="/icons/logo.svg" alt="Next" class="sf-header__logo-image"/>
+      </nuxt-link>
+    </template>
     <template #navigation>
       <nuxt-link to="/l/cat">
         <SfHeaderNavigationItem>
@@ -21,11 +26,18 @@
 </template>
 
 <script>
-import { SfHeader } from '@storefront-ui/vue'
+import { SfHeader, SfImage } from '@storefront-ui/vue'
 
 export default {
   components: {
-    SfHeader
-  }
+    SfHeader,
+    SfImage
+  },
 }
 </script>
+
+<style lang="scss" scoped>
+.sf-header__logo-image {
+  height: 100%;
+}
+</style>
