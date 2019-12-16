@@ -1,21 +1,21 @@
 <template>
   <SfHeader logo="/icons/logo.svg">
     <template #navigation>
-      <SfHeaderNavigationItem>
-        <nuxt-link to="/l/cat">
+      <nuxt-link to="/l/cat">
+        <SfHeaderNavigationItem>
           WOMEN
-        </nuxt-link>
-      </SfHeaderNavigationItem>
-      <SfHeaderNavigationItem>
-        <nuxt-link to="/l/cat">
-          KIDS
-        </nuxt-link>
-      </SfHeaderNavigationItem>
-      <SfHeaderNavigationItem>
-        <nuxt-link to="/l/cat">
+        </SfHeaderNavigationItem>
+      </nuxt-link>
+      <nuxt-link to="/l/cat">
+        <SfHeaderNavigationItem>
           MEN
-        </nuxt-link>
-      </SfHeaderNavigationItem>
+        </SfHeaderNavigationItem>
+      </nuxt-link>
+      <nuxt-link to="/l/cat">
+        <SfHeaderNavigationItem>
+          KIDS
+        </SfHeaderNavigationItem>
+      </nuxt-link>
     </template>
   </SfHeader>
 </template>
