@@ -1,5 +1,5 @@
 <template>
-  <SfFooter column="4" multiple style="max-width: 64rem; margin-left: auto; margin-right: auto">
+  <SfFooter :column="4" multiple style="max-width: 64rem; margin-left: auto; margin-right: auto">
     <SfFooterColumn title="About us">
       <SfList>
         <SfListItem
