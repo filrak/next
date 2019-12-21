@@ -156,7 +156,6 @@ import {
   SfBannerGrid
 } from "@storefront-ui/vue";
 import { getProduct } from '@vue-storefront/commercetools-api'
-import { productHelpers } from '@vue-storefront/commercetools-helpers'
 
 export default {
   name: "Home",
