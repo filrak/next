@@ -1,8 +1,12 @@
 import { buildProductWhere, buildCategoryWhere } from './../../src/helpers/search'
 
 describe('[commercetools-api-client] search', () => {
-  it('returns empty string when parameters is not supperted', () => {
-    expect(buildProductWhere({})).toBe('')
+  it('returns undefined when parameters are not supported', () => {
+    expect(buildProductWhere({})).toBe(undefined)
+  })
+
+  it('returns undefined string when parameters are not supported', () => {
+    expect(buildCategoryWhere({})).toBe(undefined)
   })
 
   it('returns product search query by cat id', () => {

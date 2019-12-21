@@ -109,3 +109,12 @@ export interface UseContent<CONTENT, SEARCH> {
   loading: boolean,
   error: any
 }
+
+export interface UiMediaGalleryItemUrl {
+  url: string
+}
+export interface UiMediaGalleryItem {
+  small: UiMediaGalleryItemUrl
+  normal: UiMediaGalleryItemUrl
+  big: UiMediaGalleryItemUrl
+}

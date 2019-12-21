@@ -6,7 +6,7 @@ const buildProductWhere = (search: CategorySearch) => {
     return `masterData(current(categories(id="${search.catId}")))`
   }
 
-  return ''
+  return undefined
 }
 
 const buildCategoryWhere = (search: CategorySearch) => {
@@ -18,7 +18,7 @@ const buildCategoryWhere = (search: CategorySearch) => {
     return `slug(${locale}="${search.slug}")`
   }
 
-  return ''
+  return undefined
 }
 
 export { buildProductWhere, buildCategoryWhere }

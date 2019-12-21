@@ -156,13 +156,21 @@ import {
   SfBannerGrid
 } from "@storefront-ui/vue";
 import { getProduct } from '@vue-storefront/commercetools-api'
+import { productHelpers } from '@vue-storefront/commercetools-helpers'
 
 export default {
   name: "Home",
   transition: 'fade',
   data() {
-    getProduct({ catId: '724b250d-9805-4657-ae73-3c02a63a9a13' })
+    getProduct({ catId: '724b250d-9805-4657-ae73-3c02a63a9a13' }).then(({ data: { products } }) => {
+      const product = products.results[0]
 
+      const masterVariant = productHelpers.getMasterVariant(product)
+      console.log('name: ', productHelpers.getName(product))
+      console.log('slug: ', productHelpers.getSlug(product))
+      console.log('gallery: ', productHelpers.getGallery(masterVariant))
+      console.log('price: ', productHelpers.getPrice(masterVariant))
+    })
     return {
       heroes: [
         {
