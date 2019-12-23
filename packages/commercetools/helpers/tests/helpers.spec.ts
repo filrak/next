@@ -48,8 +48,8 @@ describe('[commercetools-api-client] helpers', () => {
 
   it('returns gallery', () => {
     expect(getGallery(product.masterData.current.masterVariant)).toEqual([
-      { small: { url: '' }, big: { url: 'imageV11/url.jpg' }, normal: { url: '' } },
-      { small: { url: '' }, big: { url: 'imageV12/url.jpg' }, normal: { url: '' } },
+      { small: '', big: 'imageV11/url.jpg', normal: '' },
+      { small: '', big: 'imageV12/url.jpg', normal: ''},
     ])
   })
 })

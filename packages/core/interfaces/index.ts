@@ -110,14 +110,8 @@ export interface UseContent<CONTENT, SEARCH> {
   error: any
 }
 
-export interface UiMediaGalleryItemUrl {
-  url: string
-}
 export interface UiMediaGalleryItem {
-  small: UiMediaGalleryItemUrl
-  normal: UiMediaGalleryItemUrl
-  big: UiMediaGalleryItemUrl
+  small: string
+  normal: string
+  big: string
 }
-
-export type UiProductName = string
-export type UiProductPrice = string
