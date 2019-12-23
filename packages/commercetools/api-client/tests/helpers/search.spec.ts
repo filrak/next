@@ -2,11 +2,11 @@ import { buildProductWhere, buildCategoryWhere } from './../../src/helpers/searc
 
 describe('[commercetools-api-client] search', () => {
   it('returns undefined when parameters are not supported', () => {
-    expect(buildProductWhere({})).toBe(undefined)
+    expect(buildProductWhere(null)).toBe('')
   })
 
   it('returns undefined string when parameters are not supported', () => {
-    expect(buildCategoryWhere({})).toBe(undefined)
+    expect(buildCategoryWhere(null)).toBe('')
   })
 
   it('returns product search query by cat id', () => {
