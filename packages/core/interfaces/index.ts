@@ -115,6 +115,3 @@ export interface UiMediaGalleryItem {
   normal: string
   big: string
 }
-
-export declare const getName: <P>(product: P) => string;
-
