@@ -1,8 +1,8 @@
 import {
-  getName,
-  getSlug,
-  getPrice,
-  getGallery,
+  getProductName,
+  getProductSlug,
+  getProductPrice,
+  getProductGallery,
 } from './../src/index'
 
 const currentMasterVariant = {
@@ -32,22 +32,22 @@ const product = {
 
 describe('[commercetools-api-client] helpers', () => {
   it('returns name', () => {
-    expect(getName(product.masterData.current)).toBe('variant 1')
-    expect(getName(product.masterData.staged)).toBe('variant 1 draft')
+    expect(getProductName(product.masterData.current)).toBe('variant 1')
+    expect(getProductName(product.masterData.staged)).toBe('variant 1 draft')
   })
 
   it('returns slug', () => {
-    expect(getSlug(product.masterData.current)).toBe('variant-1')
-    expect(getSlug(product.masterData.staged)).toBe('variant-1-draft')
+    expect(getProductSlug(product.masterData.current)).toBe('variant-1')
+    expect(getProductSlug(product.masterData.staged)).toBe('variant-1-draft')
   })
 
   it('returns price', () => {
-    expect(getPrice(product.masterData.current.masterVariant)).toBe(12)
-    expect(getPrice(product.masterData.staged.masterVariant)).toBe(30)
+    expect(getProductPrice(product.masterData.current.masterVariant)).toBe(12)
+    expect(getProductPrice(product.masterData.staged.masterVariant)).toBe(30)
   })
 
   it('returns gallery', () => {
-    expect(getGallery(product.masterData.current.masterVariant)).toEqual([
+    expect(getProductGallery(product.masterData.current.masterVariant)).toEqual([
       { small: '', big: 'imageV11/url.jpg', normal: '' },
       { small: '', big: 'imageV12/url.jpg', normal: ''},
     ])
