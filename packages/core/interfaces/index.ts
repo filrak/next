@@ -118,3 +118,6 @@ export interface UiMediaGalleryItem {
   normal: UiMediaGalleryItemUrl
   big: UiMediaGalleryItemUrl
 }
+
+export type UiProductName = string
+export type UiProductPrice = string

@@ -155,7 +155,6 @@ import {
   SfImage,
   SfBannerGrid
 } from "@storefront-ui/vue";
-import { getProduct } from '@vue-storefront/commercetools-api'
 
 export default {
   name: "Home",
