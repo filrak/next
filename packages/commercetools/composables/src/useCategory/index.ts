@@ -12,7 +12,7 @@ export default function useCategory (): UseCategory<any, any, any, any, any> {
   const appliedFilters = ref(null)
   const applyFilter = () => { () => { console.log('useCategory:applyFilter') } }
   const clearFilters = () => { () => { console.log('useCategory:clearFilters') } }
-  const loading = ref(false)
+  const loading = ref(true)
   const error = ref(null)
 
   const search = async (params: UseCategorySearchParams) => {
@@ -20,7 +20,7 @@ export default function useCategory (): UseCategory<any, any, any, any, any> {
     categories.value = categoryResponse.data.categories.results
     // const productResponse = await getProduct({ catId: categories.value.id })
     // const loadedProducts = productResponse.data.products.results
-    loading.value = true
+    loading.value = false
   }
 
   return {
