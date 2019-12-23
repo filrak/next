@@ -3,8 +3,29 @@ import { ref } from '@vue/composition-api'
 import { getCategory, getProduct } from '@vue-storefront/commercetools-api'
 
 interface UseCategorySearchParams {
-  /** Category ID  */
   slug?: string
+}
+
+const filterRelatedProducts = category => () =>
+  ({ _categoriesRef }) => _categoriesRef.includes(category.id)
+
+const applyProducts = rawProducts => (category) => {
+  const _products = rawProducts.filter(filterRelatedProducts(category))
+
+  return {
+    ...category,
+    _products
+  }
+}
+
+const loadCategories = async (params: UseCategorySearchParams) => {
+  const categoryResponse = await getCategory({ slug: params.slug })
+  const rawCategories = categoryResponse.data.categories.results
+  const catIds = rawCategories.map(c => c.id)
+  const productResponse = await getProduct({ catIds })
+  const rawProducts = (productResponse.data as any)._variants
+
+  return categoryResponse.data.categories.results.map(applyProducts(rawProducts))
 }
 
 export default function useCategory (): UseCategory<any, any, any, any, any> {
@@ -16,10 +37,8 @@ export default function useCategory (): UseCategory<any, any, any, any, any> {
   const error = ref(null)
 
   const search = async (params: UseCategorySearchParams) => {
-    const categoryResponse = await getCategory({ slug: params.slug })
-    categories.value = categoryResponse.data.categories.results
-    // const productResponse = await getProduct({ catId: categories.value.id })
-    // const loadedProducts = productResponse.data.products.results
+    categories.value = await loadCategories(params)
+
     loading.value = false
   }
 

@@ -10,5 +10,6 @@ setup({
     scopes: ['manage_products:vue-storefront-next'],
   },
   locale: 'en',
-  currency: 'USD'
+  currency: 'USD',
+  internals: true
 })

@@ -115,5 +115,3 @@ export interface UiMediaGalleryItem {
   normal: string
   big: string
 }
-
-export type UiProductVariants<V> = V[]

@@ -8,6 +8,7 @@ import getCategory from './api/getCategory'
 let apolloClient: ApolloClient<any> = null
 let locale = 'en'
 let currency = 'USD'
+let internals = false
 
 const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
   apolloClient = new ApolloClient({
@@ -17,8 +18,9 @@ const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClien
   })
   locale = setupConfig.locale
   currency = setupConfig.currency
+  internals = setupConfig.internals
 
   return apolloClient
 }
 
-export { apolloClient, setup, locale, currency, getProduct, getCategory }
+export { apolloClient, setup, locale, currency, getProduct, getCategory, internals }

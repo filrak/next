@@ -1,13 +1,11 @@
-import { UiMediaGalleryItem, UiProductVariants } from '@vue-storefront/interfaces'
-import { ProductVariant, Image, ProductData } from './types/GraphQL'
+import { UiMediaGalleryItem } from '@vue-storefront/interfaces'
+import { ProductVariant, Image, Category, ProductData } from './types/GraphQL'
 
-export const getProductName = (product: ProductData): string => product.name
+export const getProductName = (product: ProductVariant): string => (product as any)._name
 
-export const getProductSlug = (product: ProductData): string => product.slug
+export const getProductSlug = (product: ProductVariant): string => (product as any)._slug
 
 export const getProductPrice = (product: ProductVariant): number => product.price.value.centAmount
-
-export const getProductVariants = (product: ProductData): UiProductVariants<ProductVariant> => product.allVariants
 
 export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[] =>
   product.images.map((image: Image) => ({
@@ -15,3 +13,17 @@ export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[]
     big: image.url,
     normal: ''
   }))
+
+export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {
+  if (!category || !(category as any)._products) {
+    return []
+  }
+
+  const { _products } = category as any
+
+  if (options.master) {
+    return _products.filter(v => (v as any)._master)
+  }
+
+  return _products
+}
