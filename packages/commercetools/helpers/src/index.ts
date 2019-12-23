@@ -7,10 +7,7 @@ export const getProductSlug = (product: ProductData): string => product.slug
 
 export const getProductPrice = (product: ProductVariant): number => product.price.value.centAmount
 
-export const getProductVariants = (product: ProductData): UiProductVariants<ProductData, ProductVariant> => ({
-  parent: product,
-  variants: product.allVariants
-})
+export const getProductVariants = (product: ProductData): UiProductVariants<ProductVariant> => product.allVariants
 
 export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[] =>
   product.images.map((image: Image) => ({
