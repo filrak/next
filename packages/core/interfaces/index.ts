@@ -115,3 +115,8 @@ export interface UiMediaGalleryItem {
   normal: string
   big: string
 }
+
+export interface UiProductVariants<P, V> {
+  parent: P,
+  variants: V[]
+}
