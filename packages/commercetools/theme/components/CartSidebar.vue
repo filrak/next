@@ -3,7 +3,7 @@
     <SfSidebar
       :visible="isCartSidebarOpen"
       headingTitle="My Cart"
-      @close="this.onClose"
+      @close="toggleCartSidebar"
       class="sf-sidebar--right"
     >
       <transition name="fade" mode="out-in">
@@ -75,8 +75,10 @@ import {
   SfPrice,
   SfCollectedProduct
 } from '@storefront-ui/vue'
+import { computed } from '@vue/composition-api'
 import { useCart } from '@vue-storefront/commercetools-composables'
-import { UiState, setIsCartSidebarOpen } from '../assets/ui-state'
+import { isCartSidebarOpen, toggleCartSidebar } from '~/assets/ui-state'
+
 export default {
   name: 'Cart',
   components: {
@@ -93,9 +95,13 @@ export default {
     }
   },
   setup() {
+
     const { cart } = useCart()
+    
     return {
-      products: cart.value.products
+      products: cart.value.products,
+      isCartSidebarOpen,
+      toggleCartSidebar
     };
   },
   computed: {
@@ -115,18 +121,12 @@ export default {
           return totalPrice + summary;
         }, 0)
         .toFixed(2);
-    },
-    isCartSidebarOpen() {
-      return UiState.isCartSidebarOpen
     }
   },
   methods: {
     removeHandler(product) {
       const products = [...this.products];
       this.products = products.filter(element => element.id !== product.id);
-    },
-    onClose() {
-      setIsCartSidebarOpen(false)
     }
   }
 };
