@@ -1,5 +1,5 @@
 import { UiMediaGalleryItem } from '@vue-storefront/interfaces'
-import { ProductVariant, Image, Category, ProductData } from './types/GraphQL'
+import { ProductVariant, Image, Category } from './types/GraphQL'
 
 export const getProductName = (product: ProductVariant): string => (product as any)._name
 

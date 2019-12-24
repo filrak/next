@@ -22,5 +22,4 @@ export interface SetupConfig<TCacheShape> {
   customOptions?: ApolloClientOptions<TCacheShape>
   currency: string,
   locale: string,
-  internals?: boolean
 }

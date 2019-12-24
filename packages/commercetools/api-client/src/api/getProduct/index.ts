@@ -5,23 +5,22 @@ import { ProductSearch } from './../../types/Api'
 import { ProductQueryResult } from './../../types/GraphQL'
 import defaultQuery from './defaultQuery'
 import { buildProductWhere } from './../../helpers/search'
-import { applyInternals } from './../../helpers/internals'
 
 interface ProductData {
   products: ProductQueryResult
 }
 
-const getProductQuery = (search: ProductSearch) => {
+const getProduct = async (search: ProductSearch): Promise<ApolloQueryResult<ProductData>> => {
   if (search.customQuery) {
     const { query, variables } = search.customQuery
 
-    return apolloClient.query<ProductData>({
+    return await apolloClient.query<ProductData>({
       query: gql`${query}`,
       variables
     })
   }
 
-  return apolloClient.query<ProductData>({
+  return await apolloClient.query<ProductData>({
     query: defaultQuery,
     variables: {
       where: buildProductWhere(search),
@@ -32,10 +31,6 @@ const getProductQuery = (search: ProductSearch) => {
       currency,
     }
   })
-}
-
-const getProduct = async (search: ProductSearch): Promise<ApolloQueryResult<ProductData>> => {
-  return await applyInternals<ProductData>(getProductQuery(search), 'product')
 }
 
 export default getProduct
