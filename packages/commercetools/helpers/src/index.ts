@@ -9,9 +9,9 @@ export const getProductPrice = (product: ProductVariant): number => product.pric
 
 export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[] =>
   product.images.map((image: Image) => ({
-    small: '',
+    small: image.url,
     big: image.url,
-    normal: ''
+    normal: image.url
   }))
 
 export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {

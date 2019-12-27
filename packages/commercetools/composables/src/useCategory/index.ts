@@ -8,7 +8,7 @@ interface UseCategorySearchParams {
 }
 
 const loadCategories = async (params: UseCategorySearchParams) => {
-  const categoryResponse = await getCategory({ slug: params.slug })
+  const categoryResponse = await getCategory(params)
   const rawCategories = categoryResponse.data.categories.results
   const catIds = rawCategories.map(c => c.id)
   const productResponse = await getProduct({ catIds })

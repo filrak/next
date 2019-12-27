@@ -29,8 +29,8 @@ describe('[commercetools-api-client] product helpers', () => {
 
   it('returns gallery', () => {
     expect(getProductGallery(product)).toEqual([
-      { small: '', big: 'imageV11/url.jpg', normal: '' },
-      { small: '', big: 'imageV12/url.jpg', normal: ''},
+      { small: 'imageV11/url.jpg', big: 'imageV11/url.jpg', normal: 'imageV11/url.jpg' },
+      { small: 'imageV12/url.jpg', big: 'imageV12/url.jpg', normal: 'imageV12/url.jpg' },
     ])
   })
 })
