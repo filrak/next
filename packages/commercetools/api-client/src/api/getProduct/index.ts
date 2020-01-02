@@ -20,7 +20,7 @@ const getProduct = async (search: ProductSearch): Promise<ApolloQueryResult<Prod
     })
   }
 
-  return apolloClient.query<ProductData>({
+  return await apolloClient.query<ProductData>({
     query: defaultQuery,
     variables: {
       where: buildProductWhere(search),
