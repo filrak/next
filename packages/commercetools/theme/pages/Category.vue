@@ -108,7 +108,11 @@
             <template>
               <SfList>
                 <SfListItem v-for="(item, j) in accordion.items" :key="j">
-                  <SfMenuItem :label="item.label" :count="item.count" />
+                  <SfMenuItem :label="item.label">
+                    <template #label="{ label }">
+                      <a :href="item.url" :class="item.selected ? 'sidebar--cat-selected' : ''">{{ label }}</a>
+                    </template>
+                  </SfMenuItem>
                 </SfListItem>
               </SfList>
             </template>
@@ -122,12 +126,12 @@
             :key="i"
             :title="getProductName(product)"
             :image="getProductGallery(product)[0].big"
-            :regular-price="getProductPrice(product)"
-            :special-price="getProductPrice(product)"
+            :regular-price="'$' + getProductPrice(product)"
             :max-rating="5"
             :score-rating="3"
             :isOnWishlist="false"
             @click:wishlist="toggleWishlist(i)"
+            :link="`/p/${getProductSlug(product)}`"
             class="products__product-card"
           />
         </div>
@@ -230,22 +234,49 @@ import {
   getCategoryProducts,
   getProductName,
   getProductGallery,
-  getProductPrice
+  getProductPrice,
+  getProductSlug
 } from '@vue-storefront/commercetools-helpers'
+
+const getLastSlug = routeParams =>
+  Object.keys(routeParams).reduce(
+    (prev, curr) => routeParams[curr] ? routeParams[curr] : prev,
+    routeParams['slug_1']
+  )
 
 export default {
   transition: 'fade',
-  setup () {
-    const { categories, search, loading } = useCategory()
+  setup (props, context) {
+    const { params } = context.root.$route
+    const rootCatSlug = params['slug_1']
+    const currentCatSlug = getLastSlug(params)
+    const navigationCat = useCategory()
+    const productCat = useCategory()
 
-    search({ slug: "men" })
+    navigationCat.search({ slug: rootCatSlug })
+    productCat.search({ slug: currentCatSlug })
 
-    const products = computed(() => getCategoryProducts(categories.value[0], { master: true }))
+    const products = computed(() => getCategoryProducts(productCat.categories.value[0], { master: true }))
+    const sidebarAccordion = computed(() => {
+      const { categories } = navigationCat
+
+      if (!categories.value || categories.value.length === 0) {
+        return []
+      }
+
+      return categories.value[0].children.map((category) => ({
+        header: category.name,
+        items: category.children.map(ch => ({
+          label: ch.name,
+          selected: currentCatSlug === ch.slug,
+          url: `/c/${rootCatSlug}/${ch.slug}`
+        }))
+      }))
+    })
 
     return {
-      categories,
       products,
-      loading
+      sidebarAccordion
     }
   },
   components: {
@@ -285,44 +316,6 @@ export default {
         {
           value: "price-down",
           label: "Price from high to low"
-        }
-      ],
-      sidebarAccordion: [
-        {
-          header: "Clothing",
-          items: [
-            { label: "All", count: "280" },
-            { label: "Skirts", count: "23" },
-            { label: "Sweaters", count: "54" },
-            { label: "Dresses", count: "34" },
-            { label: "T-shirts", count: "56" },
-            { label: "Pants", count: "7" },
-            { label: "Underwear", count: "12" }
-          ]
-        },
-        {
-          header: "Accesorries",
-          items: [
-            { label: "All", count: "280" },
-            { label: "Skirts", count: "23" },
-            { label: "Sweaters", count: "54" },
-            { label: "Dresses", count: "34" },
-            { label: "T-shirts", count: "56" },
-            { label: "Pants", count: "7" },
-            { label: "Underwear", count: "12" }
-          ]
-        },
-        {
-          header: "Shoes",
-          items: [
-            { label: "All", count: "280" },
-            { label: "Skirts", count: "23" },
-            { label: "Sweaters", count: "54" },
-            { label: "Dresses", count: "34" },
-            { label: "T-shirts", count: "56" },
-            { label: "Pants", count: "7" },
-            { label: "Underwear", count: "12" }
-          ]
         }
       ],
       filtersOptions: {
@@ -377,6 +370,7 @@ export default {
     getProductName,
     getProductGallery,
     getProductPrice,
+    getProductSlug,
     clearAllFilters() {
       const filters = {};
       const keys = Object.keys(this.filters);
@@ -539,6 +533,10 @@ export default {
   flex: 0 0 15%;
   padding: $spacer-extra-big;
   border-right: 1px solid $c-light;
+
+  &--cat-selected {
+    font-weight: bold
+  }
 }
 .sort-by {
   flex: unset;

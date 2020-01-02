@@ -13,7 +13,7 @@ const category = {
   ]
 } as any
 
-describe('[commercetools-api-client] category helpers', () => {
+describe('[commercetools-helpers] category helpers', () => {
   it('returns empty array when there are no _products', () => {
     expect(getCategoryProducts(null)).toEqual([])
   })

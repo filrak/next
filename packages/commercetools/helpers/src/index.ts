@@ -5,7 +5,7 @@ export const getProductName = (product: ProductVariant): string => product ? (pr
 
 export const getProductSlug = (product: ProductVariant): string => product ? (product as any)._slug : ''
 
-export const getProductPrice = (product: ProductVariant): number | null => product ? product.price.value.centAmount : null
+export const getProductPrice = (product: ProductVariant): number | null => product ? product.price.value.centAmount / 100 : null
 
 export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[] =>
   (product ? product.images : [])

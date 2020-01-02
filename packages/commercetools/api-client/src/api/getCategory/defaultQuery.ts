@@ -5,6 +5,7 @@ export default gql`
     id
     slug(locale: $locale)
     name(locale: $locale)
+    childCount
     children {
       id
       slug(locale: $locale)
