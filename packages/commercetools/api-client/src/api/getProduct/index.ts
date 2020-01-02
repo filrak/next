@@ -20,7 +20,7 @@ const getProduct = async (search: ProductSearch): Promise<ApolloQueryResult<Prod
     })
   }
 
-  const res = await apolloClient.query<ProductData>({
+  return apolloClient.query<ProductData>({
     query: defaultQuery,
     variables: {
       where: buildProductWhere(search),
@@ -34,8 +34,6 @@ const getProduct = async (search: ProductSearch): Promise<ApolloQueryResult<Prod
     // @link: https://github.com/apollographql/apollo-client/issues/3234
     fetchPolicy: 'no-cache'
   })
-
-  return res
 }
 
 export default getProduct
