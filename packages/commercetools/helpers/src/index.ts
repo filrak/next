@@ -5,19 +5,16 @@ export const getProductName = (product: ProductVariant): string => product ? (pr
 
 export const getProductSlug = (product: ProductVariant): string => product ? (product as any)._slug : ''
 
-export const getProductPrice = (product: ProductVariant): number => product ? product.price.value.centAmount : null
+export const getProductPrice = (product: ProductVariant): number | null => product ? product.price.value.centAmount : null
 
-export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[] => {
-  if (!product) {
-    return []
-  }
-
-  return product.images.map((image: Image) => ({
+export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[] =>
+  (product ? product.images : [])
+  .map((image: Image) => ({
     small: image.url,
     big: image.url,
     normal: image.url
   }))
-}
+
 export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {
   if (!category || !(category as any)._products) {
     return []
