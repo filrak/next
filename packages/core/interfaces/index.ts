@@ -115,3 +115,10 @@ export interface UiMediaGalleryItem {
   normal: string
   big: string
 }
+
+export interface UiCategory {
+  label: string
+  slug?: string
+  selected?: boolean
+  items: UiCategory[]
+}

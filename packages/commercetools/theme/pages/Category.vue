@@ -101,16 +101,16 @@
       <div class="sidebar desktop-only">
         <SfAccordion :firstOpen="true" :showChevron="false">
           <SfAccordionItem
-            v-for="(accordion, i) in sidebarAccordion"
+            v-for="(accordion, i) in categoryTree && categoryTree.items"
             :key="i"
-            :header="accordion.header"
+            :header="accordion.label"
           >
             <template>
               <SfList>
                 <SfListItem v-for="(item, j) in accordion.items" :key="j">
                   <SfMenuItem :label="item.label">
                     <template #label="{ label }">
-                      <a :href="item.url" :class="item.selected ? 'sidebar--cat-selected' : ''">{{ label }}</a>
+                      <a :href="getCategoryUrl(item.slug)" :class="item.selected ? 'sidebar--cat-selected' : ''">{{ label }}</a>
                     </template>
                   </SfMenuItem>
                 </SfListItem>
@@ -228,55 +228,46 @@ import {
   SfSelect,
   SfBreadcrumbs
 } from "@storefront-ui/vue";
-import { computed } from '@vue/composition-api'
+import { computed, watch } from '@vue/composition-api'
 import { useCategory } from '@vue-storefront/commercetools-composables'
 import {
   getCategoryProducts,
   getProductName,
   getProductGallery,
   getProductPrice,
-  getProductSlug
+  getProductSlug,
+  getCategoryTree,
 } from '@vue-storefront/commercetools-helpers'
 
-const getLastSlug = routeParams =>
-  Object.keys(routeParams).reduce(
-    (prev, curr) => routeParams[curr] ? routeParams[curr] : prev,
-    routeParams['slug_1']
-  )
 
 export default {
   transition: 'fade',
   setup (props, context) {
     const { params } = context.root.$route
-    const rootCatSlug = params['slug_1']
-    const currentCatSlug = getLastSlug(params)
-    const navigationCat = useCategory()
-    const productCat = useCategory()
+    const lastSlug = Object.keys(params).reduce(
+      (prev, curr) => params[curr] ? params[curr] : prev,
+      params['slug_1']
+    )
 
-    navigationCat.search({ slug: rootCatSlug })
-    productCat.search({ slug: currentCatSlug })
+    const { categories, search } = useCategory()
 
-    const products = computed(() => getCategoryProducts(productCat.categories.value[0], { master: true }))
-    const sidebarAccordion = computed(() => {
-      const { categories } = navigationCat
-
-      if (!categories.value || categories.value.length === 0) {
-        return []
-      }
-
-      return categories.value[0].children.map((category) => ({
-        header: category.name,
-        items: category.children.map(ch => ({
-          label: ch.name,
-          selected: currentCatSlug === ch.slug,
-          url: `/c/${rootCatSlug}/${ch.slug}`
-        }))
-      }))
+    watch(() => {
+      search({ slug: lastSlug })
     })
+
+    const products = computed(() => getCategoryProducts(categories.value[0], { master: true }))
+    const categoryTree = computed(() => getCategoryTree(categories.value[0]))
+
+    const getCategoryUrl = slug => `/c/${params['slug_1']}/${slug}`
 
     return {
       products,
-      sidebarAccordion
+      categoryTree,
+      getProductName,
+      getProductGallery,
+      getProductPrice,
+      getProductSlug,
+      getCategoryUrl
     }
   },
   components: {
@@ -367,10 +358,6 @@ export default {
     };
   },
   methods: {
-    getProductName,
-    getProductGallery,
-    getProductPrice,
-    getProductSlug,
     clearAllFilters() {
       const filters = {};
       const keys = Object.keys(this.filters);
@@ -381,7 +368,7 @@ export default {
     },
     toggleWishlist(index) {
       this.products[index].isOnWishlist = !this.products[index].isOnWishlist;
-    }
+    },
   }
 };
 </script>
