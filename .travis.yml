@@ -4,7 +4,8 @@ node_js: "10"
 cache:
   yarn: true
   directories:
-    - node_modules
+    - packages/commercetools/api-client/node_modules
+    - packages/commercetools/composables/node_modules
 
 install:
   - yarn
