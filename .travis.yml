@@ -1,5 +1,5 @@
 language: node_js
-node_js: "10"
+node_js: '10'
 
 cache:
   yarn: true
@@ -9,26 +9,29 @@ cache:
     - packages/commercetools/composables/node_modules
     - packages/commercetools/composables/lib
 
-
 install:
   - yarn
 
 jobs:
   include:
     - stage: Build
-      name: "Build"
+      name: Build
       script:
-        - yarn build:ct:tools
+      - yarn build:ct:tools
 
     - stage: test
       script: yarn test:ct:api-client
-      name: "Test commercetools api-client"
+      name: Test commercetools api-client
 
     - stage: test
       script: yarn test:ct:composables
-      name: "Test commercetools composables"
+      name: Test commercetools composables
 
     - stage: test
       script: yarn test:ct:helpers
-      name: "Test commercetools helpers"
+      name: Test commercetools helpers
 
+deploy:
+  provider: heroku
+  api_key:
+    secure: mNLZHDpiGLqj1ccQ31e24Thy6bLZCnYAeL12A7u3b7695GiPdYDwV5AQd04rPsuBKG7IRqRnNg6uS8ZAhfPct4pOrwKSF5eFkjm84QRe1C3hV3DwPkceU3EWghM9BIGkwGbuyAo/bjnLSydBNsCSrkazw+gV+oPLW28ctssS7KCY8Msc18cOaMcuPwwzDg5c5FC0pKE9bOFhOAmi0lHdrMSA/HwmJyO9QtkzUTCXuuJelZoRZrB2+5vTwyhB9zlgQaG/WS8dcqvNQSI4nfScXwiSJ4JXSFE7cJoRq+ZXd+GeZTPZXCn3YDhZiHrNTjfxAr4D2ylZS/PCU6l2v7FMqMH490wvj3BiNKr6uBycXXHq3ySJfVIUAhSKXYDMWLeRpZhEon22ebJtCxjND/RL6QlTtYWQNrbAxiM0c6SpgeAQz31C2+dI+uq7OWLXqLqVLPjKL/OSkSjNsITdWF9mvPyZHVJE//0P5W2/M4Fg6hTYNYvTEzmKsjiODsPSLjQCpCEyPUTgQPdnN4fAEKk5fLzdWpAQqrCl+ugS5/1zN1tbdR90GtzCEWWwcA+qEjfv/MCSoYuIlDNl0Dk+XlCU7NL/O1mxQ/sjzl2QjiNSox3OxJlyuTws/imsVk+f5nxKYtchqNvxJaFfqJtX+54eOvgTJDP5rihp2USJEkmGckU=
