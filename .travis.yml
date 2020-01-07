@@ -15,7 +15,6 @@ jobs:
       script:
         - yarn build:ct:tools
       node_js: "10"
-
     - stage: test
       name: "Test commercetools api-client"
       node_js: "10"
