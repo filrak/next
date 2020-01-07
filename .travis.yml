@@ -5,7 +5,10 @@ cache:
   yarn: true
   directories:
     - packages/commercetools/api-client/node_modules
+    - packages/commercetools/api-client/lib
     - packages/commercetools/composables/node_modules
+    - packages/commercetools/composables/lib
+
 
 install:
   - yarn
