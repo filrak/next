@@ -1,4 +1,5 @@
 language: node_js
+node_js: "10"
 
 cache:
   yarn: true
@@ -14,13 +15,16 @@ jobs:
       name: "Build"
       script:
         - yarn build:ct:tools
-      node_js: "10"
+
     - stage: test
-      name: "Test commercetools api-client"
-      node_js: "10"
       script: yarn test:ct:api-client
-    - script: yarn test:ct:composables
+      name: "Test commercetools api-client"
+
+    - stage: test
+      script: yarn test:ct:composables
       name: "Test commercetools composables"
-    - script: yarn test:ct:helpers
+
+    - stage: test
+      script: yarn test:ct:helpers
       name: "Test commercetools helpers"
 
