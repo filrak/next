@@ -32,6 +32,7 @@ jobs:
       name: Test commercetools helpers
 
     - stage: deployment
+      script: skip
       deploy:
         provider: heroku
         api_key:
