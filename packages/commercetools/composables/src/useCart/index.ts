@@ -48,7 +48,6 @@ export default function useCart(): UseCart<any, any, any, any, any, any, any> {
   const removeCoupon = () => { () => { console.log('useCart:removeCoupon') } }
   const loading = false
   const error = ref(null)
-
   return {
     cart,
     addToCart,

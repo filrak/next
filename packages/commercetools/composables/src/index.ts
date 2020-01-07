@@ -6,4 +6,8 @@ export {
   useCategory,
   useProduct,
   useCart
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cart api

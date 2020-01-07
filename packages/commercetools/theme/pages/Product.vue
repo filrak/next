@@ -283,7 +283,7 @@ import {
 } from "@storefront-ui/vue";
 import { computed } from '@vue/composition-api'
 
-import { useProduct } from '@vue-storefront/commercetools-composables'
+import { useProduct, useCart } from '@vue-storefront/commercetools-composables'
 import {
   getProductVariants,
   getProductName,
@@ -297,6 +297,7 @@ export default {
   setup (props, context) {
     const { params } = context.root.$route
     const { products, search } = useProduct()
+    const { cart } = useCart(context)
 
     search({ slug: params['slug_1'] })
 
