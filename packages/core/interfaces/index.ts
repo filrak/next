@@ -1,7 +1,7 @@
 import { Ref } from '@vue/composition-api'
 
-export interface UseProduct<PRODUCTS, SEARCH> {
-  products: Ref<PRODUCTS>[];
+export interface UseProduct<PRODUCT, SEARCH> {
+  products: Ref<Array<PRODUCT>>;
   search: SEARCH,
   loading: Ref<boolean>;
   error: Ref<any>;
@@ -108,4 +108,10 @@ export interface UseContent<CONTENT, SEARCH> {
   search: SEARCH,
   loading: boolean,
   error: any
+}
+
+export interface UiMediaGalleryItem {
+  small: string
+  normal: string
+  big: string
 }
