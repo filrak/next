@@ -110,7 +110,7 @@
                 <SfListItem v-for="(item, j) in accordion.items" :key="j">
                   <SfMenuItem :label="item.label">
                     <template #label="{ label }">
-                      <a :href="getCategoryUrl(item.slug)" :class="item.selected ? 'sidebar--cat-selected' : ''">{{ label }}</a>
+                      <a :href="getCategoryUrl(item.slug)" :class="isCategorySelected(item.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</a>
                     </template>
                   </SfMenuItem>
                 </SfListItem>
@@ -251,14 +251,13 @@ export default {
 
     const { categories, search } = useCategory()
 
-    watch(() => {
-      search({ slug: lastSlug })
-    })
+    search({ slug: lastSlug })
 
     const products = computed(() => getCategoryProducts(categories.value[0], { master: true }))
     const categoryTree = computed(() => getCategoryTree(categories.value[0]))
 
     const getCategoryUrl = slug => `/c/${params['slug_1']}/${slug}`
+    const isCategorySelected = slug => slug === (categories.value && categories.value[0].slug)
 
     return {
       products,
@@ -267,7 +266,8 @@ export default {
       getProductGallery,
       getProductPrice,
       getProductSlug,
-      getCategoryUrl
+      getCategoryUrl,
+      isCategorySelected
     }
   },
   components: {

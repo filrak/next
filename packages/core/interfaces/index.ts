@@ -119,6 +119,5 @@ export interface UiMediaGalleryItem {
 export interface UiCategory {
   label: string
   slug?: string
-  selected?: boolean
   items: UiCategory[]
 }

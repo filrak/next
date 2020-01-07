@@ -48,7 +48,6 @@ export const getCategoryTree = (category: Category): UiCategory | null => {
   const buildTree = (rootCategory: Category) => ({
     label: rootCategory.name,
     slug: rootCategory.slug,
-    selected: category.slug === rootCategory.slug,
     items: rootCategory.children.map(buildTree)
   })
 
