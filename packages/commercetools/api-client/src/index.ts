@@ -6,10 +6,12 @@ import getProduct from './api/getProduct'
 import getCategory from './api/getCategory'
 import createCart from './api/createCart'
 import updateCart from './api/updateCart'
+import getCart from './api/getCart'
 
 let apolloClient: ApolloClient<any> = null
 let locale = 'en'
 let currency = 'USD'
+let productAttributesIncluded = ['color', 'size']
 
 const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
   apolloClient = new ApolloClient({
@@ -19,8 +21,20 @@ const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClien
   })
   locale = setupConfig.locale
   currency = setupConfig.currency
+  productAttributesIncluded = setupConfig.productAttributesIncluded
 
   return apolloClient
 }
 
-export { apolloClient, setup, locale, currency, getProduct, getCategory, createCart, updateCart }
+export {
+  apolloClient,
+  setup,
+  locale,
+  currency,
+  productAttributesIncluded,
+  getProduct,
+  getCategory,
+  createCart,
+  updateCart,
+  getCart
+}

@@ -97,6 +97,7 @@
               :stock="stock"
               v-model="qty"
               :canAddToCart="stock > 0"
+              @click="addToCart(product)"
               class="product-details__add-to-cart"
             />
             <div class="product-details__action">
@@ -297,13 +298,13 @@ export default {
   setup (props, context) {
     const { params } = context.root.$route
     const { products, search } = useProduct()
-    const { cart } = useCart(context)
+    const { addToCart } = useCart()
 
     search({ slug: params['slug_1'] })
 
     const product = computed(() => getProductVariants(products.value, { master: true }))
 
-    return { product }
+    return { product, addToCart }
   },
   components: {
     SfAlert,

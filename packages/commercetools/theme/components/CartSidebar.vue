@@ -75,8 +75,9 @@ import {
   SfPrice,
   SfCollectedProduct
 } from '@storefront-ui/vue'
-import { computed } from '@vue/composition-api'
+import { computed, watch } from '@vue/composition-api'
 import { useCart } from '@vue-storefront/commercetools-composables'
+import { getCartProducts } from '@vue-storefront/commercetools-helpers'
 import { isCartSidebarOpen, toggleCartSidebar } from '~/assets/ui-state'
 
 export default {
@@ -95,11 +96,18 @@ export default {
     }
   },
   setup() {
+    const { cart, loadCart } = useCart()
 
-    const { cart } = useCart()
-    
+    watch(isCartSidebarOpen, () => {
+      if (isCartSidebarOpen) {
+        loadCart()
+      }
+    })
+
+    const products = computed(() => getCartProducts(cart.value))
+
     return {
-      products: cart.value.products,
+      products,
       isCartSidebarOpen,
       toggleCartSidebar
     };

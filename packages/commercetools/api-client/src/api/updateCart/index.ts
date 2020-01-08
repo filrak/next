@@ -1,6 +1,6 @@
 import { FetchResult } from 'apollo-link'
 import { Cart, CartUpdateAction } from '../../types/GraphQL'
-import { apolloClient, locale } from '../../index'
+import { apolloClient, locale, productAttributesIncluded } from '../../index'
 import CreateCartMutation from './defaultMutation'
 
 interface UpdateCartData {
@@ -17,6 +17,7 @@ const updateCart = async (cartData: UpdateCart): Promise<FetchResult<UpdateCartD
   return await apolloClient.mutate<UpdateCartData>({
     mutation: CreateCartMutation,
     variables: {
+      attributesIncluded: productAttributesIncluded,
       locale,
       ...cartData
     }

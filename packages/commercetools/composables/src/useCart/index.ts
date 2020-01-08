@@ -1,8 +1,80 @@
+import debounce from 'lodash-es/debounce'
 import { UseCart } from '@vue-storefront/interfaces'
-import { ref } from '@vue/composition-api'
+import { ref, watch } from '@vue/composition-api'
+import { Cart, LineItem } from './../types/GraphQL'
+import { createCart, updateCart, getCart } from '@vue-storefront/commercetools-api'
+import { enhanceCart } from './../helpers/internals'
 
-export default function useCart(): UseCart<any, any, any, any, any, any, any> {
-  const cart = ref({ products: [
+const getStorage = () => {
+  // @ts-ignore
+  if (typeof window !== 'undefined') {
+    // @ts-ignore
+    return window.localStorage;
+  }
+
+  const storage = {};
+
+  return {
+    setItem: (key: string, value: any) => {
+      storage[key] = value;
+    },
+    getItem: (key: string): any => {
+      return storage[key];
+    },
+  }
+}
+
+const loadCurrentCart = async () => {
+  const storage = getStorage()
+  const cartId = storage.getItem('vsf-commercetools-cart-id')
+
+  if (cartId) {
+    const { data: { cart } } = enhanceCart(await getCart(cartId))
+    storage.setItem('vsf-commercetools-cart-id', cart.id)
+
+    return cart
+  }
+
+  // TODO: first fetch cart for given customerId, if doesn't exist, create new one
+  const { data: { cart } } = enhanceCart(await createCart())
+  storage.setItem('vsf-commercetools-cart-id', cart.id)
+
+  return cart
+}
+
+export default function useCart(): UseCart<any, any, any, any, any, any, any, any> {
+  const cart = ref<Cart>(null)
+
+  watch(async () => {
+    if (cart.value) return
+
+    loadCart()
+  })
+
+  const loadCart = async () => {
+    cart.value = await loadCurrentCart()
+  }
+
+
+  const addToCart = async (variant) => {
+    const action = {
+      addLineItem: {
+        variantId: variant.id,
+        quantity: 1,
+        sku: variant.sku,
+      }
+    }
+
+    const updateResponse = enhanceCart(await updateCart({
+      id: cart.value.id,
+      version: cart.value.version,
+      actions: [action]
+    }))
+
+    cart.value = updateResponse.data.cart
+  }
+
+  const oldCart = ref({ products: [
     {
       title: "Cream Beach Bag",
       id: "CBB1",
@@ -40,7 +112,7 @@ export default function useCart(): UseCart<any, any, any, any, any, any, any> {
       stock: 20
     }
   ]})
-  const addToCart = () => { () => { console.log('useCart:addToCart') } }
+
   const removeFromCart = () => { () => { console.log('useCart:removeFromCart') } }
   const clearCart = () => { () => { console.log('useCart:clearCart') } }
   const coupon = ref({})
@@ -56,6 +128,7 @@ export default function useCart(): UseCart<any, any, any, any, any, any, any> {
     coupon,
     applyCoupon,
     removeCoupon,
+    loadCart,
     loading,
     error
   }

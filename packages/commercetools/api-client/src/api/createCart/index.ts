@@ -4,7 +4,7 @@ import { apolloClient, locale, currency } from './../../index'
 import CreateCartMutation from './defaultMutation'
 
 interface CreateCartData {
-  createCart: Cart
+  cart: Cart
 }
 
 interface CartData extends Omit<CartDraft, "currency"> {

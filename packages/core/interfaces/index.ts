@@ -34,6 +34,7 @@ export interface UseCart
   COUPON,
   APPLY_COUPON,
   REMOVE_COUPON,
+  LOAD_CART,
 > {
   cart: CART;
   addToCart: ADD_TO_CART;
@@ -42,6 +43,7 @@ export interface UseCart
   coupon: COUPON;
   applyCoupon: APPLY_COUPON;
   removeCoupon: REMOVE_COUPON;
+  loadCart: LOAD_CART;
   loading: boolean;
   error: any;
 }
@@ -120,4 +122,22 @@ export interface UiCategory {
   label: string
   slug?: string
   items: UiCategory[]
+}
+
+export interface UiCartProductConfiguration {
+  name: string
+  value: string
+}
+
+export interface UiCartProductPrice {
+  regular: number
+}
+
+export interface UiCartProduct {
+  title: string
+  id: string
+  image: string
+  price: UiCartProductPrice
+  configuration: UiCartProductConfiguration[]
+  qty: string
 }
