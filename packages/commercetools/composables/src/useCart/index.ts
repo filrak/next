@@ -6,6 +6,7 @@ import loadCurrentCart from './currentCart'
 import { cart, loading } from './shared'
 
 export default function useCart(): UseCart<any, any, any, any, any, any, any, any> {
+
   watch(async () => {
     if (!cart.value && !loading.value) {
       loading.value = true

@@ -66,7 +66,6 @@ export const getCartProducts = (cart: Cart): UiCartProduct[] => {
     return []
   }
 
-
   return cart.lineItems.map((lineItem: LineItem) => ({
     title: lineItem.name,
     id: lineItem.id,

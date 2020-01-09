@@ -2295,7 +2295,7 @@
   dependencies:
     tslib "^1.9.3"
 
-"@vue/test-utils@^1.0.0-beta.27":
+"@vue/test-utils@^1.0.0-beta.27", "@vue/test-utils@^1.0.0-beta.30":
   version "1.0.0-beta.30"
   resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.30.tgz#d5f26d1e2411fdb7fa7fdedb61b4b4ea4194c49d"
   dependencies:
@@ -7177,10 +7177,6 @@ locate-path@^5.0.0:
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-5.0.0.tgz#1afba396afd676a6d42504d0a67a3a7eb9f62aa0"
   dependencies:
     p-locate "^4.1.0"
-
-lodash-es@^4.17.15:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
 
 lodash._reinterpolate@^3.0.0:
   version "3.0.0"

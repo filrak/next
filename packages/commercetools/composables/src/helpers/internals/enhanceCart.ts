@@ -1,4 +1,3 @@
-import isObject from 'lodash-es/isObject'
 import { CartResponse } from '@vue-storefront/commercetools-api/lib/src/types/Api'
 import { LineItem, RawProductAttribute } from './../../types/GraphQL'
 
@@ -9,7 +8,7 @@ const attributeValueSelectors = {
 const transformAttribute = (attribute: RawProductAttribute) => {
   const { name, value } = attribute
 
-  if (isObject(value)) {
+  if (typeof value === 'object') {
     const transformedValue =
       attributeValueSelectors[attribute.name] ?
       attributeValueSelectors[attribute.name](value) : value
