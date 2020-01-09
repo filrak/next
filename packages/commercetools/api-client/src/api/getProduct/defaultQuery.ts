@@ -19,11 +19,19 @@ export default gql`
     }
   }
 
+  fragment Attributes on ProductVariant {
+    attributesRaw {
+      name,
+      value
+    }
+  }
+
   fragment DefaultVariant on ProductVariant {
     id
     sku
     ...Images
     ...Price
+    ...Attributes
   }
 
   query products(
@@ -48,6 +56,7 @@ export default gql`
             metaTitle(locale: $locale)
             metaKeywords(locale: $locale)
             metaDescription(locale: $locale)
+            description(locale: $locale)
             categoriesRef {
               id
             }

@@ -281,28 +281,39 @@ import {
   SfReview,
   SfBreadcrumbs
 } from "@storefront-ui/vue";
+
 import { computed } from '@vue/composition-api'
 
 import { useProduct } from '@vue-storefront/commercetools-composables'
+
 import {
   getProductVariants,
   getProductName,
   getProductGallery,
-  getProductPrice
+  getProductPrice,
+  getProductAttributes
 } from '@vue-storefront/commercetools-helpers'
 
 export default {
   name: "Product",
   transition: 'fade',
   setup (props, context) {
-    const { params } = context.root.$route
+    const { slug } = context.root.$route.params
     const { products, search } = useProduct()
 
-    search({ slug: params['slug_1'] })
+    search({ slug })
 
     const product = computed(() => getProductVariants(products.value, { master: true }))
 
-    return { product }
+    const attributes = computed(() => getProductAttributes(product.value))
+
+    return { 
+      product,
+      attributes,
+      getProductName,
+      getProductPrice,
+      getProductGallery
+    }
   },
   components: {
     SfAlert,
@@ -463,9 +474,7 @@ export default {
     };
   },
   methods: {
-    getProductName,
-    getProductPrice,
-    getProductGallery,
+
     toggleWishlist(index) {
       this.products[index].isOnWishlist = !this.products[index].isOnWishlist;
     }

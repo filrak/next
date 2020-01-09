@@ -16,6 +16,7 @@ export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[]
     normal: image.url
   }))
 
+/** Returns array of product variants meeting criteria */
 export const getProductVariants = (products: ProductVariant[], options: any = {}): ProductVariant | ProductVariant[]  => {
   if (!products) {
     return []
@@ -28,6 +29,16 @@ export const getProductVariants = (products: ProductVariant[], options: any = {}
   return products
 }
 
+export const getProductAttributes = (product: ProductVariant): any => {
+  return (product ? product.attributesRaw : [])
+  .map(p => ({
+    name: p.name,
+    value: p.value.key ? p.value.key : p.value
+  }))
+}
+
+
+export const getProductDescription = (product: ProductVariant): any
 // Category
 export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {
   if (!category || !(category as any)._products) {
