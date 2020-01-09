@@ -38,7 +38,7 @@ export const getProductAttributes = (product: ProductVariant): any => {
 }
 
 
-export const getProductDescription = (product: ProductVariant): any
+export const getProductDescription = (product: ProductVariant): any => (product as any)._description
 // Category
 export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {
   if (!category || !(category as any)._products) {
