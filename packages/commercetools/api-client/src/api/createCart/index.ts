@@ -1,18 +1,14 @@
-import { FetchResult } from 'apollo-link'
-import { Cart, CartDraft } from './../../types/GraphQL'
+import { CartDraft } from './../../types/GraphQL'
 import { apolloClient, locale, currency } from './../../index'
 import CreateCartMutation from './defaultMutation'
-
-interface CreateCartData {
-  cart: Cart
-}
+import { CartMutationResponse } from './../../types/Api'
 
 interface CartData extends Omit<CartDraft, "currency"> {
   currency?: string
 }
 
-const createCart = async (cartDraft: CartData = {}): Promise<FetchResult<CreateCartData>> => {
-  return await apolloClient.mutate<CreateCartData>({
+const createCart = async (cartDraft: CartData = {}): Promise<CartMutationResponse> => {
+  return await apolloClient.mutate({
     mutation: CreateCartMutation,
     variables: {
       locale,

@@ -1,14 +1,6 @@
-import { FetchResult } from 'apollo-link'
-import { ApolloQueryResult } from 'apollo-client'
 import isObject from 'lodash-es/isObject'
-import { Cart } from './../../types/GraphQL'
+import { CartResponse } from '@vue-storefront/commercetools-api/lib/src/types/Api'
 import { LineItem, RawProductAttribute } from './../../types/GraphQL'
-
-interface CartData {
-  cart: Cart
-}
-
-type CartResponse = ApolloQueryResult<CartData> | FetchResult<CartData>
 
 const attributeValueSelectors = {
   color: (value) => value.label.en
@@ -28,7 +20,7 @@ const transformAttribute = (attribute: RawProductAttribute) => {
   return { name, value}
 }
 
-const enhanceCart = (cartResponse: CartResponse) => {
+const enhanceCart = (cartResponse: CartResponse): CartResponse => {
   const { lineItems } = cartResponse.data.cart
 
   cartResponse.data.cart.lineItems = lineItems.map((lineItem: LineItem) => ({

@@ -7,6 +7,7 @@ import getCategory from './api/getCategory'
 import createCart from './api/createCart'
 import updateCart from './api/updateCart'
 import getCart from './api/getCart'
+import getStorage from './helpers/createCommerceToolsLink/getStorage'
 
 let apolloClient: ApolloClient<any> = null
 let locale = 'en'
@@ -32,6 +33,7 @@ export {
   locale,
   currency,
   productAttributesIncluded,
+  getStorage,
   getProduct,
   getCategory,
   createCart,
