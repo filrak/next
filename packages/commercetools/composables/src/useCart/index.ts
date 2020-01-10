@@ -7,7 +7,25 @@ import loadCurrentCart from './currentCart'
 const cart: Ref<Cart> = ref<Cart>(null)
 const loading: Ref<boolean> = ref<boolean>(false)
 
-export default function useCart(): UseCart<any, any, any, any, any, any, any, any> {
+type CartRef = Ref<Cart>
+type AddToCartFn = (variant: ProductVariant, quantity: number) => void
+type RemoveFromCartFn = (product: UiCartProduct) => void
+type ClearCartFn = (product: UiCartProduct) => void
+type CouponRef = Ref<any>
+type ApplyCouponFn = () => void
+type RemoveCoupon = () => void
+type UpdateQuantityFn = (product: UiCartProduct) => void
+
+export default function useCart(): UseCart<
+  CartRef,
+  AddToCartFn,
+  RemoveFromCartFn,
+  ClearCartFn,
+  CouponRef,
+  ApplyCouponFn,
+  RemoveCoupon,
+  UpdateQuantityFn
+> {
 
   watch(async () => {
     if (!cart.value && !loading.value) {
