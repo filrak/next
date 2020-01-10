@@ -15,7 +15,8 @@ const updateCart = async (cartData: UpdateCart): Promise<CartMutationResponse> =
     variables: {
       locale,
       ...cartData
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 }
 

@@ -72,10 +72,6 @@ export default gql`
               id
             }
           }
-          attributesRaw {
-            value
-            name
-          }
         }
         price {
           value {
