@@ -7,12 +7,14 @@ import getCategory from './api/getCategory'
 import createCart from './api/createCart'
 import updateCart from './api/updateCart'
 import getCart from './api/getCart'
+import addToCart from './api/addToCart'
+import removeFromCart from './api/removeFromCart'
+import updateCartQuantity from './api/updateCartQuantity'
 import getStorage from './helpers/createCommerceToolsLink/getStorage'
 
 let apolloClient: ApolloClient<any> = null
 let locale = 'en'
 let currency = 'USD'
-let productAttributesIncluded = ['color', 'size']
 
 const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
   apolloClient = new ApolloClient({
@@ -22,7 +24,6 @@ const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClien
   })
   locale = setupConfig.locale
   currency = setupConfig.currency
-  productAttributesIncluded = setupConfig.productAttributesIncluded
 
   return apolloClient
 }
@@ -32,11 +33,13 @@ export {
   setup,
   locale,
   currency,
-  productAttributesIncluded,
   getStorage,
   getProduct,
   getCategory,
   createCart,
   updateCart,
-  getCart
+  getCart,
+  addToCart,
+  removeFromCart,
+  updateCartQuantity
 }

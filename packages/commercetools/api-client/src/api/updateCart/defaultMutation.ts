@@ -14,7 +14,7 @@ export default gql`
     company
   }
 
-  mutation updateCart($id: String!, $version: Long!, $actions: [CartUpdateAction!]!, $locale: Locale!, $attributesIncluded: [String!]!) {
+  mutation updateCart($id: String!, $version: Long!, $actions: [CartUpdateAction!]!, $locale: Locale!) {
     cart: updateCart(id: $id, version: $version, actions: $actions) {
       id
       customerId
@@ -32,7 +32,7 @@ export default gql`
             url
             label
           }
-          attributesRaw(includeNames:  $attributesIncluded) {
+          attributesRaw {
             name
             value
           }

@@ -14,7 +14,7 @@ export default gql`
     company
   }
 
-  query getCart($cartId: String!, $locale: Locale!, $attributesIncluded: [String!]!) {
+  query getCart($cartId: String!, $locale: Locale!) {
     cart(id: $cartId) {
       id
       customerId
@@ -32,7 +32,7 @@ export default gql`
             url
             label
           }
-          attributesRaw(includeNames: $attributesIncluded) {
+          attributesRaw {
             name
             value
           }

@@ -14,5 +14,4 @@ setup({
   },
   locale: 'en',
   currency: 'USD',
-  productAttributesIncluded: ['color', 'size']
 })

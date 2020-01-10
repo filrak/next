@@ -2,7 +2,7 @@ import { getCartProducts } from './../src/index'
 
 const price = p => ({ value: { centAmount: p } })
 const variant = (p = {}) => ({ ...p, images: [{ url: 'a.jpg' }, { url: 'b.jpg' }] })
-const configuration = () => ([{ name: 'size', value: '38' }])
+const configuration = () => ([{ name: 'size', value: '38' }, { name: 'color', value: 'white' }])
 
 const cart = {
   lineItems: [
@@ -20,6 +20,13 @@ describe('[commercetools-helpers] cart helpers', () => {
     expect(getCartProducts(cart)).toEqual([
       { title: 'prod1', id: 1, price: { regular: 11 }, image: 'a.jpg', qty: 1, configuration: configuration() },
       { title: 'prod2', id: 2, price: { regular: 15 }, image: 'a.jpg', qty: 2, configuration: configuration() },
+    ])
+  })
+
+  it('returns products with whitelisted attributes', () => {
+    expect(getCartProducts(cart, ['color'])).toEqual([
+      { title: 'prod1', id: 1, price: { regular: 11 }, image: 'a.jpg', qty: 1, configuration: [ { name: 'color', value: 'white' } ] },
+      { title: 'prod2', id: 2, price: { regular: 15 }, image: 'a.jpg', qty: 2, configuration: [ { name: 'color', value: 'white' } ] },
     ])
   })
 })

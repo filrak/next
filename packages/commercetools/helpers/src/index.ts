@@ -61,9 +61,17 @@ export const getCategoryTree = (category: Category): UiCategory | null => {
 
 // Cart
 
-export const getCartProducts = (cart: Cart): UiCartProduct[] => {
+export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): UiCartProduct[] => {
   if (!cart) {
     return []
+  }
+
+  const filterAttributes = (attributes) => {
+    if (includeAttributes.length === 0) {
+      return attributes
+    }
+
+    return attributes.filter(f => includeAttributes.includes(f.name))
   }
 
   return cart.lineItems.map((lineItem: LineItem) => ({
@@ -72,7 +80,7 @@ export const getCartProducts = (cart: Cart): UiCartProduct[] => {
     price: { regular: lineItem.price.value.centAmount / 100 },
     image: lineItem.variant.images[0].url,
     qty: lineItem.quantity,
-    configuration: (lineItem as any)._configuration
+    configuration: filterAttributes((lineItem as any)._configuration)
   }))
 }
 

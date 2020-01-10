@@ -1,14 +1,19 @@
 import useCart from '../../src/useCart';
 import loadCurrentCart from './../../src/useCart/currentCart'
-import { processAddToCart, processRemoveFromCart, processUpdateQuantity } from './../../src/useCart/process'
+import { addToCart, removeFromCart, updateCartQuantity } from '@vue-storefront/commercetools-api'
 import mountComposable from './../mountComposable'
 
 jest.mock('./../../src/useCart/currentCart', () => jest.fn())
-jest.mock('./../../src/useCart/process', () => ({
-  processAddToCart: jest.fn(),
-  processRemoveFromCart: jest.fn(),
-  processUpdateQuantity: jest.fn()
+jest.mock('@vue-storefront/commercetools-api', () => ({
+  addToCart: jest.fn(),
+  removeFromCart: jest.fn(),
+  updateCartQuantity: jest.fn()
 }))
+
+jest.mock('./../../src/helpers/internals', () => ({
+  enhanceCart: args => args
+}))
+
 
 describe('[commercetools-composables] useCart', () => {
   beforeEach(() => {
@@ -32,7 +37,7 @@ describe('[commercetools-composables] useCart', () => {
   it('adds product to the cart', async () => {
     const cartData = { products: [ { prod: 1 } ] };
     (loadCurrentCart as any).mockReturnValue(Promise.resolve(cartData));
-    (processAddToCart as any).mockReturnValue(Promise.resolve({ data: { cart: cartData } }));
+    (addToCart as any).mockReturnValue(Promise.resolve({ data: { cart: cartData } }));
 
     const wrapper = mountComposable(useCart)
     await wrapper.vm.$nextTick()
@@ -45,13 +50,13 @@ describe('[commercetools-composables] useCart', () => {
     await wrapper.vm.$nextTick()
 
     expect(wrapper.vm.$data.loading).toBeFalsy()
-    expect(processAddToCart).toBeCalled()
+    expect(addToCart).toBeCalled()
   });
 
   it('removes product from the cart', async () => {
     const cartData = { products: [ { prod: 1 } ] };
     (loadCurrentCart as any).mockReturnValue(Promise.resolve(cartData));
-    (processRemoveFromCart as any).mockReturnValue(Promise.resolve({ data: { cart: cartData } }));
+    (removeFromCart as any).mockReturnValue(Promise.resolve({ data: { cart: cartData } }));
 
     const wrapper = mountComposable(useCart)
     await wrapper.vm.$nextTick()
@@ -64,13 +69,13 @@ describe('[commercetools-composables] useCart', () => {
     await wrapper.vm.$nextTick()
 
     expect(wrapper.vm.$data.loading).toBeFalsy()
-    expect(processRemoveFromCart).toBeCalled()
+    expect(removeFromCart).toBeCalled()
   });
 
   it('updates quantity for given product', async () => {
     const cartData = { products: [ { prod: 1 } ] };
     (loadCurrentCart as any).mockReturnValue(Promise.resolve(cartData));
-    (processUpdateQuantity as any).mockReturnValue(Promise.resolve({ data: { cart: cartData } }));
+    (updateCartQuantity as any).mockReturnValue(Promise.resolve({ data: { cart: cartData } }));
 
     const wrapper = mountComposable(useCart)
     await wrapper.vm.$nextTick()
@@ -80,13 +85,13 @@ describe('[commercetools-composables] useCart', () => {
     expect(wrapper.vm.$data.loading).toBeTruthy()
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$data.loading).toBeFalsy()
-    expect(processUpdateQuantity).toBeCalled()
+    expect(updateCartQuantity).toBeCalled()
   });
 
   it('not updates quantity for given product when it is zero', async () => {
     const cartData = { products: [ { prod: 1 } ] };
     (loadCurrentCart as any).mockReturnValue(Promise.resolve(cartData));
-    (processUpdateQuantity as any).mockReturnValue(Promise.resolve({ data: { cart: cartData } }));
+    (updateCartQuantity as any).mockReturnValue(Promise.resolve({ data: { cart: cartData } }));
 
     const wrapper = mountComposable(useCart)
     await wrapper.vm.$nextTick()
@@ -96,7 +101,7 @@ describe('[commercetools-composables] useCart', () => {
     expect(wrapper.vm.$data.loading).toBeFalsy()
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$data.loading).toBeFalsy()
-    expect(processUpdateQuantity).not.toBeCalled()
+    expect(updateCartQuantity).not.toBeCalled()
   })
 
   it.skip('clears entire cart', async () => {

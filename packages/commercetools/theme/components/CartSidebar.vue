@@ -99,7 +99,7 @@ export default {
   setup() {
     const { cart, removeFromCart, updateQuantity } = useCart()
 
-    const products = computed(() => getCartProducts(cart.value))
+    const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
 
     return {
       products,

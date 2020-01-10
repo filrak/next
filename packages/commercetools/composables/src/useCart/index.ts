@@ -1,7 +1,12 @@
 import { UseCart, UiCartProduct } from '@vue-storefront/interfaces'
+import {
+  addToCart as apiAddToCart,
+  removeFromCart as apiRemoveFromCart,
+  updateCartQuantity as apiUpdateCartQuantity
+} from '@vue-storefront/commercetools-api'
 import { Ref, ref, watch } from '@vue/composition-api'
 import { ProductVariant, Cart } from './../types/GraphQL'
-import { processAddToCart, processRemoveFromCart, processUpdateQuantity } from './process'
+import { enhanceCart } from './../helpers/internals'
 import loadCurrentCart from './currentCart'
 
 const cart: Ref<Cart> = ref<Cart>(null)
@@ -37,23 +42,23 @@ export default function useCart(): UseCart<
 
   const addToCart = async (variant: ProductVariant, quantity: number) => {
     loading.value = true
-    const updateResponse = await processAddToCart(cart.value, variant, quantity)
-    cart.value = updateResponse.data.cart
+    const updateResponse = await apiAddToCart(cart.value, variant, quantity)
+    cart.value = enhanceCart(updateResponse).data.cart
     loading.value = false
   }
 
   const removeFromCart = async (product: UiCartProduct) => {
     loading.value = true
-    const updateResponse = await processRemoveFromCart(cart.value, product)
-    cart.value = updateResponse.data.cart
+    const updateResponse = await apiRemoveFromCart(cart.value, product)
+    cart.value = enhanceCart(updateResponse).data.cart
     loading.value = false
   }
 
   const updateQuantity = async (product: UiCartProduct) => {
     if (parseInt(product.qty) > 0) {
       loading.value = true
-      const updateResponse = await processUpdateQuantity(cart.value, product)
-      cart.value = updateResponse.data.cart
+      const updateResponse = await apiUpdateCartQuantity(cart.value, product)
+      cart.value = enhanceCart(updateResponse).data.cart
       loading.value = false
     }
   }

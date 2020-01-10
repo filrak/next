@@ -7,7 +7,6 @@ describe('[commercetools-api-client] getCart', () => {
     const givenVariables = {
       locale: 'en',
       cartId: 'cart id',
-      attributesIncluded: ['color', 'size']
     };
 
     (apolloClient.query as any).mockImplementation(({ variables, query }) => {

@@ -1,5 +1,5 @@
-import { ProductVariant } from "@vue-storefront/commercetools-api/lib/src/types/GraphQL"
 import { UiCartProduct } from '@vue-storefront/interfaces'
+import { ProductVariant } from './../../types/GraphQL'
 
 export const createAddLineItemAction = (variant: ProductVariant, quantity: number) => ({
   addLineItem: {
