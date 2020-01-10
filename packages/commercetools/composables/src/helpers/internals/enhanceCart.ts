@@ -5,6 +5,7 @@ const attributeValueSelectors = {
   color: (value) => value.label.en
 }
 
+// TODO: Handle attribute types
 const transformAttribute = (attribute: RawProductAttribute) => {
   const { name, value } = attribute
 
