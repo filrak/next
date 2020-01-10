@@ -1,4 +1,4 @@
-import { UseCart, UiCartProduct } from '@vue-storefront/interfaces'
+import { UseCart as BaseUseCart, UiCartProduct } from '@vue-storefront/interfaces'
 import {
   addToCart as apiAddToCart,
   removeFromCart as apiRemoveFromCart,
@@ -19,18 +19,12 @@ type ClearCartFn = (product: UiCartProduct) => void
 type CouponRef = Ref<any>
 type ApplyCouponFn = () => void
 type RemoveCoupon = () => void
-type UpdateQuantityFn = (product: UiCartProduct) => void
 
-export default function useCart(): UseCart<
-  CartRef,
-  AddToCartFn,
-  RemoveFromCartFn,
-  ClearCartFn,
-  CouponRef,
-  ApplyCouponFn,
-  RemoveCoupon,
-  UpdateQuantityFn
-> {
+interface UseCart extends BaseUseCart<CartRef, AddToCartFn, RemoveFromCartFn, ClearCartFn, CouponRef, ApplyCouponFn, RemoveCoupon> {
+  updateQuantity: (product: UiCartProduct) => void
+}
+
+export default function useCart(): UseCart {
 
   watch(async () => {
     if (!cart.value && !loading.value) {

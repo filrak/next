@@ -34,13 +34,11 @@ export interface UseCart
   COUPON,
   APPLY_COUPON,
   REMOVE_COUPON,
-  UPDATE_QUANTITY,
 > {
   cart: CART;
   addToCart: ADD_TO_CART;
   removeFromCart: REMOVE_FROM_CART;
   clearCart: CLEAR_CART;
-  updateQuantity: UPDATE_QUANTITY;
   coupon: COUPON;
   applyCoupon: APPLY_COUPON;
   removeCoupon: REMOVE_COUPON;
