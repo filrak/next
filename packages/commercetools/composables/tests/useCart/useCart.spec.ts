@@ -1,7 +1,7 @@
 import useCart from '../../src/useCart';
 import loadCurrentCart from './../../src/useCart/currentCart'
 import { addToCart, removeFromCart, updateCartQuantity } from '@vue-storefront/commercetools-api'
-import mountComposable from './../mountComposable'
+import mountComposable from './../_mountComposable'
 
 jest.mock('./../../src/useCart/currentCart', () => jest.fn())
 jest.mock('@vue-storefront/commercetools-api', () => ({
