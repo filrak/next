@@ -1,8 +1,7 @@
-import { shallowMount } from '@vue/test-utils'
-import { createComponent } from '@vue/composition-api'
 import useCart from '../../src/useCart';
 import loadCurrentCart from './../../src/useCart/currentCart'
 import { processAddToCart, processRemoveFromCart, processUpdateQuantity } from './../../src/useCart/process'
+import mountComposable from './../mountComposable'
 
 jest.mock('./../../src/useCart/currentCart', () => jest.fn())
 jest.mock('./../../src/useCart/process', () => ({
@@ -10,18 +9,6 @@ jest.mock('./../../src/useCart/process', () => ({
   processRemoveFromCart: jest.fn(),
   processUpdateQuantity: jest.fn()
 }))
-
-const mountComposable = (composableFn) => {
-  const component = createComponent({
-    template: `<div>my component</div>`,
-    setup() {
-      return composableFn()
-    }
-  })
-
-  return shallowMount(component)
-}
-
 
 describe('[commercetools-composables] useCart', () => {
   beforeEach(() => {
@@ -110,5 +97,29 @@ describe('[commercetools-composables] useCart', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$data.loading).toBeFalsy()
     expect(processUpdateQuantity).not.toBeCalled()
+  })
+
+  it.skip('clears entire cart', async () => {
+    const wrapper = mountComposable(useCart)
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    wrapper.vm.$data.clearCart()
+  })
+
+  it.skip('applies coupon', async () => {
+    const wrapper = mountComposable(useCart)
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    wrapper.vm.$data.applyCoupon()
+  })
+
+  it.skip('removes coupon', async () => {
+    const wrapper = mountComposable(useCart)
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    wrapper.vm.$data.removeCoupon()
   })
 });

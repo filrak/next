@@ -1,9 +1,11 @@
 import { UseCart, UiCartProduct } from '@vue-storefront/interfaces'
-import { ref, watch } from '@vue/composition-api'
-import { ProductVariant } from './../types/GraphQL'
+import { Ref, ref, watch } from '@vue/composition-api'
+import { ProductVariant, Cart } from './../types/GraphQL'
 import { processAddToCart, processRemoveFromCart, processUpdateQuantity } from './process'
 import loadCurrentCart from './currentCart'
-import { cart, loading } from './shared'
+
+const cart: Ref<Cart> = ref<Cart>(null)
+const loading: Ref<boolean> = ref<boolean>(false)
 
 export default function useCart(): UseCart<any, any, any, any, any, any, any, any> {
 
@@ -38,11 +40,13 @@ export default function useCart(): UseCart<any, any, any, any, any, any, any, an
     }
   }
 
-  const clearCart = () => { () => { console.log('useCart:clearCart') } }
+  const clearCart = () => console.log('useCart:clearCart')
+  const applyCoupon = () => console.log('useCart:applyCoupon')
+  const removeCoupon = () => console.log('useCart:removeCoupon')
+
   const coupon = ref({})
-  const applyCoupon = () => { () => { console.log('useCart:applyCoupon') } }
-  const removeCoupon = () => { () => { console.log('useCart:removeCoupon') } }
   const error = ref(null)
+
   return {
     cart,
     addToCart,

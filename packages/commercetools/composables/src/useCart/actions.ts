@@ -12,7 +12,7 @@ export const createAddLineItemAction = (variant: ProductVariant, quantity: numbe
 export const createRemoveLineItemAction = (product: UiCartProduct) => ({
   removeLineItem: {
     lineItemId: product.id,
-    quantity: product.qty
+    quantity: parseInt(product.qty)
   }
 })
 
