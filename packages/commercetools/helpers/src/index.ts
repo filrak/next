@@ -37,6 +37,8 @@ export const getProductAttributes = (product: ProductVariant): any => {
   }))
 }
 
+// TODO, get configurable options from product
+export const getProductOptions = (product: ProductVariant) => product
 
 export const getProductDescription = (product: ProductVariant): any => (product as any)._description
 // Category
