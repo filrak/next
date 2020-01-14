@@ -30,10 +30,11 @@ export const getProductVariants = (products: ProductVariant[], options: any = {}
 }
 
 export const getProductAttributes = (product: ProductVariant): any => {
-  return (product ? product.attributesRaw : [])
-  .map(p => ({
-    name: p.name,
-    value: p.value.key ? p.value.key : p.value
+  return (product ? product.attributeList : [])
+  .map(a => ({
+    name: a.name,
+    value: a.value,
+    label: a.label ? a.label : a.value
   }))
 }
 

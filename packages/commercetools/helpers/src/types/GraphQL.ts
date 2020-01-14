@@ -448,6 +448,8 @@ export type AssetSourceInput = {
 
 export type Attribute = {
   name: Scalars["String"];
+  label?: Maybe<Scalars["String"]>;
+  value?: Maybe<Scalars["String"]>;
 };
 
 export enum AttributeConstraint {
