@@ -21,5 +21,5 @@ setup({
     ],
   },
   locale: 'en',
-  currency: 'USD'
+  currency: 'USD',
 })
