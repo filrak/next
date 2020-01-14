@@ -37,7 +37,18 @@ const getProduct = async (search: ProductSearch): Promise<ApolloQueryResult<Prod
   })
 
   /** Our GQL query is returning modified data format for attributes, this function brings it back to previous format */
-  response.data.products.results = response.data.products.results.map(product => formatProductAttributeList(product))
+  const responseDataProxy = new Proxy(response.data, {
+    set(target, prop, val) {
+      target[prop] = val
+      if (prop === '_variants ') {
+        target.products.results = target.products.results.map(product => formatProductAttributeList(product))
+      }
+      return true
+    }
+  })
+  
+  response.data = responseDataProxy
+
 
   return response
 }
