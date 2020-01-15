@@ -13,6 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nuxtjs/prismic": "^1.0.0",
     "@storefront-ui/vue": "^0.4.0",
     "@vue-storefront/commercetools-api": "^0.0.1",
     "@vue-storefront/commercetools-composables": "^0.0.1",

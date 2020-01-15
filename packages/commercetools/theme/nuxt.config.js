@@ -27,15 +27,22 @@ export default {
         path: '/p/:slug_1/',
         component: resolve(__dirname, 'pages/Product.vue')
       })
+      routes.push({ // TEMPORARY: just to show example prismic page
+        name: 'prismic',
+        path: '/prismic',
+        component: resolve(__dirname, 'pages/Prismic.vue')
+      })
     }
   },
   buildModules: [
     '@nuxt/typescript-build' // to core
   ],
   plugins: [
-    '~/plugins/commercetools'
+    '~/plugins/commercetools',
+    '~/plugins/html-serializer'
   ],
   modules: [
+    '@nuxtjs/prismic',
     ['@vue-storefront/nuxt', {
       coreDevelopment: true,
       useRawSource: {
@@ -44,5 +51,11 @@ export default {
       }
     }]
   ],
-  plugins: ['./plugins/commercetools.js']
+  plugins: [
+    './plugins/commercetools.js',
+    './plugins/html-serializer.js'
+  ],
+  prismic: {
+    endpoint: 'https://lovecrafts-dev.cdn.prismic.io/api/v2'
+  }
 }
