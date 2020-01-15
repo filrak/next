@@ -116,7 +116,7 @@ describe("[commercetools-helpers] product helpers", () => {
     );
   });
 
-  it("returns empty array if there is no product yet attributes", () => {
+  it("returns empty array if there is no product", () => {
     const product = null
     expect(getProductAttributes(product)).toEqual([]);
   });
