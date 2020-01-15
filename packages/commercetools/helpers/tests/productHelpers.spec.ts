@@ -77,6 +77,9 @@ describe("[commercetools-helpers] product helpers", () => {
     ];
     expect(getProductVariants(variants as any)).toEqual(variants);
   });
+
+  // Attributes
+
   it("returns product attributes", () => {
     const attributes = [
       {
@@ -111,5 +114,10 @@ describe("[commercetools-helpers] product helpers", () => {
     expect(getProductAttributes(product, ["color"])).toEqual(
       filteredattributeList
     );
+  });
+
+  it("returns empty array if there is no product yet attributes", () => {
+    const product = null
+    expect(getProductAttributes(product)).toEqual([]);
   });
 });
