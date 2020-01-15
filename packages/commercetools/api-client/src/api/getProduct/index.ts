@@ -5,7 +5,6 @@ import { ProductSearch } from './../../types/Api'
 import { ProductQueryResult } from './../../types/GraphQL'
 import defaultQuery from './defaultQuery'
 import { buildProductWhere } from './../../helpers/search'
-import { formatProductAttributeList } from '../../helpers/attribute'
 
 interface ProductData {
   products: ProductQueryResult
@@ -21,7 +20,7 @@ const getProduct = async (search: ProductSearch): Promise<ApolloQueryResult<Prod
     })
   }
 
-  const response =  await apolloClient.query<ProductData>({
+  return await apolloClient.query<ProductData>({
     query: defaultQuery,
     variables: {
       where: buildProductWhere(search),
@@ -36,21 +35,6 @@ const getProduct = async (search: ProductSearch): Promise<ApolloQueryResult<Prod
     fetchPolicy: 'no-cache'
   })
 
-  /** Our GQL query is returning modified data format for attributes, this function brings it back to previous format */
-  const responseDataProxy = new Proxy(response.data, {
-    set(target, prop, val) {
-      target[prop] = val
-      if (prop === '_variants ') {
-        target.products.results = target.products.results.map(product => formatProductAttributeList(product))
-      }
-      return true
-    }
-  })
-  
-  response.data = responseDataProxy
-
-
-  return response
 }
 
 export default getProduct

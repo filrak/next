@@ -36,15 +36,6 @@ const formatAttributeList = (attributes: any) => {
   }))
 }
 
-const formatProductAttributeList = (product) => {
-  product.masterData.current.masterVariant.attributeList = formatAttributeList(product.masterData.current.masterVariant.attributeList)
-  product.masterData.current.variants = product.masterData.current.variants.map(variant => {
-    variant.attributeList = formatAttributeList(variant.attributeList)
-    return variant
-  })
-  return product
-}
-
 export {
-  formatProductAttributeList
+  formatAttributeList
 }
