@@ -32,7 +32,7 @@ const formatAttributeList = (attributes: any) => {
   return attributes.map(attr => ({
     name: attr.name,
     value: getAttributeValue(attr),
-    label: attr.label
+    label: attr.label ? attr.label : getAttributeValue(attr)
   }))
 }
 

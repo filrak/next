@@ -3,7 +3,8 @@ import {
   getProductSlug,
   getProductPrice,
   getProductGallery,
-  getProductVariants
+  getProductVariants,
+  getProductAttributes
 } from './../src/index'
 
 const product = {
@@ -12,6 +13,9 @@ const product = {
   price: {
     value: { centAmount: 1200 }
   },
+  attributeList: [
+    {name: "articleNumberManufacturer", stringValue: "H805 C195 85072", __typename: "StringAttribute"},
+  ],
   images: [{ url: 'imageV11/url.jpg' }, { url: 'imageV12/url.jpg' }],
 } as any
 
@@ -57,5 +61,10 @@ describe('[commercetools-helpers] product helpers', () => {
       { _name: 'variant 2', _master: true }
     ]
     expect(getProductVariants(variants as any)).toEqual(variants)
+  })
+  it('returns product attributes', () => {
+    const attributes = [{name: "articleNumberManufacturer", value: "H805 C195 85072", label: "H805 C195 85072"}]
+
+    expect(getProductAttributes(product)).toEqual(attributes)
   })
 })
