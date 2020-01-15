@@ -30,13 +30,17 @@ export const getProductVariants = (products: ProductVariant[], options: any = {}
   return products
 }
 
-export const getProductAttributes = (product: ProductVariant): any => {
+export const getProductAttributes = (product: ProductVariant, filterByAttributeName?: Array<string>): any => {
   return (product ? formatAttributeList(product.attributeList) : [])
   .map(a => ({
     name: a.name,
     value: a.value,
     label: a.label ? a.label : a.value
   }))
+  .filter(attribute => {
+    if (filterByAttributeName) return filterByAttributeName.includes(attribute.name)
+    return attribute
+  })
 }
 
 // TODO, get configurable options from product

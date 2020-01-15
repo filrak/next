@@ -2,7 +2,7 @@ import  { formatAttributeList } from '../src/_utils'
 
 describe('[commercetools-helpers] internal utilities helpers', () => {
   const attributeList = [
-    { __typename: 'StringAttribute', stringValue: 'val', name: 'name', label: 'label' },
+    { __typename: 'StringAttribute', stringValue: 'val', name: 'color', label: 'label' },
     { __typename: 'DateAttribute', dateValue: 'val', name: 'name' },
     { __typename: 'DateTimeAttribute', dateTimeValue: 'val', name: 'name' },
     { __typename: 'TimeAttribute', timeValue: 'val', name: 'name' },
@@ -17,7 +17,7 @@ describe('[commercetools-helpers] internal utilities helpers', () => {
   
   it('transforms custom value attribute fields to normalized "value" and copies "value" to "label" if it is empty', () => {
     const normalziedAttributeList = [
-      { value: 'val', name: 'name', label: 'label'  },
+      { value: 'val', name: 'color', label: 'label'  },
       { value: 'val', name: 'name', label: 'val'  },
       { value: 'val', name: 'name', label: 'val'  },
       { value: 'val', name: 'name', label: 'val'  },
