@@ -28,7 +28,7 @@ describe('[commercetools-helpers] internal utilities helpers', () => {
       { value: 'val', name: 'name', label: 'val'  },
       { value: 'val', name: 'name', label: 'val'  },
       { value: 'val', name: 'name', label: 'val'  },
-      { value: { typeId: 'val', id: 'val' }, name: 'name', label: { typeId: 'val', id: 'val' } },
+      { value: { typeId: 'val', id: 'val' }, name: 'name', label: null },
       { value: null, name: 'name', label: null  }
     ]
     expect(formatAttributeList(attributeList)).toEqual(normalziedAttributeList)

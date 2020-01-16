@@ -1,4 +1,4 @@
-import { UiMediaGalleryItem, UiCategory, UiCartProduct } from '@vue-storefront/interfaces'
+import { UiMediaGalleryItem, UiCategory, UiCartProduct, AgnosticProductAttribute } from '@vue-storefront/interfaces'
 import { ProductVariant, Image, Category, Cart, LineItem } from './types/GraphQL'
 import { formatAttributeList } from './_utils'
 
@@ -30,13 +30,8 @@ export const getProductVariants = (products: ProductVariant[], options: any = {}
   return products
 }
 
-export const getProductAttributes = (product: ProductVariant, filterByAttributeName?: Array<string>): any => {
+export const getProductAttributes = (product: ProductVariant, filterByAttributeName?: Array<string>): Array<AgnosticProductAttribute> => {
   return (product ? formatAttributeList(product.attributeList) : [])
-  .map(a => ({
-    name: a.name,
-    value: a.value,
-    label: a.label ? a.label : a.value
-  }))
   .filter(attribute => {
     if (filterByAttributeName) return filterByAttributeName.includes(attribute.name)
     return attribute

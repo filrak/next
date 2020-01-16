@@ -1,4 +1,5 @@
-
+import { Attribute } from './types/GraphQL'
+import { AgnosticProductAttribute } from '@vue-storefront/interfaces'
 const getAttributeValue = (attribute) => {
   switch(attribute.__typename) {
     case 'StringAttribute':
@@ -28,11 +29,11 @@ const getAttributeValue = (attribute) => {
   }
 }
 
-const formatAttributeList = (attributes: any) => {
+const formatAttributeList = (attributes: Array<Attribute>): Array<AgnosticProductAttribute> => {
   return attributes.map(attr => ({
     name: attr.name,
     value: getAttributeValue(attr),
-    label: attr.label ? attr.label : getAttributeValue(attr)
+    label: attr.label ? attr.label : (typeof getAttributeValue(attr) === 'string') ? getAttributeValue(attr) : null
   }))
 }
 
