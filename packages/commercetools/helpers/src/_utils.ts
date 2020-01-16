@@ -29,7 +29,7 @@ const getAttributeValue = (attribute) => {
   }
 }
 
-const formatAttributeList = (attributes: Array<Attribute>): Array<AgnosticProductAttribute> => {
+const formatAttributeList = (attributes: Array<any>): Array<AgnosticProductAttribute> => {
   return attributes.map(attr => ({
     name: attr.name,
     value: getAttributeValue(attr),
