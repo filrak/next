@@ -29,13 +29,15 @@ const getAttributeValue = (attribute) => {
   }
 }
 
-const formatAttributeList = (attributes: Array<any>): Array<AgnosticProductAttribute> => {
-  return attributes.map(attr => ({
+const formatAttributeList = (attributes: Array<any>): Array<AgnosticProductAttribute> => 
+attributes.map(attr => {
+  const attrValue = getAttributeValue(attr)
+  return {
     name: attr.name,
-    value: getAttributeValue(attr),
-    label: attr.label ? attr.label : (typeof getAttributeValue(attr) === 'string') ? getAttributeValue(attr) : null
-  }))
-}
+    value: attrValue,
+    label: attr.label ? attr.label : (typeof attrValue === 'string') ? attrValue : null
+  }
+})
 
 export {
   formatAttributeList
