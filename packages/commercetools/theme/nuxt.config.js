@@ -24,7 +24,7 @@ export default {
       })
       routes.push({
         name: 'product',
-        path: '/p/:slug_1/',
+        path: '/p/:slug/',
         component: resolve(__dirname, 'pages/Product.vue')
       })
       routes.push({ // TEMPORARY: just to show example prismic page
