@@ -1,7 +1,14 @@
-// import { ProfileResponse } from '@vue-storefront/commercetools-api/lib/src/types/Api'
+import { ApolloQueryResult } from 'apollo-client'
 import { enhanceLineItems } from './enhanceCart'
+import { Me } from './../../types/GraphQL'
 
-const enhanceProfile = (profileResponse: any): any => {
+interface ProfileData {
+  me: Me
+}
+
+type ProfileResponse = ApolloQueryResult<ProfileData>
+
+const enhanceProfile = (profileResponse: ProfileResponse): ProfileResponse => {
   const { lineItems } = profileResponse.data.me.activeCart
 
   profileResponse.data.me.activeCart.lineItems = enhanceLineItems(lineItems)
