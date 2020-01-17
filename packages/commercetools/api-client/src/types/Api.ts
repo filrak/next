@@ -1,6 +1,6 @@
 import { ApolloQueryResult } from 'apollo-client'
 import { FetchResult } from 'apollo-link'
-import { Cart } from './GraphQL'
+import { Cart, Me } from './GraphQL'
 
 export interface CustomQuery {
   query: string
@@ -32,3 +32,4 @@ export type MutationResponse <K extends string, V> = FetchResult<Record<K, V>>
 export type CartQueryResponse = QueryResponse<"cart", Cart>
 export type CartMutationResponse = MutationResponse<"cart", Cart>
 export type CartResponse = CartQueryResponse | CartMutationResponse
+export type ProfileResponse = QueryResponse<"me", Me>
