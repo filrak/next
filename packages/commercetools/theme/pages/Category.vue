@@ -155,6 +155,7 @@
     <SfSidebar
       :visible="isFilterSidebarOpen"
       @close="isFilterSidebarOpen = false"
+      class="filters_sidebar"
     >
       <div class="filters">
         <h3 class="filters__title">Collection</h3>
@@ -568,5 +569,4 @@ export default {
     }
   }
 }
-
 </style>

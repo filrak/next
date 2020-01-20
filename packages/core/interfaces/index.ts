@@ -99,7 +99,7 @@ export interface UseCheckout
   setPaymentMethod: SET_PAYMENT_METHOD
   setShippingMethod: SET_SHIPPING_METHOD
   placeOrder: PLACE_ORDER
-  loading: boolean
+  loading: Ref<boolean>
   error: any;
 }
 
@@ -138,4 +138,10 @@ export interface UiCartProduct {
   price: UiCartProductPrice
   configuration: UiCartProductConfiguration[]
   qty: string
+}
+
+export interface AgnosticProductAttribute {
+  name: string,
+  value: string | Object
+  label: string
 }
