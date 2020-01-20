@@ -17,11 +17,9 @@ const toggleLoginModal = () => { state.isLoginModalOpen = !state.isLoginModalOpe
 
 const uiState = {
   isCartSidebarOpen,
-  isLoginModalOpen
+  isLoginModalOpen,
+  toggleCartSidebar,
+  toggleLoginModal
 }
 
-export {
-  toggleCartSidebar,
-  toggleLoginModal,
-  uiState
-}
+export default uiState

@@ -31,7 +31,8 @@
 
 <script>
 import { SfHeader, SfImage } from '@storefront-ui/vue'
-import { toggleCartSidebar, toggleLoginModal } from '~/assets/ui-state'
+import uiState from '~/assets/ui-state'
+const { toggleCartSidebar, toggleLoginModal } = uiState
 
 export default {
   setup () {
