@@ -101,16 +101,23 @@
       <div class="sidebar desktop-only">
         <SfAccordion :firstOpen="true">
           <SfAccordionItem
-            v-for="(accordion, i) in categoryTree && categoryTree.items"
+            v-for="(cat, i) in categoryTree && categoryTree.items"
             :key="i"
-            :header="accordion.label"
+            :header="cat.label"
           >
             <template>
               <SfList>
-                <SfListItem v-for="(item, j) in accordion.items" :key="j">
-                  <SfMenuItem :label="item.label">
+                <SfListItem>
+                  <SfMenuItem :label="cat.label">
+                    <template #label>
+                      <router-link :to="getCategoryUrl(cat.slug)" :class="isCategorySelected(cat.slug) ? 'sidebar--cat-selected' : ''">All</router-link>
+                    </template>
+                  </SfMenuItem>
+                </SfListItem>
+                <SfListItem v-for="(subCat, j) in cat.items" :key="j">
+                  <SfMenuItem :label="subCat.label">
                     <template #label="{ label }">
-                      <a :href="getCategoryUrl(item.slug)" :class="isCategorySelected(item.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</a>
+                      <router-link :to="getCategoryUrl(subCat.slug)" :class="isCategorySelected(subCat.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</router-link>
                     </template>
                   </SfMenuItem>
                 </SfListItem>
