@@ -2,7 +2,7 @@
   <div id="sign-in">
     <SfModal
       :visible="isLoginModalOpen"
-      @close="toggleLoginModalOpen">
+      @close="toggleLoginModal">
       <transition name="fade" mode="out-in">
         <div v-if="isLogin" key="log-in">
           <div class="form">
@@ -91,7 +91,7 @@
 </template>
 <script>
 import { SfModal, SfInput, SfButton, SfCheckbox } from '@storefront-ui/vue'
-import { uiState, toggleLoginModalOpen } from '~/assets/ui-state'
+import { uiState, toggleLoginModal } from '~/assets/ui-state'
 const { isLoginModalOpen } = uiState
 
 export default {
@@ -100,7 +100,7 @@ export default {
   setup() {
     return {
       isLoginModalOpen,
-      toggleLoginModalOpen
+      toggleLoginModal
     };
   },
   data() {

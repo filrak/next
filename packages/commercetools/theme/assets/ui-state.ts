@@ -13,7 +13,7 @@ const isCartSidebarOpen = computed(() => state.isCartSidebarOpen )
 const toggleCartSidebar = () => { state.isCartSidebarOpen = !state.isCartSidebarOpen }
 
 const isLoginModalOpen = computed(() => state.isLoginModalOpen )
-const toggleLoginModalOpen = () => { state.isLoginModalOpen = !state.isLoginModalOpen }
+const toggleLoginModal = () => { state.isLoginModalOpen = !state.isLoginModalOpen }
 
 const uiState = {
   isCartSidebarOpen,
@@ -22,6 +22,6 @@ const uiState = {
 
 export {
   toggleCartSidebar,
-  toggleLoginModalOpen,
+  toggleLoginModal,
   uiState
 }

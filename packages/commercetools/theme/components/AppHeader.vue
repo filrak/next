@@ -31,13 +31,13 @@
 
 <script>
 import { SfHeader, SfImage } from '@storefront-ui/vue'
-import { toggleCartSidebar, toggleLoginModalOpen } from '~/assets/ui-state'
+import { toggleCartSidebar, toggleLoginModal } from '~/assets/ui-state'
 
 export default {
   setup () {
     return {
       toggleCartSidebar,
-      toggleLoginModalOpen
+      toggleLoginModal
     }
   },
   components: {
@@ -47,7 +47,7 @@ export default {
   methods: {
     onAccountClicked() {
       // When need to go to another page or do something else when logged in
-      toggleLoginModalOpen()
+      toggleLoginModal()
     }
   }
 }
