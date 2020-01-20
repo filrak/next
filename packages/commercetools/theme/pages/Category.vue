@@ -99,6 +99,7 @@
     </div>
     <div class="main section">
       <div class="sidebar desktop-only">
+        <SfLoader :class="{ loading: loading }" :loading="loading">
         <SfAccordion :firstOpen="true" :showChevron="false">
           <SfAccordionItem
             v-for="(accordion, i) in categoryTree && categoryTree.items"
@@ -118,35 +119,38 @@
             </template>
           </SfAccordionItem>
         </SfAccordion>
+        </SfLoader>
       </div>
-      <div class="products">
-        <div class="products__list">
-          <SfProductCard
-            v-for="(product, i) in products"
-            :key="i"
-            :title="getProductName(product)"
-            :image="getProductGallery(product)[0].big"
-            :regular-price="'$' + getProductPrice(product)"
-            :max-rating="5"
-            :score-rating="3"
-            :isOnWishlist="false"
-            @click:wishlist="toggleWishlist(i)"
-            :link="`/p/${getProductSlug(product)}`"
-            class="products__product-card"
+      <SfLoader :class="{ loading: loading }" :loading="loading">
+        <div class="products">
+          <div class="products__list">
+            <SfProductCard
+              v-for="(product, i) in products"
+              :key="i"
+              :title="getProductName(product)"
+              :image="getProductGallery(product)[0].big"
+              :regular-price="'$' + getProductPrice(product)"
+              :max-rating="5"
+              :score-rating="3"
+              :isOnWishlist="false"
+              @click:wishlist="toggleWishlist(i)"
+              :link="`/p/${getProductSlug(product)}`"
+              class="products__product-card"
+            />
+          </div>
+          <SfPagination
+            class="products__pagination desktop-only"
+            :current="currentPage"
+            @click="
+              page => {
+                this.currentPage = page;
+              }
+            "
+            :total="4"
+            :visible="5"
           />
         </div>
-        <SfPagination
-          class="products__pagination desktop-only"
-          :current="currentPage"
-          @click="
-            page => {
-              this.currentPage = page;
-            }
-          "
-          :total="4"
-          :visible="5"
-        />
-      </div>
+      </SfLoader>
     </div>
     <SfSidebar
       :visible="isFilterSidebarOpen"
@@ -226,7 +230,8 @@ import {
   SfPagination,
   SfAccordion,
   SfSelect,
-  SfBreadcrumbs
+  SfBreadcrumbs,
+  SfLoader
 } from "@storefront-ui/vue";
 import { computed, watch } from '@vue/composition-api'
 import { useCategory } from '@vue-storefront/commercetools-composables'
@@ -249,7 +254,7 @@ export default {
       params['slug_1']
     )
 
-    const { categories, search } = useCategory()
+    const { categories, search, loading } = useCategory()
 
     search({ slug: lastSlug })
 
@@ -267,7 +272,8 @@ export default {
       getProductPrice,
       getProductSlug,
       getCategoryUrl,
-      isCategorySelected
+      isCategorySelected,
+      loading
     }
   },
   components: {
@@ -281,7 +287,8 @@ export default {
     SfMenuItem,
     SfAccordion,
     SfSelect,
-    SfBreadcrumbs
+    SfBreadcrumbs,
+    SfLoader
   },
   data () {
     return {
@@ -373,7 +380,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~@storefront-ui/vue/styles";
 
 @mixin for-desktop {
@@ -382,178 +389,184 @@ export default {
   }
 }
 
-.breadcrumbs {
-  padding: $spacer-big $spacer-extra-big $spacer-extra-big;
-}
-.main {
-  display: flex;
-}
-.navbar {
-  position: relative;
-  display: flex;
-  @include for-desktop {
-    border-top: 1px solid $c-light;
-    border-bottom: 1px solid $c-light;
+#category {
+  .breadcrumbs {
+    padding: $spacer-big $spacer-extra-big $spacer-extra-big;
   }
-  &::after {
-    position: absolute;
-    bottom: 0;
-    left: $spacer-big;
-    width: calc(100% - (#{$spacer-big} * 2));
-    height: 1px;
-    background-color: $c-light;
-    content: "";
-    @include for-desktop {
-      content: none;
-    }
-  }
-  &__aside {
+  .main {
     display: flex;
-    align-items: center;
-    flex: 0 0 15%;
-    padding: $spacer-big $spacer-extra-big;
-    border-right: 1px solid $c-light;
   }
-  &__main {
-    flex: 1;
+  .navbar {
+    position: relative;
     display: flex;
-    align-items: center;
-    padding: $spacer-medium 0;
-    font-size: $font-size-small-desktop;
     @include for-desktop {
-      padding: $spacer-big 0;
+      border-top: 1px solid $c-light;
+      border-bottom: 1px solid $c-light;
     }
-  }
-  &__title {
-    padding: 0;
-    font-size: $font-size-big-desktop;
-    line-height: 2.23;
-  }
-  &__filters-button {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    color: inherit;
-    font-size: inherit;
-    font-weight: 500;
-    @include for-desktop {
-      margin: 0 0 0 $spacer-extra-big;
-      font-weight: 400;
-      text-transform: none;
-    }
-    svg {
-      fill: $c-dark;
+    &::after {
+      position: absolute;
+      bottom: 0;
+      left: $spacer-big;
+      width: calc(100% - (#{$spacer-big} * 2));
+      height: 1px;
+      background-color: $c-light;
+      content: "";
       @include for-desktop {
-        fill: $c-gray-variant;
+        content: none;
       }
     }
-    &:hover {
-      color: $c-primary;
-      svg {
-        fill: $c-primary;
-      }
-    }
-  }
-  &__label {
-    color: $c-gray-variant;
-  }
-  &__sort {
-    display: flex;
-    align-items: center;
-    margin-left: $spacer-extra-big;
-    margin-right: auto;
-  }
-  &__counter {
-    margin: auto;
-    @include for-desktop {
-      margin-right: 0;
-    }
-  }
-  &__view {
-    display: flex;
-    align-items: center;
-    margin: 0 $spacer-extra-big;
-    &-icon {
-      margin-left: 10px;
-    }
-  }
-}
-.products {
-  box-sizing: border-box;
-  flex: 1;
-  margin: 0 -#{$spacer};
-  @include for-desktop {
-    margin: $spacer-big;
-  }
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 1.875rem - 0.5rem;
-  }
-  &__product-card {
-    flex: 0 0 50%;
-    padding: $spacer;
-    @include for-desktop {
-      flex: 0 0 25%;
-      padding: $spacer-big;
-    }
-  }
-  &__pagination {
-    @include for-desktop {
+    &__aside {
       display: flex;
-      justify-content: center;
-      margin-top: $spacer-extra-big;
+      align-items: center;
+      flex: 0 0 15%;
+      padding: $spacer-big $spacer-extra-big;
+      border-right: 1px solid $c-light;
+    }
+    &__main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: $spacer-medium 0;
+      font-size: $font-size-small-desktop;
+      @include for-desktop {
+        padding: $spacer-big 0;
+      }
+    }
+    &__title {
+      padding: 0;
+      font-size: $font-size-big-desktop;
+      line-height: 2.23;
+    }
+    &__filters-button {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font-size: inherit;
+      font-weight: 500;
+      @include for-desktop {
+        margin: 0 0 0 $spacer-extra-big;
+        font-weight: 400;
+        text-transform: none;
+      }
+      svg {
+        fill: $c-dark;
+        @include for-desktop {
+          fill: $c-gray-variant;
+        }
+      }
+      &:hover {
+        color: $c-primary;
+        svg {
+          fill: $c-primary;
+        }
+      }
+    }
+    &__label {
+      color: $c-gray-variant;
+    }
+    &__sort {
+      display: flex;
+      align-items: center;
+      margin-left: $spacer-extra-big;
+      margin-right: auto;
+    }
+    &__counter {
+      margin: auto;
+      @include for-desktop {
+        margin-right: 0;
+      }
+    }
+    &__view {
+      display: flex;
+      align-items: center;
+      margin: 0 $spacer-extra-big;
+      &-icon {
+        margin-left: 10px;
+      }
     }
   }
-}
-.section {
-  padding-left: $spacer-big;
-  padding-right: $spacer-big;
-  @include for-desktop {
-    padding-left: 0;
-    padding-right: 0;
+  .loading{
+    height: 300px;
   }
-}
-.sidebar {
-  flex: 0 0 15%;
-  padding: $spacer-extra-big;
-  border-right: 1px solid $c-light;
+  .products {
+    box-sizing: border-box;
+    flex: 1;
+    margin: 0 -#{$spacer};
+    @include for-desktop {
+      margin: $spacer-big;
+    }
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 1.875rem - 0.5rem;
+    }
+    &__product-card {
+      flex: 0 0 50%;
+      padding: $spacer;
+      @include for-desktop {
+        flex: 0 0 25%;
+        padding: $spacer-big;
+      }
+    }
+    &__pagination {
+      @include for-desktop {
+        display: flex;
+        justify-content: center;
+        margin-top: $spacer-extra-big;
+      }
+    }
+  }
+  .section {
+    padding-left: $spacer-big;
+    padding-right: $spacer-big;
+    @include for-desktop {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  .sidebar {
+    flex: 0 0 15%;
+    padding: $spacer-extra-big;
+    border-right: 1px solid $c-light;
 
-  &--cat-selected {
-    font-weight: bold
-  }
-}
-.sort-by {
-  flex: unset;
-  width: 190px;
-  padding: 0 10px;
-  font-size: inherit;
-  &__option {
-    padding: 10px;
-    font-size: inherit;
-  }
-}
-.filters {
-  &__title {
-    margin: $spacer-big * 3 0 $spacer-big;
-    font-size: $font-size-big-desktop;
-    line-height: 1.6;
-    &:first-child {
-      margin: 0 0 $spacer-big 0;
+    &--cat-selected {
+      font-weight: bold
     }
   }
-  &__item {
-    padding: $spacer-small 0;
+  .sort-by {
+    flex: unset;
+    width: 190px;
+    padding: 0 10px;
+    font-size: inherit;
+    &__option {
+      padding: 10px;
+      font-size: inherit;
+    }
   }
-  &__buttons {
-    margin: $spacer-big * 3 0 0 0;
-  }
-  &__button-clear {
-    color: #a3a5ad;
-    margin-top: 10px;
-    background-color: $c-light;
+  .filters {
+    &__title {
+      margin: $spacer-big * 3 0 $spacer-big;
+      font-size: $font-size-big-desktop;
+      line-height: 1.6;
+      &:first-child {
+        margin: 0 0 $spacer-big 0;
+      }
+    }
+    &__item {
+      padding: $spacer-small 0;
+    }
+    &__buttons {
+      margin: $spacer-big * 3 0 0 0;
+    }
+    &__button-clear {
+      color: #a3a5ad;
+      margin-top: 10px;
+      background-color: $c-light;
+    }
   }
 }
+
 </style>
