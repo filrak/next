@@ -5,7 +5,7 @@
     <BottomNavigation />
     <AppFooter />
     <CartSidebar />
-    <Login />
+    <LoginModal />
   </div>
 </template>
 
@@ -13,8 +13,8 @@
 import AppHeader from '~/components/AppHeader.vue'
 import BottomNavigation from '~/components/BottomNavigation.vue'
 import AppFooter from '~/components/AppFooter.vue'
-const CartSidebar = () => import('~/components/CartSidebar.vue')
-const Login = () => import('~/components/Login.vue')
+const CartSidebar = () => import(/* webpackChunkName: "CartSidebar" */ '~/components/CartSidebar.vue')
+const LoginModal = () => import(/* webpackChunkName: "LoginModal" */ '~/components/LoginModal.vue')
 
 export default {
   components: {
@@ -22,7 +22,7 @@ export default {
     BottomNavigation,
     AppFooter,
     CartSidebar,
-    Login
+    LoginModal
   }
 }
 </script>

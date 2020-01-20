@@ -6,8 +6,7 @@ Vue.use(VueCompositionAPI)
 
 const state = reactive({
   isCartSidebarOpen: false,
-  isLoginModalOpen: false,
-  isLoggedIn: false
+  isLoginModalOpen: false
 })
 
 const isCartSidebarOpen = computed(() => state.isCartSidebarOpen )
@@ -16,12 +15,13 @@ const toggleCartSidebar = () => { state.isCartSidebarOpen = !state.isCartSidebar
 const isLoginModalOpen = computed(() => state.isLoginModalOpen )
 const toggleLoginModalOpen = () => { state.isLoginModalOpen = !state.isLoginModalOpen }
 
-const isLoggedIn = computed(() => state.isLoggedIn )
+const uiState = {
+  isCartSidebarOpen,
+  isLoginModalOpen
+}
 
 export {
-  isCartSidebarOpen,
   toggleCartSidebar,
-  isLoginModalOpen,
   toggleLoginModalOpen,
-  isLoggedIn
+  uiState
 }

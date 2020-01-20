@@ -537,12 +537,6 @@ export default {
   }
 }
 
-.filters_sidebar {
-  .sf-sidebar__aside {
-
-  }
-}
-
 .filters {
   &__title {
     margin: $spacer-big * 3 0 $spacer-big;

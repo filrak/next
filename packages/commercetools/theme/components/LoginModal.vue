@@ -91,9 +91,11 @@
 </template>
 <script>
 import { SfModal, SfInput, SfButton, SfCheckbox } from '@storefront-ui/vue'
-import { isLoginModalOpen, toggleLoginModalOpen } from '~/assets/ui-state'
+import { uiState, toggleLoginModalOpen } from '~/assets/ui-state'
+const { isLoginModalOpen } = uiState
+
 export default {
-  name: 'Login',
+  name: 'LoginModal',
   components: { SfModal, SfInput, SfButton, SfCheckbox },
   setup() {
     return {
