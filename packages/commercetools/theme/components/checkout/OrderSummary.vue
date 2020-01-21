@@ -20,8 +20,6 @@
             :image="product.image"
             :title="product.title"
             :regular-price="product.price.regular"
-            :special-price="product.price.special"
-            :stock="product.stock"
             class="collected-product"
             @click:remove="removeProduct(index)"
           >
@@ -127,6 +125,10 @@ export default {
       type: Object,
       default: () => ({})
     },
+    products: {
+      type: Array,
+      default: () => []
+    },
     shippingMethods: {
       type: Array,
       default: () => []
@@ -134,6 +136,10 @@ export default {
     paymentMethods: {
       type: Array,
       default: () => []
+    },
+    chosenShippingMethod: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -162,9 +168,6 @@ export default {
     };
   },
   computed: {
-    products() {
-      return this.order.products;
-    },
     totalItems() {
       return (
         "" +
@@ -177,7 +180,7 @@ export default {
       return this.order.shipping;
     },
     shippingMethod() {
-      const shippingMethod = this.shipping.shippingMethod;
+      const shippingMethod = this.chosenShippingMethod;
       const method = this.shippingMethods.find(
         method => method.value === shippingMethod
       );
@@ -200,7 +203,7 @@ export default {
         const price = current.price.special
           ? current.price.special
           : current.price.regular;
-        const total = qty * parseFloat(price.replace("$", ""));
+        const total = qty * price;
         return previous + total;
       }, 0);
       return "$" + subtotal.toFixed(2);

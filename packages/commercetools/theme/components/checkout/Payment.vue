@@ -226,9 +226,13 @@ export default {
     SfCheckbox
   },
   props: {
-    order: {
+    billingDetails: {
       type: Object,
       default: () => ({})
+    },
+    chosenPaymentMethod: {
+      type: String,
+      default: ''
     },
     paymentMethods: {
       type: Array,
@@ -311,80 +315,57 @@ export default {
     }
   },
   watch: {
-    order: {
+    chosenShippingMethod: {
       handler(value) {
-        this.sameAsShipping = value.payment.sameAsShipping;
-        this.streetName = value.payment.streetName;
-        this.apartment = value.payment.apartment;
-        this.city = value.payment.city;
-        this.state = value.payment.state;
-        this.zipCode = value.payment.zipCode;
-        this.country = value.payment.country;
-        this.phoneNumber = value.payment.phoneNumber;
-        this.paymentMethod = value.payment.paymentMethod;
-        this.cardNumber = value.payment.card.number;
-        this.cardHolder = value.payment.card.holder;
-        this.cardMonth = value.payment.card.month;
-        this.cardYear = value.payment.card.year;
-        this.cardCVC = value.payment.card.cvc;
-        this.cardKeep = value.payment.card.keep;
+        this.paymentMethod = value;
+      },
+      immediate: true
+    },
+    billingDetails: {
+      handler(value) {
+        // this.sameAsShipping = value.payment.sameAsShipping;
+        this.streetName = value.streetName;
+        this.apartment = value.apartment;
+        this.city = value.city;
+        this.state = value.state;
+        this.zipCode = value.zipCode;
+        this.country = value.country;
+        this.phoneNumber = value.phoneNumber;
+        this.paymentMethod = value.paymentMethod;
       },
       immediate: true
     },
     sameAsShipping: {
       handler(value) {
-        if (value) {
-          this.firstName = this.order.shipping.firstName;
-          this.lastName = this.order.shipping.lastName;
-          this.streetName = this.order.shipping.streetName;
-          this.apartment = this.order.shipping.apartment;
-          this.city = this.order.shipping.city;
-          this.state = this.order.shipping.state;
-          this.zipCode = this.order.shipping.zipCode;
-          this.country = this.order.shipping.country;
-          this.phoneNumber = this.order.shipping.phoneNumber;
-          this.paymentMethod = this.order.shipping.paymentMethod;
-        } else {
-          this.streetName = "";
-          this.apartment = "";
-          this.city = "";
-          this.state = "";
-          this.zipCode = "";
-          this.country = "";
-          this.phoneNumber = "";
-          this.paymentMethod = "";
-        }
+        this.streetName = "";
+        this.apartment = "";
+        this.city = "";
+        this.state = "";
+        this.zipCode = "";
+        this.country = "";
+        this.phoneNumber = "";
+        this.paymentMethod = "";
       }
     }
   },
   methods: {
     toReview() {
-      const order = { ...this.order };
-      const payment = { ...order.payment };
-      const card = { ...payment.card };
-      payment.sameAsShipping = this.sameAsShipping;
-      payment.firstName = this.firstName;
-      payment.lastName = this.lastName;
-      payment.streetName = this.streetName;
-      payment.streetName = this.streetName;
-      payment.apartment = this.apartment;
-      payment.city = this.city;
-      payment.state = this.state;
-      payment.zipCode = this.zipCode;
-      payment.country = this.country;
-      payment.phoneNumber = this.phoneNumber;
-      payment.paymentMethod = this.paymentMethod;
-      if (this.isCreditCard) {
-        card.number = this.cardNumber;
-        card.holder = this.cardHolder;
-        card.month = this.cardMonth;
-        card.year = this.cardYear;
-        card.cvc = this.cardCVC;
-        card.keep = this.cardKeep;
-      }
-      payment.card = card;
-      order.payment = payment;
-      this.$emit("update:order", order);
+      const billingDetails = { ...this.billingDetails };
+      // payment.sameAsShipping = this.sameAsShipping;
+      billingDetails.firstName = this.firstName;
+      billingDetails.lastName = this.lastName;
+      billingDetails.streetName = this.streetName;
+      billingDetails.streetName = this.streetName;
+      billingDetails.apartment = this.apartment;
+      billingDetails.city = this.city;
+      billingDetails.state = this.state;
+      billingDetails.zipCode = this.zipCode;
+      billingDetails.country = this.country;
+      billingDetails.phoneNumber = this.phoneNumber;
+
+      this.$emit("update:billingDetails", billingDetails);
+      this.$emit("update:paymentMethod", this.paymentMethod);
+      this.$emit("click:forward");
     }
   }
 };

@@ -5,34 +5,47 @@
         <SfSteps :active="currentStep" @change="updateStep($event)">
           <SfStep name="Personal Details">
             <PersonalDetails
-              :order="order"
-              @update:order="updateOrder($event)"
+              :personalDetails="personalDetails"
+              @update:personalDetails="setPersonalDetails($event)"
+              @click:forward="currentStep++"
             />
           </SfStep>
           <SfStep name="Shipping">
             <Shipping
-              :order="order"
+              :shippingDetails="shippingDetails"
+              :chosen-shipping-method="chosenShippingMethod"
               :shipping-methods="shippingMethods"
-              @update:order="updateOrder($event)"
+              @update:shippingDetails="setShippingDetails($event)"
+              @update:shippingMethod="setShippingMethod($event)"
               @click:back="currentStep--"
+              @click:forward="currentStep++"
             />
           </SfStep>
           <SfStep name="Payment">
             <Payment
-              :order="order"
+              :billingDetails="billingDetails"
               :payment-methods="paymentMethods"
-              @update:order="updateOrder($event)"
+              :chosen-payment-method="chosenPaymentMethod"
+              @update:billingDetails="setBillingDetails($event)"
+              @update:paymentMethod="setPaymentMethod($event)"
               @click:back="currentStep--"
+              @click:forward="currentStep++"
             />
           </SfStep>
           <SfStep name="Review">
             <ReviewOrder
-              :order="order"
+              :personalDetails="personalDetails"
+              :shipping-details="shippingDetails"
+              :billingDetails="billingDetails"
               :shipping-methods="shippingMethods"
               :payment-methods="paymentMethods"
+              :chosen-shipping-method="chosenShippingMethod"
+              :chosen-payment-method="chosenPaymentMethod"
+              :products="products"
               @click:back="currentStep--"
               @click:edit="currentStep = $event"
               @update:order="updateOrder($event, false)"
+              @click:placeOrder="placeOrder"
             />
           </SfStep>
         </SfSteps>
@@ -42,7 +55,8 @@
           <OrderSummary
             v-if="currentStep <= 2"
             key="order-summary"
-            :order="order"
+            :products="products"
+            :chosen-shipping-method="chosenShippingMethod"
             :shipping-methods="shippingMethods"
             :payment-methods="paymentMethods"
             @update:order="updateOrder($event, false)"
@@ -50,7 +64,11 @@
           <OrderReview
             v-else
             key="order-review"
-            :order="order"
+            :personal-details="personalDetails"
+            :shipping-details="shippingDetails"
+            :billing-details="billingDetails"
+            :chosen-shipping-method="chosenShippingMethod"
+            :chosen-payment-method="chosenPaymentMethod"
             :shipping-methods="shippingMethods"
             :payment-methods="paymentMethods"
             @click:edit="currentStep = $event"
@@ -69,6 +87,10 @@ import Payment from "~/components/checkout/Payment"
 import ReviewOrder from "~/components/checkout/ReviewOrder"
 import OrderSummary from "~/components/checkout/OrderSummary"
 import OrderReview from "~/components/checkout/OrderReview"
+import { computed, ref } from '@vue/composition-api'
+
+import { useCheckout, useCart } from '@vue-storefront/commercetools-composables'
+import { getCartProducts } from '@vue-storefront/commercetools-helpers'
 
 export default {
   name: "Checkout",
@@ -81,161 +103,59 @@ export default {
     OrderSummary,
     OrderReview
   },
-  data() {
+  setup () {
+    const currentStep = ref(0)
+    const {
+      personalDetails,
+      setPersonalDetails,
+
+      shippingDetails,
+      setShippingDetails,
+      setShippingMethod,
+      chosenShippingMethod,
+
+      billingDetails,
+      setBillingDetails,
+      chosenPaymentMethod,
+      setPaymentMethod,
+
+      paymentMethods,
+      shippingMethods,
+      placeOrder
+    } = useCheckout()
+    const { cart } = useCart()
+
+    const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
+
+
+    const updateStep = (next) => {
+      if (next < currentStep.value) {
+        currentStep.value = next;
+      }
+    }
+
+    const updateOrder = (newOrder, next = true) => {
+      currentStep.value++;
+    }
+
+
     return {
-      currentStep: 0,
-      order: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        createAccount: false,
-        shipping: {
-          firstName: "",
-          lastName: "",
-          streetName: "",
-          apartment: "",
-          city: "",
-          state: "",
-          zipCode: "",
-          country: "",
-          phoneNumber: "",
-          shippingMethod: ""
-        },
-        payment: {
-          sameAsShipping: false,
-          firstName: "",
-          lastName: "",
-          streetName: "",
-          apartment: "",
-          city: "",
-          state: "",
-          zipCode: "",
-          country: "",
-          phoneNumber: "",
-          paymentMethod: "",
-          card: {
-            number: "",
-            holder: "",
-            month: "",
-            year: "",
-            cvc: "",
-            keep: false
-          }
-        },
-        review: {
-          subtotal: "$150.00",
-          shipping: "$9.00",
-          total: "$159.00"
-        },
-        products: [
-          {
-            title: "Cream Beach Bag",
-            image: "/assets/storybook/Home/productA.jpg",
-            price: { regular: "$50.00" },
-            configuration: [
-              { name: "Size", value: "XS" },
-              { name: "Color", value: "White" }
-            ],
-            qty: 1,
-            sku: "MSD23-345-324"
-          },
-          {
-            title: "Vila stripe maxi dress",
-            image: "/assets/storybook/Home/productB.jpg",
-            price: { regular: "$50.00", special: "$20.05" },
-            configuration: [
-              { name: "Size", value: "XS" },
-              { name: "Color", value: "White" }
-            ],
-            qty: 2,
-            sku: "MSD23-345-325"
-          }
-        ]
-      },
-      paymentMethods: [
-        {
-          label: "Visa Debit",
-          value: "debit"
-        },
-        {
-          label: "MasterCard",
-          value: "mastercard"
-        },
-        {
-          label: "Visa Electron",
-          value: "electron"
-        },
-        {
-          label: "Cash on delivery",
-          value: "cash"
-        },
-        {
-          label: "Check",
-          value: "check"
-        }
-      ],
-      shippingMethods: [
-        {
-          isOpen: false,
-          price: "Free",
-          delivery: "Delivery from 3 to 7 business days",
-          label: "Pickup in the store",
-          value: "store",
-          description:
-            "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-        },
-        {
-          isOpen: false,
-          price: "$9.90",
-          delivery: "Delivery from 4 to 6 business days",
-          label: "Delivery to home",
-          value: "home",
-          description:
-            "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-        },
-        {
-          isOpen: false,
-          price: "$9.90",
-          delivery: "Delivery from 4 to 6 business days",
-          label: "Paczkomaty InPost",
-          value: "inpost",
-          description:
-            "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-        },
-        {
-          isOpen: false,
-          price: "$11.00",
-          delivery: "Delivery within 48 hours",
-          label: "48 hours coffee",
-          value: "coffee",
-          description:
-            "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-        },
-        {
-          isOpen: false,
-          price: "$14.00",
-          delivery: "Delivery within 24 hours",
-          label: "Urgent 24h",
-          value: "urgent",
-          description:
-            "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-        }
-      ]
-    };
-  },
-  methods: {
-    updateStep(next) {
-      // prevent to move next by SfStep header
-      if (next < this.currentStep) {
-        this.currentStep = next;
-      }
-    },
-    updateOrder(order, next = true) {
-      this.order = { ...this.order, ...order };
-      if (next) {
-        this.currentStep++;
-      }
+      currentStep,
+      updateStep,
+      personalDetails,
+      setPersonalDetails,
+      shippingDetails,
+      setShippingDetails,
+      setShippingMethod,
+      chosenShippingMethod,
+      billingDetails,
+      setBillingDetails,
+      chosenPaymentMethod,
+      setPaymentMethod,
+      paymentMethods,
+      shippingMethods,
+      products,
+      placeOrder,
     }
   }
 };

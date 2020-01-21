@@ -82,20 +82,26 @@ export interface UseCheckout
   SHIPPING_METHODS,
   PERSONAL_DETAILS,
   SHIPPING_DETAILS,
+  BILLING_DETAILS,
+  SET_SHIPPING_DETAILS,
   CHOOSEN_PAYMENT_METHOD,
   CHOOSEN_SHIPPING_METHOD,
   SET_PERSONAL_DETAILS,
   SET_PAYMENT_METHOD,
   SET_SHIPPING_METHOD,
+  SET_BILLING_DETAILS,
   PLACE_ORDER,
 > {
-  paymentMethods: PAYMENT_METHODS
-  shippingMethods: SHIPPING_METHODS
+  paymentMethods: Ref<PAYMENT_METHODS>
+  shippingMethods: Ref<SHIPPING_METHODS>
   personalDetails: PERSONAL_DETAILS
   shippingDetails: SHIPPING_DETAILS
-  choosenPaymentMethod: CHOOSEN_PAYMENT_METHOD
-  choosenShippingMethod: CHOOSEN_SHIPPING_METHOD
+  billingDetails: BILLING_DETAILS
+  chosenPaymentMethod: CHOOSEN_PAYMENT_METHOD
+  chosenShippingMethod: CHOOSEN_SHIPPING_METHOD
   setPersonalDetails: SET_PERSONAL_DETAILS
+  setShippingDetails: SET_SHIPPING_DETAILS
+  setBillingDetails: SET_BILLING_DETAILS
   setPaymentMethod: SET_PAYMENT_METHOD
   setShippingMethod: SET_SHIPPING_METHOD
   placeOrder: PLACE_ORDER
@@ -144,4 +150,31 @@ export interface AgnosticProductAttribute {
   name: string,
   value: string | Object
   label: string
+}
+
+export interface AgnosticShippingMethod {
+  isOpen: boolean
+  price: string
+  delivery: string
+  label: string
+  value: string
+  description: string
+}
+
+export interface AgnosticPaymentMethod {
+  label: string
+  value: string
+}
+
+export interface AgnosticShipping {
+  firstName: string,
+  lastName: string,
+  streetName: string,
+  apartment: string,
+  city: string,
+  state: string,
+  zipCode: string,
+  country: string,
+  phoneNumber: string,
+  shippingMethod: string
 }

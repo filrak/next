@@ -11,6 +11,7 @@ import addToCart from './api/addToCart'
 import removeFromCart from './api/removeFromCart'
 import updateCartQuantity from './api/updateCartQuantity'
 import getMe from './api/getMe'
+import setShippingAddress from './api/setShippingAddress'
 import getStorage from './helpers/createCommerceToolsLink/getStorage'
 
 let apolloClient: ApolloClient<any> = null
@@ -43,5 +44,6 @@ export {
   addToCart,
   removeFromCart,
   getMe,
-  updateCartQuantity
+  updateCartQuantity,
+  setShippingAddress
 }

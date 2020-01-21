@@ -104,7 +104,7 @@ export default {
     SfCharacteristic
   },
   props: {
-    order: {
+    personalDetails: {
       type: Object,
       default: () => ({})
     }
@@ -126,7 +126,7 @@ export default {
     };
   },
   watch: {
-    order: {
+    personalDetails: {
       handler(value) {
         this.firstName = value.firstName;
         this.lastName = value.lastName;
@@ -140,13 +140,14 @@ export default {
   },
   methods: {
     toShipping() {
-      const order = { ...this.order };
-      order.firstName = this.firstName;
-      order.lastName = this.lastName;
-      order.email = this.email;
-      order.password = this.password;
-      order.createAccount = this.createAccount;
-      this.$emit("update:order", order);
+      const personalDetails = { ...this.personalDetails };
+      personalDetails.firstName = this.firstName;
+      personalDetails.lastName = this.lastName;
+      personalDetails.email = this.email;
+      personalDetails.password = this.password;
+      personalDetails.createAccount = this.createAccount;
+      this.$emit("update:personalDetails", personalDetails);
+      this.$emit("click:forward");
     }
   }
 };

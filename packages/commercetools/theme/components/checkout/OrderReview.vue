@@ -11,9 +11,9 @@
           >Edit</SfButton
         >
       </div>
-      <p class="content">{{ order.firstName }} {{ order.lastName }}<br /></p>
+      <p class="content">{{ personalDetails.firstName }} {{ personalDetails.lastName }}<br /></p>
       <p class="content">
-        {{ order.email }}
+        {{ personalDetails.email }}
       </p>
     </div>
     <div class="highlighted">
@@ -26,11 +26,11 @@
       <p class="content">
         <span class="content__label">{{ shippingMethod.label }}</span
         ><br />
-        {{ shipping.streetName }} {{ shipping.apartment }}, {{ shipping.zipCode
+        {{ shippingDetails.streetName }} {{ shippingDetails.apartment }}, {{ shippingDetails.zipCode
         }}<br />
-        {{ shipping.city }}, {{ shipping.country }}
+        {{ shippingDetails.city }}, {{ shippingDetails.country }}
       </p>
-      <p class="content">{{ shipping.phoneNumber }}</p>
+      <p class="content">{{ shippingDetails.phoneNumber }}</p>
     </div>
     <div class="highlighted">
       <div class="highlighted__header">
@@ -39,18 +39,18 @@
           >Edit</SfButton
         >
       </div>
-      <p v-if="payment.sameAsShipping" class="content">
+      <p v-if="billingSameAsShipping" class="content">
         Same as shipping address
       </p>
       <template v-else>
         <p class="content">
-          <span class="content__label">{{ payment.shippingMethod }}</span
+          <span class="content__label">{{ chosenShippingMethod }}</span
           ><br />
-          {{ payment.streetName }} {{ payment.apartment }}, {{ payment.zipCode
+          {{ billingDetails.streetName }} {{ billingDetails.apartment }}, {{ billingDetails.zipCode
           }}<br />
-          {{ payment.city }}, {{ payment.country }}
+          {{ billingDetails.city }}, {{ billingDetails.country }}
         </p>
-        <p class="content">{{ payment.phoneNumber }}</p>
+        <p class="content">{{ billingDetails.phoneNumber }}</p>
       </template>
     </div>
     <div class="highlighted">
@@ -73,9 +73,25 @@ export default {
     SfButton
   },
   props: {
-    order: {
+    personalDetails: {
       type: Object,
       default: () => ({})
+    },
+    shippingDetails: {
+      type: Object,
+      default: () => ({})
+    },
+    billingDetails: {
+      type: Object,
+      default: () => ({})
+    },
+    chosenShippingMethod: {
+      type: String,
+      default: ''
+    },
+    chosenPaymentMethod: {
+      type: String,
+      default: ''
     },
     shippingMethods: {
       type: Array,
@@ -84,24 +100,22 @@ export default {
     paymentMethods: {
       type: Array,
       default: () => []
+    },
+    billingSameAsShipping: {
+      tyle: Boolean,
+      default: false
     }
   },
   computed: {
-    shipping() {
-      return this.order.shipping;
-    },
     shippingMethod() {
-      const shippingMethod = this.shipping.shippingMethod;
+      const shippingMethod = this.chosenShippingMethod;
       const method = this.shippingMethods.find(
         method => method.value === shippingMethod
       );
       return method ? method : { price: 0 };
     },
-    payment() {
-      return this.order.payment;
-    },
     paymentMethod() {
-      const paymentMethod = this.payment.paymentMethod;
+      const paymentMethod = this.chosenPaymentMethod;
       const method = this.paymentMethods.find(
         method => method.value === paymentMethod
       );

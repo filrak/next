@@ -151,9 +151,13 @@ export default {
     SfRadio
   },
   props: {
-    order: {
+    shippingDetails: {
       type: Object,
       default: () => ({})
+    },
+    chosenShippingMethod: {
+      type: String,
+      default: ''
     },
     shippingMethods: {
       type: Array,
@@ -224,38 +228,43 @@ export default {
     };
   },
   watch: {
-    order: {
+    shippingDetails: {
       handler(value) {
-        this.firstName = value.shipping.firstName;
-        this.lastName = value.shipping.lastName;
-        this.streetName = value.shipping.streetName;
-        this.apartment = value.shipping.apartment;
-        this.city = value.shipping.city;
-        this.state = value.shipping.state;
-        this.zipCode = value.shipping.zipCode;
-        this.country = value.shipping.country;
-        this.phoneNumber = value.shipping.phoneNumber;
-        this.shippingMethod = value.shipping.shippingMethod;
+        this.firstName = value.firstName;
+        this.lastName = value.lastName;
+        this.streetName = value.streetName;
+        this.apartment = value.apartment;
+        this.city = value.city;
+        this.state = value.state;
+        this.zipCode = value.zipCode;
+        this.country = value.country;
+        this.phoneNumber = value.phoneNumber;
+      },
+      immediate: true
+    },
+    chosenShippingMethod: {
+      handler(value) {
+        this.shippingMethod = value;
       },
       immediate: true
     }
   },
   methods: {
     toPayment() {
-      const order = { ...this.order };
-      const shipping = { ...order.shipping };
-      shipping.firstName = this.firstName;
-      shipping.lastName = this.lastName;
-      shipping.streetName = this.streetName;
-      shipping.apartment = this.apartment;
-      shipping.city = this.city;
-      shipping.state = this.state;
-      shipping.zipCode = this.zipCode;
-      shipping.country = this.country;
-      shipping.phoneNumber = this.phoneNumber;
-      shipping.shippingMethod = this.shippingMethod;
-      order.shipping = shipping;
-      this.$emit("update:order", order);
+      const shippingDetails = { ...this.shippingDetails };
+      shippingDetails.firstName = this.firstName;
+      shippingDetails.lastName = this.lastName;
+      shippingDetails.streetName = this.streetName;
+      shippingDetails.apartment = this.apartment;
+      shippingDetails.city = this.city;
+      shippingDetails.state = this.state;
+      shippingDetails.zipCode = this.zipCode;
+      shippingDetails.country = this.country;
+      shippingDetails.phoneNumber = this.phoneNumber;
+
+      this.$emit("update:shippingDetails", shippingDetails);
+      this.$emit("update:shippingMethod", this.shippingMethod);
+      this.$emit("click:forward");
     }
   }
 };

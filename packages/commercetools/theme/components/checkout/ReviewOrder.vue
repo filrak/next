@@ -9,10 +9,10 @@
         <div class="accordion__item">
           <div class="accordion__content">
             <p class="content">
-              {{ order.firstName }} {{ order.lastName }}<br />
+              {{ personalDetails.firstName }} {{ personalDetails.lastName }}<br />
             </p>
             <p class="content">
-              {{ order.email }}
+              {{ personalDetails.email }}
             </p>
           </div>
           <SfButton
@@ -28,11 +28,11 @@
             <p class="content">
               <span class="content__label">{{ shippingMethod.label }}</span
               ><br />
-              {{ shipping.streetName }} {{ shipping.apartment }},
-              {{ shipping.zipCode }}<br />
-              {{ shipping.city }}, {{ shipping.country }}
+              {{ shippingDetails.streetName }} {{ shippingDetails.apartment }},
+              {{ shippingDetails.zipCode }}<br />
+              {{ shippingDetails.city }}, {{ shippingDetails.country }}
             </p>
-            <p class="content">{{ shipping.phoneNumber }}</p>
+            <p class="content">{{ shippingDetails.phoneNumber }}</p>
           </div>
           <SfButton
             class="sf-button--text accordion__edit"
@@ -44,18 +44,18 @@
       <SfAccordionItem header="Billing address">
         <div class="accordion__item">
           <div class="accordion__content">
-            <p v-if="payment.sameAsShipping" class="content">
+            <p v-if="billingSameAsShipping" class="content">
               Same as shipping address
             </p>
             <template v-else>
               <p class="content">
-                <span class="content__label">{{ payment.shippingMethod }}</span
+                <span class="content__label">{{ chosenPaymentMethod }}</span
                 ><br />
-                {{ payment.streetName }} {{ payment.apartment }},
-                {{ payment.zipCode }}<br />
-                {{ payment.city }}, {{ payment.country }}
+                {{ billingDetails.streetName }} {{ billingDetails.apartment }},
+                {{ billingDetails.zipCode }}<br />
+                {{ billingDetails.city }}, {{ billingDetails.country }}
               </p>
-              <p class="content">{{ payment.phoneNumber }}</p>
+              <p class="content">{{ billingDetails.phoneNumber }}</p>
             </template>
           </div>
           <SfButton
@@ -169,7 +169,7 @@
         </SfCheckbox>
       </div>
       <div class="summary__group">
-        <SfButton class="sf-button--full-width summary__action-button"
+        <SfButton class="sf-button--full-width summary__action-button" @click="$emit('click:placeOrder')"
           >Place my order</SfButton
         >
         <SfButton
@@ -183,20 +183,7 @@
   </div>
 </template>
 <script>
-import {
-  SfHeading,
-  SfTable,
-  SfCheckbox,
-  SfButton,
-  SfImage,
-  SfIcon,
-  SfPrice,
-  SfProperty,
-  SfAccordion
-} from "@storefront-ui/vue";
-export default {
-  name: "ReviewOrder",
-  components: {
+  import {
     SfHeading,
     SfTable,
     SfCheckbox,
@@ -206,80 +193,109 @@ export default {
     SfPrice,
     SfProperty,
     SfAccordion
-  },
-  props: {
-    order: {
-      type: Object,
-      default: () => ({})
+  } from "@storefront-ui/vue";
+
+  export default {
+    name: "ReviewOrder",
+    components: {
+      SfHeading,
+      SfTable,
+      SfCheckbox,
+      SfButton,
+      SfImage,
+      SfIcon,
+      SfPrice,
+      SfProperty,
+      SfAccordion
     },
-    shippingMethods: {
-      type: Array,
-      default: () => []
+    props: {
+      personalDetails: {
+        type: Object,
+        default: () => ({})
+      },
+      shippingDetails: {
+        type: Object,
+        default: () => ({})
+      },
+      billingDetails: {
+        type: Object,
+        default: () => ({})
+      },
+      chosenShippingMethod: {
+        type: String,
+        default: ''
+      },
+      chosenPaymentMethod: {
+        type: String,
+        default: ''
+      },
+      shippingMethods: {
+        type: Array,
+        default: () => []
+      },
+      paymentMethods: {
+        type: Array,
+        default: () => []
+      },
+      products: {
+        type: Array,
+        default: () => []
+      },
+      billingSameAsShipping: {
+        type: Boolean,
+        default: false
+      }
     },
-    paymentMethods: {
-      type: Array,
-      default: () => []
+    data() {
+      return {
+        terms: false,
+        tableHeaders: ["Description", "Colour", "Size", "Quantity", "Amount"]
+      };
+    },
+    computed: {
+      shippingMethod() {
+        const shippingMethod = this.chosenShippingMethod;
+        const method = this.shippingMethods.find(
+          method => method.value === shippingMethod
+        );
+        return method ? method : { price: "$0.00" };
+      },
+      paymentMethod() {
+        const paymentMethod = this.chosenPaymentMethod;
+        const method = this.paymentMethods.find(
+          method => method.value === paymentMethod
+        );
+        return method ? method : { label: "" };
+      },
+      subtotal() {
+        const products = this.products;
+        const subtotal = products.reduce((previous, current) => {
+          const qty = current.qty;
+          const price = current.price.special
+            ? current.price.special
+            : current.price.regular;
+          const total = qty * price
+          return previous + total;
+        }, 0);
+        return "$" + subtotal.toFixed(2);
+      },
+      total() {
+        const subtotal = parseFloat(this.subtotal.replace("$", ""));
+        const shipping = parseFloat(this.shippingMethod.price.replace("$", ""));
+        const total = subtotal + (isNaN(shipping) ? 0 : shipping);
+        return "$" + total.toFixed(2);
+      }
+    },
+    methods: {
+      removeProduct(index) {
+        const order = { ...this.order };
+        const products = [...order.products];
+        products.splice(index, 1);
+        order.products = products;
+        this.$emit("update:order", order);
+      }
     }
-  },
-  data() {
-    return {
-      terms: false,
-      tableHeaders: ["Description", "Colour", "Size", "Quantity", "Amount"]
-    };
-  },
-  computed: {
-    products() {
-      return this.order.products;
-    },
-    shipping() {
-      return this.order.shipping;
-    },
-    shippingMethod() {
-      const shippingMethod = this.shipping.shippingMethod;
-      const method = this.shippingMethods.find(
-        method => method.value === shippingMethod
-      );
-      return method ? method : { price: "$0.00" };
-    },
-    payment() {
-      return this.order.payment;
-    },
-    paymentMethod() {
-      const paymentMethod = this.payment.paymentMethod;
-      const method = this.paymentMethods.find(
-        method => method.value === paymentMethod
-      );
-      return method ? method : { label: "" };
-    },
-    subtotal() {
-      const products = this.products;
-      const subtotal = products.reduce((previous, current) => {
-        const qty = current.qty;
-        const price = current.price.special
-          ? current.price.special
-          : current.price.regular;
-        const total = qty * parseFloat(price.replace("$", ""));
-        return previous + total;
-      }, 0);
-      return "$" + subtotal.toFixed(2);
-    },
-    total() {
-      const subtotal = parseFloat(this.subtotal.replace("$", ""));
-      const shipping = parseFloat(this.shippingMethod.price.replace("$", ""));
-      const total = subtotal + (isNaN(shipping) ? 0 : shipping);
-      return "$" + total.toFixed(2);
-    }
-  },
-  methods: {
-    removeProduct(index) {
-      const order = { ...this.order };
-      const products = [...order.products];
-      products.splice(index, 1);
-      order.products = products;
-      this.$emit("update:order", order);
-    }
-  }
-};
+  };
 </script>
 <style lang="scss" scoped>
 @import "~@storefront-ui/shared/styles/variables";
