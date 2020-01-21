@@ -15,12 +15,12 @@
           class="gallery-mobile mobile-only"
           :images="[
             {
-              small: { url: '/productpage/productM.jpg' },
-              big: { url: '/productpage/productM.jpg' }
+              mobile: { url: '/productpage/productM.jpg' },
+              desktop: { url: '/productpage/productM.jpg' }
             },
             {
-              small: { url: '/productpage/productM.jpg' },
-              big: { url: '/productpage/productM.jpg' }
+              mobile: { url: '/productpage/productM.jpg' },
+              desktop: { url: '/productpage/productM.jpg' }
             }
           ]"
         />
