@@ -1,6 +1,6 @@
-import transformPrismicResponse from './../../src/helpers/internals/transformPrismicResponse'
+import { transformToBlocks } from '@/components/prismic/CustomPage.vue'
 
-describe('[commercetools-composables] transformPrismicResponse', () => {
+describe('[theme/components/prismic] transformToBlocks', () => {
   let supportedBlocks
   let unsupportedBlocks
 
@@ -79,7 +79,7 @@ describe('[commercetools-composables] transformPrismicResponse', () => {
       'timestamp-field': '2020-01-13T23:00:00+0000',
     }
 
-    const getParagraphObject = (text: any) => ([
+    const getParagraphObject = (text) => ([
       {
         spans: [],
         text,
@@ -87,7 +87,7 @@ describe('[commercetools-composables] transformPrismicResponse', () => {
       }
     ])
 
-    const response = transformPrismicResponse(primiteValues)
+    const response = transformToBlocks({ data: primiteValues })
 
     expect(response.length).toEqual(4)
 
@@ -102,7 +102,7 @@ describe('[commercetools-composables] transformPrismicResponse', () => {
   })
 
   it('should transform supported blocks correctly', () => {
-    const response = transformPrismicResponse(supportedBlocks)
+    const response = transformToBlocks({ data: supportedBlocks })
 
     expect(response.length).toEqual(5)
 
@@ -120,7 +120,7 @@ describe('[commercetools-composables] transformPrismicResponse', () => {
   })
 
   it('should return undefined for each unsupported blocks', () => {
-    const response = transformPrismicResponse(unsupportedBlocks)
+    const response = transformToBlocks({ data: unsupportedBlocks })
 
     expect(response).toBeInstanceOf(Array)
     expect(response.length).toEqual(0)
