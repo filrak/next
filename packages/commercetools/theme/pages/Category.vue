@@ -536,7 +536,6 @@ export default {
     font-size: inherit;
   }
 }
-
 .filters {
   &__title {
     margin: $spacer-big * 3 0 $spacer-big;
