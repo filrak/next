@@ -166,7 +166,7 @@ export interface AgnosticPaymentMethod {
   value: string
 }
 
-export interface AgnosticShipping {
+export interface AgnosticShippingDetails {
   firstName: string,
   lastName: string,
   streetName: string,
@@ -176,5 +176,22 @@ export interface AgnosticShipping {
   zipCode: string,
   country: string,
   phoneNumber: string,
-  shippingMethod: string
+}
+
+export interface AgnosticBillingDetails {
+  firstName: string,
+  lastName: string,
+  streetName: string,
+  apartment: string,
+  city: string,
+  state: string,
+  zipCode: string,
+  country: string,
+  phoneNumber: string,
+}
+
+export interface AgnosticCustomer {
+  firstName: string
+  lastName: string
+  email: string
 }

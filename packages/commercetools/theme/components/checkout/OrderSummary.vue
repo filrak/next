@@ -62,7 +62,7 @@
       />
       <SfProperty
         name="Shipping"
-        :value="shippingMethod.price"
+        :value="getShippingMethodPrice(shippingMethod)"
         class="sf-property--full-width property"
       />
       <SfProperty
@@ -110,6 +110,13 @@ import {
   SfCharacteristic,
   SfInput
 } from "@storefront-ui/vue";
+
+import {
+  getShippingMethodName,
+  getShippingMethodDescription,
+  getShippingMethodPrice
+} from '@vue-storefront/commercetools-helpers'
+
 export default {
   name: "OrderSummary",
   components: {
@@ -140,6 +147,13 @@ export default {
     chosenShippingMethod: {
       type: String,
       default: ''
+    }
+  },
+  setup() {
+    return {
+      getShippingMethodName,
+      getShippingMethodDescription,
+      getShippingMethodPrice
     }
   },
   data() {
@@ -181,10 +195,9 @@ export default {
     },
     shippingMethod() {
       const shippingMethod = this.chosenShippingMethod;
-      const method = this.shippingMethods.find(
-        method => method.value === shippingMethod
+      return this.shippingMethods.find(
+        method => method.name === shippingMethod
       );
-      return method ? method : { price: "$0.00" };
     },
     payment() {
       return this.order.payment;
@@ -210,18 +223,13 @@ export default {
     },
     total() {
       const subtotal = parseFloat(this.subtotal.replace("$", ""));
-      const shipping = parseFloat(this.shippingMethod.price.replace("$", ""));
-      const total = subtotal + (isNaN(shipping) ? 0 : shipping);
+      const total = subtotal + getShippingMethodPrice(this.shippingMethod);
       return "$" + total.toFixed(2);
     }
   },
   methods: {
     removeProduct(index) {
-      const order = { ...this.order };
-      const products = [...order.products];
-      products.splice(index, 1);
-      order.products = products;
-      this.$emit("update:order", order);
+      this.$emit("removeProduct", this.products.splice(index, 1));
     }
   }
 };

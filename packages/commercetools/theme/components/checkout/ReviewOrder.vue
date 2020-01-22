@@ -26,7 +26,7 @@
         <div class="accordion__item">
           <div class="accordion__content">
             <p class="content">
-              <span class="content__label">{{ shippingMethod.label }}</span
+              <span class="content__label">{{ getShippingMethodName(shippingMethod) }}</span
               ><br />
               {{ shippingDetails.streetName }} {{ shippingDetails.apartment }},
               {{ shippingDetails.zipCode }}<br />
@@ -145,7 +145,7 @@
           </SfProperty>
           <SfProperty
             name="Shipping"
-            :value="shippingMethod.price"
+            :value="getShippingMethodPrice(shippingMethod)"
             class="sf-property--full-width property"
           >
             <template #name
@@ -194,6 +194,11 @@
     SfProperty,
     SfAccordion
   } from "@storefront-ui/vue";
+  import {
+    getShippingMethodName,
+    getShippingMethodDescription,
+    getShippingMethodPrice
+  } from '@vue-storefront/commercetools-helpers'
 
   export default {
     name: "ReviewOrder",
@@ -246,6 +251,13 @@
         default: false
       }
     },
+    setup() {
+      return {
+        getShippingMethodName,
+        getShippingMethodDescription,
+        getShippingMethodPrice
+      }
+    },
     data() {
       return {
         terms: false,
@@ -255,10 +267,9 @@
     computed: {
       shippingMethod() {
         const shippingMethod = this.chosenShippingMethod;
-        const method = this.shippingMethods.find(
-          method => method.value === shippingMethod
+        return this.shippingMethods.find(
+          method => method.name === shippingMethod
         );
-        return method ? method : { price: "$0.00" };
       },
       paymentMethod() {
         const paymentMethod = this.chosenPaymentMethod;
@@ -281,18 +292,13 @@
       },
       total() {
         const subtotal = parseFloat(this.subtotal.replace("$", ""));
-        const shipping = parseFloat(this.shippingMethod.price.replace("$", ""));
-        const total = subtotal + (isNaN(shipping) ? 0 : shipping);
+        const total = subtotal + getShippingMethodPrice(this.shippingMethod);
         return "$" + total.toFixed(2);
       }
     },
     methods: {
       removeProduct(index) {
-        const order = { ...this.order };
-        const products = [...order.products];
-        products.splice(index, 1);
-        order.products = products;
-        this.$emit("update:order", order);
+        this.$emit("removeProduct", this.products.splice(index, 1));
       }
     }
   };

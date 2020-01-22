@@ -1,5 +1,10 @@
-import { UiMediaGalleryItem, UiCategory, UiCartProduct, AgnosticProductAttribute } from '@vue-storefront/interfaces'
-import { ProductVariant, Image, Category, Cart, LineItem } from './types/GraphQL'
+import {
+  UiMediaGalleryItem,
+  UiCategory,
+  UiCartProduct,
+  AgnosticProductAttribute,
+} from '@vue-storefront/interfaces'
+import { ProductVariant, Image, Category, Cart, LineItem, ShippingMethod } from './types/GraphQL'
 import { formatAttributeList } from './_utils'
 
 // Product
@@ -99,3 +104,19 @@ export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): U
   }))
 }
 
+
+// ShippingMethod
+
+export const getShippingMethodName = (shippingMethod: ShippingMethod): string =>
+  shippingMethod ? shippingMethod.name : ''
+
+export const getShippingMethodDescription = (shippingMethod: ShippingMethod): string =>
+  shippingMethod ? shippingMethod.description : ''
+
+export const getShippingMethodPrice = (shippingMethod: ShippingMethod): number => {
+  if (!shippingMethod) {
+    return null
+  }
+
+  return shippingMethod.zoneRates[0].shippingRates[0].price.centAmount / 100
+}

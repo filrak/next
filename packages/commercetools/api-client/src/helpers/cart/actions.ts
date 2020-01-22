@@ -1,5 +1,6 @@
-import { UiCartProduct, AgnosticShipping } from '@vue-storefront/interfaces'
-import { ProductVariant } from './../../types/GraphQL'
+import { UiCartProduct, AgnosticShippingDetails, AgnosticBillingDetails } from '@vue-storefront/interfaces'
+import { ProductVariant, AddCartPayment } from './../../types/GraphQL'
+
 
 export const createAddLineItemAction = (variant: ProductVariant, quantity: number) => ({
   addLineItem: {
@@ -23,25 +24,50 @@ export const createChangeLineItemQuantityAction = (product: UiCartProduct) => ({
   }
 })
 
-export const setShippingAddressAction = (shipping: AgnosticShipping) => ({
+export const setShippingAddressAction = (shippingDetails: AgnosticShippingDetails) => ({
   setShippingAddress: {
     address: {
-      firstName: shipping.firstName,
-      lastName: shipping.lastName,
-      streetName: shipping.streetName,
+      firstName: shippingDetails.firstName,
+      lastName: shippingDetails.lastName,
+      streetName: shippingDetails.streetName,
       streetNumber: '',
-      city: shipping.city,
-      state: shipping.state,
-      postalCode: shipping.zipCode,
-      country: shipping.country,
-      phone: shipping.phoneNumber,
+      city: shippingDetails.city,
+      state: shippingDetails.state,
+      postalCode: shippingDetails.zipCode,
+      country: shippingDetails.country,
+      phone: shippingDetails.phoneNumber,
     }
   }
 })
 
-export const setShippingMethodAction = (shipping: AgnosticShipping) => ({
+export const setShippingMethodAction = (shippingMethodId: string) => ({
   setShippingMethod: {
-    id: shipping.shippingMethod
+    shippingMethod: {
+      id: shippingMethodId
+    }
   }
 })
 
+export const setBillingAddressAction = (shippingDetails: AgnosticBillingDetails) => ({
+  setBillingAddress: {
+    address: {
+      firstName: shippingDetails.firstName,
+      lastName: shippingDetails.lastName,
+      streetName: shippingDetails.streetName,
+      streetNumber: '',
+      city: shippingDetails.city,
+      state: shippingDetails.state,
+      postalCode: shippingDetails.zipCode,
+      country: shippingDetails.country,
+      phone: shippingDetails.phoneNumber,
+    }
+  }
+})
+
+export const addPaymentAction = (paymentMethodId: string) => ({
+  addPayment: {
+    payment: {
+      id: paymentMethodId
+    }
+  }
+})

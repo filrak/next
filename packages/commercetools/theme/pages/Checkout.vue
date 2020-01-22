@@ -44,7 +44,6 @@
               :products="products"
               @click:back="currentStep--"
               @click:edit="currentStep = $event"
-              @update:order="updateOrder($event, false)"
               @click:placeOrder="placeOrder"
             />
           </SfStep>
@@ -59,7 +58,6 @@
             :chosen-shipping-method="chosenShippingMethod"
             :shipping-methods="shippingMethods"
             :payment-methods="paymentMethods"
-            @update:order="updateOrder($event, false)"
           />
           <OrderReview
             v-else
@@ -127,17 +125,11 @@ export default {
 
     const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
 
-
     const updateStep = (next) => {
       if (next < currentStep.value) {
         currentStep.value = next;
       }
     }
-
-    const updateOrder = (newOrder, next = true) => {
-      currentStep.value++;
-    }
-
 
     return {
       currentStep,
@@ -155,7 +147,7 @@ export default {
       paymentMethods,
       shippingMethods,
       products,
-      placeOrder,
+      placeOrder
     }
   }
 };

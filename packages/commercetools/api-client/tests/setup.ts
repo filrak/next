@@ -9,4 +9,5 @@ setup({
   api: null,
   locale: 'en',
   currency: 'USD',
+  country: 'UK'
 })

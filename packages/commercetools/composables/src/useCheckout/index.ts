@@ -1,6 +1,6 @@
-import { UseCheckout, AgnosticShippingMethod, AgnosticPaymentMethod } from '@vue-storefront/interfaces';
-import { setShippingAddress } from '@vue-storefront/commercetools-api';
-import { ref, Ref, computed, reactive } from '@vue/composition-api'
+import { UseCheckout, AgnosticShippingMethod, AgnosticPaymentMethod, AgnosticCustomer, AgnosticShippingDetails, AgnosticBillingDetails } from '@vue-storefront/interfaces';
+import { placeOrder as processOrder, getShippingMethods } from '@vue-storefront/commercetools-api';
+import { ref, Ref, watch, computed, reactive } from '@vue/composition-api'
 import { getCartProducts } from '@vue-storefront/commercetools-helpers'
 import { cart } from './../useCart'
 
@@ -26,91 +26,52 @@ const PAYMENT_METHODS_MOCK: AgnosticPaymentMethod[] = [
     value: "check"
   }
 ]
-const SHIPPING_METHODS_MOCK: AgnosticShippingMethod[] = [
-  {
-    isOpen: false,
-    price: "Free",
-    delivery: "Delivery from 3 to 7 business days",
-    label: "Pickup in the store",
-    value: "store",
-    description:
-      "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-  },
-  {
-    isOpen: false,
-    price: "$9.90",
-    delivery: "Delivery from 4 to 6 business days",
-    label: "Delivery to home",
-    value: "home",
-    description:
-      "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-  },
-  {
-    isOpen: false,
-    price: "$9.90",
-    delivery: "Delivery from 4 to 6 business days",
-    label: "Paczkomaty InPost",
-    value: "inpost",
-    description:
-      "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-  },
-  {
-    isOpen: false,
-    price: "$11.00",
-    delivery: "Delivery within 48 hours",
-    label: "48 hours coffee",
-    value: "coffee",
-    description:
-      "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-  },
-  {
-    isOpen: false,
-    price: "$14.00",
-    delivery: "Delivery within 24 hours",
-    label: "Urgent 24h",
-    value: "urgent",
-    description:
-      "Novelty! From now on you have the option of picking up an order in the selected InPack parceled. Just remember that in the case of orders paid on delivery, only the card payment will be accepted."
-  }
-]
 
-export default function useCheckout (): UseCheckout<AgnosticPaymentMethod[], AgnosticShippingMethod[], any, any, any, any, any, any, any, any, any, any, any> {
-  const paymentMethods: Ref<AgnosticPaymentMethod[]> = ref(PAYMENT_METHODS_MOCK)
-  const shippingMethods: Ref<AgnosticShippingMethod[]> = ref(SHIPPING_METHODS_MOCK)
-  const personalDetails = ref({})
-  const shippingDetails = ref({})
-  const billingDetails = ref({})
-  const chosenPaymentMethod = ref('')
-  const chosenShippingMethod = ref('')
+export default function useCheckout (): UseCheckout<any, any, any, any, any, any, any, any, any, any, any, any, any> {
+  const paymentMethods: Ref<any[]> = ref(PAYMENT_METHODS_MOCK)
+  const shippingMethods: Ref<any[]> = ref([])
+  const personalDetails: Ref<AgnosticCustomer> = ref({})
+  const shippingDetails: Ref<AgnosticShippingDetails> = ref({})
+  const billingDetails: Ref<AgnosticBillingDetails> = ref({})
+  const chosenPaymentMethod: Ref<string> = ref('')
+  const chosenShippingMethod: Ref<string> = ref('')
 
-  const setPersonalDetails = (details: any) => {
-    personalDetails.value = details
+  watch(async () => {
+    const shippingMethodsResponse = await getShippingMethods()
+    shippingMethods.value = shippingMethodsResponse.data.shippingMethods as any
+  })
+
+  const setPersonalDetails = (customer: AgnosticCustomer) => {
+    personalDetails.value = customer
   }
 
-  const setShippingMethod = (shippingMethod: any) => {
+  const setShippingMethod = (shippingMethod: string) => {
+    console.log('ss', shippingMethod)
     chosenShippingMethod.value = shippingMethod
   }
 
-  const setShippingDetails = (details: any) => {
+  const setShippingDetails = (details: AgnosticShippingDetails) => {
     shippingDetails.value = details
   }
 
-  const setBillingDetails = (billing: any) => {
+  const setBillingDetails = (billing: AgnosticBillingDetails) => {
     billingDetails.value = billing
   }
 
-  const setPaymentMethod = (paymentMethod: any) => {
+  const setPaymentMethod = (paymentMethod: string) => {
     chosenPaymentMethod.value = paymentMethod
   }
 
   const placeOrder = async () => {
-    console.log('useCheckout:placeOrder', {
-      personalDetails,
-      shippingDetails,
-      billingDetails,
-      chosenPaymentMethod,
-      chosenShippingMethod
-    })
+    const orderData = {
+      shippingDetails: shippingDetails.value,
+      billingDetails: billingDetails.value,
+      shippingMethod: chosenPaymentMethod.value,
+    }
+
+    const orderResponse = await processOrder(cart.value, orderData)
+
+    console.log('order response', orderResponse)
   }
 
   const loading = ref(true)

@@ -24,7 +24,7 @@
         >
       </div>
       <p class="content">
-        <span class="content__label">{{ shippingMethod.label }}</span
+        <span class="content__label">{{ getShippingMethodName(shippingMethod) }}</span
         ><br />
         {{ shippingDetails.streetName }} {{ shippingDetails.apartment }}, {{ shippingDetails.zipCode
         }}<br />
@@ -66,6 +66,12 @@
 </template>
 <script>
 import { SfHeading, SfButton } from "@storefront-ui/vue";
+import {
+  getShippingMethodName,
+  getShippingMethodDescription,
+  getShippingMethodPrice
+} from '@vue-storefront/commercetools-helpers'
+
 export default {
   name: "OrderReview",
   components: {
@@ -106,13 +112,19 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      getShippingMethodName,
+      getShippingMethodDescription,
+      getShippingMethodPrice
+    }
+  },
   computed: {
     shippingMethod() {
       const shippingMethod = this.chosenShippingMethod;
-      const method = this.shippingMethods.find(
-        method => method.value === shippingMethod
+      return this.shippingMethods.find(
+        method => method.name === shippingMethod
       );
-      return method ? method : { price: 0 };
     },
     paymentMethod() {
       const paymentMethod = this.chosenPaymentMethod;

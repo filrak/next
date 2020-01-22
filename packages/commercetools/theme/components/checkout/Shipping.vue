@@ -62,10 +62,10 @@
       >
         <SfSelectOption
           v-for="countryOption in countries"
-          :key="countryOption"
-          :value="countryOption"
+          :key="countryOption.key"
+          :value="countryOption.key"
         >
-          {{ countryOption }}
+          {{ countryOption.label }}
         </SfSelectOption>
       </SfSelect>
       <SfInput
@@ -84,36 +84,25 @@
       <div class="form__radio-group">
         <SfRadio
           v-for="item in shippingMethods"
-          :key="item.value"
+          :key="getShippingMethodName(item)"
           v-model="shippingMethod"
-          :label="item.label"
-          :value="item.value"
+          :label="getShippingMethodName(item)"
+          :value="getShippingMethodName(item)"
           name="shippingMethod"
-          :description="item.description"
+          :description="getShippingMethodDescription(item)"
           class="form__element form__radio shipping"
         >
           <template #label="{label}">
             <div class="sf-radio__label shipping__label">
               <div>{{ label }}</div>
-              <div>{{ item.price }}</div>
+              <div>${{ getShippingMethodPrice(item) }}</div>
             </div>
           </template>
           <template #description="{description}">
             <div class="sf-radio__description shipping__description">
-              <div class="shipping__delivery">
-                {{ item.delivery }}
-                <SfButton
-                  class="sf-button--text shipping__action"
-                  :class="{ 'shipping__action--is-active': item.isOpen }"
-                  @click="item.isOpen = !item.isOpen"
-                  >info</SfButton
-                >
+              <div class="shipping__info">
+                {{ description }}
               </div>
-              <transition name="fade">
-                <div v-if="item.isOpen" class="shipping__info">
-                  {{ description }}
-                </div>
-              </transition>
             </div>
           </template>
         </SfRadio>
@@ -141,6 +130,13 @@ import {
   SfSelect,
   SfRadio
 } from "@storefront-ui/vue";
+
+import {
+  getShippingMethodName,
+  getShippingMethodDescription,
+  getShippingMethodPrice
+} from '@vue-storefront/commercetools-helpers'
+
 export default {
   name: "Shipping",
   components: {
@@ -164,6 +160,13 @@ export default {
       default: () => []
     }
   },
+  setup() {
+    return {
+      getShippingMethodName,
+      getShippingMethodDescription,
+      getShippingMethodPrice,
+    }
+  },
   data() {
     return {
       firstName: "",
@@ -177,53 +180,10 @@ export default {
       phoneNumber: "",
       shippingMethod: "",
       countries: [
-        "Austria",
-        "Azerbaijan",
-        "Belarus",
-        "Belgium",
-        "Bosnia and Herzegovina",
-        "Bulgaria",
-        "Croatia",
-        "Cyprus",
-        "Czech Republic",
-        "Denmark",
-        "Estonia",
-        "Finland",
-        "France",
-        "Georgia",
-        "Germany",
-        "Greece",
-        "Hungary",
-        "Iceland",
-        "Ireland",
-        "Italy",
-        "Kosovo",
-        "Latvia",
-        "Liechtenstein",
-        "Lithuania",
-        "Luxembourg",
-        "Macedonia",
-        "Malta",
-        "Moldova",
-        "Monaco",
-        "Montenegro",
-        "The Netherlands",
-        "Norway",
-        "Poland",
-        "Portugal",
-        "Romania",
-        "Russia",
-        "San Marino",
-        "Serbia",
-        "Slovakia",
-        "Slovenia",
-        "Spain",
-        "Sweden",
-        "Switzerland",
-        "Turkey",
-        "Ukraine",
-        "United Kingdom",
-        "Vatican City"
+        { key: 'US', label: "United States" },
+        { key: 'UK', label: "United Kingdom" },
+        { key: 'IT', label: "Italy" },
+        { key: 'PL', label: "Poland" },
       ]
     };
   },
