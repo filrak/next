@@ -38,6 +38,10 @@ const STEPS = [
   { name: 'order-review', label: 'Review' }
 ]
 
+// TODO(CHECKOUT): block pages when you haven't finished previous steps / don't have products in cart and so on.
+// TODO(CHECKOUT): save data that you put in the forms - after refreshing page everything should be filled
+// TODO(CHECKOUT): form validations
+
 export default {
   name: "Checkout",
   components: {

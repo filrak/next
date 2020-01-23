@@ -61,6 +61,7 @@ export const totalItems = computed(() => products.value.reduce(
 export default function useCheckout (): UseCheckout<any, any, any, any, any, any, any, any, any, any> {
   watch(async () => {
     if (shippingMethods.value.length === 0) {
+      // TODO(CHECKOUT): loading shipping methods when country was changed
       const shippingMethodsResponse = await getShippingMethods()
       shippingMethods.value = shippingMethodsResponse.data.shippingMethods as any
     }
@@ -71,7 +72,7 @@ export default function useCheckout (): UseCheckout<any, any, any, any, any, any
   }
 
   const setPaymentMethod = (paymentMethod: any) => {
-    // TODO: selecting payment method
+    // TODO(CHECKOUT): selecting payment method
     chosenPaymentMethod.value = paymentMethod
   }
 

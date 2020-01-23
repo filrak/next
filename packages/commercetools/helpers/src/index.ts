@@ -121,5 +121,6 @@ export const getShippingMethodPrice = (shippingMethod: ShippingMethod): number =
     return null
   }
 
+  // TODO(CHECKOUT): cover the case with zones
   return shippingMethod.zoneRates[0].shippingRates[0].price.centAmount / 100
 }
