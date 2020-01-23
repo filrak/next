@@ -19,8 +19,8 @@
                 :regular-price="product.price.regular | price"
                 :special-price="product.price.special | price"
                 :stock="99999"
-                @input="updateQuantity(product)"
                 v-model="product.qty"
+                @input="updateQuantity(product)"
                 @click:remove="removeFromCart(product)"
                 class="collected-product"
               >
@@ -51,7 +51,7 @@
               <SfPrice :regular="totalPrice | price" class="sf-price--big" />
             </template>
           </SfProperty>
-          <nuxt-link to="/checkout">
+          <nuxt-link to="/checkout/personal-details">
             <SfButton class="sf-button--full-width">Go to checkout</SfButton>
           </nuxt-link>
         </div>
@@ -101,7 +101,6 @@ export default {
   },
   setup() {
     const { cart, removeFromCart, updateQuantity } = useCart()
-
     const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
 
     return {

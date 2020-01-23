@@ -15,29 +15,21 @@
               {{ personalDetails.email }}
             </p>
           </div>
-          <SfButton
-            class="sf-button--text accordion__edit"
-            @click="$emit('click:edit', 0)"
-            >Edit</SfButton
-          >
+          <SfButton class="sf-button--text accordion__edit" @click="$emit('click:edit', 0)">Edit</SfButton>
         </div>
       </SfAccordionItem>
       <SfAccordionItem header="Shipping address">
         <div class="accordion__item">
           <div class="accordion__content">
             <p class="content">
-              <span class="content__label">{{ getShippingMethodName(shippingMethod) }}</span
-              ><br />
+              <span class="content__label">{{ getShippingMethodName(chosenShippingMethod) }}</span><br />
               {{ shippingDetails.streetName }} {{ shippingDetails.apartment }},
               {{ shippingDetails.zipCode }}<br />
               {{ shippingDetails.city }}, {{ shippingDetails.country }}
             </p>
             <p class="content">{{ shippingDetails.phoneNumber }}</p>
           </div>
-          <SfButton
-            class="sf-button--text accordion__edit"
-            @click="$emit('click:edit', 1)"
-            >Edit</SfButton
+          <SfButton class="sf-button--text accordion__edit" @click="$emit('click:edit', 1)">Edit</SfButton
           >
         </div>
       </SfAccordionItem>
@@ -49,8 +41,7 @@
             </p>
             <template v-else>
               <p class="content">
-                <span class="content__label">{{ chosenPaymentMethod }}</span
-                ><br />
+                <span class="content__label">{{ chosenPaymentMethod.label }}</span><br />
                 {{ billingDetails.streetName }} {{ billingDetails.apartment }},
                 {{ billingDetails.zipCode }}<br />
                 {{ billingDetails.city }}, {{ billingDetails.country }}
@@ -58,23 +49,15 @@
               <p class="content">{{ billingDetails.phoneNumber }}</p>
             </template>
           </div>
-          <SfButton
-            class="sf-button--text accordion__edit"
-            @click="$emit('click:edit', 2)"
-            >Edit</SfButton
-          >
+          <SfButton class="sf-button--text accordion__edit" @click="$emit('click:edit', 2)">Edit</SfButton>
         </div>
       </SfAccordionItem>
       <SfAccordionItem header="Payment method">
         <div class="accordion__item">
           <div class="accordion__content">
-            <p class="content">{{ paymentMethod.label }}</p>
+            <p class="content">{{ chosenPaymentMethod.label }}</p>
           </div>
-          <SfButton
-            class="sf-button--text accordion__edit"
-            @click="$emit('click:edit', 2)"
-            >Edit</SfButton
-          >
+          <SfButton class="sf-button--text accordion__edit" @click="$emit('click:edit', 2)">Edit</SfButton>
         </div>
       </SfAccordionItem>
     </SfAccordion>
@@ -85,8 +68,9 @@
           v-for="tableHeader in tableHeaders"
           :key="tableHeader"
           class="table__header"
-          >{{ tableHeader }}</SfTableHeader
         >
+          {{ tableHeader }}
+        </SfTableHeader>
         <SfTableHeader class="table__action"></SfTableHeader>
       </SfTableHeading>
       <SfTableRow
@@ -101,12 +85,12 @@
           <div class="product-title">{{ product.title }}</div>
           <div class="product-sku">{{ product.sku }}</div>
         </SfTableData>
-        <SfTableData class="table__data">{{
-          product.configuration[1].value
-        }}</SfTableData>
-        <SfTableData class="table__data">{{
-          product.configuration[0].value
-        }}</SfTableData>
+        <SfTableData class="table__data">
+          {{ product.configuration[1].value}}
+        </SfTableData>
+        <SfTableData class="table__data">
+          {{ product.configuration[0].value }}
+        </SfTableData>
         <SfTableData class="table__data">{{ product.qty }}</SfTableData>
         <SfTableData class="table__data">
           <SfPrice
@@ -122,7 +106,7 @@
             color="#BEBFC4"
             role="button"
             class="button"
-            @click="removeProduct(index)"
+            @click="removeFromCart(product)"
           />
         </SfTableData>
       </SfTableRow>
@@ -139,18 +123,18 @@
             :value="subtotal"
             class="sf-property--full-width property"
           >
-            <template #name
-              ><span class="property__name">Subtotal</span></template
-            >
+            <template #name>
+              <span class="property__name">Subtotal</span>
+            </template>
           </SfProperty>
           <SfProperty
             name="Shipping"
-            :value="getShippingMethodPrice(shippingMethod)"
+            :value="getShippingMethodPrice(chosenShippingMethod)"
             class="sf-property--full-width property"
           >
-            <template #name
-              ><span class="property__name">Shipping</span></template
-            >
+            <template #name>
+              <span class="property__name">Shipping</span>
+            </template>
           </SfProperty>
           <SfProperty
             name="Total"
@@ -169,9 +153,9 @@
         </SfCheckbox>
       </div>
       <div class="summary__group">
-        <SfButton class="sf-button--full-width summary__action-button" @click="$emit('click:placeOrder')"
-          >Place my order</SfButton
-        >
+        <SfButton class="sf-button--full-width summary__action-button" @click="processOrder">
+          Place my order
+        </SfButton>
         <SfButton
           class="sf-button--full-width sf-button--text summary__action-button summary__action-button--secondary"
           @click="$emit('click:back')"
@@ -182,8 +166,30 @@
     </div>
   </div>
 </template>
+
 <script>
-  import {
+import {
+  SfHeading,
+  SfTable,
+  SfCheckbox,
+  SfButton,
+  SfImage,
+  SfIcon,
+  SfPrice,
+  SfProperty,
+  SfAccordion
+} from "@storefront-ui/vue"
+import {
+  getShippingMethodName,
+  getShippingMethodPrice,
+  getCartProducts
+} from '@vue-storefront/commercetools-helpers'
+import { ref, computed } from '@vue/composition-api'
+import { useCheckout, useCart } from '@vue-storefront/commercetools-composables'
+
+export default {
+  name: 'ReviewOrder',
+    components: {
     SfHeading,
     SfTable,
     SfCheckbox,
@@ -193,116 +199,51 @@
     SfPrice,
     SfProperty,
     SfAccordion
-  } from "@storefront-ui/vue";
-  import {
-    getShippingMethodName,
-    getShippingMethodDescription,
-    getShippingMethodPrice
-  } from '@vue-storefront/commercetools-helpers'
+  },
+  setup(props, context) {
+    context.emit('changeStep', 3)
+    const billingSameAsShipping = ref(false)
+    const terms = ref(false)
+    const { cart, removeFromCart, updateQuantity } = useCart()
+    const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
+    const {
+      personalDetails,
+      shippingDetails,
+      billingDetails,
+      chosenShippingMethod,
+      chosenPaymentMethod,
+      total,
+      subtotal,
+      placeOrder
+    } = useCheckout()
 
-  export default {
-    name: "ReviewOrder",
-    components: {
-      SfHeading,
-      SfTable,
-      SfCheckbox,
-      SfButton,
-      SfImage,
-      SfIcon,
-      SfPrice,
-      SfProperty,
-      SfAccordion
-    },
-    props: {
-      personalDetails: {
-        type: Object,
-        default: () => ({})
-      },
-      shippingDetails: {
-        type: Object,
-        default: () => ({})
-      },
-      billingDetails: {
-        type: Object,
-        default: () => ({})
-      },
-      chosenShippingMethod: {
-        type: String,
-        default: ''
-      },
-      chosenPaymentMethod: {
-        type: String,
-        default: ''
-      },
-      shippingMethods: {
-        type: Array,
-        default: () => []
-      },
-      paymentMethods: {
-        type: Array,
-        default: () => []
-      },
-      products: {
-        type: Array,
-        default: () => []
-      },
-      billingSameAsShipping: {
-        type: Boolean,
-        default: false
-      }
-    },
-    setup() {
-      return {
-        getShippingMethodName,
-        getShippingMethodDescription,
-        getShippingMethodPrice
-      }
-    },
-    data() {
-      return {
-        terms: false,
-        tableHeaders: ["Description", "Colour", "Size", "Quantity", "Amount"]
-      };
-    },
-    computed: {
-      shippingMethod() {
-        const shippingMethod = this.chosenShippingMethod;
-        return this.shippingMethods.find(
-          method => method.name === shippingMethod
-        );
-      },
-      paymentMethod() {
-        const paymentMethod = this.chosenPaymentMethod;
-        const method = this.paymentMethods.find(
-          method => method.value === paymentMethod
-        );
-        return method ? method : { label: "" };
-      },
-      subtotal() {
-        const products = this.products;
-        const subtotal = products.reduce((previous, current) => {
-          const qty = current.qty;
-          const price = current.price.special
-            ? current.price.special
-            : current.price.regular;
-          const total = qty * price
-          return previous + total;
-        }, 0);
-        return "$" + subtotal.toFixed(2);
-      },
-      total() {
-        const subtotal = parseFloat(this.subtotal.replace("$", ""));
-        const total = subtotal + getShippingMethodPrice(this.shippingMethod);
-        return "$" + total.toFixed(2);
-      }
-    },
-    methods: {
-      removeProduct(index) {
-        this.$emit("removeProduct", this.products.splice(index, 1));
-      }
+    const processOrder = async () => {
+      await placeOrder()
+      context.emit('nextStep')
     }
-  };
+
+    return {
+      products,
+      personalDetails,
+      shippingDetails,
+      billingDetails,
+      chosenShippingMethod,
+      chosenPaymentMethod,
+      getShippingMethodName,
+      getShippingMethodPrice,
+      billingSameAsShipping,
+      terms,
+      total,
+      subtotal,
+      removeFromCart,
+      processOrder,
+      tableHeaders: ["Description", "Colour", "Size", "Quantity", "Amount"]
+    }
+  }
+}
+
 </script>
+
 <style lang="scss" scoped>
 @import "~@storefront-ui/shared/styles/variables";
 

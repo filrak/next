@@ -1,8 +1,12 @@
-import { UseCheckout, AgnosticShippingMethod, AgnosticPaymentMethod, AgnosticCustomer, AgnosticShippingDetails, AgnosticBillingDetails } from '@vue-storefront/interfaces';
+import { UseCheckout, AgnosticPaymentMethod, AgnosticCustomer, AgnosticShippingDetails, AgnosticBillingDetails } from '@vue-storefront/interfaces';
 import { placeOrder as processOrder, getShippingMethods } from '@vue-storefront/commercetools-api';
-import { ref, Ref, watch, computed, reactive } from '@vue/composition-api'
-import { getCartProducts } from '@vue-storefront/commercetools-helpers'
+import { ref, Ref, watch, computed } from '@vue/composition-api'
 import { cart } from './../useCart'
+import {
+  getShippingMethodPrice,
+  getCartProducts
+} from '@vue-storefront/commercetools-helpers'
+import { ShippingMethod } from '@vue-storefront/commercetools-api/lib/src/types/GraphQL';
 
 const PAYMENT_METHODS_MOCK: AgnosticPaymentMethod[] = [
   {
@@ -27,38 +31,47 @@ const PAYMENT_METHODS_MOCK: AgnosticPaymentMethod[] = [
   }
 ]
 
-export default function useCheckout (): UseCheckout<any, any, any, any, any, any, any, any, any, any, any, any, any> {
-  const paymentMethods: Ref<any[]> = ref(PAYMENT_METHODS_MOCK)
-  const shippingMethods: Ref<any[]> = ref([])
-  const personalDetails: Ref<AgnosticCustomer> = ref({})
-  const shippingDetails: Ref<AgnosticShippingDetails> = ref({})
-  const billingDetails: Ref<AgnosticBillingDetails> = ref({})
-  const chosenPaymentMethod: Ref<string> = ref('')
-  const chosenShippingMethod: Ref<string> = ref('')
+const products = computed(() => getCartProducts(cart.value))
 
+export const paymentMethods: Ref<any[]> = ref(PAYMENT_METHODS_MOCK)
+export const shippingMethods: Ref<any[]> = ref([])
+export const personalDetails: Ref<AgnosticCustomer> = ref({})
+export const shippingDetails: Ref<AgnosticShippingDetails> = ref({})
+export const billingDetails: Ref<AgnosticBillingDetails> = ref({})
+export const chosenPaymentMethod: Ref<string> = ref('')
+export const chosenShippingMethod: Ref<any> = ref({})
+export const subtotal = computed(() =>
+  (products.value || [])
+    .map(({ qty, price }) => ({
+      price: price.special ? price.special : price.regular,
+      qty
+    }))
+    .reduce((previous, { qty, price }) => previous + parseInt(qty) * price,  0)
+    .toFixed(2)
+)
+
+export const total = computed(() =>
+  parseFloat(subtotal.value + (getShippingMethodPrice(chosenShippingMethod.value) || 0)).toFixed(2)
+)
+
+export const totalItems = computed(() => products.value.reduce(
+  (previous, { qty }) => previous + parseInt(qty), 0)
+)
+
+export default function useCheckout (): UseCheckout<any, any, any, any, any, any, any, any, any, any> {
   watch(async () => {
-    const shippingMethodsResponse = await getShippingMethods()
-    shippingMethods.value = shippingMethodsResponse.data.shippingMethods as any
+    if (shippingMethods.value.length === 0) {
+      const shippingMethodsResponse = await getShippingMethods()
+      shippingMethods.value = shippingMethodsResponse.data.shippingMethods as any
+    }
   })
 
-  const setPersonalDetails = (customer: AgnosticCustomer) => {
-    personalDetails.value = customer
-  }
-
-  const setShippingMethod = (shippingMethod: string) => {
-    console.log('ss', shippingMethod)
+  const setShippingMethod = (shippingMethod: ShippingMethod) => {
     chosenShippingMethod.value = shippingMethod
   }
 
-  const setShippingDetails = (details: AgnosticShippingDetails) => {
-    shippingDetails.value = details
-  }
-
-  const setBillingDetails = (billing: AgnosticBillingDetails) => {
-    billingDetails.value = billing
-  }
-
-  const setPaymentMethod = (paymentMethod: string) => {
+  const setPaymentMethod = (paymentMethod: any) => {
+    // TODO: selecting payment method
     chosenPaymentMethod.value = paymentMethod
   }
 
@@ -66,11 +79,10 @@ export default function useCheckout (): UseCheckout<any, any, any, any, any, any
     const orderData = {
       shippingDetails: shippingDetails.value,
       billingDetails: billingDetails.value,
-      shippingMethod: chosenPaymentMethod.value,
+      shippingMethod: chosenShippingMethod.value.id,
     }
-
+    console.log({ orderData })
     const orderResponse = await processOrder(cart.value, orderData)
-
     console.log('order response', orderResponse)
   }
 
@@ -83,14 +95,13 @@ export default function useCheckout (): UseCheckout<any, any, any, any, any, any
     personalDetails,
     shippingDetails,
     billingDetails,
-    setShippingDetails,
     chosenPaymentMethod,
     chosenShippingMethod,
-    setPersonalDetails,
     setPaymentMethod,
     setShippingMethod,
-    setBillingDetails,
     placeOrder,
+    total,
+    subtotal,
     loading,
     error
   }

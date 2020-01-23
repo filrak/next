@@ -107,6 +107,9 @@ export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): U
 
 // ShippingMethod
 
+export const getShippingMethodId = (shippingMethod: ShippingMethod): string =>
+  shippingMethod ? shippingMethod.id : ''
+
 export const getShippingMethodName = (shippingMethod: ShippingMethod): string =>
   shippingMethod ? shippingMethod.name : ''
 
@@ -114,7 +117,7 @@ export const getShippingMethodDescription = (shippingMethod: ShippingMethod): st
   shippingMethod ? shippingMethod.description : ''
 
 export const getShippingMethodPrice = (shippingMethod: ShippingMethod): number => {
-  if (!shippingMethod) {
+  if (!shippingMethod || !shippingMethod.zoneRates) {
     return null
   }
 

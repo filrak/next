@@ -3,16 +3,11 @@ import { apolloClient, locale, currency } from '../../index'
 import CreateMyOrderFromCartMutation from './defaultMutation'
 import { OrderMutationResponse } from '../../types/Api'
 
-const createMyOrderFromCart = async (cartDraft: OrderMyCartCommand): Promise<OrderMutationResponse> => {
+const createMyOrderFromCart = async (draft: OrderMyCartCommand): Promise<OrderMutationResponse> => {
   return await apolloClient.mutate({
     mutation: CreateMyOrderFromCartMutation,
-    variables: {
-      locale,
-      draft: {
-        currency,
-        ...cartDraft
-      }
-    }
+    variables: { locale, draft },
+    fetchPolicy: 'no-cache'
   })
 }
 

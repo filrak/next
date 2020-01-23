@@ -7,27 +7,19 @@
       />
       <div class="highlighted__header">
         <h3 class="highlighted__title">Personal details</h3>
-        <SfButton class="sf-button--text" @click="$emit('click:edit', 0)"
-          >Edit</SfButton
-        >
+        <SfButton class="sf-button--text" @click="$emit('click:edit', 0)">Edit</SfButton>
       </div>
       <p class="content">{{ personalDetails.firstName }} {{ personalDetails.lastName }}<br /></p>
-      <p class="content">
-        {{ personalDetails.email }}
-      </p>
+      <p class="content">{{ personalDetails.email }}</p>
     </div>
     <div class="highlighted">
       <div class="highlighted__header">
         <h3 class="highlighted__title">Shipping details</h3>
-        <SfButton class="sf-button--text" @click="$emit('click:edit', 1)"
-          >Edit</SfButton
-        >
+        <SfButton class="sf-button--text" @click="$emit('click:edit', 1)">Edit</SfButton>
       </div>
       <p class="content">
-        <span class="content__label">{{ getShippingMethodName(shippingMethod) }}</span
-        ><br />
-        {{ shippingDetails.streetName }} {{ shippingDetails.apartment }}, {{ shippingDetails.zipCode
-        }}<br />
+        <span class="content__label">{{ getShippingMethodName(chosenShippingMethod) }}</span><br />
+        {{ shippingDetails.streetName }} {{ shippingDetails.apartment }}, {{ shippingDetails.zipCode }}<br />
         {{ shippingDetails.city }}, {{ shippingDetails.country }}
       </p>
       <p class="content">{{ shippingDetails.phoneNumber }}</p>
@@ -35,19 +27,13 @@
     <div class="highlighted">
       <div class="highlighted__header">
         <h3 class="highlighted__title">Billing address</h3>
-        <SfButton class="sf-button--text" @click="$emit('click:edit', 2)"
-          >Edit</SfButton
-        >
+        <SfButton class="sf-button--text" @click="$emit('click:edit', 2)">Edit</SfButton>
       </div>
-      <p v-if="billingSameAsShipping" class="content">
-        Same as shipping address
-      </p>
+      <p v-if="billingSameAsShipping" class="content">Same as shipping address</p>
       <template v-else>
         <p class="content">
-          <span class="content__label">{{ chosenShippingMethod }}</span
-          ><br />
-          {{ billingDetails.streetName }} {{ billingDetails.apartment }}, {{ billingDetails.zipCode
-          }}<br />
+          <span class="content__label">{{ chosenPaymentMethod }}</span><br />
+          {{ billingDetails.streetName }} {{ billingDetails.apartment }}, {{ billingDetails.zipCode }}<br />
           {{ billingDetails.city }}, {{ billingDetails.country }}
         </p>
         <p class="content">{{ billingDetails.phoneNumber }}</p>
@@ -56,9 +42,7 @@
     <div class="highlighted">
       <div class="highlighted__header">
         <h3 class="highlighted__title">Payment method</h3>
-        <SfButton class="sf-button--text" @click="$emit('click:edit', 2)"
-          >Edit</SfButton
-        >
+        <SfButton class="sf-button--text" @click="$emit('click:edit', 2)">Edit</SfButton>
       </div>
       <p class="content">{{ paymentMethod.label }}</p>
     </div>
@@ -66,10 +50,13 @@
 </template>
 <script>
 import { SfHeading, SfButton } from "@storefront-ui/vue";
+import { computed, ref } from '@vue/composition-api'
+import { useCheckout } from '@vue-storefront/commercetools-composables'
 import {
   getShippingMethodName,
   getShippingMethodDescription,
-  getShippingMethodPrice
+  getShippingMethodPrice,
+  getCartProducts
 } from '@vue-storefront/commercetools-helpers'
 
 export default {
@@ -78,60 +65,18 @@ export default {
     SfHeading,
     SfButton
   },
-  props: {
-    personalDetails: {
-      type: Object,
-      default: () => ({})
-    },
-    shippingDetails: {
-      type: Object,
-      default: () => ({})
-    },
-    billingDetails: {
-      type: Object,
-      default: () => ({})
-    },
-    chosenShippingMethod: {
-      type: String,
-      default: ''
-    },
-    chosenPaymentMethod: {
-      type: String,
-      default: ''
-    },
-    shippingMethods: {
-      type: Array,
-      default: () => []
-    },
-    paymentMethods: {
-      type: Array,
-      default: () => []
-    },
-    billingSameAsShipping: {
-      tyle: Boolean,
-      default: false
-    }
-  },
-  data () {
+
+  setup(props) {
+    const { personalDetails, shippingDetails, chosenShippingMethod, chosenPaymentMethod } = useCheckout()
+
     return {
+      personalDetails,
+      shippingDetails,
+      chosenShippingMethod,
+      chosenPaymentMethod,
       getShippingMethodName,
       getShippingMethodDescription,
       getShippingMethodPrice
-    }
-  },
-  computed: {
-    shippingMethod() {
-      const shippingMethod = this.chosenShippingMethod;
-      return this.shippingMethods.find(
-        method => method.name === shippingMethod
-      );
-    },
-    paymentMethod() {
-      const paymentMethod = this.chosenPaymentMethod;
-      const method = this.paymentMethods.find(
-        method => method.value === paymentMethod
-      );
-      return method ? method : { label: "" };
     }
   }
 };

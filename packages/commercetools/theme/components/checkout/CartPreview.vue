@@ -7,9 +7,9 @@
       />
       <div class="total-items">
         <h3>Total items: {{ totalItems }}</h3>
-        <SfButton class="sf-button--text" @click="listIsHidden = !listIsHidden"
-          >{{ listIsHidden ? "Show" : "Hide" }} items list</SfButton
-        >
+        <SfButton class="sf-button--text" @click="listIsHidden = !listIsHidden">
+          {{ listIsHidden ? "Show" : "Hide" }} items list
+        </SfButton>
       </div>
       <transition name="fade">
         <div v-if="!listIsHidden" class="collected-product-list">
@@ -21,7 +21,8 @@
             :title="product.title"
             :regular-price="product.price.regular"
             class="collected-product"
-            @click:remove="removeProduct(index)"
+            @click:remove="removeFromCart(product)"
+            @input="updateQuantity(product)"
           >
             <template #configuration>
               <div class="product__properties">
@@ -42,9 +43,6 @@
                 </div>
               </div>
             </template>
-            <template #input>
-              <!--              <div></div>-->
-            </template>
           </SfCollectedProduct>
         </div>
       </transition>
@@ -62,7 +60,7 @@
       />
       <SfProperty
         name="Shipping"
-        :value="getShippingMethodPrice(shippingMethod)"
+        :value="getShippingMethodPrice(chosenShippingMethod)"
         class="sf-property--full-width property"
       />
       <SfProperty
@@ -72,11 +70,8 @@
       />
     </div>
     <div class="highlighted promo-code">
-      <SfButton
-        class="promo-code__button"
-        @click="showPromoCode = !showPromoCode"
-        >{{ showPromoCode ? "-" : "+" }} Promo Code</SfButton
-      >
+      <SfButton class="promo-code__button" @click="showPromoCode = !showPromoCode">
+        {{ showPromoCode ? "-" : "+" }} Promo Code</SfButton>
       <transition name="fade">
         <div v-if="showPromoCode">
           <SfInput
@@ -102,6 +97,7 @@
   </div>
 </template>
 <script>
+
 import {
   SfHeading,
   SfButton,
@@ -110,15 +106,18 @@ import {
   SfCharacteristic,
   SfInput
 } from "@storefront-ui/vue";
+import { computed, ref } from '@vue/composition-api'
+import { useCart, useCheckout } from '@vue-storefront/commercetools-composables'
 
 import {
   getShippingMethodName,
   getShippingMethodDescription,
-  getShippingMethodPrice
+  getShippingMethodPrice,
+  getCartProducts
 } from '@vue-storefront/commercetools-helpers'
 
 export default {
-  name: "OrderSummary",
+  name: "CartPreview",
   components: {
     SfHeading,
     SfButton,
@@ -127,40 +126,29 @@ export default {
     SfCharacteristic,
     SfInput
   },
-  props: {
-    order: {
-      type: Object,
-      default: () => ({})
-    },
-    products: {
-      type: Array,
-      default: () => []
-    },
-    shippingMethods: {
-      type: Array,
-      default: () => []
-    },
-    paymentMethods: {
-      type: Array,
-      default: () => []
-    },
-    chosenShippingMethod: {
-      type: String,
-      default: ''
-    }
-  },
-  setup() {
+  setup(props) {
+    const { chosenShippingMethod, subtotal, total} = useCheckout()
+    const { cart, removeFromCart, updateQuantity } = useCart()
+    const listIsHidden = ref(false)
+    const promoCode = ref('')
+    const showPromoCode = ref(false)
+    const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
+    const totalItems = computed(() => products.value.reduce((previous, current) => previous + current.qty, 0))
+
     return {
+      totalItems,
+      listIsHidden,
+      products,
+      chosenShippingMethod,
+      total,
+      subtotal,
+      promoCode,
+      showPromoCode,
+      removeFromCart,
+      updateQuantity,
       getShippingMethodName,
       getShippingMethodDescription,
-      getShippingMethodPrice
-    }
-  },
-  data() {
-    return {
-      promoCode: "",
-      showPromoCode: false,
-      listIsHidden: false,
+      getShippingMethodPrice,
       characteristics: [
         {
           title: "Safety",
@@ -179,59 +167,8 @@ export default {
           icon: "return"
         }
       ]
-    };
-  },
-  computed: {
-    totalItems() {
-      return (
-        "" +
-        this.products.reduce((previous, current) => {
-          return previous + current.qty;
-        }, 0)
-      );
-    },
-    shipping() {
-      return this.order.shipping;
-    },
-    shippingMethod() {
-      const shippingMethod = this.chosenShippingMethod;
-      return this.shippingMethods.find(
-        method => method.name === shippingMethod
-      );
-    },
-    payment() {
-      return this.order.payment;
-    },
-    paymentMethod() {
-      const paymentMethod = this.payment.paymentMethod;
-      const method = this.paymentMethods.find(
-        method => method.value === paymentMethod
-      );
-      return method ? method : { label: "" };
-    },
-    subtotal() {
-      const products = this.products;
-      const subtotal = products.reduce((previous, current) => {
-        const qty = current.qty;
-        const price = current.price.special
-          ? current.price.special
-          : current.price.regular;
-        const total = qty * price;
-        return previous + total;
-      }, 0);
-      return "$" + subtotal.toFixed(2);
-    },
-    total() {
-      const subtotal = parseFloat(this.subtotal.replace("$", ""));
-      const total = subtotal + getShippingMethodPrice(this.shippingMethod);
-      return "$" + total.toFixed(2);
     }
   },
-  methods: {
-    removeProduct(index) {
-      this.$emit("removeProduct", this.products.splice(index, 1));
-    }
-  }
 };
 </script>
 <style lang="scss" scoped>

@@ -2,156 +2,79 @@
   <div id="checkout">
     <div class="checkout">
       <div class="checkout__main">
-        <SfSteps :active="currentStep" @change="updateStep($event)">
-          <SfStep name="Personal Details">
-            <PersonalDetails
-              :personalDetails="personalDetails"
-              @update:personalDetails="setPersonalDetails($event)"
-              @click:forward="currentStep++"
-            />
-          </SfStep>
-          <SfStep name="Shipping">
-            <Shipping
-              :shippingDetails="shippingDetails"
-              :chosen-shipping-method="chosenShippingMethod"
-              :shipping-methods="shippingMethods"
-              @update:shippingDetails="setShippingDetails($event)"
-              @update:shippingMethod="setShippingMethod($event)"
-              @click:back="currentStep--"
-              @click:forward="currentStep++"
-            />
-          </SfStep>
-          <SfStep name="Payment">
-            <Payment
-              :billingDetails="billingDetails"
-              :payment-methods="paymentMethods"
-              :chosen-payment-method="chosenPaymentMethod"
-              @update:billingDetails="setBillingDetails($event)"
-              @update:paymentMethod="setPaymentMethod($event)"
-              @click:back="currentStep--"
-              @click:forward="currentStep++"
-            />
-          </SfStep>
-          <SfStep name="Review">
-            <ReviewOrder
-              :personalDetails="personalDetails"
-              :shipping-details="shippingDetails"
-              :billingDetails="billingDetails"
-              :shipping-methods="shippingMethods"
-              :payment-methods="paymentMethods"
-              :chosen-shipping-method="chosenShippingMethod"
-              :chosen-payment-method="chosenPaymentMethod"
-              :products="products"
-              @click:back="currentStep--"
-              @click:edit="currentStep = $event"
-              @click:placeOrder="placeOrder"
+        <SfSteps :active="currentStep" v-if="currentStep < 4">
+          <SfStep v-for="(step, index) in STEPS" :key="step.name" :name="step.label">
+            <nuxt-child
+              @showReview="handleShowReview"
+              @changeStep="updateStep($event)"
+              @nextStep="handleNextStep(index + 1)"
             />
           </SfStep>
         </SfSteps>
+        <nuxt-child v-else @changeStep="updateStep($event)" />
       </div>
-      <div class="checkout__aside desktop-only">
+      <div class="checkout__aside desktop-only" v-if="currentStep < 4">
         <transition name="fade">
-          <OrderSummary
-            v-if="currentStep <= 2"
-            key="order-summary"
-            :products="products"
-            :chosen-shipping-method="chosenShippingMethod"
-            :shipping-methods="shippingMethods"
-            :payment-methods="paymentMethods"
-          />
-          <OrderReview
-            v-else
-            key="order-review"
-            :personal-details="personalDetails"
-            :shipping-details="shippingDetails"
-            :billing-details="billingDetails"
-            :chosen-shipping-method="chosenShippingMethod"
-            :chosen-payment-method="chosenPaymentMethod"
-            :shipping-methods="shippingMethods"
-            :payment-methods="paymentMethods"
-            @click:edit="currentStep = $event"
-          />
+          <CartPreview v-if="showCartPreview" key="order-summary" />
+          <OrderReview v-else key="order-review" />
         </transition>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { SfSteps } from "@storefront-ui/vue";
 
-import PersonalDetails from "~/components/checkout/PersonalDetails"
-import Shipping from "~/components/checkout/Shipping"
-import Payment from "~/components/checkout/Payment"
-import ReviewOrder from "~/components/checkout/ReviewOrder"
-import OrderSummary from "~/components/checkout/OrderSummary"
+import { SfSteps } from "@storefront-ui/vue";
+import CartPreview from "~/components/checkout/CartPreview"
 import OrderReview from "~/components/checkout/OrderReview"
 import { computed, ref } from '@vue/composition-api'
-
-import { useCheckout, useCart } from '@vue-storefront/commercetools-composables'
+import { useCart } from '@vue-storefront/commercetools-composables'
 import { getCartProducts } from '@vue-storefront/commercetools-helpers'
+
+const STEPS = [
+  { name: 'personal-details', label: 'Personal Details' },
+  { name: 'shipping', label: 'Shipping' },
+  { name: 'payment', label: 'Payment' },
+  { name: 'order-review', label: 'Review' }
+]
 
 export default {
   name: "Checkout",
   components: {
     SfSteps,
-    PersonalDetails,
-    Shipping,
-    Payment,
-    ReviewOrder,
-    OrderSummary,
+    CartPreview,
     OrderReview
   },
-  setup () {
+  setup (props, context) {
+    const showCartPreview = ref(true)
     const currentStep = ref(0)
-    const {
-      personalDetails,
-      setPersonalDetails,
-
-      shippingDetails,
-      setShippingDetails,
-      setShippingMethod,
-      chosenShippingMethod,
-
-      billingDetails,
-      setBillingDetails,
-      chosenPaymentMethod,
-      setPaymentMethod,
-
-      paymentMethods,
-      shippingMethods,
-      placeOrder
-    } = useCheckout()
     const { cart } = useCart()
-
     const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
 
+    const handleShowReview = () => {
+      showCartPreview.value = false
+    }
+
     const updateStep = (next) => {
-      if (next < currentStep.value) {
-        currentStep.value = next;
-      }
+      currentStep.value = next;
+    }
+
+    const handleNextStep = (nextStep) => {
+      context.root.$router.push(nextStep < 4 ? STEPS[nextStep].name : 'thank-you')
     }
 
     return {
+      STEPS,
+      handleNextStep,
       currentStep,
       updateStep,
-      personalDetails,
-      setPersonalDetails,
-      shippingDetails,
-      setShippingDetails,
-      setShippingMethod,
-      chosenShippingMethod,
-      billingDetails,
-      setBillingDetails,
-      chosenPaymentMethod,
-      setPaymentMethod,
-      paymentMethods,
-      shippingMethods,
-      products,
-      placeOrder
+      handleShowReview,
+      showCartPreview
     }
   }
 };
 </script>
+
 <style lang="scss" scoped>
 @import "~@storefront-ui/shared/styles/variables";
 @import "~@storefront-ui/shared/styles/helpers/visibility";

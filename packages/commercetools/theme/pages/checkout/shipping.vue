@@ -6,62 +6,62 @@
     />
     <div class="form">
       <SfInput
-        v-model="firstName"
+        v-model="shippingDetails.firstName"
         label="First name"
         name="firstName"
         class="form__element form__element--half"
         required
       />
       <SfInput
-        v-model="lastName"
+        v-model="shippingDetails.lastName"
         label="Last name"
         name="lastName"
         class="form__element form__element--half form__element--half-even"
         required
       />
       <SfInput
-        v-model="streetName"
+        v-model="shippingDetails.streetName"
         label="Street name"
         name="streetName"
         class="form__element"
         required
       />
       <SfInput
-        v-model="apartment"
+        v-model="shippingDetails.apartment"
         label="House/Apartment number"
         name="apartment"
         class="form__element"
         required
       />
       <SfInput
-        v-model="city"
+        v-model="shippingDetails.city"
         label="City"
         name="city"
         class="form__element form__element--half"
         required
       />
       <SfInput
-        v-model="state"
+        v-model="shippingDetails.state"
         label="State/Province"
         name="state"
         class="form__element form__element--half form__element--half-even"
         required
       />
       <SfInput
-        v-model="zipCode"
+        v-model="shippingDetails.zipCode"
         label="Zip-code"
         name="zipCode"
         class="form__element form__element--half"
         required
       />
       <SfSelect
-        v-model="country"
+        v-model="shippingDetails.country"
         label="Country"
         class="form__element form__element--half form__element--half-even form__select sf-select--underlined"
         required
       >
         <SfSelectOption
-          v-for="countryOption in countries"
+          v-for="countryOption in COUNTRIES"
           :key="countryOption.key"
           :value="countryOption.key"
         >
@@ -69,7 +69,7 @@
         </SfSelectOption>
       </SfSelect>
       <SfInput
-        v-model="phoneNumber"
+        v-model="shippingDetails.phoneNumber"
         label="Phone number"
         name="phone"
         class="form__element"
@@ -85,9 +85,10 @@
         <SfRadio
           v-for="item in shippingMethods"
           :key="getShippingMethodName(item)"
-          v-model="shippingMethod"
           :label="getShippingMethodName(item)"
-          :value="getShippingMethodName(item)"
+          :value="getShippingMethodId(item)"
+          :selected="getShippingMethodId(chosenShippingMethod)"
+          @input="setShippingMethod(item)"
           name="shippingMethod"
           :description="getShippingMethodDescription(item)"
           class="form__element form__radio shipping"
@@ -108,20 +109,20 @@
         </SfRadio>
       </div>
       <div class="form__action">
-        <SfButton
-          class="sf-button--full-width form__action-button"
-          @click="toPayment"
-          >Continue to payment</SfButton
-        >
+        <SfButton class="sf-button--full-width form__action-button" @click="$emit('nextStep')">
+          Continue to payment
+        </SfButton>
         <SfButton
           class="sf-button--full-width sf-button--text form__action-button form__action-button--secondary"
-          @click="$emit('click:back')"
-          >Go back to Personal details</SfButton
+          @click="$emit('click:back')">
+            Go back to Personal details
+        </SfButton
         >
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import {
   SfHeading,
@@ -131,104 +132,56 @@ import {
   SfRadio
 } from "@storefront-ui/vue";
 
+import { ref, onBeforeUnmount } from '@vue/composition-api'
 import {
   getShippingMethodName,
   getShippingMethodDescription,
-  getShippingMethodPrice
+  getShippingMethodPrice,
+  getShippingMethodId
 } from '@vue-storefront/commercetools-helpers'
+import { useCheckout } from '@vue-storefront/commercetools-composables'
+
+const COUNTRIES = [
+  { key: 'US', label: "United States" },
+  { key: 'UK', label: "United Kingdom" },
+  { key: 'IT', label: "Italy" },
+  { key: 'PL', label: "Poland" },
+]
 
 export default {
-  name: "Shipping",
-  components: {
+  name: "PersonalDetails",
+    components: {
     SfHeading,
     SfInput,
     SfButton,
     SfSelect,
     SfRadio
   },
-  props: {
-    shippingDetails: {
-      type: Object,
-      default: () => ({})
-    },
-    chosenShippingMethod: {
-      type: String,
-      default: ''
-    },
-    shippingMethods: {
-      type: Array,
-      default: () => []
-    }
-  },
-  setup() {
+  setup(props, context) {
+    context.emit('changeStep', 1)
+    const {
+      shippingDetails,
+      chosenShippingMethod,
+      shippingMethods,
+      setShippingMethod
+    } = useCheckout()
+
     return {
+      shippingDetails,
+      chosenShippingMethod,
+      shippingMethods,
+      setShippingMethod,
       getShippingMethodName,
       getShippingMethodDescription,
       getShippingMethodPrice,
+      getShippingMethodId,
+      COUNTRIES
     }
   },
-  data() {
-    return {
-      firstName: "",
-      lastName: "",
-      streetName: "",
-      apartment: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      country: "",
-      phoneNumber: "",
-      shippingMethod: "",
-      countries: [
-        { key: 'US', label: "United States" },
-        { key: 'UK', label: "United Kingdom" },
-        { key: 'IT', label: "Italy" },
-        { key: 'PL', label: "Poland" },
-      ]
-    };
-  },
-  watch: {
-    shippingDetails: {
-      handler(value) {
-        this.firstName = value.firstName;
-        this.lastName = value.lastName;
-        this.streetName = value.streetName;
-        this.apartment = value.apartment;
-        this.city = value.city;
-        this.state = value.state;
-        this.zipCode = value.zipCode;
-        this.country = value.country;
-        this.phoneNumber = value.phoneNumber;
-      },
-      immediate: true
-    },
-    chosenShippingMethod: {
-      handler(value) {
-        this.shippingMethod = value;
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    toPayment() {
-      const shippingDetails = { ...this.shippingDetails };
-      shippingDetails.firstName = this.firstName;
-      shippingDetails.lastName = this.lastName;
-      shippingDetails.streetName = this.streetName;
-      shippingDetails.apartment = this.apartment;
-      shippingDetails.city = this.city;
-      shippingDetails.state = this.state;
-      shippingDetails.zipCode = this.zipCode;
-      shippingDetails.country = this.country;
-      shippingDetails.phoneNumber = this.phoneNumber;
+}
 
-      this.$emit("update:shippingDetails", shippingDetails);
-      this.$emit("update:shippingMethod", this.shippingMethod);
-      this.$emit("click:forward");
-    }
-  }
-};
 </script>
+
 <style lang="scss" scoped>
 @import "~@storefront-ui/shared/styles/variables";
 

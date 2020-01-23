@@ -32,7 +32,8 @@ export const setShippingAddressAction = (shippingDetails: AgnosticShippingDetail
       streetName: shippingDetails.streetName,
       streetNumber: '',
       city: shippingDetails.city,
-      state: shippingDetails.state,
+      // TODO:: selecting state
+      // state: shippingDetails.state,
       postalCode: shippingDetails.zipCode,
       country: shippingDetails.country,
       phone: shippingDetails.phoneNumber,
@@ -56,7 +57,8 @@ export const setBillingAddressAction = (shippingDetails: AgnosticBillingDetails)
       streetName: shippingDetails.streetName,
       streetNumber: '',
       city: shippingDetails.city,
-      state: shippingDetails.state,
+      // TODO:: selecting state
+      // state: shippingDetails.state,
       postalCode: shippingDetails.zipCode,
       country: shippingDetails.country,
       phone: shippingDetails.phoneNumber,
