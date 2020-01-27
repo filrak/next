@@ -1,6 +1,5 @@
-import { UiCartProduct, AgnosticShippingDetails, AgnosticBillingDetails } from '@vue-storefront/interfaces'
-import { ProductVariant, AddCartPayment } from './../../types/GraphQL'
-
+import { UiCartProduct } from '@vue-storefront/interfaces'
+import { ProductVariant, AddressInput } from './../../types/GraphQL'
 
 export const createAddLineItemAction = (variant: ProductVariant, quantity: number) => ({
   addLineItem: {
@@ -24,7 +23,7 @@ export const createChangeLineItemQuantityAction = (product: UiCartProduct) => ({
   }
 })
 
-export const setShippingAddressAction = (shippingDetails: AgnosticShippingDetails) => ({
+export const setShippingAddressAction = (shippingDetails: AddressInput) => ({
   setShippingAddress: {
     address: {
       firstName: shippingDetails.firstName,
@@ -34,9 +33,9 @@ export const setShippingAddressAction = (shippingDetails: AgnosticShippingDetail
       city: shippingDetails.city,
       // TODO:: selecting state
       // state: shippingDetails.state,
-      postalCode: shippingDetails.zipCode,
+      postalCode: shippingDetails.postalCode,
       country: shippingDetails.country,
-      phone: shippingDetails.phoneNumber,
+      phone: shippingDetails.phone,
     }
   }
 })
@@ -49,7 +48,7 @@ export const setShippingMethodAction = (shippingMethodId: string) => ({
   }
 })
 
-export const setBillingAddressAction = (shippingDetails: AgnosticBillingDetails) => ({
+export const setBillingAddressAction = (shippingDetails: AddressInput) => ({
   setBillingAddress: {
     address: {
       firstName: shippingDetails.firstName,
@@ -59,9 +58,9 @@ export const setBillingAddressAction = (shippingDetails: AgnosticBillingDetails)
       city: shippingDetails.city,
       // TODO:: selecting state
       // state: shippingDetails.state,
-      postalCode: shippingDetails.zipCode,
+      postalCode: shippingDetails.postalCode,
       country: shippingDetails.country,
-      phone: shippingDetails.phoneNumber,
+      phone: shippingDetails.phone,
     }
   }
 })

@@ -113,7 +113,11 @@ import {
   getShippingMethodName,
   getShippingMethodDescription,
   getShippingMethodPrice,
-  getCartProducts
+  getCartProducts,
+  getCartTotalPrice,
+  getCartSubtotalPrice,
+  getCartShippingPrice,
+  getCartTotalItems
 } from '@vue-storefront/commercetools-helpers'
 
 export default {
@@ -127,13 +131,15 @@ export default {
     SfInput
   },
   setup(props) {
-    const { chosenShippingMethod, subtotal, total} = useCheckout()
+    const { chosenShippingMethod } = useCheckout()
     const { cart, removeFromCart, updateQuantity } = useCart()
     const listIsHidden = ref(false)
     const promoCode = ref('')
     const showPromoCode = ref(false)
     const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
-    const totalItems = computed(() => products.value.reduce((previous, current) => previous + current.qty, 0))
+    const totalItems = computed(() => getCartTotalItems(cart.value))
+    const subtotal = computed(() => getCartSubtotalPrice(cart.value))
+    const total = computed(() => getCartTotalPrice(cart.value))
 
     return {
       totalItems,

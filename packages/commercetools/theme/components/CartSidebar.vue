@@ -82,6 +82,12 @@ import { computed } from '@vue/composition-api'
 import { useCart } from '@vue-storefront/commercetools-composables'
 import { getCartProducts } from '@vue-storefront/commercetools-helpers'
 import uiState from '~/assets/ui-state'
+import {
+  getCartProducts,
+  getCartSubtotalPrice
+} from '@vue-storefront/commercetools-helpers'
+import { isCartSidebarOpen, toggleCartSidebar } from '~/assets/ui-state'
+
 const { isCartSidebarOpen, toggleCartSidebar } = uiState
 
 export default {
@@ -102,34 +108,22 @@ export default {
   setup() {
     const { cart, removeFromCart, updateQuantity } = useCart()
     const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
+    const totalPrice = computed(() => getCartSubtotalPrice(cart.value))
+    const totalItems = computed(() => products.value.reduce(
+      (totalItems, product) => totalItems + parseInt(product.qty, 10),
+      0
+    ))
 
     return {
       products,
       removeFromCart,
       updateQuantity,
       isCartSidebarOpen,
-      toggleCartSidebar
+      toggleCartSidebar,
+      totalPrice,
+      totalItems
     };
-  },
-  computed: {
-    totalItems() {
-      return this.products.reduce(
-        (totalItems, product) => totalItems + parseInt(product.qty, 10),
-        0
-      );
-    },
-    totalPrice() {
-      return this.products
-        .reduce((totalPrice, product) => {
-          const price = product.price.special
-            ? product.price.special
-            : product.price.regular;
-          const summary = parseFloat(price).toFixed(2) * product.qty;
-          return totalPrice + summary;
-        }, 0)
-        .toFixed(2);
-    }
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

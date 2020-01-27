@@ -182,7 +182,9 @@ import {
 import {
   getShippingMethodName,
   getShippingMethodPrice,
-  getCartProducts
+  getCartProducts,
+  getCartTotalPrice,
+  getCartSubtotalPrice
 } from '@vue-storefront/commercetools-helpers'
 import { ref, computed } from '@vue/composition-api'
 import { useCheckout, useCart } from '@vue-storefront/commercetools-composables'
@@ -206,14 +208,14 @@ export default {
     const terms = ref(false)
     const { cart, removeFromCart, updateQuantity } = useCart()
     const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
+    const subtotal = computed(() => getCartSubtotalPrice(cart.value))
+    const total = computed(() => getCartTotalPrice(cart.value))
     const {
       personalDetails,
       shippingDetails,
       billingDetails,
       chosenShippingMethod,
       chosenPaymentMethod,
-      total,
-      subtotal,
       placeOrder
     } = useCheckout()
 

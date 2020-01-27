@@ -54,7 +54,7 @@
         required
       />
       <SfInput
-        v-model="billingDetails.zipCode"
+        v-model="billingDetails.postalCode"
         label="Zip-code"
         name="zipCode"
         class="form__element form__element--half"
@@ -75,7 +75,7 @@
         </SfSelectOption>
       </SfSelect>
       <SfInput
-        v-model="billingDetails.phoneNumber"
+        v-model="billingDetails.phone"
         label="Phone number"
         name="phone"
         class="form__element"

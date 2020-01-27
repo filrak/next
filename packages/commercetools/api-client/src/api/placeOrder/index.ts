@@ -1,7 +1,6 @@
-import { AgnosticShippingDetails, AgnosticBillingDetails } from '@vue-storefront/interfaces'
 import updateCart from '../updateCart'
 import { CartResponse, OrderResponse } from '../../types/Api'
-import { Cart } from '../../types/GraphQL'
+import { Cart, AddressInput } from '../../types/GraphQL'
 import {
   setShippingAddressAction,
   setShippingMethodAction,
@@ -12,8 +11,8 @@ import createMyOrderFromCart from './../createMyOrderFromCart'
 import { CartUpdateAction } from '../../types/GraphQL'
 
 interface Order {
-  shippingDetails: AgnosticShippingDetails
-  billingDetails: AgnosticBillingDetails
+  shippingDetails: AddressInput
+  billingDetails: AddressInput
   shippingMethod: string
   paymentMethod?: string
 }

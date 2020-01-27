@@ -109,6 +109,22 @@ export const CartFragment = `
     customer {
       ...DefaultCustomer
     }
+    totalPrice {
+      centAmount
+    }
+    taxedPrice {
+      totalNet {
+        centAmount
+      }
+      totalGross {
+        centAmount
+      }
+    }
+    shippingInfo {
+      price {
+        centAmount
+      }
+    }
     cartState
     version
   }

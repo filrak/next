@@ -104,6 +104,25 @@ export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): U
   }))
 }
 
+export const getCartTotalPrice = (cart: Cart): number => {
+  if (!cart) {
+    return 0
+  }
+
+  const subtotal = cart.totalPrice.centAmount
+  const shipping = cart.shippingInfo ? cart.shippingInfo.price.centAmount : 0
+
+  return (shipping + subtotal) / 100
+}
+export const getCartSubtotalPrice = (cart: Cart): number => cart ? cart.totalPrice.centAmount / 100 : 0
+export const getCartShippingPrice = (cart: Cart): number => cart && cart.shippingInfo ? cart.shippingInfo.price.centAmount / 100 : 0
+export const getCartTotalItems = (cart: Cart): number => {
+  if (!cart) {
+    return 0
+  }
+
+  return cart.lineItems.reduce((previous, current) => previous + current.quantity, 0)
+}
 
 // ShippingMethod
 

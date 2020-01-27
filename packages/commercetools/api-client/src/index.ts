@@ -13,7 +13,8 @@ import updateCartQuantity from './api/updateCartQuantity'
 import getMe from './api/getMe'
 import placeOrder from './api/placeOrder'
 import createMyOrderFromCart from './api/createMyOrderFromCart'
-import getShippingMethods from './api/getShippingMethods'
+import getShippingMethodsByCartId from './api/getShippingMethodsByCartId'
+import updateShippingDetails from './api/updateShippingDetails'
 import getStorage from './helpers/createCommerceToolsLink/getStorage'
 
 let apolloClient: ApolloClient<any> = null
@@ -52,5 +53,6 @@ export {
   updateCartQuantity,
   placeOrder,
   createMyOrderFromCart,
-  getShippingMethods
+  getShippingMethodsByCartId,
+  updateShippingDetails
 }

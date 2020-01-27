@@ -48,7 +48,7 @@
         required
       />
       <SfInput
-        v-model="shippingDetails.zipCode"
+        v-model="shippingDetails.postalCode"
         label="Zip-code"
         name="zipCode"
         class="form__element form__element--half"
@@ -69,7 +69,7 @@
         </SfSelectOption>
       </SfSelect>
       <SfInput
-        v-model="shippingDetails.phoneNumber"
+        v-model="shippingDetails.phone"
         label="Phone number"
         name="phone"
         class="form__element"

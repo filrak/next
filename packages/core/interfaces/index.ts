@@ -99,8 +99,6 @@ export interface UseCheckout
   setPaymentMethod: SET_PAYMENT_METHOD
   setShippingMethod: SET_SHIPPING_METHOD
   placeOrder: PLACE_ORDER
-  total: any,
-  subtotal: any
   loading: Ref<boolean>
   error: any;
 }
@@ -147,48 +145,4 @@ export interface AgnosticProductAttribute {
   name: string,
   value: string | Object
   label: string
-}
-
-export interface AgnosticShippingMethod {
-  isOpen: boolean
-  price: string
-  delivery: string
-  label: string
-  value: string
-  description: string
-}
-
-export interface AgnosticPaymentMethod {
-  label: string
-  value: string
-}
-
-export interface AgnosticShippingDetails {
-  firstName: string,
-  lastName: string,
-  streetName: string,
-  apartment: string,
-  city: string,
-  state?: string,
-  zipCode: string,
-  country: string,
-  phoneNumber: string,
-}
-
-export interface AgnosticBillingDetails {
-  firstName: string,
-  lastName: string,
-  streetName: string,
-  apartment: string,
-  city: string,
-  state?: string,
-  zipCode: string,
-  country: string,
-  phoneNumber: string,
-}
-
-export interface AgnosticCustomer {
-  firstName: string
-  lastName: string
-  email: string
 }

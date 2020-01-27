@@ -1,5 +1,5 @@
 import { OrderMyCartCommand } from '../../types/GraphQL'
-import { apolloClient, locale, currency } from '../../index'
+import { apolloClient, locale } from '../../index'
 import CreateMyOrderFromCartMutation from './defaultMutation'
 import { OrderMutationResponse } from '../../types/Api'
 
