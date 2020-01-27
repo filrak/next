@@ -110,7 +110,7 @@ export default {
     const { cart, removeFromCart, updateQuantity } = useCart()
     const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
     const totalPrice = computed(() => getCartSubtotalPrice(cart.value))
-    const totalItems = computed(() => getCartSubtotalPrice(cart.value)))
+    const totalItems = computed(() => getCartSubtotalPrice(cart.value))
 
     return {
       products,
