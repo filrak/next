@@ -80,14 +80,12 @@ import {
 } from '@storefront-ui/vue'
 import { computed } from '@vue/composition-api'
 import { useCart } from '@vue-storefront/commercetools-composables'
-import { getCartProducts } from '@vue-storefront/commercetools-helpers'
 import uiState from '~/assets/ui-state'
 import {
   getCartProducts,
   getCartSubtotalPrice,
   getCartTotalItems
 } from '@vue-storefront/commercetools-helpers'
-import { isCartSidebarOpen, toggleCartSidebar } from '~/assets/ui-state'
 
 const { isCartSidebarOpen, toggleCartSidebar } = uiState
 
