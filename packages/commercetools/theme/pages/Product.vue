@@ -6,23 +6,29 @@
     />
     <div class="product">
       <div class="product__gallery">
-        <SfImage
-          v-for="(image, i) in getProductGallery(product).splice(0, 2)" :key="i"
-          :src="image.big"
-          class="desktop-only"
-        />
         <SfGallery
           class="gallery-mobile mobile-only"
+          :image-width="375"
+          :image-height="490"
           :images="[
             {
               mobile: { url: '/productpage/productM.jpg' },
-              desktop: { url: '/productpage/productM.jpg' }
+              desktop: { url: '/productpage/productM.jpg' },
+              big: { url: '/productpage/productM.jpg' }
             },
             {
               mobile: { url: '/productpage/productM.jpg' },
-              desktop: { url: '/productpage/productM.jpg' }
+              desktop: { url: '/productpage/productM.jpg' },
+              big: { url: '/productpage/productM.jpg' }
             }
           ]"
+        />
+        <SfImage
+          v-for="(image, i) in getProductGallery(product).splice(0, 2)" :key="i"
+          :src="image.big"
+          :width="590"
+          :height="700"
+          class="desktop-only"
         />
       </div>
       <div class="product__description">
@@ -190,48 +196,7 @@
         </SfCarouselItem>
       </SfCarousel>
     </SfSection>
-    <SfSection
-      title-heading="Share Your Look"
-      subtitle-heading="#YOURLOOK"
-      class="section"
-    >
-      <div class="images-grid">
-        <div class="images-grid__row">
-          <div class="images-grid__col">
-            <SfImage src="/homepage/imageA.jpg"
-              >katherina_trn</SfImage
-            >
-          </div>
-          <div class="images-grid__col">
-            <SfImage src="/homepage/imageB.jpg"
-              >katherina_trn</SfImage
-            >
-          </div>
-          <div class="images-grid__col">
-            <SfImage src="/homepage/imageC.jpg"
-              >katherina_trn</SfImage
-            >
-          </div>
-        </div>
-        <div class="images-grid__row">
-          <div class="images-grid__col">
-            <SfImage src="/homepage/imageC.jpg"
-              >katherina_trn</SfImage
-            >
-          </div>
-          <div class="images-grid__col">
-            <SfImage src="/homepage/imageD.jpg"
-              >katherina_trn</SfImage
-            >
-          </div>
-          <div class="images-grid__col">
-            <SfImage src="/homepage/imageA.jpg"
-              >katherina_trn</SfImage
-            >
-          </div>
-        </div>
-      </div>
-    </SfSection>
+    <InstagramFeed />
     <SfBanner
       title="Download our application to your mobile"
       image="/homepage/bannerD.png"
@@ -282,7 +247,8 @@ import {
   SfSticky,
   SfReview,
   SfBreadcrumbs
-} from "@storefront-ui/vue";
+} from '@storefront-ui/vue'
+import InstagramFeed from '~/components/InstagramFeed.vue'
 import { ref, computed } from '@vue/composition-api'
 
 import { useProduct, useCart } from '@vue-storefront/commercetools-composables'
@@ -310,15 +276,15 @@ export default {
 
     const attributes = computed(() => getProductAttributes(product.value))
 
-    return { 
+    return {
       product,
       attributes,
       getProductName,
       getProductPrice,
       getProductGallery,
-      qty, 
-      addToCart, 
-      loading 
+      qty,
+      addToCart,
+      loading
     }
   },
   components: {
@@ -339,7 +305,8 @@ export default {
     SfBanner,
     SfSticky,
     SfReview,
-    SfBreadcrumbs
+    SfBreadcrumbs,
+    InstagramFeed
   },
   data() {
     return {
@@ -537,47 +504,13 @@ export default {
   @supports (-webkit-overflow-scrolling: touch) {
     height: calc(100vh - #{$height-iOS});
   }
-  ::v-deep .glide {
-    &,
-    * {
-      height: 100%;
-    }
-    &__slide {
-      position: relative;
-      overflow: hidden;
-    }
+  ::v-deep .sf-image {
     img {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      min-width: calc((375 / 490) * (100vh - #{$height-other}));
-      @supports (-webkit-overflow-scrolling: touch) {
-        min-width: calc((375 / 490) * (100vh - #{$height-iOS}));
-      }
+      width: 100%;
     }
   }
   ::v-deep .sf-gallery__stage {
     width: 100%;
-  }
-}
-.images-grid {
-  &__row {
-    display: flex;
-    & + & {
-      margin-top: $spacer-big / 2;
-      @include for-desktop {
-        margin-top: $spacer-big;
-      }
-    }
-  }
-  &__col {
-    margin: 0;
-    & + & {
-      margin-left: $spacer-big / 2;
-      @include for-desktop {
-        margin-left: $spacer-big;
-      }
-    }
   }
 }
 .product {
