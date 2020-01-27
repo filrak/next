@@ -85,7 +85,7 @@ import uiState from '~/assets/ui-state'
 import {
   getCartProducts,
   getCartSubtotalPrice,
-  getCartSubtotalPrice
+  getCartTotalItems
 } from '@vue-storefront/commercetools-helpers'
 import { isCartSidebarOpen, toggleCartSidebar } from '~/assets/ui-state'
 
@@ -110,7 +110,7 @@ export default {
     const { cart, removeFromCart, updateQuantity } = useCart()
     const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
     const totalPrice = computed(() => getCartSubtotalPrice(cart.value))
-    const totalItems = computed(() => getCartSubtotalPrice(cart.value))
+    const totalItems = computed(() => getCartTotalItems(cart.value))
 
     return {
       products,
