@@ -38,8 +38,8 @@ export default {
     '@nuxt/typescript-build' // to core
   ],
   plugins: [
-    '~/plugins/commercetools',
-    '~/plugins/html-serializer'
+    '~/prismic/plugins/commercetools',
+    '~/prismic/plugins/html-serializer'
   ],
   modules: [
     '@nuxtjs/prismic',
@@ -52,8 +52,8 @@ export default {
     }]
   ],
   plugins: [
-    './plugins/commercetools.js',
-    './plugins/html-serializer.js'
+    './prismic/plugins/commercetools.js',
+    './prismic/plugins/html-serializer.js'
   ],
   prismic: {
     endpoint: 'https://lovecrafts-dev.cdn.prismic.io/api/v2'

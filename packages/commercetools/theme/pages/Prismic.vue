@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import CustomPage from '../components/prismic/CustomPage'
+// @defudef: This is just an example how to use Prismic. It will be deleted soon.
+import CustomPage from '../prismic/components/prismic/CustomPage'
 
 export default {
   components: {
