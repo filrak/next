@@ -88,7 +88,7 @@
           :label="getShippingMethodName(item)"
           :value="getShippingMethodId(item)"
           :selected="getShippingMethodId(chosenShippingMethod)"
-          @input="setShippingMethod(item)"
+          @input="() => chosenShippingMethod = item"
           name="shippingMethod"
           :description="getShippingMethodDescription(item)"
           class="form__element form__radio shipping"
@@ -163,14 +163,12 @@ export default {
       shippingDetails,
       chosenShippingMethod,
       shippingMethods,
-      setShippingMethod
     } = useCheckout()
 
     return {
       shippingDetails,
       chosenShippingMethod,
       shippingMethods,
-      setShippingMethod,
       getShippingMethodName,
       getShippingMethodDescription,
       getShippingMethodPrice,

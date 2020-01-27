@@ -85,8 +85,6 @@ export interface UseCheckout
   BILLING_DETAILS,
   CHOOSEN_PAYMENT_METHOD,
   CHOOSEN_SHIPPING_METHOD,
-  SET_PAYMENT_METHOD,
-  SET_SHIPPING_METHOD,
   PLACE_ORDER,
 > {
   paymentMethods: Ref<PAYMENT_METHODS>
@@ -96,8 +94,6 @@ export interface UseCheckout
   billingDetails: BILLING_DETAILS
   chosenPaymentMethod: CHOOSEN_PAYMENT_METHOD
   chosenShippingMethod: CHOOSEN_SHIPPING_METHOD
-  setPaymentMethod: SET_PAYMENT_METHOD
-  setShippingMethod: SET_SHIPPING_METHOD
   placeOrder: PLACE_ORDER
   loading: Ref<boolean>
   error: any;

@@ -13,7 +13,7 @@ import updateCartQuantity from './api/updateCartQuantity'
 import getMe from './api/getMe'
 import placeOrder from './api/placeOrder'
 import createMyOrderFromCart from './api/createMyOrderFromCart'
-import getShippingMethodsByCartId from './api/getShippingMethodsByCartId'
+import getShippingMethods from './api/getShippingMethods'
 import updateShippingDetails from './api/updateShippingDetails'
 import getStorage from './helpers/createCommerceToolsLink/getStorage'
 
@@ -53,6 +53,6 @@ export {
   updateCartQuantity,
   placeOrder,
   createMyOrderFromCart,
-  getShippingMethodsByCartId,
+  getShippingMethods,
   updateShippingDetails
 }

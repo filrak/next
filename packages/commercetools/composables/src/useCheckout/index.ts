@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import { UseCheckout } from '@vue-storefront/interfaces';
-import { placeOrder as processOrder, getShippingMethodsByCartId } from '@vue-storefront/commercetools-api';
+import { placeOrder as processOrder, getShippingMethods } from '@vue-storefront/commercetools-api';
 import { ref, Ref, watch } from '@vue/composition-api'
 import { cart } from './../useCart'
 import { ShippingMethod, AddressInput, Customer } from '@vue-storefront/commercetools-api/lib/src/types/GraphQL';
@@ -36,23 +36,17 @@ export const billingDetails: Ref<AddressInput> = ref({})
 export const chosenPaymentMethod: Ref<string> = ref('')
 export const chosenShippingMethod: Ref<ShippingMethod> = ref({})
 
-export default function useCheckout (): UseCheckout<any, any, any, any, any, any, any, any, any, any> {
+
+ // TODO(CHECKOUT): selecting payment method
+export default function useCheckout (): UseCheckout<any, any, any, any, any, any, any, any> {
   watch(async () => {
-    if (shippingMethods.value.length === 0 && cart.value) {
+    if (shippingMethods.value.length === 0) {
       // TODO(CHECKOUT): Update shipping data for each update form
-      const shippingMethodsResponse = await getShippingMethodsByCartId(cart.value.id)
-      shippingMethods.value = shippingMethodsResponse.data.shippingMethods as any
+      const shippingMethodsResponse = await getShippingMethods()
+      shippingMethods.value = shippingMethodsResponse.data.shippingMethods.results as any
     }
   })
 
-  const setShippingMethod = (shippingMethod: ShippingMethod) => {
-    chosenShippingMethod.value = shippingMethod
-  }
-
-  const setPaymentMethod = (paymentMethod: any) => {
-    // TODO(CHECKOUT): selecting payment method
-    chosenPaymentMethod.value = paymentMethod
-  }
 
   const placeOrder = async () => {
     const orderData = {
@@ -75,8 +69,6 @@ export default function useCheckout (): UseCheckout<any, any, any, any, any, any
     billingDetails,
     chosenPaymentMethod,
     chosenShippingMethod,
-    setPaymentMethod,
-    setShippingMethod,
     placeOrder,
     loading,
     error
