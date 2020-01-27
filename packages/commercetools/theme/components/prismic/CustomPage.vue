@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{blocks.length}}
     <prismic-block :key="block.key" v-for="block in blocks" :block="block" />
   </div>
 </template>
