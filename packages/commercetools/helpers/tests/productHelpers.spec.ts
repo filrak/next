@@ -4,7 +4,9 @@ import {
   getProductPrice,
   getProductGallery,
   getProductVariants,
-  getProductAttributes
+  getProductAttributes,
+  getProductOptions,
+  getConfiguredProduct
 } from "./../src/index";
 
 const product = {
@@ -120,4 +122,133 @@ describe("[commercetools-helpers] product helpers", () => {
     const product = null
     expect(getProductAttributes(product)).toEqual([]);
   });
+
+  it("returns product options", () => {
+    const variants = [
+      {
+        ...product,
+        attributeList: [
+          {
+            name: "size",
+            stringValue: "36",
+            __typename: "StringAttribute"
+          },
+          {
+            name: "color",
+            stringValue: "white",
+            __typename: "StringAttribute"
+          }
+        ]
+      },
+      {
+        ...product,
+        attributeList: [
+          {
+            name: "size",
+            stringValue: "38",
+            __typename: "StringAttribute"
+          },
+          {
+            name: "color",
+            stringValue: "black",
+            __typename: "StringAttribute"
+          }
+        ]
+      },
+    ]
+
+    expect(getProductOptions(null)).toEqual({})
+    expect(getProductOptions(variants)).toEqual({
+      color: [
+        { label: 'white', value: 'white' },
+        { label: 'black', value: 'black' }
+      ],
+      size: [
+        { label: '36', value: '36' },
+        { label: '38', value: '38' }
+      ]
+    })
+
+    expect(getProductOptions(variants, ['color'])).toEqual({
+      color: [
+        { label: 'white', value: 'white' },
+        { label: 'black', value: 'black' }
+      ]
+    })
+  })
+
+  it("returns configured product", () => {
+    const variants = [
+      {
+        ...product,
+        _master: true,
+        attributeList: [
+          {
+            name: "size",
+            stringValue: "36",
+            __typename: "StringAttribute"
+          },
+          {
+            name: "color",
+            stringValue: "white",
+            __typename: "StringAttribute"
+          }
+        ]
+      },
+      {
+        ...product,
+        attributeList: [
+          {
+            name: "size",
+            stringValue: "38",
+            __typename: "StringAttribute"
+          },
+          {
+            name: "color",
+            stringValue: "black",
+            __typename: "StringAttribute"
+          }
+        ]
+      },
+    ] as any
+
+    const configuration = {
+      size: '38',
+      color: 'black'
+    } as any
+
+    expect(getConfiguredProduct(null, configuration)).toEqual(null)
+    expect(getConfiguredProduct(variants, {})).toEqual({
+      ...product,
+      _master: true,
+      attributeList: [
+        {
+          name: "size",
+          stringValue: "36",
+          __typename: "StringAttribute"
+        },
+        {
+          name: "color",
+          stringValue: "white",
+          __typename: "StringAttribute"
+        }
+      ]
+    })
+
+    expect(getConfiguredProduct(variants, configuration)).toEqual({
+      ...product,
+      attributeList: [
+        {
+          name: "size",
+          stringValue: "38",
+          __typename: "StringAttribute"
+        },
+        {
+          name: "color",
+          stringValue: "black",
+          __typename: "StringAttribute"
+        }
+      ]
+    })
+  })
 });
