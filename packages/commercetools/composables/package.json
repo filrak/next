@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vue-storefront/commercetools-api": "^0.0.3",
+    "@vue-storefront/commercetools-helpers": "^0.0.3",
     "@vue-storefront/interfaces": "^0.0.3",
     "@vue/composition-api": "^0.3.4",
     "vue": "^2.6.x"
