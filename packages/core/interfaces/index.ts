@@ -1,7 +1,8 @@
 import { Ref } from '@vue/composition-api'
 
-export interface UseProduct<PRODUCT, SEARCH> {
+export interface UseProduct<PRODUCT, SEARCH, CONFIGURATION> {
   products: Ref<Array<PRODUCT>>;
+  configuration: Ref<CONFIGURATION>
   search: SEARCH,
   loading: Ref<boolean>;
   error: Ref<any>;
@@ -118,11 +119,6 @@ export interface UiCategory {
   items: UiCategory[]
 }
 
-export interface UiCartProductConfiguration {
-  name: string
-  value: string
-}
-
 export interface UiCartProductPrice {
   regular: number
   special?: number
@@ -133,12 +129,21 @@ export interface UiCartProduct {
   id: string
   image: string
   price: UiCartProductPrice
-  configuration: UiCartProductConfiguration[]
+  configuration: AgnosticProductAttribute[]
   qty: string
 }
 
 export interface AgnosticProductAttribute {
-  name: string,
+  name: string
   value: string | Object
   label: string
 }
+
+export interface AgnosticProductOption {
+  value: string | object
+  label: string
+}
+
+export type AgnosticProductOptions<A extends string> = Record<A, AgnosticProductOption>
+
+export type AgnosticProductConfiguration<A extends string> = Record<A, 'string'>
