@@ -1,4 +1,3 @@
-import { getStorage, getMe, createCart } from '@vue-storefront/commercetools-api'
 import getDefaultConfiguration from '../../src/useProduct/getDefaultConfiguration'
 
 const cart = { id: 'cartid' }

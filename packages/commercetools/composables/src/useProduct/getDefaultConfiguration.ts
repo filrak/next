@@ -1,8 +1,5 @@
-import {
-  getProductVariants,
-  getProductOptions,
-} from '@vue-storefront/commercetools-helpers'
-import { ProductVariant } from "../../../api-client/src/types/GraphQL";
+import { getProductVariants, getProductOptions } from '@vue-storefront/commercetools-helpers'
+import { ProductVariant } from '../../../api-client/src/types/GraphQL'
 
 const getDefaultConfiguration = (products: ProductVariant[]) => {
   const defaultOptions = getProductOptions([getProductVariants(products, { master: true }) as ProductVariant])
