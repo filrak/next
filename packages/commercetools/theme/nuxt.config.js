@@ -70,7 +70,7 @@ export default {
     '@nuxt/typescript-build' // to core
   ],
   plugins: [
-    '~/prismic/plugins/commercetools',
+    '~/plugins/commercetools',
     '~/prismic/plugins/html-serializer'
   ],
   modules: [
@@ -84,7 +84,7 @@ export default {
     }]
   ],
   plugins: [
-    './prismic/plugins/commercetools.js',
+    './plugins/commercetools.js',
     './prismic/plugins/html-serializer.js'
   ],
   prismic: {
