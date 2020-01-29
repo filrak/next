@@ -15,7 +15,7 @@
     "@vue-storefront/commercetools-helpers": "^0.0.3",
     "@vue-storefront/interfaces": "^0.0.3",
     "@vue/composition-api": "^0.3.4",
-    "vue": "^2.6.x"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.30",
