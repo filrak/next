@@ -24,7 +24,8 @@ export default function useCart (): UseCart<Cart, AddToCart, RemoveFromCart, Cle
   const removeFromCart: RemoveFromCart = (product) => {}
   const clearCart: ClearCart = () => {}
   const applyCoupon: ApplyCoupon = () => {}
-  
+  const removeCoupon: RemoveCoupon = () => {}
+
   return {
     cart,
     addToCart,
@@ -37,3 +38,4 @@ export default function useCart (): UseCart<Cart, AddToCart, RemoveFromCart, Cle
     loading
   }
 }
+
