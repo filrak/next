@@ -17,7 +17,7 @@ type CouponRef = Ref<any>
 type ApplyCouponFn = () => void
 type RemoveCoupon = () => void
 
-const cart: Ref<Cart> = ref<Cart>(null)
+export const cart: Ref<Cart> = ref<Cart>(null)
 const loading: Ref<boolean> = ref<boolean>(false)
 
 // TODO: Think how to incorporate this into core (updateItem?)
