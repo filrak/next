@@ -93,7 +93,7 @@ export default {
       new webpack.DefinePlugin({
         'process.VERSION': JSON.stringify({
           version: require('./package.json').version,
-          lastCommit: process.env.LAST_COMMIT || ''
+          lastCommit: process.env.TRAVIS_COMMIT || ''
         })
       })
     ]
