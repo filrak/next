@@ -4,10 +4,11 @@ import {
   UiCartProduct,
   AgnosticProductAttribute,
   AgnosticProductOptions,
-  AgnosticProductConfiguration,
 } from '@vue-storefront/interfaces'
 import { ProductVariant, Image, Category, Cart, LineItem, ShippingMethod } from './types/GraphQL'
 import { formatAttributeList } from './_utils'
+import getVariantByAttributes from './_getVariantByAttributes'
+
 
 // Product
 export const getProductName = (product: ProductVariant): string => product ? (product as any)._name : ''
@@ -26,47 +27,34 @@ export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[]
   }))
 
 /** Returns array of product variants meeting criteria */
-export const getProductVariants = (products: ProductVariant[], options: any = {}): ProductVariant | ProductVariant[]  => {
+export const getProductVariants = (products: ProductVariant[], filters: any = {}): ProductVariant | ProductVariant[]  => {
   if (!products) {
     return []
   }
 
-  if (options.master) {
+  if (filters.attributes && Object.keys(filters.attributes).length > 0) {
+    return getVariantByAttributes(products, filters.attributes)
+  }
+
+  if (filters.master) {
     return products.find(product => (product as any)._master)
   }
 
   return products
 }
 
-export const getConfiguredProduct = <A extends string>(products: ProductVariant[], configuration: AgnosticProductConfiguration<A>, filterByAttributeName?: Array<string>): ProductVariant => {
-  if (!products || products.length === 0) {
-    return null
-  }
+export const getProductAttributes = <A extends string>(products: ProductVariant[], filterByAttributeName?: Array<string>): AgnosticProductOptions<A> => {
+  const isSingleProduct = !Array.isArray(products)
+  const productList = (isSingleProduct ? [products] : products) as ProductVariant[]
 
-  const configurationKeys = Object.keys(configuration).filter(key => filterByAttributeName ? filterByAttributeName.includes(key) : true)
-
-  if (configurationKeys.length === 0) {
-    return getProductVariants(products, { master: true }) as ProductVariant
-  }
-
-  return products.find(product => {
-    const attributes = getProductAttributes(product, filterByAttributeName)
-
-    return configurationKeys.every(attrName =>
-      attributes.find(({ name, value }) => attrName === name && configuration[attrName] === value)
-    )
-  })
-}
-
-export const getProductAttributes = (product: ProductVariant, filterByAttributeName?: Array<string>): Array<AgnosticProductAttribute> =>
-  (product ? formatAttributeList(product.attributeList) : [])
-    .filter(attribute => filterByAttributeName ? filterByAttributeName.includes(attribute.name) : attribute)
-
-
-export const getProductOptions = <A extends string>(products: ProductVariant[], filterByAttributeName?: Array<string>): AgnosticProductOptions<A> => {
-  if (!products || products.length == 0) {
+  if (!products || productList.length === 0) {
     return {} as AgnosticProductOptions<A>
   }
+
+  const formatAttributes = (product: ProductVariant): Array<AgnosticProductAttribute> =>
+    (product ? formatAttributeList(product.attributeList) : [])
+      .filter(attribute => filterByAttributeName ? filterByAttributeName.includes(attribute.name) : attribute)
+
 
   const reduceToUniques = (prev, curr) => {
     const isAttributeExist = prev.some(el => el.name === curr.name && el.value === curr.value)
@@ -80,14 +68,14 @@ export const getProductOptions = <A extends string>(products: ProductVariant[], 
 
   const reduceByAttributeName = (prev, curr) => ({
     ...prev,
-    [curr.name]: [
+    [curr.name]: isSingleProduct ? curr.value :[
       ...(prev[curr.name] || []),
       { value: curr.value, label: curr.label }
     ]
   })
 
-  return products
-    .map(product => getProductAttributes(product, filterByAttributeName))
+  return productList
+    .map(product => formatAttributes(product))
     .reduce((prev, curr) => [...prev, ...curr], [])
     .reduce(reduceToUniques, [])
     .reduce(reduceByAttributeName, {})

@@ -69,6 +69,7 @@
             <SfSelect
               v-if="options.size"
               v-model="configuration.size"
+              @change="size => updateFilter({ size })"
               label="Size"
               class="sf-select--bordered product-details__attribute"
             >
@@ -83,6 +84,7 @@
             <SfSelect
               v-if="options.color"
               v-model="configuration.color"
+              @change="color => updateFilter({ color })"
               label="Color"
               class="sf-select--bordered product-details__attribute"
             >
@@ -257,8 +259,7 @@ import {
   getProductName,
   getProductGallery,
   getProductPrice,
-  getProductOptions,
-  getConfiguredProduct
+  getProductAttributes
 } from '@vue-storefront/commercetools-helpers'
 
 export default {
@@ -267,16 +268,24 @@ export default {
   setup (props, context) {
     const qty = ref(1)
     const { slug } = context.root.$route.params
-    const { params } = context.root.$route
-    const { products, configuration, search } = useProduct()
-    const { cart, addToCart,loading } = useCart()
+    const { products, search } = useProduct()
+    const { cart, addToCart, loading } = useCart()
 
     search({ slug })
 
-    const product = computed(() => getConfiguredProduct(products.value, configuration.value, ['color', 'size']))
-    const options = computed(() => getProductOptions(products.value, ['color', 'size']))
+    const product = computed(() => getProductVariants(products.value, { master: true, attributes: context.root.$route.query }))
+    const options = computed(() => getProductAttributes(products.value, ['color', 'size']))
+    const configuration = computed(() => getProductAttributes(product.value, ['color', 'size']))
+
+    const updateFilter = filter => {
+      context.root.$router.push({
+        path: context.root.$route.path,
+        query: { ...configuration.value, ...filter }
+      })
+    }
 
     return {
+      updateFilter,
       configuration,
       product,
       options,

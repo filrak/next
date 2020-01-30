@@ -1,5 +1,5 @@
-import { Attribute } from './types/GraphQL'
 import { AgnosticProductAttribute } from '@vue-storefront/interfaces'
+
 const getAttributeValue = (attribute) => {
   switch(attribute.__typename) {
     case 'StringAttribute':
@@ -22,14 +22,14 @@ const getAttributeValue = (attribute) => {
       return attribute.centAmount
     case 'BooleanAttribute':
       return attribute.booleanValue
-    case 'ReferenceAttribute': 
+    case 'ReferenceAttribute':
       return { typeId: attribute.typeId, id: attribute.id }
     default:
       return null
   }
 }
 
-const formatAttributeList = (attributes: Array<any>): Array<AgnosticProductAttribute> => 
+const formatAttributeList = (attributes: Array<any>): Array<AgnosticProductAttribute> =>
 attributes.map(attr => {
   const attrValue = getAttributeValue(attr)
   return {
