@@ -1,5 +1,7 @@
 import webpack from 'webpack'
 
+console.log('LAST_COMMIT', process.env.LAST_COMMIT)
+
 export default {
   mode: 'universal',
   head: {
@@ -93,7 +95,7 @@ export default {
       new webpack.DefinePlugin({
         'process.VERSION': JSON.stringify({
           version: require('./package.json').version,
-          lastCommit: process.env.TRAVIS_COMMIT || ''
+          lastCommit: process.env.LAST_COMMIT || ''
         })
       })
     ]
