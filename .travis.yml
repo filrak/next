@@ -19,7 +19,7 @@ jobs:
     - stage: Build
       name: Build
       script:
-      - yarn build:ct
+      - LAST_COMMIT=$(git log --pretty=%H -1) yarn build:ct
 
     # - stage: test
     #   script: yarn test:ct:api-client
