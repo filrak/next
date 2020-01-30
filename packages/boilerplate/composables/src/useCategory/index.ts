@@ -1,6 +1,6 @@
 import { UseCategory } from '@vue-storefront/interfaces'
 import { ref, Ref } from '@vue/composition-api'
-import { Category, CategoryFilter } from './../types'
+import { Category, CategoryFilter } from '@vue-storefront/boilerplate-api/src/types'
 
 // Category-specific typings. 
 // Those inetrfaces are just recommendations. 
@@ -12,8 +12,8 @@ type ClearFilters = () => void
 
 export default function useCategory () :UseCategory<Category, Search, AppliedFilters, ApplyFilter, ClearFilters> {
   const categories: Ref<Category[]> = ref([])
-  const loading: Ref<boolean> = ref<boolean>(true)
-  const error: Ref<any> = ref<any>(null)
+  const loading: Ref<boolean> = ref(true)
+  const error: Ref<any> = ref(null)
   const appliedFilters: AppliedFilters = ref(null)
   const applyFilter: ApplyFilter = (filter) => {}
   const clearFilters: ClearFilters = () => {}

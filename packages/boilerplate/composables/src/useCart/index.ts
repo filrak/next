@@ -1,6 +1,6 @@
 import { UseCart } from '@vue-storefront/interfaces'
 import { Ref, ref, watch } from '@vue/composition-api'
-import { Cart, ProductVariant } from '../types'
+import { Cart, ProductVariant } from '@vue-storefront/boilerplate-api/src/types'
 
 // Cart-specific typings. 
 // Those inetrfaces are just recommendations. 
@@ -13,10 +13,10 @@ type ApplyCoupon = (coupon: string) => void
 type RemoveCoupon = () => void
 
 // This state will be shared between all 'useCart` instances.
-const cart: Ref<Cart> = ref<Cart>(null)
-const loading: Ref<boolean> = ref<boolean>(true)
-const error: Ref<any> = ref<any>(null)
-const coupon: Ref<Coupon> = ref<Coupon>(null)
+const cart: Ref<Cart> = ref(null)
+const loading: Ref<boolean> = ref(true)
+const error: Ref<any> = ref(null)
+const coupon: Ref<Coupon> = ref(null)
 
 const addToCart: AddToCart = (product) => {}
 const removeFromCart: RemoveFromCart = (product) => {}
@@ -29,7 +29,7 @@ async function loadCart () {
   loading.value = false
 }
 
-export default function useCart (): UseCart<Cart, AddToCart, RemoveFromCart, ClearCart, Coupon, ApplyCoupon, RemoveCoupon> {
+export default function useCart (): UseCart<Cart, AddToCart, RemoveFromCart, ClearCart, Ref<Coupon>, ApplyCoupon, RemoveCoupon> {
   return {
     cart,
     addToCart,
