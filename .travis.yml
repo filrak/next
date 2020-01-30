@@ -16,15 +16,15 @@ install:
 
 jobs:
   include:
-    - stage: Build
-      name: Build
-      script:
-      - LAST_COMMIT=$(git log --pretty=%H -1) yarn build:ct
-      - rm packages/commercetools/api-client/.gitignore
-      - rm packages/commercetools/composables/.gitignore
-      - rm packages/commercetools/helpers/.gitignore
-      - rm packages/commercetools/theme/.gitignore
-      - rm .gitignore
+    # - stage: Build
+    #   name: Build
+    #   script:
+    #   - LAST_COMMIT=$(git log --pretty=%H -1) yarn build:ct
+    #   - rm packages/commercetools/api-client/.gitignore
+    #   - rm packages/commercetools/composables/.gitignore
+    #   - rm packages/commercetools/helpers/.gitignore
+    #   - rm packages/commercetools/theme/.gitignore
+    #   - rm .gitignore
 
 
 
