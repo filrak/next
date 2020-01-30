@@ -10629,7 +10629,7 @@ vue2-leaflet@^2.1.1:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/vue2-leaflet/-/vue2-leaflet-2.4.2.tgz#f3b718c915b5391ec8469b96bacb282a543cda24"
 
-vue@^2.6.11:
+vue@^2.6.11, vue@^2.6.x:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
 
