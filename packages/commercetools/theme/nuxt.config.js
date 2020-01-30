@@ -2,6 +2,14 @@ import webpack from 'webpack'
 
 console.log('LAST_COMMIT', process.env.LAST_COMMIT)
 
+const readLastCommit = () => {
+  // try {
+    return require('fs').readFileSync('./../../../version')
+  // } catch (_) {
+  //   return ''
+  // }
+}
+
 export default {
   mode: 'universal',
   head: {
@@ -95,7 +103,7 @@ export default {
       new webpack.DefinePlugin({
         'process.VERSION': JSON.stringify({
           version: require('./package.json').version,
-          lastCommit: process.env.LAST_COMMIT || ''
+          lastCommit: readLastCommit()
         })
       })
     ]
