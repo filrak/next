@@ -41,7 +41,8 @@ jobs:
     #   name: Test commercetools helpers
 
     - stage: deployment
-      script: skip
+      script:
+        - LAST_COMMIT=$(git log --pretty=%H -1)
       deploy:
         provider: heroku
         api_key:
