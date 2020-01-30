@@ -1,6 +1,9 @@
 {
   "name": "root",
   "private": true,
+  "engines": {
+    "node": "10.x"
+  },
   "scripts": {
     "build:docs": "cd packages/commercetools/docs && yarn build",
     "dev:docs": "cd packages/commercetools/docs && yarn dev",
