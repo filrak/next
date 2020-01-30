@@ -68,7 +68,7 @@
           <div class="product-details__section">
             <SfSelect
               v-if="options.size"
-              v-model="configuration.size"
+              :selected="configuration.size"
               @change="size => updateFilter({ size })"
               label="Size"
               class="sf-select--bordered product-details__attribute"
@@ -83,7 +83,7 @@
             </SfSelect>
             <SfSelect
               v-if="options.color"
-              v-model="configuration.color"
+              :selected="configuration.color"
               @change="color => updateFilter({ color })"
               label="Color"
               class="sf-select--bordered product-details__attribute"
