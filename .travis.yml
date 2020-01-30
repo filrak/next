@@ -42,8 +42,6 @@ jobs:
 
     - stage: deployment
       script: skip
-      before_deploy:
-        - heroku config:set LAST_COMMIT=88888 -a vsf-next-prod
       deploy:
         provider: heroku
         api_key:
