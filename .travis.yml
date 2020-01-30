@@ -20,7 +20,7 @@ jobs:
     - stage: Build
       name: Build
       script:
-      - yarn build:ct:tools
+      - yarn build:ct
 
     - stage: test
       script: yarn test:ct:api-client
