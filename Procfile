@@ -1,1 +1,1 @@
-web: yarn dev:ct
+web: yarn start:ct
