@@ -1,4 +1,4 @@
-import getVariantByAttributes from '../src/_getVariantByAttributes'
+import { getVariantByAttributes } from '../src/_utils'
 
 const product = {
   _name: "variant 1",

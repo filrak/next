@@ -133,16 +133,7 @@ export interface UiCartProduct {
 }
 
 export interface AgnosticProductAttribute {
-  name: string
+  name?: string
   value: string | Object
   label: string
 }
-
-export interface AgnosticProductOption {
-  value: string | object
-  label: string
-}
-
-export type AgnosticProductOptions<A extends string> = Record<A, AgnosticProductOption>
-
-export type AgnosticProductConfiguration<A extends string> = Record<A, 'string'>

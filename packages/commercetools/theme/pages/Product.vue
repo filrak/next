@@ -269,7 +269,7 @@ export default {
     const qty = ref(1)
     const { slug } = context.root.$route.params
     const { products, search } = useProduct()
-    const { cart, addToCart, loading } = useCart()
+    const { addToCart, loading } = useCart()
 
     search({ slug })
 

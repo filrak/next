@@ -2,13 +2,15 @@ import {
   UiMediaGalleryItem,
   UiCategory,
   UiCartProduct,
-  AgnosticProductAttribute,
-  AgnosticProductOptions,
+  AgnosticProductAttribute
 } from '@vue-storefront/interfaces'
 import { ProductVariant, Image, Category, Cart, LineItem, ShippingMethod } from './types/GraphQL'
-import { formatAttributeList } from './_utils'
-import getVariantByAttributes from './_getVariantByAttributes'
+import { formatAttributeList, getVariantByAttributes } from './_utils'
 
+interface ProductVariantFilters {
+  master?: boolean
+  attributes?: Record<string, string>
+}
 
 // Product
 export const getProductName = (product: ProductVariant): string => product ? (product as any)._name : ''
@@ -27,7 +29,7 @@ export const getProductGallery = (product: ProductVariant): UiMediaGalleryItem[]
   }))
 
 /** Returns array of product variants meeting criteria */
-export const getProductVariants = (products: ProductVariant[], filters: any = {}): ProductVariant | ProductVariant[]  => {
+export const getProductVariants = (products: ProductVariant[], filters: ProductVariantFilters = {}): ProductVariant | ProductVariant[]  => {
   if (!products) {
     return []
   }
@@ -43,12 +45,12 @@ export const getProductVariants = (products: ProductVariant[], filters: any = {}
   return products
 }
 
-export const getProductAttributes = <A extends string>(products: ProductVariant[], filterByAttributeName?: Array<string>): AgnosticProductOptions<A> => {
+export const getProductAttributes = (products: ProductVariant[], filterByAttributeName?: Array<string>): Record<string, AgnosticProductAttribute | string> => {
   const isSingleProduct = !Array.isArray(products)
   const productList = (isSingleProduct ? [products] : products) as ProductVariant[]
 
   if (!products || productList.length === 0) {
-    return {} as AgnosticProductOptions<A>
+    return {} as any
   }
 
   const formatAttributes = (product: ProductVariant): Array<AgnosticProductAttribute> =>
