@@ -1,13 +1,12 @@
 import webpack from 'webpack'
-
-console.log('LAST_COMMIT', process.env.LAST_COMMIT)
+import { readFileSync } from 'fs'
 
 const readLastCommit = () => {
-  // try {
-    return require('fs').readFileSync('./../../../version')
-  // } catch (_) {
-  //   return ''
-  // }
+  try {
+    return String(readFileSync('./../../../version'))
+  } catch (_) {
+    return ''
+  }
 }
 
 export default {
