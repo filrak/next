@@ -2,7 +2,7 @@
   "name": "theme",
   "description": "My breathtaking Nuxt.js project",
   "author": "Filip Rakowski",
-  "version": "1.0.1",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "dev": "nuxt",
