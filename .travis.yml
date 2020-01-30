@@ -19,19 +19,19 @@ jobs:
     - stage: Build
       name: Build
       script:
-      - yarn build:ct:tools
+      - yarn build:ct
 
-    - stage: test
-      script: yarn test:ct:api-client
-      name: Test commercetools api-client
+    # - stage: test
+    #   script: yarn test:ct:api-client
+    #   name: Test commercetools api-client
 
-    - stage: test
-      script: yarn test:ct:composables
-      name: Test commercetools composables
+    # - stage: test
+    #   script: yarn test:ct:composables
+    #   name: Test commercetools composables
 
-    - stage: test
-      script: yarn test:ct:helpers
-      name: Test commercetools helpers
+    # - stage: test
+    #   script: yarn test:ct:helpers
+    #   name: Test commercetools helpers
 
     - stage: deployment
       script: skip
