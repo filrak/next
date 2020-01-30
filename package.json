@@ -25,7 +25,7 @@
     "dev:ct:composables": "cd packages/commercetools/composables && yarn dev",
     "dev:ct:helpers": "cd packages/commercetools/helpers && yarn dev",
     "dev:ct": "cd packages/commercetools/theme && yarn dev",
-    "heroku-postbuild": "cross-env LAST_COMMIT=$(git log --pretty=%H -1) yarn build:ct"
+    "heroku-postbuild": "heroku config:set LAST_COMMIT=99999 yarn build:ct"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
