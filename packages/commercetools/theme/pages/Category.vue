@@ -99,7 +99,7 @@
     </div>
     <div class="main section">
       <div class="sidebar desktop-only">
-        <SfLoader :class="{ loading: loading }" :loading="loading">
+        <SfLoader :class="{ loading }" :loading="loading">
         <SfAccordion :firstOpen="true" :showChevron="false">
           <SfAccordionItem
             v-for="(cat, i) in categoryTree && categoryTree.items"
@@ -128,7 +128,7 @@
         </SfAccordion>
         </SfLoader>
       </div>
-      <SfLoader :class="{ loading: loading }" :loading="loading">
+      <SfLoader :class="{ loading }" :loading="loading">
         <div class="products">
           <div class="products__list">
             <SfProductCard
