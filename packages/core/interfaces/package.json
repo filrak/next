@@ -1,9 +1,12 @@
 {
   "name": "@vue-storefront/interfaces",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "types": "lib/index.d.ts",
   "description": "",
   "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc"
   },
@@ -12,7 +15,5 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "@vue/composition-api": "^0.3.4"
-  }
+  "gitHead": "8d866340da30761f4f72a6d1b60f78f9665c6738"
 }

@@ -1,7 +1,6 @@
 {
   "name": "docs",
   "private": true,
-  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,5 +11,8 @@
     "vuepress": "^1.2.0"
   },
   "author": "DivanteLtd",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
