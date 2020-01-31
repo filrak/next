@@ -45,5 +45,5 @@ jobs:
         app: vsf-next-prod
         skip_cleanup: true
         on:
-          branch: deployment
+          branch: master
 
