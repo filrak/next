@@ -47,7 +47,8 @@
     "packages": [
       "packages/commercetools/*",
       "packages/boilerplate/*",
-      "packages/core/*"
+      "packages/core/*",
+      "packages/prismic/*"
     ],
     "nohoist": [
       "**/**/**"

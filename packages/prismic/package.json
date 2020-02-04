@@ -1,0 +1,16 @@
+{
+  "name": "@vue-storefront/prismic",
+  "descrition": "Prismic headless CMS integration for Vue Next",
+  "author": "Marcin Drwiega",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@vue/composition-api": "^0.3.4",
+    "prismic-vue": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "gitHead": "8d866340da30761f4f72a6d1b60f78f9665c6738"
+}
