@@ -9,10 +9,10 @@
     By having this additional layer we can hide implementation details of <b>how</b> we get the data which gives you freedom to introducing major changes in this layer without influencing other parts of the app. 
     If you want to change the way you're getting certain types of data - for example switch from REST API to GraphQL or fetch product reviews from external service you can easily do that without introducing breaking changes <b>as long as your method is will have the same interface</b>.
   </p>
-  <Block type="tip">
-    API Client is a Vanilla JavaScript application and it doesn't require any frontend framework to run. 
-  </Block>
-
+  <p>
+    API Client is a Vanilla JavaScript application and it doesn't require any frontend framework to run.
+  </p>
+  
   <h2>Setting up</h2>
   <Block type="warning" title="Using API Client outside of VSF Theme">
     If you're not using our Nuxt theme you first need to install the API Client package:
