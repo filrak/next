@@ -8,6 +8,21 @@ export interface UseProduct<PRODUCT, SEARCH> {
   [x: string]: any;
 }
 
+export interface UseUser
+<
+  USER,
+  REGISTER,
+  LOGIN,
+  LOGOUT,
+> {
+  user: USER
+  register: REGISTER
+  login: LOGIN
+  logout: LOGOUT
+  loading: Ref<boolean>
+  error: Ref<any>
+}
+
 export interface UseCategory
 <
   CATEGORY,
@@ -18,7 +33,7 @@ export interface UseCategory
 > {
   categories: Ref<Array<CATEGORY>>;
   search: SEARCH;
-  appliedFilters: Ref<APPLIED_FILTERS>;
+  appliedFilters: APPLIED_FILTERS;
   applyFilter: APPLY_FILTER;
   clearFilters: CLEAR_FILTERS;
   loading: Ref<boolean>;
@@ -57,7 +72,7 @@ export interface UseWishlist
   addToWishlist: ADD_TO_WISHLIST;
   removeFromWishlist: REMOVE_FROM_WISHLIST;
   clearWishlist: CLEAR_WISHLIST;
-  loading: boolean;
+  loading: Ref<boolean>;
   error: any;
 }
 
@@ -118,11 +133,6 @@ export interface UiCategory {
   items: UiCategory[]
 }
 
-export interface UiCartProductConfiguration {
-  name: string
-  value: string
-}
-
 export interface UiCartProductPrice {
   regular: number
   special?: number
@@ -133,12 +143,12 @@ export interface UiCartProduct {
   id: string
   image: string
   price: UiCartProductPrice
-  configuration: UiCartProductConfiguration[]
+  configuration: AgnosticProductAttribute[]
   qty: string
 }
 
 export interface AgnosticProductAttribute {
-  name: string,
+  name?: string
   value: string | Object
   label: string
 }
