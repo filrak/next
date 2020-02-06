@@ -4,7 +4,7 @@
 
 <script>
 // @defudef: This is just an example how to use Prismic. It will be deleted soon.
-import CustomPage from '../prismic/components/CustomPage'
+import { search } from '@vue-storefront/prismic'
 
 export default {
   components: {

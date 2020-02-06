@@ -93,13 +93,15 @@ export default {
   plugins: [
     './plugins/commercetools.js',
     './prismic/plugins/html-serializer.js',
+    '~/plugins/prismic.js'
   ],
   prismic: {
     endpoint: 'https://lovecrafts-dev.cdn.prismic.io/api/v2'
   },
   build: {
     transpile: [
-      'vee-validate/dist/rules'
+      'vee-validate/dist/rules',
+      '@vue-storefront/prismic/lib/plugins/prismic.js'
     ],
     plugins: [
       new webpack.DefinePlugin({

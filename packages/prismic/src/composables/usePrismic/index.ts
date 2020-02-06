@@ -19,7 +19,7 @@ export default function usePrismic (prismic: any) {
   const loading = ref(true)
   const error = ref(null)
   const document = reactive(null)
-  const search = (query: QueryType & QueryType, options = null) => prismic.query(
+  const search = (query: QueryType & QueryType[], options: OptionsType = null) => prismic.query(
     query, // transform query into Prismic's
     options
   )

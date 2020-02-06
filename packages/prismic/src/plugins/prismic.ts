@@ -1,4 +1,4 @@
-import { setup } from "..";
+import { setup } from "../index";
 
 setup({
   endpoint: 'https://lovecrafts-dev.cdn.prismic.io/api/v2',
