@@ -19,6 +19,7 @@ export interface UseUser
   register: REGISTER
   login: LOGIN
   logout: LOGOUT
+  isAuthenticated: Ref<boolean>
   loading: Ref<boolean>
   error: Ref<any>
 }

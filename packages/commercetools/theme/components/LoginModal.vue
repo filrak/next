@@ -5,28 +5,38 @@
       @close="toggleLoginModal">
       <transition name="fade" mode="out-in">
         <div v-if="isLogin" key="log-in">
-          <div class="form">
-            <SfInput
-              v-model="form.email"
-              name="email"
-              label="Your email"
-              class="form__input"
-            />
-            <SfInput
-              v-model="form.password"
-              name="password"
-              label="Password"
-              type="password"
-              class="form__input"
-            />
-            <SfCheckbox
-              v-model="rememberMe"
-              name="remember-me"
-              label="Remember me"
-              class="form__checkbox"
-            />
-            <SfButton class="sf-button--full-width form__button">Login</SfButton>
-          </div>
+          <ValidationObserver v-slot="{ handleSubmit }">
+            <form class="form" @submit.prevent="handleSubmit(handleLogin)">
+              <ValidationProvider rules="required|email" v-slot="{ errors }">
+                <SfInput
+                  v-model="form.email"
+                  :valid="!errors[0]"
+                  :errorMessage="errors[0]"
+                  name="email"
+                  label="Your email"
+                  class="form__input"
+                />
+              </ValidationProvider>
+              <ValidationProvider rules="required" v-slot="{ errors }">
+                <SfInput
+                  v-model="form.password"
+                  :valid="!errors[0]"
+                  :errorMessage="errors[0]"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  class="form__input"
+                />
+              </ValidationProvider>
+              <SfCheckbox
+                v-model="rememberMe"
+                name="remember-me"
+                label="Remember me"
+                class="form__checkbox"
+              />
+              <SfButton class="sf-button--full-width form__button" type="">Login</SfButton>
+            </form>
+          </ValidationObserver>
           <div class="action">
             <SfButton class="sf-button--text button--muted">Forgotten password?</SfButton>
           </div>
@@ -141,14 +151,17 @@ export default {
     const isLogin = ref(false)
     const createAccount = ref(false)
     const rememberMe = ref(false)
-    const { register, loading } = useUser()
+    const { register, login, loading } = useUser()
 
-    const handleRegister = async (formData) => {
+    const handleRegister = async () => {
       await register(form.value)
       toggleLoginModal()
     }
 
-    const handleLogin = () => {}
+    const handleLogin = async () => {
+      await login(form.value)
+      toggleLoginModal()
+    }
 
     return {
       form,
