@@ -69,6 +69,21 @@ module.exports = function VueStorefrontNuxtModule (moduleOptions) {
   options.useRawSource[isProd || options.coreDevelopment ? 'prod' : 'dev'].map(package => {
     useRawSource(package)
   })
+  
+
+  // templates
+
+  this.addTemplate({
+    fileName: 'pages/Product.vue',
+    src: path.join(__dirname, '../theme/pages/Product.vue'),
+  });
+  this.extendRoutes((routes, resolve) => {
+    routes.unshift({
+      name: 'product',
+      path: '/p/:slug/',
+      component: resolve(this.options.buildDir, 'pages/Product.vue'),
+    });
+  });
 }
 
 module.exports.meta = require('../package.json')

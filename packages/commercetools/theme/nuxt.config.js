@@ -37,11 +37,6 @@ export default {
         path: '/c/:slug_1/:slug_2?/:slug_3?/:slug_4?/:slug_5?',
         component: resolve(__dirname, 'pages/Category.vue')
       })
-      routes.push({
-        name: 'product',
-        path: '/p/:slug/',
-        component: resolve(__dirname, 'pages/Product.vue')
-      })
       routes.push({ // TEMPORARY: just to show example prismic page
         name: 'prismic',
         path: '/prismic',
