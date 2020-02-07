@@ -28,7 +28,6 @@ jobs:
     - stage: Build
       name: Build
       script:
-      - echo $COMMIT
       - yarn build:ct
 
     - stage: test
