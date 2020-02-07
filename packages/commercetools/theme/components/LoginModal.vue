@@ -34,7 +34,16 @@
                 label="Remember me"
                 class="form__checkbox"
               />
-              <SfButton class="sf-button--full-width form__button" type="">Login</SfButton>
+              <SfButton
+                type="submit"
+                class="sf-button--full-width form__button"
+                :disabled="loading"
+              >
+                <SfLoader :class="{ loader: loading }" :loading="loading">
+                  <div>Login</div>
+                </SfLoader>
+              </SfButton>
+              <SfAlert v-if="error" class="alert" type="danger" :message="error" />
             </form>
           </ValidationObserver>
           <div class="action">
@@ -47,7 +56,7 @@
         </div>
         <div v-else key="sign-up" class="form">
           <ValidationObserver v-slot="{ handleSubmit }">
-            <form class="from" @submit.prevent="handleSubmit(handleRegister)">
+            <form class="from" @submit.prevent="handleSubmit(handleRegister)" autocomplete="off">
               <ValidationProvider rules="required|email" v-slot="{ errors }">
                 <SfInput
                   v-model="form.email"
@@ -116,8 +125,8 @@
   </div>
 </template>
 <script>
-import { computed, ref } from '@vue/composition-api'
-import { SfModal, SfInput, SfButton, SfCheckbox, SfLoader } from '@storefront-ui/vue'
+import { computed, ref, watch } from '@vue/composition-api'
+import { SfModal, SfInput, SfButton, SfCheckbox, SfLoader, SfAlert } from '@storefront-ui/vue'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
 import { useUser } from '@vue-storefront/commercetools-composables'
@@ -143,6 +152,7 @@ export default {
     SfButton,
     SfCheckbox,
     SfLoader,
+    SfAlert,
     ValidationProvider,
     ValidationObserver
   },
@@ -151,19 +161,28 @@ export default {
     const isLogin = ref(false)
     const createAccount = ref(false)
     const rememberMe = ref(false)
-    const { register, login, loading } = useUser()
+    const { register, login, loading, error } = useUser()
 
-    const handleRegister = async () => {
-      await register(form.value)
-      toggleLoginModal()
+    watch(isLoginModalOpen, () => {
+      if (isLoginModalOpen) {
+        form.value = {}
+      }
+    })
+
+    const handleForm = (fn) => async () => {
+      await fn(form.value)
+
+      if (!error.value) {
+        toggleLoginModal()
+      }
     }
 
-    const handleLogin = async () => {
-      await login(form.value)
-      toggleLoginModal()
-    }
+    const handleRegister = async () => handleForm(register)()
+
+    const handleLogin = async () => handleForm(login)()
 
     return {
+      error,
       form,
       loading,
       isLogin,
@@ -223,5 +242,10 @@ export default {
   &::v-deep .sf-loader__overlay {
     background: transparent;
   }
+}
+
+.alert {
+  margin: 15px 0;
+  font-size: 13px;
 }
 </style>

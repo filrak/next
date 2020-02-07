@@ -18,14 +18,28 @@ type UserRef = Ref<Customer>
 type RegisterFn = (userData: CustomerSignMeInDraft) => Promise<void>
 type LoginFn = (userData: CustomerSignMeInDraft) => Promise<void>
 type LogoutFn = () => Promise<void>
+type UserData = CustomerSignMeUpDraft | CustomerSignMeInDraft
 
 const user: UserRef = ref({})
+const loading = ref(false)
+const error = ref(null)
+const isAuthenticated = computed(() => user.value && Object.keys(user.value).length > 0)
+
+const authenticate = async (userData: UserData, fn) => {
+  loading.value = true
+  error.value = null
+  try {
+    const userResponse = await fn(userData)
+    const enhancedUserResponse = enhanceUser(userResponse)
+    user.value = enhancedUserResponse.data.user.customer
+    cart.value = enhancedUserResponse.data.user.cart
+  } catch (err) {
+    error.value = err.graphQLErrors ? err.graphQLErrors[0].message : err
+  }
+  loading.value = false
+}
 
 export default function useUser(): UseUser<UserRef, RegisterFn, LoginFn, LogoutFn> {
-  const loading = ref(false)
-  const error = ref(null)
-  const isAuthenticated = computed(() => user.value && Object.keys(user.value).length > 0)
-
   watch(user, async () => {
     if (isAuthenticated.value) {
       return
@@ -42,21 +56,11 @@ export default function useUser(): UseUser<UserRef, RegisterFn, LoginFn, LogoutF
   })
 
   const register = async (userData: CustomerSignMeUpDraft) => {
-    loading.value = true
-    const userResponse = await customerSignMeUp(userData)
-    const enhancedUserResponse = enhanceUser(userResponse)
-    user.value = enhancedUserResponse.data.user.customer
-    cart.value = enhancedUserResponse.data.user.cart
-    loading.value = false
+    await authenticate(userData, customerSignMeUp)
   }
 
   const login = async (userData: CustomerSignMeInDraft) => {
-    loading.value = true
-    const userResponse = await customerSignMeIn(userData)
-    const enhancedUserResponse = enhanceUser(userResponse)
-    user.value = enhancedUserResponse.data.user.customer
-    cart.value = enhancedUserResponse.data.user.cart
-    loading.value = false
+    await authenticate(userData, customerSignMeIn)
   }
 
   const logout = async () => {

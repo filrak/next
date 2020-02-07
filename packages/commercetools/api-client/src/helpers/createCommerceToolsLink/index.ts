@@ -18,9 +18,10 @@ const createCommerceToolsLink = (config: ApiConfig): ApolloLink => {
     };
   });
   const customerLink = new ApolloLink((operation, forward) =>
-    forward(operation).map(response => {
+    forward(operation).map((response) => {
       const { operationName, variables } = operation
-      if (['customerSignMeUp', 'customerSignMeIn'].includes(operationName)) {
+
+      if (!response.errors && ['customerSignMeUp', 'customerSignMeIn'].includes(operationName)) {
         const { email, password } = variables.draft
 
         loadAccessToken(config, { username: email, password })
