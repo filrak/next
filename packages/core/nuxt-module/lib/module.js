@@ -4,6 +4,7 @@ const fs = require("fs")
 const consola = require('consola')
 const chalk = require('chalk');
 const { mergeWith, isArray } = require('lodash')
+const chokidar = require('chokidar')
 
 const log = {
   info: (message) => consola.info(chalk.bold('VSF'), message),
@@ -40,7 +41,7 @@ module.exports = function VueStorefrontNuxtModule (moduleOptions) {
   this.addPlugin(path.resolve(__dirname, 'plugins/composition-api.js'))
   log.success('Installed Composition API plugin for Vue 2')
 
-  //----------------------s--------------
+  //-------------------------------------
 
   // Using symlinks in lerna somehow breaks composition API behavior as a singleton.
   if (options.coreDevelopment === true) {
@@ -70,13 +71,13 @@ module.exports = function VueStorefrontNuxtModule (moduleOptions) {
     useRawSource(package)
   })
   
-
   // templates
 
   this.addTemplate({
     fileName: 'pages/Product.vue',
-    src: path.join(__dirname, '../theme/pages/Product.vue'),
+    src: path.join(__dirname, '../theme/pages/Product.vue')
   });
+
   this.extendRoutes((routes, resolve) => {
     routes.unshift({
       name: 'product',
@@ -84,6 +85,13 @@ module.exports = function VueStorefrontNuxtModule (moduleOptions) {
       component: resolve(this.options.buildDir, 'pages/Product.vue'),
     });
   });
+
+  this.nuxt.hook('build:before',(builder) => {
+    chokidar.watch(path.join(__dirname, '../theme/')).on('all', (event, path) => {
+      builder.generateRoutesAndFiles()
+    });
+  })
+
 }
 
 module.exports.meta = require('../package.json')
