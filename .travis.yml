@@ -43,7 +43,7 @@ jobs:
       name: Test commercetools helpers
 
     - build_image:
-      if: branch = master
+      if: branch = master AND type != pull_request
       name: "Build docker image"
       stage: docker_build
       script:
@@ -52,7 +52,7 @@ jobs:
         - docker push registry.storefrontcloud.io/vsf-next-demo-storefrontcloud-io/vue-storefront:$COMMIT
 
     - deploy_to_storefrontcloud:
-      if: branch = master
+      if: branch = master AND type != pull_request
       name: "Deploy to StorefrontCloud"
       stage: deploy
       script:
