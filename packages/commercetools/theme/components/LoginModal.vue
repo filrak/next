@@ -9,7 +9,7 @@
             <form class="form" @submit.prevent="handleSubmit(handleLogin)">
               <ValidationProvider rules="required|email" v-slot="{ errors }">
                 <SfInput
-                  v-model="form.email"
+                  v-model="form.username"
                   :valid="!errors[0]"
                   :errorMessage="errors[0]"
                   name="email"

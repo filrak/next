@@ -1,10 +1,6 @@
 import { ref, Ref, watch, computed } from '@vue/composition-api'
-import { UseUser } from '@vue-storefront/interfaces'
-import {
-  CustomerSignMeInDraft,
-  CustomerSignMeUpDraft,
-  Customer
-} from '@vue-storefront/commercetools-api/lib/src/types/GraphQL'
+import { UseUser, AgnosticUserLogin, AgnosticUserRegister } from '@vue-storefront/interfaces'
+import { Customer, CustomerSignMeUpDraft, CustomerSignMeInDraft } from '@vue-storefront/commercetools-api/lib/src/types/GraphQL'
 import {
   customerSignMeUp,
   customerSignMeIn,
@@ -15,8 +11,8 @@ import { cart } from './../useCart'
 import { enhanceUser } from './../helpers/internals'
 
 type UserRef = Ref<Customer>
-type RegisterFn = (userData: CustomerSignMeInDraft) => Promise<void>
-type LoginFn = (userData: CustomerSignMeInDraft) => Promise<void>
+type RegisterFn = (userData: AgnosticUserRegister) => Promise<void>
+type LoginFn = (userData: AgnosticUserLogin) => Promise<void>
 type LogoutFn = () => Promise<void>
 type UserData = CustomerSignMeUpDraft | CustomerSignMeInDraft
 
@@ -55,12 +51,13 @@ export default function useUser(): UseUser<UserRef, RegisterFn, LoginFn, LogoutF
     loading.value = false
   })
 
-  const register = async (userData: CustomerSignMeUpDraft) => {
+  const register = async (userData: AgnosticUserRegister) => {
     await authenticate(userData, customerSignMeUp)
   }
 
-  const login = async (userData: CustomerSignMeInDraft) => {
-    await authenticate(userData, customerSignMeIn)
+  const login = async (userData: AgnosticUserLogin) => {
+    const customerLoginDraft = { email: userData.username, password: userData.password }
+    await authenticate(customerLoginDraft, customerSignMeIn)
   }
 
   const logout = async () => {

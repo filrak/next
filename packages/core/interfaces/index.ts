@@ -153,3 +153,16 @@ export interface AgnosticProductAttribute {
   value: string | Object
   label: string
 }
+
+export interface AgnosticUserRegister {
+  email: string
+  password: string
+  firstName?: string
+  lastName?: string
+}
+
+export interface AgnosticUserLogin {
+  username: string
+  password: string
+}
+
