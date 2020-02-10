@@ -20,7 +20,7 @@ export interface Token {
 export interface SetupConfig<TCacheShape> {
   api?: ApiConfig,
   customOptions?: ApolloClientOptions<TCacheShape>
-  currency: string,
+  currency?: string,
   locale: string,
   country?: string
 }

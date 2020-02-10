@@ -72,6 +72,7 @@ export default {
     '@nuxt/typescript-build' // to core
   ],
   modules: [
+    'nuxt-i18n',
     '@nuxtjs/prismic',
     ['@vue-storefront/nuxt', {
       coreDevelopment: true,
@@ -89,6 +90,7 @@ export default {
   plugins: [
     './plugins/commercetools.js',
     './prismic/plugins/html-serializer.js',
+    './plugins/i18n.js'
   ],
   prismic: {
     endpoint: 'https://lovecrafts-dev.cdn.prismic.io/api/v2'
@@ -110,5 +112,20 @@ export default {
         })
       })
     ]
-  }
+  },
+  i18n: {
+    locales: ['en', 'de'],
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en',
+      messages: {
+        en: {
+          welcome: 'Welcome'
+        },
+        de: {
+          welcome: 'Guten morgen!'
+        }
+      }
+    }
+  },
 }

@@ -26,14 +26,17 @@ let currency = 'USD'
 let country = 'UK'
 
 const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
-  apolloClient = new ApolloClient({
-    link: createCommerceToolsLink(setupConfig.api),
-    cache: new InMemoryCache(),
-    ...setupConfig.customOptions
-  })
-  locale = setupConfig.locale
-  currency = setupConfig.currency
-  country = setupConfig.country
+  if (setupConfig.api) {
+    apolloClient = new ApolloClient({
+      link: createCommerceToolsLink(setupConfig.api),
+      cache: new InMemoryCache(),
+      ...setupConfig.customOptions
+    })
+  }
+
+  locale = setupConfig.locale || locale
+  currency = setupConfig.currency || currency
+  country = setupConfig.country || country
 
   return apolloClient
 }
