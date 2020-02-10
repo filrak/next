@@ -7,17 +7,24 @@ import {
   setup
 } from '@vue-storefront/commercetools-api'
 import Cookies from 'js-cookie'
-import { UseProduct } from '@vue-storefront/interfaces'
+import { UseLocale } from '@vue-storefront/interfaces'
 
-export default function useLocales(context: any): any {
+type Locale = Ref<string>
+type Country = Ref<string>
+type Currency = Ref<string>
+type AvailableLocales = Ref<Readonly<string[]>>
+type AvailableCountries = Ref<Readonly<string[]>>
+type AvailableCurrencies = Ref<Readonly<string[]>>
+
+export default function useLocales(context: any): UseLocale<Locale, Country, Currency, AvailableLocales, AvailableCountries, AvailableCurrencies> {
   const loading = ref(false)
   const error = ref(null)
-  const locale = ref(context.root.$i18n.locale)
-  const availableLocales = computed(() => context.root.$i18n.availableLocales)
-  const availableCountries = computed(() => countries)
-  const availableCurrencies = computed(() => currencies)
-  const country = ref(null)
-  const currency = ref(null)
+  const locale: Locale = ref(context.root.$i18n.locale)
+  const availableLocales: AvailableLocales = computed<string[]>(() => context.root.$i18n.availableLocales)
+  const availableCountries: AvailableCountries = computed<string[]>(() => countries)
+  const availableCurrencies: AvailableCurrencies = computed<string[]>(() => currencies)
+  const country: Country = ref(null)
+  const currency: Currency = ref(null)
 
   watch(() => {
     if (!country.value || !currency.value) {
