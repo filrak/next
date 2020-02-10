@@ -27,6 +27,9 @@ export default {
     ]
   },
   loading: { color: '#fff' },
+  dir: {
+    layouts: '.nuxt/layouts',
+  },
   router: {
     extendRoutes (routes, resolve) {
       // TEMPORARY, will be removed
@@ -82,7 +85,11 @@ export default {
   modules: [
     '@nuxtjs/prismic',
     ['@vue-storefront/nuxt', {
-      coreDevelopment: true
+      coreDevelopment: true,
+      useRawSource: {
+        dev: ['@vue-storefront/commercetools-composables'],
+        prod: ['@vue-storefront/commercetools-composables']
+      }
     }],
     ['@vue-storefront/nuxt-theme', {
       apiClient: '@vue-storefront/commercetools-api',

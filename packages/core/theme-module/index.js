@@ -11,11 +11,11 @@ const log = {
   error: (message) => consola.error(chalk.bold('VSF'), message)
 }
 
-const getAllFiles = function(dirPath) {
+const getAllFiles = function(dirPath, arrayOfFiles) {
   const files = fs.readdirSync(dirPath)
- 
-  arrayOfFiles = []
- 
+
+  arrayOfFiles = arrayOfFiles || []
+  
   files.forEach(file => {
     if (fs.statSync(dirPath + "/" + file).isDirectory()) {
       arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
@@ -33,7 +33,7 @@ module.exports = function DefaultThemeModule (moduleOptions) {
   log.info('Adding theme files...')
 
   const themeFiles = getAllFiles(path.join(__dirname, 'theme'))
-
+  console.log(themeFiles)
   themeFiles.forEach(file => {
     this.addTemplate({
       fileName: file.split('theme/').pop(),
