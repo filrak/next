@@ -11,20 +11,43 @@ const log = {
   error: (message) => consola.error(chalk.bold('VSF'), message)
 }
 
+const getAllFiles = function(dirPath) {
+  files = fs.readdirSync(dirPath)
+ 
+  arrayOfFiles = []
+ 
+  files.forEach(function(file) {
+    if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+      arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
+    } else {
+      arrayOfFiles.push((dirPath + "/" + file).split(__dirname + '/').pop())
+    }
+  })
+ 
+  return arrayOfFiles
+}
+
 module.exports = function DefaultThemeModule (moduleOptions) {
   log.info(chalk.green('Starting Theme Module'))
 
   log.info('Adding theme files...')
 
-  this.addTemplate({
-    fileName: 'pages/Product.vue',
-    src: path.join(__dirname, 'theme/pages/Product.vue'),
-    options: {
-      apiClient: moduleOptions.apiClient,
-      helpers: moduleOptions.helpers,
-      composables: moduleOptions.composables
-    }
-  });
+  const themeFiles = getAllFiles(path.join(__dirname, 'theme'))
+
+  themeFiles.forEach(file => {
+    this.addTemplate({
+      fileName: file.split('theme/').pop(),
+      src: path.join(__dirname, file),
+      options: {
+        apiClient: moduleOptions.apiClient,
+        helpers: moduleOptions.helpers,
+        composables: moduleOptions.composables
+      }
+    });
+  })
+
+
+  log.success(`Added ${themeFiles.length} theme file(s) to ${chalk.bold('.nuxt')} folder`)
 
   this.extendRoutes((routes, resolve) => {
     routes.unshift({
@@ -33,8 +56,6 @@ module.exports = function DefaultThemeModule (moduleOptions) {
       component: resolve(this.options.buildDir, 'pages/Product.vue'),
     });
   });
-
-  log.success('Theme files succesfully added!')
 
   if(global.coreDev) {
     log.info(`Watching theme dir in Theme Module for changes.. ${chalk.italic('[coreDevelopment]')}`)
