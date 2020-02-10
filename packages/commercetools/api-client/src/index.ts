@@ -24,6 +24,8 @@ let apolloClient: ApolloClient<any> = null
 let locale = 'en'
 let currency = 'USD'
 let country = 'UK'
+let countries = ['UK', 'US']
+let currencies = ['EUR', 'USD']
 
 const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
   if (setupConfig.api) {
@@ -37,6 +39,8 @@ const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClien
   locale = setupConfig.locale || locale
   currency = setupConfig.currency || currency
   country = setupConfig.country || country
+  countries = setupConfig.countries || countries
+  currencies = setupConfig.currencies || currencies
 
   return apolloClient
 }
@@ -47,6 +51,8 @@ export {
   locale,
   country,
   currency,
+  countries,
+  currencies,
   getStorage,
   getProduct,
   getCategory,

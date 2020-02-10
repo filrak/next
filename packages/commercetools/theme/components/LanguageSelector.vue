@@ -1,44 +1,79 @@
 <template>
-  <div class="lang-selector">
+  <div class="container">
     <nuxt-link
-      v-for="locale in availableLocales"
-      :key="locale"
-      :to="switchLocalePath(locale)"
-      :class="['lang-selector__item', { 'lang-selector__item--selected': locale === currentLocale}]"
-      @click.native="currentLocale = locale"
+      v-for="lang in availableLocales"
+      :key="lang"
+      :to="switchLocalePath(lang)"
+      :class="['container__lang', { 'container__lang--selected': lang === locale}]"
+      @click.native="lang = locale"
     >
-      <SfImage :src="`/icons/langs/${locale}.png`" width="20" />
+      <SfImage :src="`/icons/langs/${lang}.png`" width="20" />
     </nuxt-link>
+    <SfSelect v-model="country" class="container__select">
+      <SfSelectOption v-for="currentCountry in availableCountries" :key="currentCountry" :value="currentCountry">
+        <div>{{ currentCountry }}</div>
+      </SfSelectOption>
+    </SfSelect>
+    <SfSelect v-model="currency" class="container__select">
+      <SfSelectOption v-for="currentCurrency in availableCurrencies" :key="currentCurrency" :value="currentCurrency">
+        <div>{{ currentCurrency }}</div>
+      </SfSelectOption>
+    </SfSelect>
   </div>
 </template>
 
 <script>
-import { SfImage } from '@storefront-ui/vue'
+import { SfImage, SfSelect } from '@storefront-ui/vue'
 import { ref, computed, watch } from '@vue/composition-api'
+import { useLocales } from '@vue-storefront/commercetools-composables'
 
 export default {
   components: {
     SfImage,
+    SfSelect
   },
   setup(props, context) {
-    const { availableLocales, locale } = context.root.$i18n
-    const currentLocale = ref(locale)
+    const {
+      availableLocales,
+      locale,
+      availableCountries,
+      country,
+      availableCurrencies,
+      currency
+    } = useLocales(context)
 
-    return { availableLocales, currentLocale }
+    return {
+      availableLocales,
+      locale,
+      availableCountries,
+      country,
+      availableCurrencies,
+      currency
+    }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@storefront-ui/vue/styles";
 
-.lang-selector {
+.container {
   margin: 0 -5px;
   display: flex;
+  flex-wrap: nowrap;
 
-  &__item {
+  &__select {
     padding: 0 5px;
-    display: block;
+
+     &::v-deep .sf-select__dropdown{
+      min-width: 100px;
+    }
+  }
+
+  &__lang {
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
     opacity: 0.5;
 
     &:hover,

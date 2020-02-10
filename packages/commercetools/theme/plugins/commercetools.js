@@ -19,5 +19,7 @@ setup({
   },
   locale: 'en',
   currency: 'USD',
-  country: 'US'
+  country: 'US',
+  countries: ['US', 'AT', 'DE', 'NL'],
+  currencies: ['EUR', 'USD']
 })
