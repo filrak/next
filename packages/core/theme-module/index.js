@@ -33,7 +33,7 @@ module.exports = function DefaultThemeModule (moduleOptions) {
   log.info('Adding theme files...')
 
   const themeFiles = getAllFiles(path.join(__dirname, 'theme'))
-  console.log(themeFiles)
+
   themeFiles.forEach(file => {
     this.addTemplate({
       fileName: file.split('theme/').pop(),
