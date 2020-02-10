@@ -7,7 +7,7 @@ jest.mock('apollo-client')
 jest.mock('./../src/helpers/createCommerceToolsLink/tokenCache')
 
 setup({
-  api: null,
+  api: {} as any,
   locale: 'en',
   currency: 'USD',
   country: 'UK'
