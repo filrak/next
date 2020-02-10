@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TopBar />
     <div id="layout" >
       <AppHeader />
       <nuxt />
@@ -16,6 +17,7 @@
 import AppHeader from '~/components/AppHeader.vue'
 import BottomNavigation from '~/components/BottomNavigation.vue'
 import AppFooter from '~/components/AppFooter.vue'
+import TopBar from '~/components/TopBar.vue'
 import Version from '~/components/Version.vue'
 import CartSidebar from '~/components/CartSidebar.vue'
 import LoginModal from '~/components/LoginModal.vue'
@@ -24,6 +26,7 @@ import LoginModal from '~/components/LoginModal.vue'
 
 export default {
   components: {
+    TopBar,
     AppHeader,
     BottomNavigation,
     AppFooter,
