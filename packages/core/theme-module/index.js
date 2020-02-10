@@ -12,11 +12,11 @@ const log = {
 }
 
 const getAllFiles = function(dirPath) {
-  files = fs.readdirSync(dirPath)
+  const files = fs.readdirSync(dirPath)
  
   arrayOfFiles = []
  
-  files.forEach(function(file) {
+  files.forEach(file => {
     if (fs.statSync(dirPath + "/" + file).isDirectory()) {
       arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
     } else {
