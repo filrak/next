@@ -1,1 +1,1 @@
-<Theme>s
+<Theme/>
