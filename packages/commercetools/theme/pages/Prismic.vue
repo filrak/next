@@ -1,14 +1,20 @@
 <template>
-  <custom-page :type="'privacy-policy'" :uid="'privacy-policy'" />
+  <div>ok</div>
 </template>
-
 <script>
-// @defudef: This is just an example how to use Prismic. It will be deleted soon.
-import { search } from '@vue-storefront/prismic'
+
+import Vue from 'vue'
+import { usePrismic } from '@vue-storefront/prismic'
 
 export default {
-  components: {
-    CustomPage,
+  setup(props, context) {
+    const { document, search } = usePrismic()
+
+    search([])
+
+    return {
+      document
+    }
   }
 }
 </script>

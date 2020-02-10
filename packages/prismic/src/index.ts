@@ -1,43 +1,32 @@
-import PrismicVue from 'prismic-vue'
-
-interface PrismicVueType {
-  install: (Vue: any, options: any) => void
-}
+import usePrismic from './composables/usePrismic'
+import PrismicJS from 'prismic-javascript'
+import { ApiOptions } from 'prismic-javascript/d.ts/Api';
 
 interface SetupConfig {
   endpoint: any
-  htmlSerializer?: any
-  linkResolver?: any
-  apiOptions?: {
-    accessToken: string
-  }
+  apiOptions?: ApiOptions
 }
 
-let plugin = null
-let prismic = null
+let prismic = PrismicJS
 let apiOptions = null
 let linkResolver = null
 let htmlSerializer = null
 let endpoint = null
+const setup = (setupConfig: SetupConfig) => {
+  apiOptions = setupConfig ? setupConfig.apiOptions || null : null
+  endpoint = setupConfig ? setupConfig.endpoint || null : null
 
-const setup = (setupConfig: SetupConfig): [PrismicVueType, SetupConfig] => {
-  prismic = PrismicVue
-  apiOptions = setupConfig.apiOptions || null
-  linkResolver = setupConfig.linkResolver || null
-  htmlSerializer = setupConfig.htmlSerializer || null
-  endpoint = setupConfig.endpoint
+  prismic.client(setupConfig.endpoint, setupConfig.apiOptions)
 
-  plugin = [PrismicVue, setupConfig]
-
-  return plugin
+  return prismic
 }
 
 export {
   setup,
   prismic,
-  plugin,
   apiOptions,
   linkResolver,
   htmlSerializer,
   endpoint,
+  usePrismic
 }

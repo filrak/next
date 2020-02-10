@@ -81,27 +81,27 @@ export default {
     '@nuxt/typescript-build' // to core
   ],
   modules: [
-    '@nuxtjs/prismic',
     ['@vue-storefront/nuxt', {
       coreDevelopment: true,
       useRawSource: {
-        dev: ['@vue-storefront/commercetools-composables'],
-        prod: ['@vue-storefront/commercetools-composables']
+        dev: [
+          '@vue-storefront/commercetools-composables',
+          '@vue-storefront/prismic'
+        ],
+        prod: [
+          '@vue-storefront/commercetools-composables',
+          '@vue-storefront/prismic'
+        ]
       }
     }]
   ],
   plugins: [
     './plugins/commercetools.js',
-    './prismic/plugins/html-serializer.js',
-    '~/plugins/prismic.js'
+    './plugins/prismic.js'
   ],
-  prismic: {
-    endpoint: 'https://lovecrafts-dev.cdn.prismic.io/api/v2'
-  },
   build: {
     transpile: [
-      'vee-validate/dist/rules',
-      '@vue-storefront/prismic/lib/plugins/prismic.js'
+      'vee-validate/dist/rules'
     ],
     plugins: [
       new webpack.DefinePlugin({

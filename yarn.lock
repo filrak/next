@@ -4442,6 +4442,14 @@ cross-env@^6.0.3:
   dependencies:
     cross-spawn "^7.0.0"
 
+cross-fetch@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.2.3.tgz#e8a0b3c54598136e037f8650f8e823ccdfac198e"
+  integrity sha512-PrWWNH3yL2NYIb/7WF/5vFG3DCQiXDOVf8k3ijatbrtnwNuhMWLC7YF7uqf53tbTFDzHIUD8oITw4Bxt8ST3Nw==
+  dependencies:
+    node-fetch "2.1.2"
+    whatwg-fetch "2.0.4"
+
 cross-spawn@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-3.0.1.tgz#1256037ecb9f0c5f79e3d6ef135e30770184b982"
@@ -5218,7 +5226,7 @@ es6-promisify@^5.0.0:
   dependencies:
     es6-promise "^4.0.3"
 
-escape-html@~1.0.3:
+escape-html@1.0.3, escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
@@ -8281,6 +8289,11 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
+node-fetch@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
+  integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
+
 node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
@@ -9848,6 +9861,36 @@ pretty@^2.0.0:
     extend-shallow "^2.0.1"
     js-beautify "^1.6.12"
 
+prismic-dom@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/prismic-dom/-/prismic-dom-2.1.0.tgz#a614d371e3895be454f06473ed3c3e59bf1340df"
+  integrity sha512-SHXaVYiGC0IehnnTjLXWMAG2FBPRsNpMU04iGI05ByLZRJR1P2PKegQL/BjpnfHpCuucdEZxvehqsOMwA/ZGvg==
+  dependencies:
+    escape-html "1.0.3"
+    prismic-helpers "^1.0.0"
+    prismic-richtext "^0.4.2"
+
+prismic-helpers@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/prismic-helpers/-/prismic-helpers-1.0.0.tgz#8337420cf187f55fb7b7a8be755523c8696fc329"
+  integrity sha1-gzdCDPGH9V+3t6i+dVUjyGlvwyk=
+
+prismic-javascript@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/prismic-javascript/-/prismic-javascript-2.1.5.tgz#7170ce830c7176df442d91f11cda4db5a5679599"
+  integrity sha512-rBZ97TpvrshbwrqzZpO7kZWzzNu/iczBCwRn90Gtdt3P7k6f7o9bNVD+8khmt9nmM1nvdQkU9w17R4UU+uxVGg==
+  dependencies:
+    cross-fetch "^2.2.3"
+    promise-polyfill "8.0.0"
+
+prismic-richtext@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/prismic-richtext/-/prismic-richtext-0.4.2.tgz#bdc27d2c3d0e8e2226918b7ad2708fd3ac3d1e7f"
+  integrity sha512-+6frCZktVUHX+IA2a/s4EUukVvlLwjgdsJPRVkZmq/inaR1NVnjTHqM9l81QGEXAlTO5Jhzk0hhQBL1Pj73TYw==
+  dependencies:
+    ramda "^0.25.0"
+    uuid "^3.1.0"
+
 prismic-vue@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/prismic-vue/-/prismic-vue-2.0.0.tgz#e2c26d70402d3bcc172054017f1c23b208c0192d"
@@ -9872,6 +9915,11 @@ promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
+
+promise-polyfill@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-8.0.0.tgz#b47c7fc74052cc5b2132b703cca144f1a5eb56ef"
+  integrity sha512-QGmPnw2hDEaRS6freHynJ7nfS1nDg0/P0c/CGglA43utoJjYQMiY9ojEpK0HaJ4wbUztdmwqQRlEfGWdsEQ5uQ==
 
 promise-retry@^1.1.1:
   version "1.1.1"
@@ -10034,6 +10082,11 @@ quick-lru@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
   integrity sha1-Q2CxfGETatOAeDl/8RQW4Ybc+7g=
+
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.1.0"
@@ -12350,6 +12403,11 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   integrity sha512-b5lim54JOPN9HtzvK9HFXvBma/rnfFeqsic0hSpjtDbVxR3dJKLc+KB4V6GgiGOvl7CY/KNh8rxSo9DKQrnUEw==
   dependencies:
     iconv-lite "0.4.24"
+
+whatwg-fetch@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
+  integrity sha512-dcQ1GWpOD/eEQ97k66aiEVpNnapVj90/+R+SXTPYGHpYBBypfKJEQjLrvMZ7YXbKm21gXd4NcuxUTjiv1YtLng==
 
 whatwg-fetch@>=0.10.0:
   version "3.0.0"

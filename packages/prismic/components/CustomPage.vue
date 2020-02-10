@@ -6,7 +6,7 @@
 
 <script>
 import { ref, reactive } from '@vue/composition-api'
-import PrismicBlock from './PrismicBlock'
+import PrismicBlock from '@vue-storefront/prismic/components/PrismicBlock'
 
 const parseType = (document) => {
   if (typeof document === 'string' || typeof document === 'number') {
