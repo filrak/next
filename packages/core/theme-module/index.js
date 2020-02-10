@@ -18,7 +18,12 @@ module.exports = function DefaultThemeModule (moduleOptions) {
 
   this.addTemplate({
     fileName: 'pages/Product.vue',
-    src: path.join(__dirname, 'theme/pages/Product.vue')
+    src: path.join(__dirname, 'theme/pages/Product.vue'),
+    options: {
+      apiClient: moduleOptions.apiClient,
+      helpers: moduleOptions.helpers,
+      composables: moduleOptions.composables
+    }
   });
 
   this.extendRoutes((routes, resolve) => {

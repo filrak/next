@@ -82,13 +82,13 @@ export default {
   modules: [
     '@nuxtjs/prismic',
     ['@vue-storefront/nuxt', {
-      coreDevelopment: true,
-      useRawSource: {
-        dev: ['@vue-storefront/commercetools-composables'],
-        prod: ['@vue-storefront/commercetools-composables']
-      }
+      coreDevelopment: true
     }],
-    ['@vue-storefront/nuxt-theme-module']
+    ['@vue-storefront/nuxt-theme-module', {
+      apiClient: '@vue-storefront/commercetools-api',
+      composables: '@vue-storefront/commercetools-composables',
+      helpers: '@vue-storefront/commercetools-helpers'
+    }]
   ],
   plugins: [
     './plugins/commercetools.js',
