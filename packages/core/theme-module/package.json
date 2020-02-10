@@ -1,5 +1,6 @@
 {
   "name": "@vue-storefront/nuxt-theme-module",
+  "private": true,
   "version": "0.0.1",
   "description": "",
   "main": "lib/module.js",

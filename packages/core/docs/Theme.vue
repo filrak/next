@@ -12,7 +12,16 @@
     <p>
       Because of that it's very important to <b>keep the agnostic APIs in default themes</b>. Clients can do whatever they want in their projects but we should keep agnosticity for maintanance purposes.
     </p>
-    <p>Default theme is located under 
+    <p>Default theme is located in <code>core/theme-module</code> folder and recognized as <code>@vue-storefront/nuxt-theme-module</code> </p>
+    <h2>Configuring theme</h2>s
+    <p>
+      In <code>nuxt.config.js</code> of your theme set <code>apiClient/composables/helpers</code> options to be named as your integration packages. 
+      For example under <code>composables</code> you can put <code>@vue-storefront/comemrcetools-composables</code>. 
+      It will be used in lodash templates inside <code>@vue-storefront/nuxt-theme-module</code> as a replacement for variables like here <code>import { useProduct, useCart } from '<%= options.composables %>'</code>
+    </p>
     <h2>Overriding default theme files</h2>
+    <p>
+      Try to keep all templates agnostic. Themes shouldn't have platform-specific logic but sometimes they're unavoidable. In that cases you can override any of theme pages by putting file with the same dir in <code>app</code> folder of your project. 
+      For example to override <code>theme/pages/Product.vue</code> from theme module you need to create <code>app/pages/Product.vue</code> in your app.
   </div>
 </template>
