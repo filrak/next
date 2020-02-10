@@ -4,7 +4,6 @@
       class="breadcrumbs desktop-only"
       :breadcrumbs="breadcrumbs"
     />
-    zupa
     <div class="product">
       <div class="product__gallery">
         <SfGallery

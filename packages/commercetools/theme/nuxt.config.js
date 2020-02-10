@@ -87,7 +87,8 @@ export default {
         dev: ['@vue-storefront/commercetools-composables'],
         prod: ['@vue-storefront/commercetools-composables']
       }
-    }]
+    }],
+    ['@vue-storefront/nuxt-theme-module']
   ],
   plugins: [
     './plugins/commercetools.js',

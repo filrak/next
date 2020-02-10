@@ -36,7 +36,9 @@ module.exports = function VueStorefrontNuxtModule (moduleOptions) {
       return objValue.concat(srcValue);
     }
   })
-
+  
+  if (moduleOptions.coreDevelopment) global.coreDev = true
+  
   log.info(chalk.green('Starting Vue Storefront Nuxt Module'))
   this.addPlugin(path.resolve(__dirname, 'plugins/composition-api.js'))
   log.success('Installed Composition API plugin for Vue 2')
@@ -69,27 +71,6 @@ module.exports = function VueStorefrontNuxtModule (moduleOptions) {
   // always use raw source on core development mode
   options.useRawSource[isProd || options.coreDevelopment ? 'prod' : 'dev'].map(package => {
     useRawSource(package)
-  })
-  
-  // templates
-
-  this.addTemplate({
-    fileName: 'pages/Product.vue',
-    src: path.join(__dirname, '../theme/pages/Product.vue')
-  });
-
-  this.extendRoutes((routes, resolve) => {
-    routes.unshift({
-      name: 'product',
-      path: '/p/:slug/',
-      component: resolve(this.options.buildDir, 'pages/Product.vue'),
-    });
-  });
-
-  this.nuxt.hook('build:before',(builder) => {
-    chokidar.watch(path.join(__dirname, '../theme/')).on('all', (event, path) => {
-      builder.generateRoutesAndFiles()
-    });
   })
 
 }
