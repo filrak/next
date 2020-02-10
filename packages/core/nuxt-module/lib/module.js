@@ -37,7 +37,6 @@ module.exports = function VueStorefrontNuxtModule (moduleOptions) {
     }
   })
   
-  if (moduleOptions.coreDevelopment) global.coreDev = true
   
   log.info(chalk.green('Starting Vue Storefront Nuxt Module'))
   this.addPlugin(path.resolve(__dirname, 'plugins/composition-api.js'))
@@ -47,7 +46,8 @@ module.exports = function VueStorefrontNuxtModule (moduleOptions) {
 
   // Using symlinks in lerna somehow breaks composition API behavior as a singleton.
   if (options.coreDevelopment === true) {
-    log.info(`Vue Storefront core development mode is on. ${chalk.italic('[coreDevelopment]')}`)
+    log.info(`Vue Storefront core development mode is on ${chalk.italic('[coreDevelopment]')}`)
+    if (moduleOptions.coreDevelopment) global.coreDev = true
     this.extendBuild(config => {
       config.resolve.alias['@vue/composition-api'] = path.resolve('node_modules/@vue/composition-api')
     })
