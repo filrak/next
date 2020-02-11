@@ -1,8 +1,9 @@
 import webpack from 'webpack'
-import path from 'path'
-import config, { localeNames } from './config'
+import config from './config'
 
 console.log(path.join(__dirname, '.nuxt/components'))
+
+const localeNames = config.locales.map(l => l.name)
 
 export default {
   mode: 'universal',

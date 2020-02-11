@@ -1,4 +1,4 @@
-const config = {
+export default {
   api: {
     uri: 'https://api.commercetools.com/vsf-ct-dev/graphql',
     authHost: 'https://auth.sphere.io',
@@ -38,8 +38,3 @@ const config = {
     localeCookieName: 'vsf-locale'
   }
 }
-
-const localeNames = config.locales.map(l => l.name)
-
-export { localeNames }
-export default config
