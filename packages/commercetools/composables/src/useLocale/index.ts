@@ -39,11 +39,13 @@ export default function useLocale(): UseLocale<Locale, Country, Currency, Availa
   })
 
   watch(country, () => {
+    if (!country.value) return
     Cookies.set(cookies.countryCookieName, country.value)
     setup({ country: country.value })
   })
 
   watch(currency, () => {
+    if (!currency.value) return
     Cookies.set(cookies.currencyCookieName, currency.value)
     setup({ currency: currency.value })
   })
