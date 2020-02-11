@@ -17,14 +17,27 @@ export interface Token {
   token_type: string
 }
 
+export interface CookiesConfig {
+  currencyCookieName: string
+  countryCookieName: string
+  localeCookieName: string
+}
+
+export interface LocaleItem {
+  name: string
+  label: string
+}
+
 export interface SetupConfig<TCacheShape> {
   api?: ApiConfig
   customOptions?: ApolloClientOptions<TCacheShape>
   currency?: string
   locale?: string
   country?: string
-  countries?: string[]
-  currencies?: string[]
+  countries?: LocaleItem[]
+  currencies?: LocaleItem[]
+  locales?: LocaleItem[]
+  cookies?: CookiesConfig
 }
 
 export interface CustomerCredentials {

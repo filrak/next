@@ -1,7 +1,7 @@
 <template>
   <SfTopBar>
     <template #left>
-      <language-selector />
+      <LocaleSelector />
     </template>
     <template #right>
       <SfButton
@@ -29,12 +29,12 @@ import uiState from '~/assets/ui-state'
 import { useUser } from '@vue-storefront/commercetools-composables'
 import { getUserFullName } from '@vue-storefront/commercetools-helpers'
 import { computed } from '@vue/composition-api'
-import  LanguageSelector from './LanguageSelector'
+import  LocaleSelector from './LocaleSelector'
 
 const { toggleLoginModal } = uiState
 
 export default {
-  components: { SfTopBar, SfButton, LanguageSelector },
+  components: { SfTopBar, SfButton, LocaleSelector },
   setup() {
     const { isAuthenticated, logout, user } = useUser()
 

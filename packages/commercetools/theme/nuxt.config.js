@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import path from 'path'
+import config, { localeNames } from './config'
 
 console.log(path.join(__dirname, '.nuxt/components'))
 
@@ -114,18 +115,13 @@ export default {
     ]
   },
   i18n: {
-    locales: ['en', 'de'],
-    defaultLocale: 'en',
+    locales: localeNames,
+    defaultLocale: localeNames[0],
     vueI18n: {
-      fallbackLocale: 'en',
-      messages: {
-        en: {
-          welcome: 'Welcome'
-        },
-        de: {
-          welcome: 'Guten morgen!'
-        }
-      }
+      fallbackLocale: localeNames[0],
+    },
+    detectBrowserLanguage: {
+      cookieKey: config.cookies.localeCookieName
     }
   },
 }
