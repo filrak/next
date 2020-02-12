@@ -11,7 +11,6 @@ interface OptionsType {
   page?: number
 }
 
-// TODO: prismic as an argument is temporary. Will be accessible globally in this case
 export default function usePrismic () {
   const loading = ref(true)
   const error = ref(null)
