@@ -1,16 +1,11 @@
 import webpack from 'webpack'
-import { readFileSync } from 'fs'
-
-const readLastCommit = () => {
-  try {
-    return String(readFileSync('./../../../version'))
-  } catch (_) {
-    return ''
-  }
-}
 
 export default {
   mode: 'universal',
+  server: {
+    port: 3000,
+    host: '0.0.0.0'
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -23,6 +18,9 @@ export default {
     ]
   },
   loading: { color: '#fff' },
+  dir: {
+    layouts: '.nuxt/layouts',
+  },
   router: {
     extendRoutes (routes, resolve) {
       // TEMPORARY, will be removed
@@ -32,11 +30,6 @@ export default {
         name: 'category',
         path: '/c/:slug_1/:slug_2?/:slug_3?/:slug_4?/:slug_5?',
         component: resolve(__dirname, 'pages/Category.vue')
-      })
-      routes.push({
-        name: 'product',
-        path: '/p/:slug/',
-        component: resolve(__dirname, 'pages/Product.vue')
       })
       routes.push({ // TEMPORARY: just to show example prismic page
         name: 'prismic',
@@ -93,6 +86,11 @@ export default {
           '@vue-storefront/prismic'
         ]
       }
+    }],
+    ['@vue-storefront/nuxt-theme', {
+      apiClient: '@vue-storefront/commercetools-api',
+      composables: '@vue-storefront/commercetools-composables',
+      helpers: '@vue-storefront/commercetools-helpers'
     }]
   ],
   plugins: [
@@ -107,7 +105,7 @@ export default {
       new webpack.DefinePlugin({
         'process.VERSION': JSON.stringify({
           version: require('./package.json').version,
-          lastCommit: readLastCommit()
+          lastCommit: process.env.LAST_COMMIT || ''
         })
       })
     ]
