@@ -67,12 +67,14 @@ export default function usePrismic () {
   }
   
   const search = async (query: PrismicQuery, options: OptionsType = {}) => {
-    const result = await prismic.getApi(endpoint).then(api => api.query(
-      transformQuery(query), 
-      options as QueryOptions
-    ))
+    const result = await prismic
+      .getApi(endpoint)
+      .then(api => api.query(
+        transformQuery(query), 
+        options as QueryOptions
+      ))
 
-    Object.assign(document, result)
+    Object.assign(document, result || {})
     loading.value = false
   }
 
