@@ -1,8 +1,9 @@
 import { ref, reactive } from '@vue/composition-api'
 import { prismic, endpoint } from '../../index'
-import { PrismicQuery, PrismicQueryTypes } from '../../interfaces';
-import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi';
-import ApiSearchResponse from 'prismic-javascript/d.ts/ApiSearchResponse';
+import { PrismicQuery, PrismicQueryTypes } from '../../interfaces'
+import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi'
+import ApiSearchResponse from 'prismic-javascript/d.ts/ApiSearchResponse'
+import PrismicDom from 'prismic-dom'
 
 interface OptionsType {
   orderings?: string
@@ -15,6 +16,7 @@ export default function usePrismic () {
   const loading = ref(true)
   const error = ref(null)
   const document: ApiSearchResponse = reactive({} as ApiSearchResponse)
+  const render = PrismicDom
 
   const transformQuery = (query: PrismicQuery): string | string[] => {
     const predict = (method, args) => prismic.Predicates[method](...args)
@@ -78,6 +80,7 @@ export default function usePrismic () {
     loading,
     error,
     document,
-    search
+    search,
+    render
   }
 }

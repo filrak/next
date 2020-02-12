@@ -1,6 +1,6 @@
 <template>
   <div>
-    <prismic-block :key="block.key" v-for="block in blocks" :block="block" />
+    <prismic-block :key="block.key" v-for="block in blocks" :block="block.element" />
   </div>
 </template>
 
@@ -61,10 +61,8 @@ export default {
   setup({ data }) {
     const blocks = reactive([])
 
-    console.log(data, 'data')
-
-    transformToBlocks(data).forEach((element, key) => {
-      blocks.push({ key, ...element })
+    Object.values(data).forEach((element, key) => {
+      blocks.push({ key, element })
     })
 
     return {
