@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// TODO: This is not integrated to usePrismic yet. Do not use it.
 import { ref, reactive } from '@vue/composition-api'
 import PrismicBlock from '@vue-storefront/prismic/components/PrismicBlock'
 

@@ -9,12 +9,14 @@
 </template>
 
 <script>
+import PrismicDom from 'prismic-dom'
+
 export default {
   props: {
     block: {
       type: Object,
       required: true
     }
-  }
+  },
 }
 </script>

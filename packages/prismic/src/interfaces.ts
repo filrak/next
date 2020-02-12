@@ -47,7 +47,25 @@ interface FragmentHour<T = number> extends Fragment {
   hour: T
 }
 
-export interface QueryOptions {
+interface DocumentAndResults {
+  documentId: string
+  maxResults: number
+}
+
+export type PrismicQueryTypes = 
+& FragmentValue
+& FragmentValues
+& FragmentBefore
+& FragmentAfter
+& FragmentBeforeAfter
+& FragmentGeo
+& FragmentYear
+& FragmentMonth
+& FragmentDay<any>
+& FragmentHour
+& DocumentAndResults
+
+export interface PrismicQuery {
   at?: FragmentValue<DateValue | DateValue[]>
   not?: FragmentValue<DateValue | DateValue[]>
   missing?: Fragment
@@ -55,29 +73,7 @@ export interface QueryOptions {
   any?: FragmentValues<DateValue>
   in?: FragmentValues<string>
   fulltext?: FragmentValue<string>
-  similar?: {
-    documentId: string
-    maxResults: number
-  }
-
-  date: {
-      before: FragmentBefore
-      after: FragmentAfter
-      between: FragmentBeforeAfter
-      dayOfMonth: FragmentDay<number>
-      dayOfMonthAfter: FragmentDay<number>
-      dayOfMonthBefore: FragmentDay<number>
-      dayOfWeek: FragmentDay<string | number>
-      dayOfWeekAfter: FragmentDay<string | number>
-      dayOfWeekBefore: FragmentDay<string | number>
-      month: FragmentMonth
-      monthBefore: FragmentMonth
-      monthAfter: FragmentMonth
-      year: FragmentYear
-      hour: FragmentHour
-      hourBefore: FragmentHour
-      hourAfter: FragmentHour
-  };
+  similar?: DocumentAndResults
   dateBefore: FragmentBefore
   dateAfter: FragmentAfter
   dateBetween: FragmentBeforeAfter
