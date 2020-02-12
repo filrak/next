@@ -62,10 +62,14 @@ export const getCategoryProducts = (category: Category, options: any = {}): Prod
   return [{},{},{},{},{}]
 }
 
+export const getCategoryName = (category: Category): string => {
+  return category.name
+}
+
 // Cart
 
 // TODO: Change UICartProduct to something agnostic. 
-export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): UiCartProduct[] => {
+export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): any => {
   return [{},{},{},{},{}]
 }
 
@@ -87,18 +91,18 @@ export const getCartTotalItems = (cart: Cart): number => {
 
 // ShippingMethod
 
-export const getShippingMethodId = (shippingMethod: ShippingMethod): string => {
+export const getShippingMethodId = (shippingMethod: any): string => {
   return 'shipping-method-id'
 }
 
-export const getShippingMethodName = (shippingMethod: ShippingMethod): string => {
+export const getShippingMethodName = (shippingMethod: any): string => {
   return 'shipping-method-name'
 }
 
-export const getShippingMethodDescription = (shippingMethod: ShippingMethod): string => {
+export const getShippingMethodDescription = (shippingMethod: any): string => {
   return 'Shipping method description'
 }
 
-export const getShippingMethodPrice = (shippingMethod: ShippingMethod): number => {
+export const getShippingMethodPrice = (shippingMethod: any): number => {
   return 10.00
 }

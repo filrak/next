@@ -55,11 +55,14 @@ export const getProductDescription = (product: ProductVariant): string => {
   return 'Lorem ipsum dolor sit amet'
 }
 
-
 // Category
 // TODO:  What is options?
 export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {
   return [{},{},{},{},{}]
+}
+
+export const getCategoryName = (category: Category) => {
+  return category.name || ''
 }
 
 // Cart

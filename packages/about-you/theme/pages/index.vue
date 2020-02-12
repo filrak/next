@@ -2,47 +2,31 @@
   <div class="container">
     <div>
       <logo />
-      <h1 class="title">
-        ayc-template
-      </h1>
-      <h2 class="subtitle">
-        My tremendous Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      {{ getCategoryName(categories[0]) }}
     </div>
   </div>
 </template>
 
 <script>
+import { useCategory } from '@vue-storefront/about-you-composables'
+import { getCategoryName } from '@vue-storefront/about-you-helpers'
+import { computed } from '@vue/composition-api'
+
 import Logo from '~/components/Logo.vue'
-import { setup, getCategory } from "@vue-storefront/about-you-api"
-
-setup()
-getCategory({})
-
 export default {
-  data () {
+  setup () {
+
+    const { categories, search } = useCategory()
+
+    search({})
+    const category = computed(() => categories.value[0])
+    const name = computed(() => getCategoryName(category.value))
+
     return {
-      categories: null
+      name,
+      getCategoryName,
+      categories
     }
-  },
-  async created () {
-    this.categories = await getCategory({})
   },
   components: {
     Logo

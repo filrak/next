@@ -32,6 +32,15 @@ export default {
   /*
   ** Nuxt.js dev-modules
   */
+  modules: [
+    ['@vue-storefront/nuxt', {
+      coreDevelopment: true,
+      useRawSource: {
+        dev: ['@vue-storefront/about-you-composables'],
+        prod: ['@vue-storefront/about-you-composables']
+      }
+    }],
+  ],
   buildModules: [
   ],
   /*

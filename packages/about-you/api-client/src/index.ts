@@ -1,5 +1,4 @@
 import { BapiClient } from '@aboutyou/backbone'
-import axios from 'axios'
 import getProductApi from './getProduct'
 import getCategoryApi from './getCategory'
 import addToCartApi  from './addToCart'
@@ -30,10 +29,10 @@ function override (overrides) {
 
 function setup () {
   api = new BapiClient({
-    host: 'http://boston.backbone-api.demo.aboutyou.cloud/v1/',
+    host: 'https://boston.backbone-api.demo.aboutyou.cloud/v1/',
     auth: { username: 'aboutyou', password: 'OmNErAb96Y5Qn75SFhXr' },
-    shopId: 121
-});
+    shopId: 121,
+  });
 }
 
 /** just because you can't simply do "export x as y..." */
@@ -46,6 +45,13 @@ const placeOrder = methods.placeOrderApi
 const getUser = methods.getUserApi
 const addCoupon = methods.addCouponApi
 const removeCoupon = methods.removeCouponApi
+
+setup()
+async function getCat() { 
+  const cat = await getCategory({ depth: 3 }) 
+  console.log(JSON.stringify(cat))
+}
+getCat()
 
 export {
   getProduct,

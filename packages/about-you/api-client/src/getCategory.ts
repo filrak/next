@@ -2,7 +2,9 @@
 import { api } from './index'
 import { CategoryWith } from '@aboutyou/backbone/types/CategoryWith'
 
-export default async function (options: { ids: number[], path: string, with: CategoryWith, depth: number} | any) {
+export type getCategorySearchParams = { ids: number[], path: string, with: CategoryWith, depth: number} | any
+
+export default async function (options: getCategorySearchParams ) {
   if (!options) this.options = {}
   if (options.ids) {
     return await api.categories.getByIds(
