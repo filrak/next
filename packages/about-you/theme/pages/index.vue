@@ -19,6 +19,7 @@ export default {
     const { categories, search } = useCategory()
 
     search({})
+    
     const category = computed(() => categories.value[0])
     const name = computed(() => getCategoryName(category.value))
 
