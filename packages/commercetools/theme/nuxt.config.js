@@ -1,4 +1,5 @@
 import webpack from 'webpack'
+import path from 'path'
 import config from './config'
 
 console.log(path.join(__dirname, '.nuxt/components'))
