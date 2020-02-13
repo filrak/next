@@ -98,10 +98,10 @@ export default {
     endpoint: 'https://lovecrafts-dev.cdn.prismic.io/api/v2'
   },
   build: {
-    extend (config) {
-      delete config.resolve.alias['~']
-      config.resolve.alias['~/components'] = path.join(__dirname, '.nuxt/components')
-      config.resolve.alias['~'] = path.join(__dirname)
+    extend (buildConfig) {
+      delete buildConfig.resolve.alias['~']
+      buildConfig.resolve.alias['~/components'] = path.join(__dirname, '.nuxt/components')
+      buildConfig.resolve.alias['~'] = path.join(__dirname)
     },
     transpile: [
       'vee-validate/dist/rules'
