@@ -1,4 +1,7 @@
 import webpack from 'webpack'
+import path from 'path'
+
+console.log(path.join(__dirname, '.nuxt/components'))
 
 export default {
   mode: 'universal',
@@ -26,11 +29,6 @@ export default {
       // TEMPORARY, will be removed
       // @todo move to common middleware in core module and cover use case where we don't have slug at all
       // aka URL dispatcher
-      routes.push({
-        name: 'category',
-        path: '/c/:slug_1/:slug_2?/:slug_3?/:slug_4?/:slug_5?',
-        component: resolve(__dirname, 'pages/Category.vue')
-      })
       routes.push({ // TEMPORARY: just to show example prismic page
         name: 'prismic',
         path: '/prismic',
@@ -98,6 +96,11 @@ export default {
     './plugins/prismic.js'
   ],
   build: {
+    extend (config) {
+      delete config.resolve.alias['~']
+      config.resolve.alias['~/components'] = path.join(__dirname, '.nuxt/components')
+      config.resolve.alias['~'] = path.join(__dirname)
+    },
     transpile: [
       'vee-validate/dist/rules'
     ],
