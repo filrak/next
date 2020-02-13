@@ -75,7 +75,6 @@ export default {
     '@nuxt/typescript-build' // to core
   ],
   modules: [
-    'nuxt-i18n',
     '@nuxtjs/prismic',
     ['@vue-storefront/nuxt', {
       coreDevelopment: true,
@@ -88,7 +87,8 @@ export default {
       apiClient: '@vue-storefront/commercetools-api',
       composables: '@vue-storefront/commercetools-composables',
       helpers: '@vue-storefront/commercetools-helpers'
-    }]
+    }],
+    'nuxt-i18n',
   ],
   plugins: [
     './plugins/commercetools.js',
