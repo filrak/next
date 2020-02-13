@@ -33,7 +33,7 @@ let cookies = {
   localeCookieName: 'vsf-locale'
 }
 
-const setup = <TCacheShape>(setupConfig?: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
+const setup = <TCacheShape>(setupConfig: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
   if (setupConfig.api) {
     apolloClient = new ApolloClient({
       link: createCommerceToolsLink(setupConfig.api),
