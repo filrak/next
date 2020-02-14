@@ -168,36 +168,14 @@
         </SfSticky>
       </div>
     </div>
-    <SfSection title-heading="Match it with" class="section">
-      <SfCarousel class="product-carousel">
-        <SfCarouselItem v-for="(product, i) in products" :key="i">
-          <SfProductCard
-            :title="product.title"
-            :image="product.image"
-            :regular-price="product.price.regular"
-            :max-rating="product.rating.max"
-            :score-rating="product.rating.score"
-            :is-on-wishlist="product.isOnWishlist"
-            class="product-card"
-          />
-        </SfCarouselItem>
-      </SfCarousel>
-    </SfSection>
-    <SfSection title-heading="You might also like" class="section">
-      <SfCarousel class="product-carousel">
-        <SfCarouselItem v-for="(product, i) in products" :key="i">
-          <SfProductCard
-            :title="product.title"
-            :image="product.image"
-            :regular-price="product.price.regular"
-            :max-rating="product.rating.max"
-            :score-rating="product.rating.score"
-            :is-on-wishlist="product.isOnWishlist"
-            class="product-card"
-          />
-        </SfCarouselItem>
-      </SfCarousel>
-    </SfSection>
+    <RelatedProducts
+      :product="product"
+      title="Match it with"
+    />
+    <RelatedProducts
+      :product="product"
+      title="You might also like"
+    />
     <InstagramFeed />
     <SfBanner
       title="Download our application to your mobile"
@@ -240,9 +218,6 @@ import {
   SfAddToCart,
   SfTabs,
   SfGallery,
-  SfProductCard,
-  SfCarousel,
-  SfSection,
   SfImage,
   SfBanner,
   SfAlert,
@@ -252,6 +227,7 @@ import {
 } from '@storefront-ui/vue'
 
 import InstagramFeed from '~/components/InstagramFeed.vue'
+import RelatedProducts from '~/components/RelatedProducts.vue'
 import { ref, computed } from '@vue/composition-api'
 
 import { useProduct, useCart } from '<%= options.composables %>'
@@ -264,7 +240,7 @@ import {
 } from '<%= options.helpers %>'
 
 export default {
-  name: "Product",
+  name: 'Product',
   transition: 'fade',
   setup (props, context) {
     const qty = ref(1)
@@ -309,15 +285,13 @@ export default {
     SfAddToCart,
     SfTabs,
     SfGallery,
-    SfProductCard,
-    SfCarousel,
-    SfSection,
     SfImage,
     SfBanner,
     SfSticky,
     SfReview,
     SfBreadcrumbs,
-    InstagramFeed
+    InstagramFeed,
+    RelatedProducts
   },
   data() {
     return {

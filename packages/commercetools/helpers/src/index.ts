@@ -86,6 +86,7 @@ export const getProductAttributes = (products: ProductVariant[], filterByAttribu
 
 export const getProductDescription = (product: ProductVariant): any => (product as any)._description
 
+export const getProductCategories = (product: ProductVariant): string[] => (product as any)._categoriesRef
 
 // Category
 export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {

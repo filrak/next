@@ -5,6 +5,7 @@ import {
   getProductGallery,
   getProductVariants,
   getProductAttributes,
+  getProductCategories,
 } from "./../src/index";
 
 const product = {
@@ -20,7 +21,11 @@ const product = {
       __typename: "StringAttribute"
     }
   ],
-  images: [{ url: "imageV11/url.jpg" }, { url: "imageV12/url.jpg" }]
+  images: [{ url: "imageV11/url.jpg" }, { url: "imageV12/url.jpg" }],
+  _categoriesRef: [
+    'catA',
+    'catB',
+  ],
 } as any;
 
 describe("[commercetools-helpers] product helpers", () => {
@@ -152,6 +157,13 @@ describe("[commercetools-helpers] product helpers", () => {
       color: [{ value: "H805 C195 85072", label: "H805 C195 85072" }]
     });
   });
+
+  it('returns product categories', () => {
+    expect(getProductCategories(product)).toEqual([
+      'catA',
+      'catB',
+    ])
+  })
 
   it("returns empty array if there is no product", () => {
     expect(getProductAttributes(null)).toEqual({});
