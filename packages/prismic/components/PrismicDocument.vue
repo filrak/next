@@ -1,12 +1,14 @@
 <template>
   <div>
     <prismic-block :key="block.key" v-for="block in blocks" :block="block.element" />
+    <prismic-slice :key="i" v-for="(slice, i) in slices" :slice="slice" />
   </div>
 </template>
 
 <script>
 import { reactive } from '@vue/composition-api'
 import PrismicBlock from '@vue-storefront/prismic/components/PrismicBlock'
+import PrismicSlice from '@vue-storefront/prismic/components/PrismicSlice'
 
 const parseType = (document) => {
   if (typeof document === 'string' || typeof document === 'number') {
@@ -32,25 +34,10 @@ const parseType = (document) => {
   return undefined
 }
 
-const transformToBlocks = (data) => (
-  Object
-    .keys(data)
-    .map(key => ({
-      type: parseType(data[key]),
-      document: typeof data[key] === 'object'
-        ? data[key]
-        : [{
-          type: 'paragraph',
-          text: data[key],
-          spans: [],
-        }]
-      }))
-    .filter(data => data.type !== undefined)
-)
-
 export default {
   components: {
-    PrismicBlock
+    PrismicBlock,
+    PrismicSlice
   },
   props: {
     data: {
@@ -60,13 +47,24 @@ export default {
   },
   setup({ data }) {
     const blocks = reactive([])
+    const slices = reactive([])
 
-    Object.values(data).forEach((element, key) => {
-      blocks.push({ key, element })
+    Object.keys(data).forEach((key) => {
+      const element = data[key]
+
+      if (key === 'body') {
+        // TODO
+        element.forEach(slice => {
+          slices.push(slice);
+        })
+      } else {
+        blocks.push({ key, element })
+      }
     })
 
     return {
-      blocks
+      blocks,
+      slices
     }
   }
 }

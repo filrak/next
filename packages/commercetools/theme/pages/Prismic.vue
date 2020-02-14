@@ -18,7 +18,7 @@ export default {
     search({
       at: {
         fragment: 'document.type',
-        value: 'privacy-policy'
+        value: 'slices'
       }
     })
 
