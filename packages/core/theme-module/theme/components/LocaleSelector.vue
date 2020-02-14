@@ -33,14 +33,14 @@ export default {
     SfButton
   },
   setup(props, context) {
-    const { $i18n, $router } = context.root
+    const { $i18n, $router, $route } = context.root
     const { locale, ...fields } = useLocale()
     const setCookie = context.root.$i18n.setLocaleCookie
 
     const handleChangeLang = ({ name }) => {
       locale.value = name;
       setCookie(name)
-      $router.go({ path:'/', force: true })
+      $router.go({ path: $route.fullPath, force: true })
     }
 
     return {
