@@ -111,14 +111,14 @@
                 <SfListItem>
                   <SfMenuItem :label="cat.label">
                     <template #label>
-                      <nuxt-link :to="localePath(getCategoryUrl(cat.slug))" :class="isCategorySelected(cat.slug) ? 'sidebar--cat-selected' : ''">All</nuxt-link>
+                      <nuxt-link :to="getCategoryUrl(cat.slug)" :class="isCategorySelected(cat.slug) ? 'sidebar--cat-selected' : ''">All</nuxt-link>
                     </template>
                   </SfMenuItem>
                 </SfListItem>
                 <SfListItem v-for="(subCat, j) in cat.items" :key="j">
                   <SfMenuItem :label="subCat.label">
                     <template #label="{ label }">
-                      <nuxt-link :to="localePath(getCategoryUrl(subCat.slug))" :class="isCategorySelected(subCat.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</nuxt-link>
+                      <nuxt-link :to="getCategoryUrl(subCat.slug)" :class="isCategorySelected(subCat.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</nuxt-link>
                     </template>
                   </SfMenuItem>
                 </SfListItem>
@@ -141,7 +141,7 @@
               :score-rating="3"
               :isOnWishlist="false"
               @click:wishlist="toggleWishlist(i)"
-              :link="localePath(`/p/${getProductSlug(product)}`)"
+              :link="`/p/${getProductSlug(product)}`"
               class="products__product-card"
             />
           </div>

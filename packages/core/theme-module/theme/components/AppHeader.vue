@@ -10,17 +10,17 @@
       </nuxt-link>
     </template>
     <template #navigation>
-      <nuxt-link :to="localePath('/c/women')">
+      <nuxt-link to="/c/women">
         <SfHeaderNavigationItem>
           WOMEN
         </SfHeaderNavigationItem>
       </nuxt-link>
-      <nuxt-link :to="localePath('/c/men')">
+      <nuxt-link to="/c/men">
         <SfHeaderNavigationItem>
           MEN
         </SfHeaderNavigationItem>
       </nuxt-link>
-      <nuxt-link :to="localePath('/c/cat')">
+      <nuxt-link to="/c/cat">
         <SfHeaderNavigationItem>
           KIDS
         </SfHeaderNavigationItem>
