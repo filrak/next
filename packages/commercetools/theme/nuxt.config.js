@@ -2,8 +2,6 @@ import webpack from 'webpack'
 import path from 'path'
 import config from './config'
 
-console.log(path.join(__dirname, '.nuxt/components'))
-
 const localeNames = config.locales.map(l => l.name)
 
 export default {
@@ -119,6 +117,7 @@ export default {
   i18n: {
     locales: localeNames,
     defaultLocale: localeNames[0],
+    strategy: 'no_prefix',
     vueI18n: {
       fallbackLocale: localeNames[0],
     },
