@@ -1,9 +1,11 @@
 import { ref, reactive } from '@vue/composition-api'
 import { prismic, endpoint } from '../../index'
-import { PrismicQuery, PrismicQueryTypes } from '../../interfaces'
+import { PrismicQuery, PrismicQueryTypes } from '../../types'
 import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi'
 import ApiSearchResponse from 'prismic-javascript/d.ts/ApiSearchResponse'
 import PrismicDom from 'prismic-dom'
+import renderBlock from '../../helpers/internal/renderBlock'
+import transformBlock from '../../helpers/internal/transformBlock'
 
 interface OptionsType {
   orderings?: string
@@ -14,7 +16,7 @@ interface OptionsType {
 export default function usePrismic () {
   const loading = ref(true)
   const error = ref(null)
-  const document: ApiSearchResponse = reactive({} as ApiSearchResponse)
+  const doc: ApiSearchResponse = reactive({} as ApiSearchResponse)
   const render = PrismicDom
 
   const transformQuery = (query: PrismicQuery): string | string[] => {
@@ -73,15 +75,17 @@ export default function usePrismic () {
         options as QueryOptions
       ))
 
-    Object.assign(document, result || {})
+    Object.assign(doc, result || {})
     loading.value = false
   }
 
   return {
     loading,
     error,
-    document,
+    doc,
     search,
-    render
+    render,
+    renderBlock,
+    transformBlock
   }
 }

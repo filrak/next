@@ -1,6 +1,6 @@
 <template>
   <div>
-    <prismic-document v-if="!loading && !error" :data="document.results[0].data" />
+    <prismic-document v-if="!loading && !error" :data="doc.results[0].data" />
   </div>
 </template>
 <script>
@@ -13,7 +13,7 @@ export default {
     PrismicDocument
   },
   setup() {
-    const { document, search, loading, error } = usePrismic()
+    const { doc, search, loading, error } = usePrismic()
 
     search({
       at: {
@@ -23,7 +23,7 @@ export default {
     })
 
     return {
-      document,
+      doc,
       loading,
       error,
     }

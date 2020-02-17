@@ -103,3 +103,10 @@ export interface PrismicQuery {
     near: FragmentGeo
   }
 }
+
+export type PrismicBlockType = 'text' | 'html' | 'image' | 'embed' | 'link'
+
+export interface PrismicTransformedBlock {
+  type: PrismicBlockType
+  element: any | any[]
+}
