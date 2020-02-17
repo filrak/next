@@ -68,19 +68,20 @@ export const getCategoryName = (category: Category): string => {
 
 // Cart
 
-// TODO: Change UICartProduct to something agnostic. 
+// TODO: Change UICartProduct to something agnostic.
 export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): any => {
   return [{},{},{},{},{}]
 }
 
 
 // todo: remove CartPrice and unify with getProductPrice
-export const getCartTotalPrice = (cart: Cart): number => {
-  return 300.00
+export const getCartTotals = (cart: Cart) => {
+  return {
+    total: 300.00,
+    subtotal: 240.00
+  }
 }
-export const getCartSubtotalPrice = (cart: Cart): number => {
-  return 200.00
-}
+
 export const getCartShippingPrice = (cart: Cart): number => {
   return 100.00
 }

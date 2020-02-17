@@ -1,4 +1,4 @@
-import { getCartProducts, getCartTotalPrice, getCartSubtotalPrice, getCartShippingPrice, getCartTotalItems } from './../src/index'
+import { getCartProducts, getCartTotals, getCartShippingPrice, getCartTotalItems } from './../src/index'
 
 const price = p => ({ value: { centAmount: p } })
 const variant = (p = {}) => ({ ...p, images: [{ url: 'a.jpg' }, { url: 'b.jpg' }] })
@@ -8,8 +8,8 @@ const rawConfiguration = [
 ]
 
 const configuration = [
-  { name: 'size', label: '38', value: '38' },
-  { name: 'color', label: 'white', value: 'white' }
+  {  __typename: 'StringAttribute', name: 'size', label: '38', stringValue: '38' },
+  {  __typename: 'StringAttribute', name: 'color', label: 'white', stringValue: 'white' }
 ]
 
 const cart = {
@@ -34,27 +34,20 @@ describe('[commercetools-helpers] cart helpers', () => {
 
   it('returns products', () => {
     expect(getCartProducts(cart)).toEqual([
-      { title: 'prod1', id: 1, price: { regular: 11 }, image: 'a.jpg', qty: 1, configuration: configuration },
-      { title: 'prod2', id: 2, price: { regular: 15 }, image: 'a.jpg', qty: 2, configuration: configuration },
-    ])
-  })
-
-  it('returns products with whitelisted attributes', () => {
-    expect(getCartProducts(cart, ['color'])).toEqual([
-      { title: 'prod1', id: 1, price: { regular: 11 }, image: 'a.jpg', qty: 1, configuration: [ { name: 'color', label: 'white', value: 'white' } ] },
-      { title: 'prod2', id: 2, price: { regular: 15 }, image: 'a.jpg', qty: 2, configuration: [ { name: 'color', label: 'white', value: 'white' } ] },
+      { title: 'prod1', id: 1, price: { regular: 11 }, image: 'a.jpg', qty: 1, attributeList: configuration },
+      { title: 'prod2', id: 2, price: { regular: 15 }, image: 'a.jpg', qty: 2, attributeList: configuration },
     ])
   })
 
   it('returns cart total price', () => {
-    expect(getCartTotalPrice(null)).toEqual(0)
-    expect(getCartTotalPrice(cart)).toEqual(128.88)
-    expect(getCartTotalPrice({ ...cart, shippingInfo: null })).toEqual(124.44)
+    expect(getCartTotals(null)).toEqual(null)
+    expect(getCartTotals(cart).total).toEqual(128.88)
+    expect(getCartTotals({ ...cart, shippingInfo: null }).total).toEqual(124.44)
   })
 
   it('returns cart subtotal price', () => {
-    expect(getCartSubtotalPrice(cart)).toEqual(124.44)
-    expect(getCartSubtotalPrice({ ...cart, shippingInfo: null })).toEqual(124.44)
+    expect(getCartTotals(cart).subtotal).toEqual(124.44)
+    expect(getCartTotals({ ...cart, shippingInfo: null }).subtotal).toEqual(124.44)
   })
 
   it('returns cart shipping price', () => {

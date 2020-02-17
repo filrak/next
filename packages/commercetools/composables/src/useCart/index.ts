@@ -1,4 +1,4 @@
-import { UseCart as BaseUseCart, UiCartProduct } from '@vue-storefront/interfaces'
+import { UseCart as BaseUseCart, AgnosticCartProduct } from '@vue-storefront/interfaces'
 import {
   addToCart as apiAddToCart,
   removeFromCart as apiRemoveFromCart,
@@ -11,8 +11,8 @@ import loadCurrentCart from './currentCart'
 
 type CartRef = Ref<Cart>
 type AddToCartFn = (variant: ProductVariant, quantity: number) => void
-type RemoveFromCartFn = (product: UiCartProduct) => void
-type ClearCartFn = (product: UiCartProduct) => void
+type RemoveFromCartFn = (product: AgnosticCartProduct) => void
+type ClearCartFn = (product: AgnosticCartProduct) => void
 type CouponRef = Ref<any>
 type ApplyCouponFn = () => void
 type RemoveCoupon = () => void
@@ -22,7 +22,7 @@ const loading: Ref<boolean> = ref<boolean>(false)
 
 // TODO: Think how to incorporate this into core (updateItem?)
 interface UseCart extends BaseUseCart<CartRef, AddToCartFn, RemoveFromCartFn, ClearCartFn, CouponRef, ApplyCouponFn, RemoveCoupon> {
-  updateQuantity: (product: UiCartProduct) => void
+  updateQuantity: (product: AgnosticCartProduct) => void
 }
 
 export default function useCart(): UseCart {
@@ -42,14 +42,14 @@ export default function useCart(): UseCart {
     loading.value = false
   }
 
-  const removeFromCart = async (product: UiCartProduct) => {
+  const removeFromCart = async (product: AgnosticCartProduct) => {
     loading.value = true
     const updateResponse = await apiRemoveFromCart(cart.value, product)
     cart.value = enhanceCart(updateResponse).data.cart
     loading.value = false
   }
 
-  const updateQuantity = async (product: UiCartProduct) => {
+  const updateQuantity = async (product: AgnosticCartProduct) => {
     if (parseInt(product.qty) > 0) {
       loading.value = true
       const updateResponse = await apiUpdateCartQuantity(cart.value, product)

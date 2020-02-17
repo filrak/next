@@ -29,7 +29,6 @@ import CartPreview from "~/components/checkout/CartPreview"
 import OrderReview from "~/components/checkout/OrderReview"
 import { computed, ref } from '@vue/composition-api'
 import { useCart } from '@vue-storefront/commercetools-composables'
-import { getCartProducts } from '@vue-storefront/commercetools-helpers'
 
 const STEPS = [
   { name: 'personal-details', label: 'Personal Details' },
@@ -53,7 +52,6 @@ export default {
     const showCartPreview = ref(true)
     const currentStep = ref(0)
     const { cart } = useCart()
-    const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
 
     const handleShowReview = () => {
       showCartPreview.value = false

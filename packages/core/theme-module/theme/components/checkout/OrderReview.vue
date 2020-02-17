@@ -55,8 +55,7 @@ import { useCheckout } from '@vue-storefront/commercetools-composables'
 import {
   getShippingMethodName,
   getShippingMethodDescription,
-  getShippingMethodPrice,
-  getCartProducts
+  getShippingMethodPrice
 } from '@vue-storefront/commercetools-helpers'
 
 export default {

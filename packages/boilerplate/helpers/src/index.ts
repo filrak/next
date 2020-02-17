@@ -1,7 +1,7 @@
 import {
   UiMediaGalleryItem,
   UiCategory,
-  UiCartProduct,
+  AgnosticCartProduct,
   AgnosticProductAttribute
 } from '@vue-storefront/interfaces'
 import { ProductVariant, Category, Cart } from '@vue-storefront/boilerplate-api/src/types'
@@ -67,19 +67,20 @@ export const getCategoryName = (category: Category) => {
 
 // Cart
 
-// TODO: Change UICartProduct to something agnostic. 
-export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): UiCartProduct[] => {
+// TODO: Change UICartProduct to something agnostic.
+export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): AgnosticCartProduct[] => {
   return [{},{},{},{},{}]
 }
 
 
 // todo: remove CartPrice and unify with getProductPrice
-export const getCartTotalPrice = (cart: Cart): number => {
-  return 300.00
+export const getCartTotals = (cart: Cart) => {
+  return {
+    total: 300.00,
+    subtotal: 240.00
+  }
 }
-export const getCartSubtotalPrice = (cart: Cart): number => {
-  return 200.00
-}
+
 export const getCartShippingPrice = (cart: Cart): number => {
   return 100.00
 }

@@ -1,8 +1,9 @@
 import {
   UiMediaGalleryItem,
   UiCategory,
-  UiCartProduct,
-  AgnosticProductAttribute
+  AgnosticCartProduct,
+  AgnosticProductAttribute,
+  AgnosticTotals
 } from '@vue-storefront/interfaces'
 import { ProductVariant, Image, Category, Cart, LineItem, ShippingMethod, Customer } from './types/GraphQL'
 import { formatAttributeList, getVariantByAttributes } from './_utils'
@@ -120,17 +121,9 @@ export const getCategoryTree = (category: Category): UiCategory | null => {
 
 // Cart
 
-export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): UiCartProduct[] => {
+export const getCartProducts = (cart: Cart): AgnosticCartProduct[] => {
   if (!cart) {
     return []
-  }
-
-  const filterAttributes = (attributes) => {
-    if (includeAttributes.length === 0) {
-      return attributes
-    }
-
-    return attributes.filter(f => includeAttributes.includes(f.name))
   }
 
   return cart.lineItems.map((lineItem: LineItem) => ({
@@ -139,22 +132,26 @@ export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): U
     price: { regular: lineItem.price.value.centAmount / 100 },
     image: lineItem.variant.images[0].url,
     qty: lineItem.quantity,
-    configuration: formatAttributeList(filterAttributes((lineItem as any)._configuration))
+    attributeList: (lineItem as any)._configuration
   }))
 }
 
-export const getCartTotalPrice = (cart: Cart): number => {
+export const getCartTotals = (cart: Cart): AgnosticTotals => {
   if (!cart) {
-    return 0
+    return null
   }
 
-  const subtotal = cart.totalPrice.centAmount
+  const subtotalPrice = cart.totalPrice.centAmount
   const shipping = cart.shippingInfo ? cart.shippingInfo.price.centAmount : 0
 
-  return (shipping + subtotal) / 100
+  return {
+    total: (shipping + subtotalPrice) / 100,
+    subtotal: subtotalPrice / 100
+  }
 }
-export const getCartSubtotalPrice = (cart: Cart): number => cart ? cart.totalPrice.centAmount / 100 : 0
+
 export const getCartShippingPrice = (cart: Cart): number => cart && cart.shippingInfo ? cart.shippingInfo.price.centAmount / 100 : 0
+
 export const getCartTotalItems = (cart: Cart): number => {
   if (!cart) {
     return 0

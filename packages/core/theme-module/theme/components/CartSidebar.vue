@@ -27,10 +27,10 @@
                 <template #configuration>
                   <div class="collected-product__properties">
                     <SfProperty
-                      v-for="(property, key) in product.configuration"
+                      v-for="(value, key) in getProductAttributes(product, ['color', 'size'])"
                       :key="key"
-                      :name="property.name"
-                      :value="property.value"
+                      :name="key"
+                      :value="value"
                     />
                   </div>
                 </template>
@@ -48,7 +48,7 @@
               <span class="sf-property__name">TOTAL</span>
             </template>
             <template #value>
-              <SfPrice :regular="totalPrice | price" class="sf-price--big" />
+              <SfPrice :regular="totals.subtotal" class="sf-price--big" />
             </template>
           </SfProperty>
           <nuxt-link to="/checkout/personal-details">
@@ -83,8 +83,9 @@ import { useCart } from '@vue-storefront/commercetools-composables'
 import uiState from '~/assets/ui-state'
 import {
   getCartProducts,
-  getCartSubtotalPrice,
-  getCartTotalItems
+  getProductAttributes,
+  getCartTotalItems,
+  getCartTotals
 } from '@vue-storefront/commercetools-helpers'
 
 const { isCartSidebarOpen, toggleCartSidebar } = uiState
@@ -100,8 +101,8 @@ export default {
   },
   setup() {
     const { cart, removeFromCart, updateQuantity } = useCart()
-    const products = computed(() => getCartProducts(cart.value, ['color', 'size']))
-    const totalPrice = computed(() => getCartSubtotalPrice(cart.value))
+    const products = computed(() => getCartProducts(cart.value))
+    const totals = computed(() => getCartTotals(cart.value))
     const totalItems = computed(() => getCartTotalItems(cart.value))
 
     return {
@@ -110,8 +111,9 @@ export default {
       updateQuantity,
       isCartSidebarOpen,
       toggleCartSidebar,
-      totalPrice,
-      totalItems
+      totals,
+      totalItems,
+      getProductAttributes
     };
   }
 };
