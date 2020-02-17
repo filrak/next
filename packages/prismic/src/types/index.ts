@@ -52,7 +52,7 @@ interface DocumentAndResults {
   maxResults: number
 }
 
-export type PrismicQueryTypes = 
+export type PrismicQueryTypes =
 & FragmentValue
 & FragmentValues
 & FragmentBefore
@@ -105,8 +105,31 @@ export interface PrismicQuery {
 }
 
 export type PrismicBlockType = 'text' | 'html' | 'image' | 'embed' | 'link'
+export type PrismicBlock = Record<string, any>
 
-export interface PrismicTransformedBlock {
-  type: PrismicBlockType
-  element: any | any[]
+// TODO: Find other block types
+export type PrismicBlockText = Array<{
+  type: string
+  text: string | number
+  spans: string[]
+}>
+
+export interface PrismicPage {
+  alternate_langauges: any[]
+  data?: PrismicBlock
+  first_publication_date: string
+  href: string
+  id: string
+  lang: string
+  last_publication_date: string
+  linked_documents: any[]
+  slugs: string[]
+  tags: string[]
+  type: string
+  uid: string
+  body?: any[] // TODO: Extend in slices implementation
+}
+
+export interface PrismicDocument {
+  results: PrismicPage[]
 }

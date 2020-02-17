@@ -1,19 +1,21 @@
 <template>
   <div>
-    <prismic-document v-if="!loading && !error" :data="doc.results[0].data" />
+    <div v-for="page in pages" :key="getPageId(page)">
+      <div v-for="(block, i) in getBlocks(page)" :key="i">
+        <div v-html="block" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
 
-import { usePrismic } from '@vue-storefront/prismic'
-import PrismicDocument from '@vue-storefront/prismic/components/PrismicDocument'
+import { ref, computed } from '@vue/composition-api'
+import { usePrismic, getPages, getBlocks, getPageId } from '@vue-storefront/prismic'
 
 export default {
-  components: {
-    PrismicDocument
-  },
   setup() {
     const { doc, search, loading, error } = usePrismic()
+    const pages = computed(() => getPages(doc.value))
 
     search({
       at: {
@@ -23,9 +25,11 @@ export default {
     })
 
     return {
-      doc,
+      pages,
       loading,
       error,
+      getBlocks,
+      getPageId
     }
   }
 }
