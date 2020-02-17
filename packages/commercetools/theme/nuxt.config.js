@@ -1,7 +1,8 @@
 import webpack from 'webpack'
 import path from 'path'
+import config from './config'
 
-console.log(path.join(__dirname, '.nuxt/components'))
+const localeNames = config.locales.map(l => l.name)
 
 export default {
   mode: 'universal',
@@ -89,17 +90,19 @@ export default {
       apiClient: '@vue-storefront/commercetools-api',
       composables: '@vue-storefront/commercetools-composables',
       helpers: '@vue-storefront/commercetools-helpers'
-    }]
+    }],
+    'nuxt-i18n',
   ],
   plugins: [
     './plugins/commercetools.js',
-    './plugins/prismic.js'
+    './plugins/prismic.js',
+    './plugins/i18n.js'
   ],
   build: {
-    extend (config) {
-      delete config.resolve.alias['~']
-      config.resolve.alias['~/components'] = path.join(__dirname, '.nuxt/components')
-      config.resolve.alias['~'] = path.join(__dirname)
+    extend (buildConfig) {
+      delete buildConfig.resolve.alias['~']
+      buildConfig.resolve.alias['~/components'] = path.join(__dirname, '.nuxt/components')
+      buildConfig.resolve.alias['~'] = path.join(__dirname)
     },
     transpile: [
       'vee-validate/dist/rules'
@@ -112,5 +115,16 @@ export default {
         })
       })
     ]
-  }
+  },
+  i18n: {
+    locales: localeNames,
+    defaultLocale: localeNames[0],
+    strategy: 'no_prefix',
+    vueI18n: {
+      fallbackLocale: localeNames[0],
+    },
+    detectBrowserLanguage: {
+      cookieKey: config.cookies.localeCookieName
+    }
+  },
 }
