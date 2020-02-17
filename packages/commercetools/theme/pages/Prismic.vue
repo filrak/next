@@ -17,11 +17,23 @@ export default {
     const { doc, search, loading, error } = usePrismic()
     const pages = computed(() => getPages(doc.value))
 
-    search({
-      at: {
-        fragment: 'document.type',
-        value: 'privacy-policy'
-      }
+    // doc.page -> getCurrentPage: number
+    // doc.results_per_page -> getResultsPerPage: number
+    // doc.results_size: -> getResultsSize: number
+    // doc.total_results_size -> getTotalResultsSize: number
+    // doc.total_pages ->  getTotalPages: number
+    // doc.next_page -> getNextPage: string | null
+    // doc.prev_page -> getPrevPage: string | null
+
+    // search({
+    //   at: {
+    //     fragment: 'document.type',
+    //     value: 'privacy-policy'
+    //   },
+    // })
+
+    search({}, {
+      pageSize: 1,
     })
 
     return {

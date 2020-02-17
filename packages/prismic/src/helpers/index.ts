@@ -18,7 +18,7 @@ export const getPageSlugs = (page: PrismicPage): string[] => page.slugs
 export const getPageLang = (page: PrismicPage): string => page.lang
 
 export const getBlocks = ({ data }: PrismicPage, blockName?: string): string | string[] => {
-  const blockKeys = Object.keys(data || {})
+  const blockKeys = Object.keys(data || {}).filter(key => key !== 'body')
 
   if (blockName) {
     const key = blockKeys.find(blockKey => blockKey === blockName)

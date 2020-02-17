@@ -1,4 +1,4 @@
-import { ref, Ref, reactive } from '@vue/composition-api'
+import { ref, Ref } from '@vue/composition-api'
 import { prismic, endpoint } from '../../index'
 import { PrismicQuery } from '../../types'
 import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi'
@@ -11,12 +11,23 @@ interface OptionsType {
   page?: number
 }
 
-export default function usePrismic () {
-  const loading = ref(true)
+type Search = (query: PrismicQuery, options?: OptionsType) => Promise<void>
+
+interface UsePrismic {
+  loading: Ref<boolean>
+  error: Ref<boolean>
+  doc: Ref<ApiSearchResponse>
+  search: Search
+}
+
+export default function usePrismic (): UsePrismic {
+  const loading = ref(false)
   const error = ref(null)
   const doc: Ref<ApiSearchResponse> = ref({} as ApiSearchResponse)
 
-  const search = async (query: PrismicQuery, options: OptionsType = {}) => {
+  const search: Search = async (query: PrismicQuery, options: OptionsType = {}) => {
+    loading.value = true
+
     doc.value = await prismic
       .getApi(endpoint)
       .then(api => api.query(
