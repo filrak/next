@@ -15,7 +15,7 @@ const getAllFiles = function(dirPath, arrayOfFiles) {
   const files = fs.readdirSync(dirPath)
 
   arrayOfFiles = arrayOfFiles || []
-  
+
   files.forEach(file => {
     if (fs.statSync(dirPath + "/" + file).isDirectory()) {
       arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
@@ -23,7 +23,7 @@ const getAllFiles = function(dirPath, arrayOfFiles) {
       arrayOfFiles.push((dirPath + "/" + file).split(__dirname + '/').pop())
     }
   })
- 
+
   return arrayOfFiles
 }
 
@@ -65,6 +65,28 @@ module.exports = function DefaultThemeModule (moduleOptions) {
       path: '/c/:slug_1/:slug_2?/:slug_3?/:slug_4?/:slug_5?',
       component: resolve(this.options.buildDir, 'pages/Category.vue'),
     })
+    routes.unshift({
+      name: 'my-account',
+      path: '/my-account',
+      component: resolve(this.options.buildDir, 'pages/MyAccount.vue'),
+      children: [
+        {
+          path: 'profile',
+          name: 'profile',
+          component: resolve(this.options.buildDir, 'pages/MyAccount/MyProfile.vue'),
+        },
+        {
+          path: 'shipping-details',
+          name: 'shipping-details',
+          component: resolve(this.options.buildDir, 'pages/MyAccount/ShippingDetails.vue'),
+        },
+        {
+          path: 'order-history',
+          name: 'order-history',
+          component: resolve(this.options.buildDir, 'pages/MyAccount/OrderHistory.vue'),
+        },
+      ]
+    });
   });
 
 
