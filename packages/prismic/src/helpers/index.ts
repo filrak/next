@@ -3,6 +3,20 @@ import { PrismicDocument, PrismicPage } from '../types'
 
 export const getPages = (doc: PrismicDocument): PrismicPage[] => doc ? doc.results : []
 
+export const getCurrentPage = (doc: PrismicDocument): number => doc ? doc.page : 0
+
+export const getResultsPerPage = (doc: PrismicDocument): number => doc ? doc.results_per_page : 0
+
+export const getResultsSize = (doc: PrismicDocument): number => doc ? doc.results_size : 0
+
+export const getTotalResultsSize = (doc: PrismicDocument): number => doc ? doc.total_results_size : 0
+
+export const getTotalPages = (doc: PrismicDocument): number => doc ? doc.total_pages : 0
+
+export const getNextPage = (doc: PrismicDocument): string | null => doc ? doc.next_page || null : null
+
+export const getPrevPage = (doc: PrismicDocument): string | null => doc ? doc.prev_page || null : null
+
 export const getPageUid = (page: PrismicPage): string => page.uid
 
 export const getPageId = (page: PrismicPage): string => page.id
