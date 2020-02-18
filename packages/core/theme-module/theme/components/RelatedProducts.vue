@@ -1,14 +1,11 @@
 <template>
-  <SfSection v-if="product" :title-heading="title" class="section">
+  <SfSection v-if="displayProducts.length > 0" :title-heading="title" class="section">
     <SfCarousel class="product-carousel">
       <SfCarouselItem v-for="(product, i) in displayProducts" :key="i">
         <SfProductCard
-          :title="product.title"
-          :image="product.image"
-          :regular-price="product.price.regular"
-          :max-rating="product.rating.max"
-          :score-rating="product.rating.score"
-          :is-on-wishlist="product.isOnWishlist"
+          :title="getProductName(product)"
+          :image="getProductGallery(product)[0].normal"
+          :regular-price="getProductPrice(product)"
           :link="`/p/${getProductSlug(product)}`"
           class="product-card"
         />
@@ -27,10 +24,13 @@ import {
 } from '@storefront-ui/vue'
 
 import { useProduct } from '<%= options.composables %>';
-import { 
+import {
   getProductCategories,
   getProductVariants,
   getProductSlug,
+  getProductName,
+  getProductGallery,
+  getProductPrice
 } from '<%= options.helpers %>';
 
 export default {
@@ -48,17 +48,15 @@ export default {
   },
 
   setup({ product }) {
-    // const category = computed(() => product ? getProductCategories(product)[0] : null)
-    const category = '6a8ee00e-2d72-4605-8b25-f059fd1eaeba'
     const { products, search, loading, error } = useProduct();
+    const categories = computed(() => product ? getProductCategories(product) : [])
+    const displayProducts = computed(() => getProductVariants(products.value, { masters: true }))
 
-    watch(category, () => {
-      if (category) {
-        search({ catIds: [category] });
+    watch(categories, () => {
+      if (categories.value.length > 0) {
+        search({ catIds: [categories.value[0]] })
       }
     })
-    
-    const displayProducts = computed(() => getProductVariants(products.value, { master: true }))
 
     return {
       displayProducts,
@@ -66,8 +64,10 @@ export default {
       loading,
       error,
       getProductSlug,
+      getProductName,
+      getProductGallery,
+      getProductPrice
     }
-  },
-
+  }
 };
 </script>

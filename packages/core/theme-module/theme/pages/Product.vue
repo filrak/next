@@ -169,10 +169,12 @@
       </div>
     </div>
     <RelatedProducts
+      v-if="product"
       :product="product"
       title="Match it with"
     />
     <RelatedProducts
+      v-if="product"
       :product="product"
       title="You might also like"
     />
