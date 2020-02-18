@@ -6,11 +6,13 @@ import {
   getProductVariants,
   getProductAttributes,
   getProductCategories,
+  getProductId,
 } from "./../src/index";
 
 const product = {
   _name: "variant 1",
   _slug: "variant-1",
+  _id: 1234,
   price: {
     value: { centAmount: 1200 }
   },
@@ -176,6 +178,10 @@ describe("[commercetools-helpers] product helpers", () => {
       'catA',
       'catB',
     ])
+  })
+
+  it('returns product ID', () => {
+    expect(getProductId(product)).toEqual(1234)
   })
 
   it("returns empty array if there is no product", () => {

@@ -93,6 +93,8 @@ export const getProductDescription = (product: ProductVariant): any => (product 
 
 export const getProductCategories = (product: ProductVariant): string[] => (product as any)._categoriesRef
 
+export const getProductId = (product: ProductVariant): number => (product as any)._id
+
 // Category
 export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {
   if (!category || !(category as any)._products) {

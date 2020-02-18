@@ -173,11 +173,6 @@
       :product="product"
       title="Match it with"
     />
-    <RelatedProducts
-      v-if="product"
-      :product="product"
-      title="You might also like"
-    />
     <InstagramFeed />
     <SfBanner
       title="Download our application to your mobile"

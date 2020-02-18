@@ -30,7 +30,8 @@ import {
   getProductSlug,
   getProductName,
   getProductGallery,
-  getProductPrice
+  getProductPrice,
+  getProductId,
 } from '<%= options.helpers %>';
 
 export default {
@@ -50,11 +51,12 @@ export default {
   setup({ product }) {
     const { products, search, loading, error } = useProduct();
     const categories = computed(() => product ? getProductCategories(product) : [])
-    const displayProducts = computed(() => getProductVariants(products.value, { masters: true }))
+    const displayProducts = computed(() => getProductVariants(products.value, { masters: true }).filter(prod => getProductId(prod) !== getProductId(product)))
 
     watch(categories, () => {
       if (categories.value.length > 0) {
-        search({ catIds: [categories.value[0]] })
+        const catIndex = Math.floor(Math.random() * categories.value.length)
+        search({ catIds: [categories.value[catIndex]] })
       }
     })
 
