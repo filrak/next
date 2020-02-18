@@ -38,6 +38,9 @@ export default function usePrismic (): UsePrismic {
     loading.value = false
   }
 
+  // @ts-ignore
+  console.log(loading, 'fdsfdafa')
+
   return {
     loading,
     error,

@@ -1,4 +1,4 @@
-type DateValue = string | number | Date
+type DateValue = string | number
 
 interface Fragment {
   fragment: string;
@@ -74,34 +74,26 @@ export interface PrismicQuery {
   in?: FragmentValues<string>
   fulltext?: FragmentValue<string>
   similar?: DocumentAndResults
-  dateBefore: FragmentBefore
-  dateAfter: FragmentAfter
-  dateBetween: FragmentBeforeAfter
-  dayOfMonth: FragmentDay<number>
-  dayOfMonthAfter: FragmentDay<number>
-  dayOfMonthBefore: FragmentDay<number>
-  dayOfWeek: FragmentDay<string | number>
-  dayOfWeekAfter: FragmentDay<string | number>
-  dayOfWeekBefore: FragmentDay<string | number>
-  month: FragmentMonth
-  monthBefore: FragmentMonth
-  monthAfter: FragmentMonth
-  year: FragmentYear
-  hour: FragmentHour
-  hourBefore: FragmentHour
-  hourAfter: FragmentHour
-  number: {
-    gt: FragmentValue<number>
-    lt: FragmentValue<number>
-    inRange: FragmentBeforeAfter<number>
-  }
-  gt: FragmentValue<number>
-  lt: FragmentValue<number>
-  inRange: FragmentBeforeAfter<number>
-  near: FragmentGeo
-  geopoint: {
-    near: FragmentGeo
-  }
+  dateBefore?: FragmentBefore
+  dateAfter?: FragmentAfter
+  dateBetween?: FragmentBeforeAfter
+  dayOfMonth?: FragmentDay<number>
+  dayOfMonthAfter?: FragmentDay<number>
+  dayOfMonthBefore?: FragmentDay<number>
+  dayOfWeek?: FragmentDay<string | number>
+  dayOfWeekAfter?: FragmentDay<string | number>
+  dayOfWeekBefore?: FragmentDay<string | number>
+  month?: FragmentMonth
+  monthBefore?: FragmentMonth
+  monthAfter?: FragmentMonth
+  year?: FragmentYear
+  hour?: FragmentHour
+  hourBefore?: FragmentHour
+  hourAfter?: FragmentHour
+  gt?: FragmentValue<number>
+  lt?: FragmentValue<number>
+  inRange?: FragmentBeforeAfter<number>
+  near?: FragmentGeo
 }
 
 export type PrismicBlockType = 'text' | 'html' | 'image' | 'embed' | 'link'
