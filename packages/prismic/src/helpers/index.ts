@@ -37,6 +37,10 @@ export const getBlocks = ({ data }: PrismicPage, blockName?: string): string | s
   if (blockName) {
     const key = blockKeys.find(blockKey => blockKey === blockName)
 
+    if (key === undefined) {
+      return ''
+    }
+
     return transformBlock(data[key])
   }
 

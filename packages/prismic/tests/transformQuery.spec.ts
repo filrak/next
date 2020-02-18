@@ -1,4 +1,4 @@
-import transformQuery from '../composables/usePrismic/transformQuery'
+import transformQuery from '../src/composables/usePrismic/transformQuery'
 
 describe('[prismic] transformQuery', () => {
   let query

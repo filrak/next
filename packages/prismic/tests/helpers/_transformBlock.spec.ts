@@ -1,4 +1,4 @@
-import { transformBlock } from '../../helpers/_utils'
+import { transformBlock } from '../../src/helpers/_utils'
 
 describe('[prismic] transformBlock', () => {
   let block
