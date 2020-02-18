@@ -9,5 +9,6 @@ module.exports = {
   collectCoverageFrom: [
     "src/**/*.ts",
   ],
-  collectCoverage: true
+  collectCoverage: true,
+  setupFilesAfterEnv: ['./tests/setup.ts'],
 };
