@@ -64,7 +64,7 @@ describe("[commercetools-helpers] product helpers", () => {
     ]);
   });
 
-  it("returns master products", () => {
+  it("returns master variant", () => {
     const variants = [
       { _name: "variant 1", _master: false },
       { _name: "variant 2", _master: true }
@@ -73,6 +73,19 @@ describe("[commercetools-helpers] product helpers", () => {
       _name: "variant 2",
       _master: true
     });
+  });
+
+  it("returns master variants", () => {
+    const variants = [
+      { _name: "variant 1_1", _master: false },
+      { _name: "variant 1_2", _master: true },
+      { _name: "variant 2_1", _master: true },
+      { _name: "variant 2_2", _master: false },
+    ];
+    expect(getProductVariants(variants as any, { masters: true })).toEqual([
+      { _name: "variant 1_2", _master: true },
+      { _name: "variant 2_1", _master: true },
+    ]);
   });
 
   it("returns all variants", () => {

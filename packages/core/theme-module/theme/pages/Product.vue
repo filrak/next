@@ -293,7 +293,7 @@ export default {
     SfReview,
     SfBreadcrumbs,
     InstagramFeed,
-    RelatedProducts
+    RelatedProducts,
   },
   data() {
     return {
@@ -314,64 +314,6 @@ export default {
         {
           name: "Country",
           value: "Germany"
-        }
-      ],
-      products: [
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productA.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productB.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productC.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productA.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productB.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productC.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productA.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productB.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
         }
       ],
       reviews: [

@@ -66,7 +66,7 @@ export default {
       getProductSlug,
       getProductName,
       getProductGallery,
-      getProductPrice
+      getProductPrice,
     }
   }
 };
