@@ -10,7 +10,7 @@
         <SfTableHeading>
           <SfTableHeader v-for="(header, i) in headers" :key="i">{{ header }}</SfTableHeader>
           <SfTableHeader>
-            <SfButton>Download all</SfButton>
+            <SfButton class="download-all">Download all</SfButton>
           </SfTableHeader>
         </SfTableHeading>
         <SfTableRow v-for="order in orders" :key="order.id">
@@ -92,6 +92,10 @@ export default {
   font-size: 16px;
   padding: 40px 0;
   font-weight: bold;
+}
+
+.download-all {
+  padding: 10px;
 }
 
 .download-button {

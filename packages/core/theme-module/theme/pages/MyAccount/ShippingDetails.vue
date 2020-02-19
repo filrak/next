@@ -13,7 +13,7 @@
           <div class="address__details__row address__details__row--spaced">{{ address.email }}</div>
         </div>
         <div class="address__actions">
-          <SfButton>Change</SfButton>
+          <nuxt-link class="sf-button change-button" to="/my-account/shipping-details/edit">Change</nuxt-link>
           <SfButton class="color-secondary">Delete</SfButton>
         </div>
       </div>
@@ -74,8 +74,18 @@ export default {
   }
 
   &__actions {
+    display: flex;
+    margin: 0 -5px;
 
+    > * {
+      margin: 0 5px;
+    }
   }
+}
+
+.change-button {
+  display: block;
+  color: #1c1e21;
 }
 
 </style>

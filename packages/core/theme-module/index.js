@@ -81,6 +81,11 @@ module.exports = function DefaultThemeModule (moduleOptions) {
           component: resolve(this.options.buildDir, 'pages/MyAccount/ShippingDetails.vue'),
         },
         {
+          path: 'shipping-details/edit',
+          name: 'edit-shipping-details',
+          component: resolve(this.options.buildDir, 'pages/MyAccount/ChangeShippingDetails.vue'),
+        },
+        {
           path: 'order-history',
           name: 'order-history',
           component: resolve(this.options.buildDir, 'pages/MyAccount/OrderHistory.vue'),

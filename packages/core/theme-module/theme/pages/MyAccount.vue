@@ -11,12 +11,11 @@
             <div class="menu__header">My account</div>
 
             <div class="menu__heading">Personal details</div>
-            <nuxt-link class="menu__link menu__link--selected" to="/profile">My profile</nuxt-link>
-            <nuxt-link class="menu__link" to="/">Shipping details</nuxt-link>
+            <nuxt-link class="menu__link menu__link--selected" to="/my-account/profile">My profile</nuxt-link>
+            <nuxt-link class="menu__link" to="/my-account/shipping-details">Shipping details</nuxt-link>
 
             <div class="menu__heading">Order details</div>
-            <nuxt-link class="menu__link" to="/">Order history</nuxt-link>
-            <nuxt-link class="menu__link" to="/">My reviews</nuxt-link>
+            <nuxt-link class="menu__link" to="/my-account/order-history">Order history</nuxt-link>
           </div>
         </SfSticky>
       </div>
@@ -86,11 +85,11 @@ export default {
     color: #1d1f22;
     line-height: 1.64;
     padding: 5px 0;
+  }
 
-    &--selected {
-      font-weight: bold;
-      text-decoration: underline;
-    }
+  &::v-deep .nuxt-link-active {
+    font-weight: bold;
+    text-decoration: underline;
   }
 }
 
