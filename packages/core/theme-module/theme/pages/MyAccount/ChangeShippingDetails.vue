@@ -29,10 +29,7 @@
   </SfTabs>
 </template>
 
-
-
 <script>
-// import { ref } from '@vue/composition-api'
 import { SfTabs, SfButton, SfInput } from '@storefront-ui/vue'
 
 export default {
