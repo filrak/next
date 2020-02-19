@@ -44,6 +44,10 @@ jobs:
       script: yarn test:ct:helpers
       name: Test commercetools helpers
 
+    - stage: test
+      script: yarn test:prismic
+      name: Test prismic
+
     - build_image:
       if: branch = master AND type != pull_request
       name: "Build docker image"
