@@ -47,7 +47,7 @@ export const getBlocks = ({ data }: PrismicPage, blockName?: string): string | s
   return blockKeys.map(key => transformBlock(data[key]))
 }
 
-export const getSlices = ({ data }: PrismicPage, sliceType?: string) => {
+export const getSlices = ({ data }: PrismicPage, sliceType?: string): string[] | Array<string[]> => {
   const slices = data.body as PrismicSlice[]
 
   if (sliceType) {
