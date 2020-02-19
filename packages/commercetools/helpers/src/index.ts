@@ -10,6 +10,7 @@ import { formatAttributeList, getVariantByAttributes } from './_utils'
 
 interface ProductVariantFilters {
   master?: boolean
+  masters?: boolean
   attributes?: Record<string, string>
 }
 
@@ -37,6 +38,10 @@ export const getProductVariants = (products: ProductVariant[], filters: ProductV
 
   if (filters.attributes && Object.keys(filters.attributes).length > 0) {
     return getVariantByAttributes(products, filters.attributes)
+  }
+
+  if (filters.masters) {
+    return products.filter(product => (product as any)._master)
   }
 
   if (filters.master) {
@@ -87,6 +92,9 @@ export const getProductAttributes = (products: ProductVariant[], filterByAttribu
 
 export const getProductDescription = (product: ProductVariant): any => (product as any)._description
 
+export const getProductCategories = (product: ProductVariant): string[] => (product as any)._categoriesRef
+
+export const getProductId = (product: ProductVariant): number => (product as any)._id
 
 // Category
 export const getCategoryProducts = (category: Category, options: any = {}): ProductVariant[] => {
