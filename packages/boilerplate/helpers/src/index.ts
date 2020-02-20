@@ -1,7 +1,5 @@
 import {
   UiMediaGalleryItem,
-  UiCategory,
-  AgnosticCartProduct,
   AgnosticProductAttribute
 } from '@vue-storefront/interfaces'
 import { ProductVariant, Category, Cart } from '@vue-storefront/boilerplate-api/src/types'
@@ -68,7 +66,7 @@ export const getCategoryName = (category: Category) => {
 // Cart
 
 // TODO: Change UICartProduct to something agnostic.
-export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): AgnosticCartProduct[] => {
+export const getCartProducts = (cart: Cart, includeAttributes: string[] = []): any[] => {
   return [{},{},{},{},{}]
 }
 

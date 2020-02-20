@@ -1,7 +1,6 @@
 import {
   UiMediaGalleryItem,
   UiCategory,
-  AgnosticCartProduct,
   AgnosticProductAttribute,
   AgnosticTotals
 } from '@vue-storefront/interfaces'
@@ -51,7 +50,7 @@ export const getProductVariants = (products: ProductVariant[], filters: ProductV
   return products
 }
 
-export const getProductAttributes = (products: ProductVariant[], filterByAttributeName?: Array<string>): Record<string, AgnosticProductAttribute | string> => {
+export const getProductAttributes = (products: ProductVariant[] | ProductVariant, filterByAttributeName?: Array<string>): Record<string, AgnosticProductAttribute | string> => {
   const isSingleProduct = !Array.isArray(products)
   const productList = (isSingleProduct ? [products] : products) as ProductVariant[]
 
@@ -129,24 +128,30 @@ export const getCategoryTree = (category: Category): UiCategory | null => {
 
 // Cart
 
-export const getCartProducts = (cart: Cart): AgnosticCartProduct[] => {
+export const getCartProducts = (cart: Cart): LineItem[] => {
   if (!cart) {
     return []
   }
 
-  return cart.lineItems.map((lineItem: LineItem) => ({
-    title: lineItem.name,
-    id: lineItem.id,
-    price: { regular: lineItem.price.value.centAmount / 100 },
-    image: lineItem.variant.images[0].url,
-    qty: lineItem.quantity,
-    attributeList: (lineItem as any)._configuration
-  }))
+  return cart.lineItems;
 }
+
+export const getCartProductName = (product: LineItem): string => product.name
+
+export const getCartProductImage = (product: LineItem): string => product.variant.images[0].url
+
+export const getCartProductPrice = (product: LineItem): number => product.price.value.centAmount / 100
+
+export const getCartProductQty = (product: LineItem): number => product.quantity
+
+export const getCartProductAttributes = (product: LineItem, filterByAttributeName?: Array<string>) =>
+  getProductAttributes(product.variant, filterByAttributeName)
+
+export const getCartProductSku = (product: LineItem): string => product.variant.sku
 
 export const getCartTotals = (cart: Cart): AgnosticTotals => {
   if (!cart) {
-    return null
+    return { total: 0, subtotal: 0 }
   }
 
   const subtotalPrice = cart.totalPrice.centAmount

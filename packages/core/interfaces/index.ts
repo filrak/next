@@ -158,15 +158,6 @@ export interface UiCartProductPrice {
   special?: number
 }
 
-export interface AgnosticCartProduct {
-  title: string
-  id: string
-  image: string
-  price: UiCartProductPrice
-  attributeList: any[]
-  qty: string
-}
-
 export interface AgnosticTotals {
   total: number
   subtotal: number

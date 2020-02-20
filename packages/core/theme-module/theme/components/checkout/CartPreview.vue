@@ -16,18 +16,18 @@
           <SfCollectedProduct
             v-for="(product, index) in products"
             :key="index"
-            v-model="product.qty"
-            :image="product.image"
-            :title="product.title"
-            :regular-price="product.price.regular"
+            :qty="getCartProductQty(product)"
+            :image="getCartProductImage(product)"
+            :title="getCartProductName(product)"
+            :regular-price="getCartProductPrice(product)"
             class="collected-product"
             @click:remove="removeFromCart(product)"
-            @input="updateQuantity(product)"
+            @input="updateQuantity(product, $event)"
           >
             <template #configuration>
               <div class="product__properties">
                 <SfProperty
-                  v-for="(value, key) in getProductAttributes(product, ['color', 'size'])"
+                  v-for="(value, key) in getCartProductAttributes(product, ['color', 'size'])"
                   :key="key"
                   :name="key"
                   :value="value"
@@ -37,9 +37,9 @@
             </template>
             <template #actions>
               <div>
-                <div class="product__action">{{ product.sku }}</div>
+                <div class="product__action">{{ getCartProductSku(product) }}</div>
                 <div class="product__action">
-                  Quantity: <span class="product__qty">{{ product.qty }}</span>
+                  Quantity: <span class="product__qty">{{ getCartProductQty(product) }}</span>
                 </div>
               </div>
             </template>
@@ -115,9 +115,13 @@ import {
   getShippingMethodPrice,
   getCartProducts,
   getCartTotals,
-  getCartShippingPrice,
   getCartTotalItems,
-  getProductAttributes
+  getCartProductName,
+  getCartProductImage,
+  getCartProductPrice,
+  getCartProductQty,
+  getCartProductAttributes,
+  getCartProductSku
 } from '@vue-storefront/commercetools-helpers'
 
 export default {
@@ -130,7 +134,7 @@ export default {
     SfCharacteristic,
     SfInput
   },
-  setup(props) {
+  setup() {
     const { chosenShippingMethod } = useCheckout()
     const { cart, removeFromCart, updateQuantity } = useCart()
     const listIsHidden = ref(false)
@@ -153,7 +157,12 @@ export default {
       getShippingMethodName,
       getShippingMethodDescription,
       getShippingMethodPrice,
-      getProductAttributes,
+      getCartProductName,
+      getCartProductImage,
+      getCartProductPrice,
+      getCartProductQty,
+      getCartProductAttributes,
+      getCartProductSku,
       characteristics: [
         {
           title: "Safety",

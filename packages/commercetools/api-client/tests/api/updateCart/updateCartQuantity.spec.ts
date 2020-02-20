@@ -11,7 +11,7 @@ describe('[commercetools-api-client] updateCartQuantity', () => {
   })
 
   it('updates cart product quantity', async () => {
-    const product = { id: 1, sku: '123', qty: 2 } as any
+    const product = { id: 1, sku: '123', quantity: 2 } as any
 
     const response = await updateCartQuantity(cart, product)
 

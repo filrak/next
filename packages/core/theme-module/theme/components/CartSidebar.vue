@@ -13,21 +13,20 @@
             <transition-group name="fade" tag="div">
               <SfCollectedProduct
                 v-for="product in products"
-                :key="product.id"
-                :image="product.image"
-                :title="product.title"
-                :regular-price="product.price.regular"
-                :special-price="product.price.special"
+                :key="getCartProductName(product)"
+                :image="getCartProductImage(product)"
+                :title="getCartProductName(product)"
+                :regular-price="getCartProductPrice(product)"
                 :stock="99999"
-                v-model="product.qty"
-                @input="updateQuantity(product)"
+                :qty="getCartProductQty(product)"
+                @input="updateQuantity(product, $event)"
                 @click:remove="removeFromCart(product)"
                 class="collected-product"
               >
                 <template #configuration>
                   <div class="collected-product__properties">
                     <SfProperty
-                      v-for="(value, key) in getProductAttributes(product, ['color', 'size'])"
+                      v-for="(value, key) in getCartProductAttributes(product, ['color', 'size'])"
                       :key="key"
                       :name="key"
                       :value="value"
@@ -83,9 +82,13 @@ import { useCart } from '@vue-storefront/commercetools-composables'
 import uiState from '~/assets/ui-state'
 import {
   getCartProducts,
-  getProductAttributes,
   getCartTotalItems,
-  getCartTotals
+  getCartTotals,
+  getCartProductName,
+  getCartProductImage,
+  getCartProductPrice,
+  getCartProductQty,
+  getCartProductAttributes
 } from '@vue-storefront/commercetools-helpers'
 
 const { isCartSidebarOpen, toggleCartSidebar } = uiState
@@ -113,7 +116,11 @@ export default {
       toggleCartSidebar,
       totals,
       totalItems,
-      getProductAttributes
+      getCartProductName,
+      getCartProductImage,
+      getCartProductPrice,
+      getCartProductQty,
+      getCartProductAttributes
     };
   }
 };
