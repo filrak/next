@@ -24,46 +24,48 @@
 </template>
 <script>
 
-import { SfSteps } from "@storefront-ui/vue";
-import CartPreview from "~/components/checkout/CartPreview"
-import OrderReview from "~/components/checkout/OrderReview"
-import { computed, ref } from '@vue/composition-api'
-import { useCart } from '@vue-storefront/commercetools-composables'
+import { SfSteps } from '@storefront-ui/vue';
+import CartPreview from '~/components/checkout/CartPreview';
+import OrderReview from '~/components/checkout/OrderReview';
+import { ref } from '@vue/composition-api';
 
 const STEPS = [
-  { name: 'personal-details', label: 'Personal Details' },
-  { name: 'shipping', label: 'Shipping' },
-  { name: 'payment', label: 'Payment' },
-  { name: 'order-review', label: 'Review' }
-]
+  { name: 'personal-details',
+    label: 'Personal Details' },
+  { name: 'shipping',
+    label: 'Shipping' },
+  { name: 'payment',
+    label: 'Payment' },
+  { name: 'order-review',
+    label: 'Review' }
+];
 
 // TODO(CHECKOUT): block pages when you haven't finished previous steps / don't have products in cart and so on.
 // TODO(CHECKOUT): save data that you put in the forms - after refreshing page everything should be filled
 // TODO(CHECKOUT): form validations
 
 export default {
-  name: "Checkout",
+  name: 'Checkout',
   components: {
     SfSteps,
     CartPreview,
     OrderReview
   },
-  setup (props, context) {
-    const showCartPreview = ref(true)
-    const currentStep = ref(0)
-    const { cart } = useCart()
+  setup(context) {
+    const showCartPreview = ref(true);
+    const currentStep = ref(0);
 
     const handleShowReview = () => {
-      showCartPreview.value = false
-    }
+      showCartPreview.value = false;
+    };
 
     const updateStep = (next) => {
       currentStep.value = next;
-    }
+    };
 
     const handleNextStep = (nextStep) => {
-      context.root.$router.push(nextStep < 4 ? STEPS[nextStep].name : 'thank-you')
-    }
+      context.root.$router.push(nextStep < 4 ? STEPS[nextStep].name : 'thank-you');
+    };
 
     return {
       STEPS,
@@ -72,7 +74,7 @@ export default {
       updateStep,
       handleShowReview,
       showCartPreview
-    }
+    };
   }
 };
 </script>

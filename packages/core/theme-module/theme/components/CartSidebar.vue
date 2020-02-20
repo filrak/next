@@ -76,10 +76,10 @@ import {
   SfProperty,
   SfPrice,
   SfCollectedProduct
-} from '@storefront-ui/vue'
-import { computed } from '@vue/composition-api'
-import { useCart } from '@vue-storefront/commercetools-composables'
-import uiState from '~/assets/ui-state'
+} from '@storefront-ui/vue';
+import { computed } from '@vue/composition-api';
+import { useCart } from '@vue-storefront/commercetools-composables';
+import uiState from '~/assets/ui-state';
 import {
   getCartProducts,
   getCartTotalItems,
@@ -89,9 +89,9 @@ import {
   getCartProductPrice,
   getCartProductQty,
   getCartProductAttributes
-} from '@vue-storefront/commercetools-helpers'
+} from '@vue-storefront/commercetools-helpers';
 
-const { isCartSidebarOpen, toggleCartSidebar } = uiState
+const { isCartSidebarOpen, toggleCartSidebar } = uiState;
 
 export default {
   name: 'Cart',
@@ -103,10 +103,10 @@ export default {
     SfCollectedProduct
   },
   setup() {
-    const { cart, removeFromCart, updateQuantity } = useCart()
-    const products = computed(() => getCartProducts(cart.value))
-    const totals = computed(() => getCartTotals(cart.value))
-    const totalItems = computed(() => getCartTotalItems(cart.value))
+    const { cart, removeFromCart, updateQuantity } = useCart();
+    const products = computed(() => getCartProducts(cart.value));
+    const totals = computed(() => getCartTotals(cart.value));
+    const totalItems = computed(() => getCartTotalItems(cart.value));
 
     return {
       products,

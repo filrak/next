@@ -1,7 +1,7 @@
-import enhanceCategory from './enhanceCategory'
-import enhanceProduct from './enhanceProduct'
+import enhanceCategory from './enhanceCategory';
+import enhanceProduct from './enhanceProduct';
 
 export {
   enhanceProduct,
-  enhanceCategory,
-}
+  enhanceCategory
+};

@@ -105,9 +105,9 @@ import {
   SfProperty,
   SfCharacteristic,
   SfInput
-} from "@storefront-ui/vue";
-import { computed, ref } from '@vue/composition-api'
-import { useCart, useCheckout } from '@vue-storefront/commercetools-composables'
+} from '@storefront-ui/vue';
+import { computed, ref } from '@vue/composition-api';
+import { useCart, useCheckout } from '@vue-storefront/commercetools-composables';
 
 import {
   getShippingMethodName,
@@ -122,10 +122,10 @@ import {
   getCartProductQty,
   getCartProductAttributes,
   getCartProductSku
-} from '@vue-storefront/commercetools-helpers'
+} from '@vue-storefront/commercetools-helpers';
 
 export default {
-  name: "CartPreview",
+  name: 'CartPreview',
   components: {
     SfHeading,
     SfButton,
@@ -135,14 +135,14 @@ export default {
     SfInput
   },
   setup() {
-    const { chosenShippingMethod } = useCheckout()
-    const { cart, removeFromCart, updateQuantity } = useCart()
-    const listIsHidden = ref(false)
-    const promoCode = ref('')
-    const showPromoCode = ref(false)
-    const products = computed(() => getCartProducts(cart.value))
-    const totalItems = computed(() => getCartTotalItems(cart.value))
-    const totals = computed(() => getCartTotals(cart.value))
+    const { chosenShippingMethod } = useCheckout();
+    const { cart, removeFromCart, updateQuantity } = useCart();
+    const listIsHidden = ref(false);
+    const promoCode = ref('');
+    const showPromoCode = ref(false);
+    const products = computed(() => getCartProducts(cart.value));
+    const totalItems = computed(() => getCartTotalItems(cart.value));
+    const totals = computed(() => getCartTotals(cart.value));
 
     return {
       totalItems,
@@ -165,24 +165,24 @@ export default {
       getCartProductSku,
       characteristics: [
         {
-          title: "Safety",
-          description: "It carefully packaged with a personal touch",
-          icon: "safety"
+          title: 'Safety',
+          description: 'It carefully packaged with a personal touch',
+          icon: 'safety'
         },
         {
-          title: "Easy shipping",
+          title: 'Easy shipping',
           description:
-            "You’ll receive dispatch confirmation and an arrival date",
-          icon: "shipping"
+            'You’ll receive dispatch confirmation and an arrival date',
+          icon: 'shipping'
         },
         {
-          title: "Changed your mind?",
-          description: "Rest assured, we offer free returns within 30 days",
-          icon: "return"
+          title: 'Changed your mind?',
+          description: 'Rest assured, we offer free returns within 30 days',
+          icon: 'return'
         }
       ]
-    }
-  },
+    };
+  }
 };
 </script>
 <style lang="scss" scoped>

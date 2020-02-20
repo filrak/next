@@ -177,7 +177,7 @@ import {
   SfPrice,
   SfProperty,
   SfAccordion
-} from "@storefront-ui/vue"
+} from '@storefront-ui/vue';
 import {
   getShippingMethodName,
   getShippingMethodPrice,
@@ -189,13 +189,13 @@ import {
   getCartProductQty,
   getCartProductAttributes,
   getCartProductSku
-} from '@vue-storefront/commercetools-helpers'
-import { ref, computed } from '@vue/composition-api'
-import { useCheckout, useCart } from '@vue-storefront/commercetools-composables'
+} from '@vue-storefront/commercetools-helpers';
+import { ref, computed } from '@vue/composition-api';
+import { useCheckout, useCart } from '@vue-storefront/commercetools-composables';
 
 export default {
   name: 'ReviewOrder',
-    components: {
+  components: {
     SfHeading,
     SfTable,
     SfCheckbox,
@@ -207,12 +207,12 @@ export default {
     SfAccordion
   },
   setup(props, context) {
-    context.emit('changeStep', 3)
-    const billingSameAsShipping = ref(false)
-    const terms = ref(false)
-    const { cart, removeFromCart } = useCart()
-    const products = computed(() => getCartProducts(cart.value))
-    const totals = computed(() => getCartTotals(cart.value))
+    context.emit('changeStep', 3);
+    const billingSameAsShipping = ref(false);
+    const terms = ref(false);
+    const { cart, removeFromCart } = useCart();
+    const products = computed(() => getCartProducts(cart.value));
+    const totals = computed(() => getCartTotals(cart.value));
     const {
       personalDetails,
       shippingDetails,
@@ -220,12 +220,12 @@ export default {
       chosenShippingMethod,
       chosenPaymentMethod,
       placeOrder
-    } = useCheckout()
+    } = useCheckout();
 
     const processOrder = async () => {
-      await placeOrder()
-      context.emit('nextStep')
-    }
+      await placeOrder();
+      context.emit('nextStep');
+    };
 
     return {
       products,
@@ -241,16 +241,16 @@ export default {
       totals,
       removeFromCart,
       processOrder,
-      tableHeaders: ["Description", "Colour", "Size", "Quantity", "Amount"],
+      tableHeaders: ['Description', 'Colour', 'Size', 'Quantity', 'Amount'],
       getCartProductName,
       getCartProductImage,
       getCartProductPrice,
       getCartProductQty,
       getCartProductAttributes,
       getCartProductSku
-    }
+    };
   }
-}
+};
 
 </script>
 
