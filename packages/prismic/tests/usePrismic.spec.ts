@@ -4,8 +4,23 @@ import { prismic } from '../src/index';
 import * as helpers from '../src/helpers/index';
 import { ApiOptions } from 'prismic-javascript/d.ts/Api';
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi';
+import { Ref } from '@vue/composition-api';
 import ApiSearchResponse from 'prismic-javascript/d.ts/ApiSearchResponse';
-import { PrismicDocument, PrismicSlice } from '../src/types';
+import { Document } from 'prismic-javascript/d.ts/documents';
+import { PrismicSlice } from '../src/types';
+import ArticleExampleMock from './mocks/ArticleExampleMock';
+import LegalExampleMock from './mocks/LegalExampleMock';
+
+const mockDocument = (doc: Document): ApiSearchResponse => ({
+  page: 1,
+  prev_page: 'prev-page',
+  next_page: 'next-page',
+  results: [doc],
+  results_per_page: 1,
+  results_size: 1,
+  total_pages: 1,
+  total_results_size: 1
+});
 
 const createMock = (mockResponse: ApiSearchResponse) => {
   jest
@@ -14,7 +29,9 @@ const createMock = (mockResponse: ApiSearchResponse) => {
     .mockImplementation(async (url: string, options?: ApiOptions) => {
       return {
         // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        query: async (query, optionsOrCallback) => mockResponse
+        query: async (query, optionsOrCallback) => mockResponse,
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        queryFirst: async (query, optionsOrCallback) => mockResponse.results[0]
       } as ResolvedApi;
     });
 };
@@ -105,30 +122,28 @@ describe('[prismic] usePrismic', () => {
     await search({}, {});
 
     expect(doc.value).not.toBeNull();
-    expect(doc.value.results).toHaveLength(1);
-    expect(Object.keys(doc.value.results[0].data)[0]).toBe('sampleElement');
-    expect(doc.value.results[0].data.sampleElement).toBe('test');
+    expect(doc.value).toHaveLength(1);
+    expect(Object.keys(doc.value[0].data)[0]).toBe('sampleElement');
+    expect(doc.value[0].data.sampleElement).toBe('test');
   });
 
   it('should return correct values for document getters', async () => {
-    const { doc, search } = usePrismic();
+    const { doc, meta, search } = usePrismic();
 
     createMock(prismicResponseMock);
 
     await search({});
 
-    const fetchedDoc = doc.value as any as PrismicDocument;
-
     const { getPages, getCurrentPage, getResultsPerPage, getResultsSize, getTotalResultsSize, getTotalPages, getNextPage, getPrevPage } = helpers;
 
-    expect(getPages(fetchedDoc)).toHaveLength(1);
-    expect(getCurrentPage(fetchedDoc)).toBe(1);
-    expect(getResultsPerPage(fetchedDoc)).toBe(1);
-    expect(getResultsSize(fetchedDoc)).toBe(1);
-    expect(getTotalResultsSize(fetchedDoc)).toBe(1);
-    expect(getTotalPages(fetchedDoc)).toBe(1);
-    expect(getNextPage(fetchedDoc)).toBe('next-page');
-    expect(getPrevPage(fetchedDoc)).toBe('prev-page');
+    expect(getPages(doc.value)).toHaveLength(1);
+    expect(getCurrentPage(meta.value)).toBe(1);
+    expect(getResultsPerPage(meta.value)).toBe(1);
+    expect(getResultsSize(meta.value)).toBe(1);
+    expect(getTotalResultsSize(meta.value)).toBe(1);
+    expect(getTotalPages(meta.value)).toBe(1);
+    expect(getNextPage(meta.value)).toBe('next-page');
+    expect(getPrevPage(meta.value)).toBe('prev-page');
   });
 
   it('should return correct values for page getters', async () => {
@@ -138,7 +153,7 @@ describe('[prismic] usePrismic', () => {
 
     await search({});
 
-    const page = doc.value.results[0] as any;
+    const page = doc.value[0];
 
     const { getPageUid, getPageId, getPageType, getPageHref, getPageTags, getPageSlugs, getPageLang } = helpers;
 
@@ -160,7 +175,7 @@ describe('[prismic] usePrismic', () => {
 
     await search({});
 
-    const page = doc.value.results[0] as any;
+    const page = doc.value[0];
 
     const { getBlocks } = helpers;
 
@@ -174,7 +189,7 @@ describe('[prismic] usePrismic', () => {
 
     await search({});
 
-    const page = doc.value.results[0] as any;
+    const page = doc.value[0];
 
     const { getBlocks } = helpers;
 
@@ -199,7 +214,7 @@ describe('[prismic] usePrismic', () => {
 
     await search({});
 
-    const page = doc.value.results[0] as any;
+    const page = doc.value[0];
 
     const { getBlocks } = helpers;
 
@@ -213,7 +228,7 @@ describe('[prismic] usePrismic', () => {
 
     await search({});
 
-    const page = doc.value.results[0] as any;
+    const page = doc.value[0];
 
     const { getSlices } = helpers;
 
@@ -221,10 +236,10 @@ describe('[prismic] usePrismic', () => {
 
     expect(Array.isArray(slices)).toBeTruthy();
     expect(slices).toHaveLength(2);
-    expect(slices[0]).toHaveLength(3);
-    expect(slices[1]).toHaveLength(3);
-    expect(JSON.stringify(slices[0])).toBe('["<p>a</p>","<p>b</p>","<p>c</p>"]');
-    expect(JSON.stringify(slices[1])).toBe('["<p>d</p>","<p>e</p>","<p>f</p>"]');
+    expect(slices[0]).toHaveLength(4);
+    expect(slices[1]).toHaveLength(4);
+    expect(JSON.stringify(slices[0])).toBe('["","<p>a</p>","<p>b</p>","<p>c</p>"]');
+    expect(JSON.stringify(slices[1])).toBe('["","<p>d</p>","<p>e</p>","<p>f</p>"]');
   });
 
   it('should return collection of rendered selected slice', async () => {
@@ -234,15 +249,15 @@ describe('[prismic] usePrismic', () => {
 
     await search({});
 
-    const page = doc.value.results[0] as any;
+    const page = doc.value[0];
 
     const { getSlices } = helpers;
 
     const slice = getSlices(page, 'grid-slice');
 
     expect(Array.isArray(slice)).toBeTruthy();
-    expect(slice).toHaveLength(3);
-    expect(JSON.stringify(slice)).toBe('["<p>a</p>","<p>b</p>","<p>c</p>"]');
+    expect(slice).toHaveLength(4);
+    expect(JSON.stringify(slice)).toBe('["","<p>a</p>","<p>b</p>","<p>c</p>"]');
   });
 
   it('should return empty collection if slice not found', async () => {
@@ -252,7 +267,7 @@ describe('[prismic] usePrismic', () => {
 
     await search({});
 
-    const page = doc.value.results[0] as any;
+    const page = doc.value[0];
 
     const { getSlices } = helpers;
 
@@ -260,5 +275,142 @@ describe('[prismic] usePrismic', () => {
 
     expect(Array.isArray(slice)).toBeTruthy();
     expect(slice).toHaveLength(0);
+  });
+
+  it('should pass when multiple queries', async () => {
+    const { doc, search } = usePrismic();
+
+    createMock(prismicResponseMock);
+
+    await search([{}, {}]);
+
+    expect(Array.isArray(doc.value)).toBeTruthy();
+    expect(doc.value[0].uid).toBe('456');
+  });
+
+  it('should return first document but not as an array', async () => {
+    const { doc, meta, searchFirst } = usePrismic();
+
+    createMock(prismicResponseMock);
+
+    await searchFirst({});
+
+    const docElement = doc as Ref<Document>;
+
+    expect(meta.value).toBeNull();
+    expect(Array.isArray(docElement.value)).toBeFalsy();
+    expect(docElement.value.id).toBe('123');
+  });
+
+  it('should parse ArticleExampleMock', async () => {
+    const { doc, search } = usePrismic();
+
+    createMock(mockDocument(ArticleExampleMock));
+
+    await search({});
+
+    const page = doc.value[0] as Document;
+
+    const { getPageUid, getPageId, getPageType, getPageHref, getPageTags, getPageSlugs, getPageLang } = helpers;
+
+    expect(getPageUid(page)).toBe('star-maker-of-the-month');
+    expect(getPageId(page)).toBe('Xhx-tRAAACUAWQUv');
+    expect(getPageType(page)).toBe('article');
+    expect(getPageHref(page)).toBe('http://localhost/documents/search?ref=XjP6oxQAACQANXY-&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22Xhx-tRAAACUAWQUv%22%29+%5D%5D');
+    expect(getPageTags(page)).toHaveLength(1);
+    expect(JSON.stringify(getPageTags(page))).toBe('["discoverable:false"]');
+    expect(getPageSlugs(page)).toHaveLength(1);
+    expect(getPageSlugs(page)[0]).toBe('star-maker-of-the-month');
+    expect(getPageLang(page)).toBe('en-gb');
+  });
+
+  it('should parse blocks for ArticleExampleMock', async () => {
+    const { doc, searchFirst } = usePrismic();
+
+    createMock(mockDocument(ArticleExampleMock));
+
+    await searchFirst({});
+
+    const { getBlocks } = helpers;
+
+    const blocks = getBlocks(doc.value as Document);
+
+    expect(blocks).toHaveLength(11);
+    expect(blocks[0]).toBe('<h1>Star Maker of The Month </h1>');
+  });
+
+  it('should parse slices for ArticleExampleMock', async () => {
+    const { doc, searchFirst } = usePrismic();
+
+    createMock(mockDocument(ArticleExampleMock));
+
+    await searchFirst({});
+
+    const { getSlices } = helpers;
+
+    const page = doc.value as Document;
+
+    const slices = getSlices(page);
+    const slice = getSlices(page, 'generic_text');
+
+    expect(slices).toHaveLength(12);
+    expect(slice).toHaveLength(2);
+    expect(slice[0]).toBe('<h2>lorem ipsum</h2><p>lorem ipsum</p>');
+  });
+
+  it('should parse LegalExampleMock', async () => {
+    const { doc, search } = usePrismic();
+
+    createMock(mockDocument(LegalExampleMock));
+
+    await search({});
+
+    const page = doc.value[0] as Document;
+
+    const { getPageUid, getPageId, getPageType, getPageHref, getPageTags, getPageSlugs, getPageLang } = helpers;
+
+    expect(getPageUid(page)).toBe(null);
+    expect(getPageId(page)).toBe('WvLGVCsAAKn7PRtR');
+    expect(getPageType(page)).toBe('legal');
+    expect(getPageHref(page)).toBe('http://localhost/documents/search?ref=XjP6oxQAACQANXY-&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22WvLGVCsAAKn7PRtR%22%29+%5D%5D');
+    expect(getPageTags(page)).toHaveLength(3);
+    expect(JSON.stringify(getPageTags(page))).toBe('["tag:knitting","tag:crochet","tag:sewing"]');
+    expect(getPageSlugs(page)).toHaveLength(1);
+    expect(getPageSlugs(page)[0]).toBe('terms-of-use');
+    expect(getPageLang(page)).toBe('en-gb');
+  });
+
+  it('should parse blocks for LegalExampleMock', async () => {
+    const { doc, searchFirst } = usePrismic();
+
+    createMock(mockDocument(LegalExampleMock));
+
+    await searchFirst({});
+
+    const { getBlocks } = helpers;
+
+    const blocks = getBlocks(doc.value as Document);
+
+    expect(blocks).toHaveLength(3);
+    expect(blocks[0]).toBe('terms-of-use');
+  });
+
+  it('should parse slices for LegalExampleMock', async () => {
+    const { doc, searchFirst } = usePrismic();
+
+    createMock(mockDocument(LegalExampleMock));
+
+    await searchFirst({});
+
+    const { getSlices } = helpers;
+
+    const page = doc.value as Document;
+
+    const slices = getSlices(page);
+    const slice = getSlices(page, 'text_with_tldr');
+
+    expect(slices).toHaveLength(13);
+    expect(slice).toHaveLength(2);
+    expect(slice[0]).toBe('<h2>Introduction</h2><p>lorem ipsum</p><p>lorem ipsum<a  href="http://localhost"></a></p>');
   });
 });

@@ -141,3 +141,13 @@ export interface PrismicSlice {
   primary: PrismicBlock;
   items: PrismicBlock[];
 }
+
+export interface PrismicMeta {
+  page: number;
+  results_per_page: number;
+  results_size: number;
+  total_results_size: number;
+  total_pages: number;
+  next_page: string;
+  prev_page: string;
+}
