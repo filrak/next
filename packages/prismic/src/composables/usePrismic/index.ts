@@ -1,5 +1,5 @@
 import { ref, Ref } from '@vue/composition-api'
-import { prismic, endpoint } from '../../index'
+import { prismic, endpoint, apiOptions } from '../../index'
 import { PrismicQuery } from '../../types'
 import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi'
 import ApiSearchResponse from 'prismic-javascript/d.ts/ApiSearchResponse'
@@ -29,7 +29,7 @@ export default function usePrismic (): UsePrismic {
     loading.value = true
 
     doc.value = await prismic
-      .getApi(endpoint)
+      .getApi(endpoint, apiOptions)
       .then(api => api.query(
         transformQuery(query),
         options as QueryOptions
