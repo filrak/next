@@ -78,7 +78,7 @@ export const getSlices = ({ data }: Document, sliceType?: string): string[] | Ar
     return [foundSlice.primary || {}, ...foundSlice.items].map((item) => renderSliceElements(item));
   }
 
-  return [...slices]
+  return slices
     .map((slice) => [slice.primary || {}, ...slice.items]
       .map((item) => renderSliceElements(item))
     );
