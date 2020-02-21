@@ -13,8 +13,8 @@ let apiOptions = null;
 let endpoint = null;
 
 const setup = (setupConfig: SetupConfig) => {
-  apiOptions = setupConfig ? setupConfig.apiOptions || null : null;
-  endpoint = setupConfig ? setupConfig.endpoint || null : null;
+  apiOptions = setupConfig.apiOptions || null;
+  endpoint = setupConfig.endpoint;
 
   return prismic.client(endpoint, apiOptions);
 };
