@@ -154,13 +154,7 @@ export interface PrismicMeta {
   prev_page: string;
 }
 
-interface CustomQueryOptions extends QueryOptions {
-  orderings?: string;
-  pageSize?: number;
-  page?: number;
-}
-
 export interface PrismicOptions {
-  queryOptions?: CustomQueryOptions;
+  queryOptions?: QueryOptions;
   getFirst?: boolean;
 }
