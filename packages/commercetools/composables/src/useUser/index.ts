@@ -1,6 +1,11 @@
 import { ref, Ref, watch, computed } from '@vue/composition-api';
 import { UseUser } from '@vue-storefront/interfaces';
-import { Customer, CustomerSignMeUpDraft, CustomerSignMeInDraft } from '@vue-storefront/commercetools-api/lib/src/types/GraphQL';
+import {
+  Customer,
+  CustomerSignMeUpDraft,
+  CustomerSignMeInDraft,
+  Order
+} from '@vue-storefront/commercetools-api/lib/src/types/GraphQL';
 import {
   customerSignMeUp,
   customerSignMeIn,
@@ -12,8 +17,10 @@ import { cart } from './../useCart';
 type UserData = CustomerSignMeUpDraft | CustomerSignMeInDraft
 
 const user: Ref<Customer> = ref({});
+const orders: Ref<Order[]> = ref([]);
 const loading: Ref<boolean> = ref(false);
 const error: Ref<any> = ref(null);
+
 const isAuthenticated = computed(() => user.value && Object.keys(user.value).length > 0);
 
 const authenticate = async (userData: UserData, fn) => {
@@ -29,7 +36,7 @@ const authenticate = async (userData: UserData, fn) => {
   loading.value = false;
 };
 
-export default function useUser(): UseUser<Customer> {
+export default function useUser(): UseUser<Customer, Order> {
   watch(user, async () => {
     if (isAuthenticated.value) {
       return;
@@ -40,7 +47,9 @@ export default function useUser(): UseUser<Customer> {
     try {
       const profile = await getMe({ customer: true });
       user.value = profile.data.me.customer;
-    } catch (err) {} // eslint-disable-line
+      orders.value = profile.data.me.orders.results;
+    // eslint-disable-next-line no-empty
+    } catch (err) {}
 
     loading.value = false;
   });
@@ -63,6 +72,7 @@ export default function useUser(): UseUser<Customer> {
 
   return {
     user: computed(() => user.value),
+    orders: computed(() => orders.value),
     register,
     login,
     logout,

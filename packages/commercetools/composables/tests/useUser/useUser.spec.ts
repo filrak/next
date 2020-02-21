@@ -6,8 +6,19 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
   customerSignMeUp: jest.fn(),
   customerSignMeIn: jest.fn(),
   customerSignOut: jest.fn(),
-  getMe: () => ({ data: { me: { customer: { firstName: 'loaded customer',
-    lastName: 'loaded customer' } } } })
+  getMe: () => ({
+    data: {
+      me: {
+        customer: {
+          firstName: 'loaded customer',
+          lastName: 'loaded customer'
+        },
+        orders: {
+          results: []
+        }
+      }
+    }
+  })
 }));
 
 describe('[commercetools-composables] useUser', () => {
@@ -16,15 +27,20 @@ describe('[commercetools-composables] useUser', () => {
   });
 
   it('creates properties', () => {
-    const { loading, error } = useUser();
+    const { loading, error, orders } = useUser();
 
     expect(loading.value).toEqual(true);
     expect(error.value).toEqual(null);
+    expect(orders.value).toEqual([]);
   });
 
   it('registers new customer', async () => {
-    const user = { customer: { firstName: 'john',
-      lastName: 'doe' } };
+    const user = {
+      customer: {
+        firstName: 'john',
+        lastName: 'doe'
+      }
+    };
     (customerSignMeUp as any).mockReturnValue(Promise.resolve({ data: { user } }));
 
     const wrapper = mountComposable(useUser);
@@ -40,16 +56,22 @@ describe('[commercetools-composables] useUser', () => {
   });
 
   it('login customer and log out', async () => {
-    const user = { customer: { firstName: 'john',
-      lastName: 'doe' } };
+    const user = {
+      customer: {
+        firstName: 'john',
+        lastName: 'doe'
+      }
+    };
     (customerSignMeIn as any).mockReturnValue(Promise.resolve({ data: { user } }));
 
     const wrapper = mountComposable(useUser);
     await wrapper.vm.$nextTick();
     await wrapper.vm.$nextTick();
 
-    wrapper.vm.$data.login({ email: 'john@doe.com',
-      password: '123' });
+    wrapper.vm.$data.login({
+      email: 'john@doe.com',
+      password: '123'
+    });
 
     expect(wrapper.vm.$data.loading).toBeTruthy();
     await wrapper.vm.$nextTick();
@@ -78,4 +100,12 @@ describe('[commercetools-composables] useUser', () => {
       lastName: 'loaded customer'
     });
   });
+
+  it('loads current customer with orders', async () => {
+    const wrapper = mountComposable(useUser);
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.$data.orders).toEqual([]);
+  });
+
 });

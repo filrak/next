@@ -13,9 +13,11 @@ export interface UseProduct<PRODUCT> {
 
 export interface UseUser
 <
-  USER
+  USER,
+  ORDER
 > {
   user: Readonly<Ref<Readonly<USER>>>;
+  orders: Readonly<Ref<Readonly<ORDER[]>>>;
   register: (user: {
     email: string;
     password: string;
@@ -175,4 +177,14 @@ export interface AgnosticProductAttribute {
   name?: string;
   value: string | Record<string, any>;
   label: string;
+}
+
+export enum AgnosticOrderStatus {
+  Open = 'Open',
+  Pending = 'Pending',
+  Confirmed = 'Confirmed',
+  Shipped = 'Shipped',
+  Complete = 'Complete',
+  Cancelled = 'Cancelled',
+  Refunded = 'Refunded'
 }
