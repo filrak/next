@@ -10,23 +10,19 @@ interface SetupConfig {
 
 const prismic = PrismicJS;
 let apiOptions = null;
-const linkResolver = null;
-const htmlSerializer = null;
 let endpoint = null;
 
 const setup = (setupConfig: SetupConfig) => {
   apiOptions = setupConfig ? setupConfig.apiOptions || null : null;
   endpoint = setupConfig ? setupConfig.endpoint || null : null;
 
-  return prismic.client(setupConfig.endpoint, setupConfig.apiOptions);
+  return prismic.client(endpoint, apiOptions);
 };
 
 export {
   setup,
   prismic,
   apiOptions,
-  linkResolver,
-  htmlSerializer,
   endpoint,
   usePrismic,
   getPages,
