@@ -1,9 +1,9 @@
 import { ref, Ref } from '@vue/composition-api';
-import { PrismicQuery, PrismicMeta, OptionsType } from '../../types';
+import { PrismicQuery, PrismicMeta, PrismicOptions } from '../../types';
 import { Document } from 'prismic-javascript/d.ts/documents';
 import loadDocuments from './loadDocuments';
 
-type Search = (query: PrismicQuery | PrismicQuery[], options?: OptionsType, getFirst?: boolean) => Promise<void>;
+type Search = (query: PrismicQuery | PrismicQuery[], options?: PrismicOptions) => Promise<void>;
 
 interface UsePrismic {
   loading: Ref<boolean>;
@@ -19,10 +19,10 @@ export default function usePrismic(): UsePrismic {
   const doc: Ref<Document | Document[]> = ref({});
   const meta: Ref<PrismicMeta | null> = ref(null);
 
-  const search: Search = async (query: PrismicQuery | PrismicQuery[], options: OptionsType = {}, getFirst = false) => {
+  const search: Search = async (query: PrismicQuery | PrismicQuery[], options: PrismicOptions = {}) => {
     loading.value = true;
 
-    const { results, metadata } = await loadDocuments(query, options, getFirst);
+    const { results, metadata } = await loadDocuments(query, options);
 
     meta.value = metadata;
     doc.value = results;

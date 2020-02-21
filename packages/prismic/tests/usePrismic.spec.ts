@@ -119,7 +119,11 @@ describe('[prismic] usePrismic', () => {
 
     createMock(prismicResponseMock);
 
-    await search({}, {});
+    await search({}, {
+      queryOptions: {
+        page: 10
+      }
+    });
 
     expect(doc.value).not.toBeNull();
     expect(doc.value).toHaveLength(1);
@@ -293,7 +297,7 @@ describe('[prismic] usePrismic', () => {
 
     createMock(prismicResponseMock);
 
-    await search({}, {}, true);
+    await search({}, { getFirst: true });
 
     const docElement = doc as Ref<Document>;
 
@@ -329,7 +333,7 @@ describe('[prismic] usePrismic', () => {
 
     createMock(mockDocument(ArticleExampleMock));
 
-    await search({}, {}, true);
+    await search({}, { getFirst: true });
 
     const { getBlocks } = helpers;
 
@@ -344,7 +348,7 @@ describe('[prismic] usePrismic', () => {
 
     createMock(mockDocument(ArticleExampleMock));
 
-    await search({}, {}, true);
+    await search({}, { getFirst: true });
 
     const { getSlices } = helpers;
 
@@ -385,7 +389,7 @@ describe('[prismic] usePrismic', () => {
 
     createMock(mockDocument(LegalExampleMock));
 
-    await search({}, {}, true);
+    await search({}, { getFirst: true });
 
     const { getBlocks } = helpers;
 
@@ -400,7 +404,7 @@ describe('[prismic] usePrismic', () => {
 
     createMock(mockDocument(LegalExampleMock));
 
-    await search({}, {}, true);
+    await search({}, { getFirst: true });
 
     const { getSlices } = helpers;
 
