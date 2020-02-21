@@ -15,6 +15,11 @@ type OptionsType = CustomQueryOptions & QueryOptions;
 
 type Search = (query: PrismicQuery | PrismicQuery[], options?: OptionsType, getFirst?: boolean) => Promise<void>;
 
+interface LoadDocuments {
+  results: Document | Document[];
+  metadata: PrismicMeta | null;
+}
+
 interface UsePrismic {
   loading: Ref<boolean>;
   error: Ref<boolean>;
@@ -29,26 +34,31 @@ export default function usePrismic(): UsePrismic {
   const doc: Ref<Document | Document[]> = ref({});
   const meta: Ref<PrismicMeta | null> = ref(null);
 
-  const search: Search = async (query: PrismicQuery | PrismicQuery[], options: OptionsType = {}, getFirst = false) => {
-    loading.value = true;
-
+  const loadDocuments = async (query: PrismicQuery | PrismicQuery[], options: OptionsType = {}, getFirst: boolean): Promise<LoadDocuments> => {
     const api = await prismic.getApi(endpoint, apiOptions);
 
     if (getFirst) {
-      doc.value = await api.queryFirst(
-        transformQuery(query),
-        options
-      );
-    } else {
-      const { results, ...metadata } = await api.query(
-        transformQuery(query),
-        options
-      );
-
-      meta.value = metadata;
-      doc.value = results;
+      return {
+        results: await api.queryFirst(transformQuery(query), options),
+        metadata: null
+      };
     }
 
+    const { results, ...metadata } = await api.query(transformQuery(query), options);
+
+    return {
+      results,
+      metadata
+    };
+  };
+
+  const search: Search = async (query: PrismicQuery | PrismicQuery[], options: OptionsType = {}, getFirst = false) => {
+    loading.value = true;
+
+    const { results, metadata } = await loadDocuments(query, options, getFirst);
+
+    meta.value = metadata;
+    doc.value = results;
     loading.value = false;
   };
 
