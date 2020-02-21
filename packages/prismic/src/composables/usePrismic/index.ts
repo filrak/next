@@ -35,21 +35,18 @@ export default function usePrismic(): UsePrismic {
     const api = await prismic.getApi(endpoint, apiOptions);
 
     if (getFirst) {
-      doc.value = await api
-        .queryFirst(
-          transformQuery(query),
-          options
-        );
+      doc.value = await api.queryFirst(
+        transformQuery(query),
+        options
+      );
     } else {
-      await api
-        .query(
-          transformQuery(query),
-          options
-        )
-        .then(({ results, ...metadata }) => {
-          meta.value = metadata;
-          doc.value = results;
-        });
+      const { results, ...metadata } = await api.query(
+        transformQuery(query),
+        options
+      );
+
+      meta.value = metadata;
+      doc.value = results;
     }
 
     loading.value = false;
