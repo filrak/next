@@ -143,6 +143,7 @@ export const OrderFragment = `
     orderState
     id
     version
+    createdAt
   }
 `;
 
