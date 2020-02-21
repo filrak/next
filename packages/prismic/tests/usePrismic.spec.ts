@@ -289,11 +289,11 @@ describe('[prismic] usePrismic', () => {
   });
 
   it('should return first document but not as an array', async () => {
-    const { doc, meta, searchFirst } = usePrismic();
+    const { doc, meta, search } = usePrismic();
 
     createMock(prismicResponseMock);
 
-    await searchFirst({});
+    await search({}, {}, true);
 
     const docElement = doc as Ref<Document>;
 
@@ -325,11 +325,11 @@ describe('[prismic] usePrismic', () => {
   });
 
   it('should parse blocks for ArticleExampleMock', async () => {
-    const { doc, searchFirst } = usePrismic();
+    const { doc, search } = usePrismic();
 
     createMock(mockDocument(ArticleExampleMock));
 
-    await searchFirst({});
+    await search({}, {}, true);
 
     const { getBlocks } = helpers;
 
@@ -340,11 +340,11 @@ describe('[prismic] usePrismic', () => {
   });
 
   it('should parse slices for ArticleExampleMock', async () => {
-    const { doc, searchFirst } = usePrismic();
+    const { doc, search } = usePrismic();
 
     createMock(mockDocument(ArticleExampleMock));
 
-    await searchFirst({});
+    await search({}, {}, true);
 
     const { getSlices } = helpers;
 
@@ -381,11 +381,11 @@ describe('[prismic] usePrismic', () => {
   });
 
   it('should parse blocks for LegalExampleMock', async () => {
-    const { doc, searchFirst } = usePrismic();
+    const { doc, search } = usePrismic();
 
     createMock(mockDocument(LegalExampleMock));
 
-    await searchFirst({});
+    await search({}, {}, true);
 
     const { getBlocks } = helpers;
 
@@ -396,11 +396,11 @@ describe('[prismic] usePrismic', () => {
   });
 
   it('should parse slices for LegalExampleMock', async () => {
-    const { doc, searchFirst } = usePrismic();
+    const { doc, search } = usePrismic();
 
     createMock(mockDocument(LegalExampleMock));
 
-    await searchFirst({});
+    await search({}, {}, true);
 
     const { getSlices } = helpers;
 
