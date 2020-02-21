@@ -1,3 +1,5 @@
+import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi';
+
 /* eslint-disable camelcase */
 type DateValue = string | number
 
@@ -151,3 +153,11 @@ export interface PrismicMeta {
   next_page: string;
   prev_page: string;
 }
+
+interface CustomQueryOptions {
+  orderings?: string;
+  pageSize?: number;
+  page?: number;
+}
+
+export type OptionsType = CustomQueryOptions & QueryOptions;

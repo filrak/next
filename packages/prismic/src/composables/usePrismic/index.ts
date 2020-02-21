@@ -1,24 +1,9 @@
 import { ref, Ref } from '@vue/composition-api';
-import { prismic, endpoint, apiOptions } from '../../index';
-import { PrismicQuery, PrismicMeta } from '../../types';
-import { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi';
-import transformQuery from './transformQuery';
+import { PrismicQuery, PrismicMeta, OptionsType } from '../../types';
 import { Document } from 'prismic-javascript/d.ts/documents';
-
-interface CustomQueryOptions {
-  orderings?: string;
-  pageSize?: number;
-  page?: number;
-}
-
-type OptionsType = CustomQueryOptions & QueryOptions;
+import loadDocuments from './loadDocuments';
 
 type Search = (query: PrismicQuery | PrismicQuery[], options?: OptionsType, getFirst?: boolean) => Promise<void>;
-
-interface LoadDocuments {
-  results: Document | Document[];
-  metadata: PrismicMeta | null;
-}
 
 interface UsePrismic {
   loading: Ref<boolean>;
@@ -27,24 +12,6 @@ interface UsePrismic {
   meta: Ref<PrismicMeta | null>;
   search: Search;
 }
-
-const loadDocuments = async (query: PrismicQuery | PrismicQuery[], options: OptionsType = {}, getFirst: boolean): Promise<LoadDocuments> => {
-  const api = await prismic.getApi(endpoint, apiOptions);
-
-  if (getFirst) {
-    return {
-      results: await api.queryFirst(transformQuery(query), options),
-      metadata: null
-    };
-  }
-
-  const { results, ...metadata } = await api.query(transformQuery(query), options);
-
-  return {
-    results,
-    metadata
-  };
-};
 
 export default function usePrismic(): UsePrismic {
   const loading = ref(false);
