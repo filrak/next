@@ -168,36 +168,11 @@
         </SfSticky>
       </div>
     </div>
-    <SfSection title-heading="Match it with" class="section">
-      <SfCarousel class="product-carousel">
-        <SfCarouselItem v-for="(product, i) in products" :key="i">
-          <SfProductCard
-            :title="product.title"
-            :image="product.image"
-            :regular-price="product.price.regular"
-            :max-rating="product.rating.max"
-            :score-rating="product.rating.score"
-            :is-on-wishlist="product.isOnWishlist"
-            class="product-card"
-          />
-        </SfCarouselItem>
-      </SfCarousel>
-    </SfSection>
-    <SfSection title-heading="You might also like" class="section">
-      <SfCarousel class="product-carousel">
-        <SfCarouselItem v-for="(product, i) in products" :key="i">
-          <SfProductCard
-            :title="product.title"
-            :image="product.image"
-            :regular-price="product.price.regular"
-            :max-rating="product.rating.max"
-            :score-rating="product.rating.score"
-            :is-on-wishlist="product.isOnWishlist"
-            class="product-card"
-          />
-        </SfCarouselItem>
-      </SfCarousel>
-    </SfSection>
+    <RelatedProducts
+      v-if="product"
+      :product="product"
+      title="Match it with"
+    />
     <InstagramFeed />
     <SfBanner
       title="Download our application to your mobile"
@@ -240,50 +215,50 @@ import {
   SfAddToCart,
   SfTabs,
   SfGallery,
-  SfProductCard,
-  SfCarousel,
-  SfSection,
   SfImage,
   SfBanner,
   SfAlert,
   SfSticky,
   SfReview,
   SfBreadcrumbs
-} from '@storefront-ui/vue'
+} from '@storefront-ui/vue';
 
-import InstagramFeed from '~/components/InstagramFeed.vue'
-import { ref, computed } from '@vue/composition-api'
+import InstagramFeed from '~/components/InstagramFeed.vue';
+import RelatedProducts from '~/components/RelatedProducts.vue';
+import { ref, computed } from '@vue/composition-api';
 
-import { useProduct, useCart } from '<%= options.composables %>'
+import { useProduct, useCart } from '<%= options.composables %>';
 import {
   getProductVariants,
   getProductName,
   getProductGallery,
   getProductPrice,
   getProductAttributes
-} from '<%= options.helpers %>'
+} from '<%= options.helpers %>';
 
 export default {
-  name: "Product",
+  name: 'Product',
   transition: 'fade',
-  setup (props, context) {
-    const qty = ref(1)
-    const { slug } = context.root.$route.params
-    const { products, search } = useProduct()
-    const { addToCart, loading } = useCart()
+  setup(props, context) {
+    const qty = ref(1);
+    const { slug } = context.root.$route.params;
+    const { products, search } = useProduct();
+    const { addToCart, loading } = useCart();
 
-    search({ slug })
+    search({ slug });
 
-    const product = computed(() => getProductVariants(products.value, { master: true, attributes: context.root.$route.query }))
-    const options = computed(() => getProductAttributes(products.value, ['color', 'size']))
-    const configuration = computed(() => getProductAttributes(product.value, ['color', 'size']))
+    const product = computed(() => getProductVariants(products.value, { master: true,
+      attributes: context.root.$route.query }));
+    const options = computed(() => getProductAttributes(products.value, ['color', 'size']));
+    const configuration = computed(() => getProductAttributes(product.value, ['color', 'size']));
 
-    const updateFilter = filter => {
+    const updateFilter = (filter) => {
       context.root.$router.push({
         path: context.root.$route.path,
-        query: { ...configuration.value, ...filter }
-      })
-    }
+        query: { ...configuration.value,
+          ...filter }
+      });
+    };
 
     return {
       updateFilter,
@@ -296,7 +271,7 @@ export default {
       qty,
       addToCart,
       loading
-    }
+    };
   },
   components: {
     SfAlert,
@@ -309,134 +284,74 @@ export default {
     SfAddToCart,
     SfTabs,
     SfGallery,
-    SfProductCard,
-    SfCarousel,
-    SfSection,
     SfImage,
     SfBanner,
     SfSticky,
     SfReview,
     SfBreadcrumbs,
-    InstagramFeed
+    InstagramFeed,
+    RelatedProducts
   },
   data() {
     return {
       stock: 5,
       properties: [
         {
-          name: "Product Code",
-          value: "578902-00"
+          name: 'Product Code',
+          value: '578902-00'
         },
         {
-          name: "Category",
-          value: "Pants"
+          name: 'Category',
+          value: 'Pants'
         },
         {
-          name: "Material",
-          value: "Cotton"
+          name: 'Material',
+          value: 'Cotton'
         },
         {
-          name: "Country",
-          value: "Germany"
-        }
-      ],
-      products: [
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productA.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productB.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productC.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productA.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productB.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productC.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productA.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: "Cream Beach Bag",
-          image: "/homepage/productB.jpg",
-          price: { regular: "50.00 $" },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
+          name: 'Country',
+          value: 'Germany'
         }
       ],
       reviews: [
         {
-          author: "Jane D.Smith",
-          date: "April 2019",
+          author: 'Jane D.Smith',
+          date: 'April 2019',
           message:
-            "I was looking for a bright light for the kitchen but wanted some item more modern than a strip light. this one is perfect, very bright and looks great. I can't comment on interlation as I had an electrition instal it. Would recommend",
+            'I was looking for a bright light for the kitchen but wanted some item more modern than a strip light. this one is perfect, very bright and looks great. I can\'t comment on interlation as I had an electrition instal it. Would recommend',
           rating: 4
         },
         {
-          author: "Mari",
-          date: "Jan 2018",
+          author: 'Mari',
+          date: 'Jan 2018',
           message:
-            "Excellent light output from this led fitting. Relatively easy to fix to the ceiling,but having two people makes it easier, to complete the installation. Unable to comment on reliability at this time, but I am hopeful of years of use with good light levels. Excellent light output from this led fitting. Relatively easy to fix to the ceiling,",
+            'Excellent light output from this led fitting. Relatively easy to fix to the ceiling,but having two people makes it easier, to complete the installation. Unable to comment on reliability at this time, but I am hopeful of years of use with good light levels. Excellent light output from this led fitting. Relatively easy to fix to the ceiling,',
           rating: 5
         }
       ],
       detailsIsActive: false,
       breadcrumbs: [
         {
-          text: "Home",
+          text: 'Home',
           route: {
-            link: "#"
+            link: '#'
           }
         },
         {
-          text: "Category",
+          text: 'Category',
           route: {
-            link: "#"
+            link: '#'
           }
         },
         {
-          text: "Pants",
+          text: 'Pants',
           route: {
-            link: "#"
+            link: '#'
           }
         }
       ]
     };
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

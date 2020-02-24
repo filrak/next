@@ -14,10 +14,12 @@
     "build:ct:helpers": "cd packages/commercetools/helpers && yarn build",
     "build:ct:tools": "yarn build:ct:api-client && yarn build:ct:helpers && yarn build:ct:composables",
     "build:ct:theme": "cd packages/commercetools/theme && yarn build",
+    "build:prismic": "cd packages/prismic && yarn build",
     "build:ct": "yarn build:core && yarn build:ct:tools && yarn build:ct:theme",
     "test:ct:api-client": "cd packages/commercetools/api-client && yarn test",
     "test:ct:composables": "cd packages/commercetools/composables && yarn test",
     "test:ct:helpers": "cd packages/commercetools/helpers && yarn test",
+    "test:prismic": "cd packages/prismic && yarn test",
     "test:ct": "yarn test:ct:api-client && yarn test:ct:composables && yarn test:ct:helpers",
     "test:ct:ci": "yarn test:ct:api-client && yarn test:ct:composables && yarn test:ct:helpers",
     "start:ct": "cd packages/commercetools/theme && yarn start",
@@ -31,13 +33,18 @@
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.14",
-    "@typescript-eslint/eslint-plugin": "^2.19.2",
-    "@typescript-eslint/parser": "^2.19.2",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
     "@vue/eslint-config-typescript": "^5.0.1",
-    "codecov": "^3.6.1",
+    "coveralls": "^3.0.9",
     "cross-env": "^6.0.3",
-    "eslint": "^6.0.0",
-    "eslint-plugin-vue": "^6.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^6.2.1",
     "husky": "^4.2.3",
     "jest": "^24.9.0",
     "lerna": "^3.15.0",
@@ -49,6 +56,7 @@
     "ts-node": "^8.4.1",
     "tslib": "^1.10.0",
     "typescript": "^3.6.4",
+    "vue-eslint-parser": "^7.0.0",
     "webpack-bundle-analyzer": "^3.5.2"
   },
   "workspaces": {
@@ -56,6 +64,7 @@
       "packages/commercetools/*",
       "packages/boilerplate/*",
       "packages/core/*",
+      "packages/prismic",
       "packages/about-you/*"
     ],
     "nohoist": [
@@ -69,6 +78,6 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,vue}": "lint"
+    "*.{js,ts,vue}": "eslint --fix"
   }
 }

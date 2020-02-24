@@ -1,27 +1,26 @@
-import { UiCartProduct } from '@vue-storefront/interfaces'
-import { ProductVariant, AddressInput } from './../../types/GraphQL'
+import { ProductVariant, AddressInput, LineItem } from './../../types/GraphQL';
 
 export const createAddLineItemAction = (variant: ProductVariant, quantity: number) => ({
   addLineItem: {
     variantId: variant.id,
     quantity: quantity,
-    sku: variant.sku,
+    sku: variant.sku
   }
-})
+});
 
-export const createRemoveLineItemAction = (product: UiCartProduct) => ({
+export const createRemoveLineItemAction = (product: LineItem) => ({
   removeLineItem: {
     lineItemId: product.id,
-    quantity: parseInt(product.qty)
+    quantity: product.quantity
   }
-})
+});
 
-export const createChangeLineItemQuantityAction = (product: UiCartProduct) => ({
+export const createChangeLineItemQuantityAction = (product: LineItem) => ({
   changeLineItemQuantity: {
     lineItemId: product.id,
-    quantity: parseInt(product.qty)
+    quantity: product.quantity
   }
-})
+});
 
 export const setShippingAddressAction = (shippingDetails: AddressInput) => ({
   setShippingAddress: {
@@ -35,10 +34,10 @@ export const setShippingAddressAction = (shippingDetails: AddressInput) => ({
       // state: shippingDetails.state,
       postalCode: shippingDetails.postalCode,
       country: shippingDetails.country,
-      phone: shippingDetails.phone,
+      phone: shippingDetails.phone
     }
   }
-})
+});
 
 export const setShippingMethodAction = (shippingMethodId: string) => ({
   setShippingMethod: {
@@ -46,7 +45,7 @@ export const setShippingMethodAction = (shippingMethodId: string) => ({
       id: shippingMethodId
     }
   }
-})
+});
 
 export const setBillingAddressAction = (shippingDetails: AddressInput) => ({
   setBillingAddress: {
@@ -60,10 +59,10 @@ export const setBillingAddressAction = (shippingDetails: AddressInput) => ({
       // state: shippingDetails.state,
       postalCode: shippingDetails.postalCode,
       country: shippingDetails.country,
-      phone: shippingDetails.phone,
+      phone: shippingDetails.phone
     }
   }
-})
+});
 
 export const addPaymentAction = (paymentMethodId: string) => ({
   addPayment: {
@@ -71,4 +70,4 @@ export const addPaymentAction = (paymentMethodId: string) => ({
       id: paymentMethodId
     }
   }
-})
+});

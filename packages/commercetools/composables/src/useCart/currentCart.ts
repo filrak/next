@@ -1,19 +1,15 @@
-import { getMe, createCart } from '@vue-storefront/commercetools-api'
-import { enhanceProfile, enhanceCart } from './../helpers/internals'
+import { getMe, createCart } from '@vue-storefront/commercetools-api';
 
 const loadCurrentCart = async () => {
-  const profileResponse = await getMe()
+  const profileResponse = await getMe();
 
   if (profileResponse.data.me.activeCart) {
-    const enhancedProfile = enhanceProfile(profileResponse)
-    return enhancedProfile.data.me.activeCart
+    return profileResponse.data.me.activeCart;
   }
 
-  const cartResponse = await createCart()
+  const cartResponse = await createCart();
 
-  const enhancedCart = enhanceCart(cartResponse)
+  return cartResponse.data.cart;
+};
 
-  return enhancedCart.data.cart
-}
-
-export default loadCurrentCart
+export default loadCurrentCart;
