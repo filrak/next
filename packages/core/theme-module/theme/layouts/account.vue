@@ -13,14 +13,12 @@
 </template>
 
 <script>
-import AppHeader from '~/components/AppHeader.vue'
-import BottomNavigation from '~/components/BottomNavigation.vue'
-import TopBar from '~/components/TopBar.vue'
-import Version from '~/components/Version.vue'
-import CartSidebar from '~/components/CartSidebar.vue'
-import LoginModal from '~/components/LoginModal.vue'
-// const CartSidebar = () => import(/* webpackChunkName: "CartSidebar" */ '~/components/CartSidebar.vue')
-// const LoginModal = () => import(/* webpackChunkName: "LoginModal" */ '~/components/LoginModal.vue')
+import AppHeader from '~/components/AppHeader.vue';
+import BottomNavigation from '~/components/BottomNavigation.vue';
+import TopBar from '~/components/TopBar.vue';
+import Version from '~/components/Version.vue';
+import CartSidebar from '~/components/CartSidebar.vue';
+import LoginModal from '~/components/LoginModal.vue';
 
 export default {
   components: {
@@ -30,8 +28,8 @@ export default {
     CartSidebar,
     LoginModal,
     Version
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss">

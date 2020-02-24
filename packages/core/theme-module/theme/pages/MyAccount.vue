@@ -1,104 +1,168 @@
 <template>
-  <div>
+  <div id="my-account">
     <SfBreadcrumbs
-      class="breadcrumbs"
+      class="breadcrumbs desktop-only"
       :breadcrumbs="breadcrumbs"
     />
-    <div class="container">
-      <div class="container__sticky">
-        <SfSticky>
-          <div class="menu">
-            <div class="menu__header">My account</div>
-
-            <div class="menu__heading">Personal details</div>
-            <nuxt-link class="menu__link menu__link--selected" to="/my-account/profile">My profile</nuxt-link>
-            <nuxt-link class="menu__link" to="/my-account/shipping-details">Shipping details</nuxt-link>
-
-            <div class="menu__heading">Order details</div>
-            <nuxt-link class="menu__link" to="/my-account/order-history">Order history</nuxt-link>
-          </div>
-        </SfSticky>
-      </div>
-      <div class="content">
-        <nuxt-child />
-      </div>
-    </div>
+    <SfContentPages
+      title="My Account"
+      :active="activePage"
+      class="my-account"
+      @click:change="changeActivePage"
+    >
+      <SfContentCategory title="Personal Details">
+        <SfContentPage title="My profile">
+          <MyProfile
+            :account="account"
+            @update:personal="account = { ...account, ...$event }"
+            @update:password="account = { ...account, ...$event }"
+          />
+        </SfContentPage>
+        <SfContentPage title="Shipping details">
+          <ShippingDetails
+            :account="account"
+            @update:shipping="account = { ...account, ...$event }"
+          />
+        </SfContentPage>
+        <SfContentPage title="Loyalty card">
+          <LoyaltyCard />
+        </SfContentPage>
+        <SfContentPage title="My newsletter">
+          <MyNewsletter />
+        </SfContentPage>
+      </SfContentCategory>
+      <SfContentCategory title="Order details">
+        <SfContentPage title="Order history">
+          <OrderHistory :account="account" />
+        </SfContentPage>
+        <SfContentPage title="My reviews">
+          <MyReviews />
+        </SfContentPage>
+      </SfContentCategory>
+      <SfContentPage title="Log out" />
+    </SfContentPages>
   </div>
 </template>
-
 <script>
-import { SfSticky, SfBreadcrumbs } from '@storefront-ui/vue'
+import { SfBreadcrumbs, SfContentPages } from '@storefront-ui/vue';
+import MyProfile from './MyAccount/MyProfile';
+import ShippingDetails from './MyAccount/ShippingDetails';
+import LoyaltyCard from './MyAccount/LoyaltyCard';
+import MyNewsletter from './MyAccount/MyNewsletter';
+import OrderHistory from './MyAccount/OrderHistory';
+import MyReviews from './MyAccount/MyReviews';
 
 export default {
-  layout: 'account',
-  components: { SfSticky, SfBreadcrumbs },
-  setup() {
+  name: 'MyAccount',
+  components: {
+    SfBreadcrumbs,
+    SfContentPages,
+    MyProfile,
+    ShippingDetails,
+    LoyaltyCard,
+    MyNewsletter,
+    OrderHistory,
+    MyReviews
+  },
+  data() {
     return {
       breadcrumbs: [
         {
-          text: "Home",
+          text: 'Home',
           route: {
-            link: "#"
+            link: '#'
           }
         },
         {
-          text: "My account",
+          text: 'My Account',
           route: {
-            link: "#"
+            link: '#'
           }
-        },
-      ]
+        }
+      ],
+      account: {
+        firstName: 'Sviatlana',
+        lastName: 'Havaka',
+        email: 'example@email.com',
+        password: 'a*23Et',
+        shipping: [
+          {
+            firstName: 'Sviatlana',
+            lastName: 'Havaka',
+            streetName: 'Zielinskiego',
+            apartment: '24/193A',
+            city: 'Wroclaw',
+            state: 'Lower Silesia',
+            zipCode: '53-540',
+            country: 'Poland',
+            phoneNumber: '(00)560 123 456'
+          },
+          {
+            firstName: 'Sviatlana',
+            lastName: 'Havaka',
+            streetName: 'Zielinskiego',
+            apartment: '20/193A',
+            city: 'Wroclaw',
+            state: 'Lower Silesia',
+            zipCode: '53-603',
+            country: 'Poland',
+            phoneNumber: '(00)560 123 456'
+          }
+        ],
+        orders: [
+          ['#35765', '4th Nov, 2019', 'Visa card', '$12.00', 'In process'],
+          ['#35766', '4th Nov, 2019', 'Paypal', '$12.00', 'Finalised'],
+          ['#35768', '4th Nov, 2019', 'Mastercard', '$12.00', 'Finalised'],
+          ['#35769', '4th Nov, 2019', 'Paypal', '$12.00', 'Finalised']
+        ]
+      }
+    };
+  },
+  computed: {
+    activePage() {
+      const { pageName } = this.$route.params;
+
+      if (pageName) {
+        return (pageName.charAt(0).toUpperCase() + pageName.slice(1)).replace('-', ' ');
+      }
+
+      return 'My profile';
+    }
+  },
+  methods: {
+    changeActivePage(title) {
+      if (title === 'Log out') {
+        return;
+      }
+
+      this.$router.push(`/my-account/${title.toLowerCase().replace(' ', '-')}`);
     }
   }
-}
+};
 </script>
-<style lang="scss" scoped>
-@import "~@storefront-ui/vue/styles";
+<style lang='scss' scoped>
+@import '~@storefront-ui/vue/styles';
 
-.container {
-  display: flex;
-
-  &__sticky {
-    flex: 0 1 350px;
-    background: #f1f2f3;
+@mixin for-desktop {
+  @media screen and (min-width: $desktop-min) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media screen and (max-width: $desktop-min) {
+    @content;
   }
 }
 
-.menu {
-  padding: 40px;
-
-  &__header {
-    font-size: 24px;
-    line-height: 1.39;
-  }
-
-  &__heading  {
-    font-size: 18px;
-    line-height: 1.61;
-    color: #1d1f22;
-    padding: 40px 0 20px;
-  }
-
-  &__link {
-    display: block;
-    font-size: 14px;
-    color: #1d1f22;
-    line-height: 1.64;
-    padding: 5px 0;
-  }
-
-  &::v-deep .nuxt-link-active {
-    font-weight: bold;
-    text-decoration: underline;
+#my-account {
+  box-sizing: border-box;
+  @include for-desktop {
+    max-width: 1240px;
+    margin: 0 auto;
   }
 }
-
-.content {
-  margin-left: 50px;
-  flex: 1;
-}
-
 .breadcrumbs {
-  padding: $spacer-big $spacer-extra-big $spacer-extra-big;
+  padding: var(--spacer-big) var(--spacer-extra-big) var(--spacer-extra-big)
+    var(--spacer-extra-big);
 }
 </style>
