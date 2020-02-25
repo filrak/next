@@ -1,5 +1,5 @@
 import { transformBlock } from './_utils';
-import { PrismicSlice, PrismicMeta, PrismicBlock } from '../types';
+import { PrismicSlice, PrismicMeta } from '../types';
 import { Document } from 'prismic-javascript/d.ts/documents';
 
 export const getPages = (doc: Document | Document[], pageUid?: string): Document | null | Document[] => {
@@ -42,12 +42,18 @@ export const getPageSlugs = (page: Document): string[] => page.slugs;
 
 export const getPageLang = (page: Document): string => page.lang;
 
-export const getBlocks = ({ data }: Document, blockName?: string): string | string[] => {
-  const blockKeys = Object.keys(data || {})
+type ElementNameType = string | string[] | null | undefined;
+
+export const getBlocks = (data: any, blockName?: ElementNameType): string | string[] => {
+  if (typeof data !== 'object' || data === null) {
+    return blockName ? '' : [];
+  }
+
+  const blockKeys = Object.keys(data)
     .filter((key) => key !== 'body')
     .filter((key) => data[key] !== null);
 
-  if (blockName) {
+  if (typeof blockName === 'string') {
     const key = blockKeys.find((blockKey) => blockKey === blockName);
 
     if (key === undefined) {
@@ -57,29 +63,35 @@ export const getBlocks = ({ data }: Document, blockName?: string): string | stri
     return transformBlock(data[key]);
   }
 
-  return blockKeys.map((key) => transformBlock(data[key]));
+  const filteredBlockKeys = Array.isArray(blockName)
+    ? blockKeys.filter((key) => blockName.includes(key))
+    : blockKeys;
+
+  return filteredBlockKeys.map((key) => transformBlock(data[key]));
 };
 
-export const getSlices = ({ data }: Document, sliceType?: string): string[] | Array<string[]> => {
-  const renderSliceElements = (slice: PrismicBlock): string => Object.keys(slice)
-    .filter((key) => slice[key] !== null && Object.keys(slice[key].length !== 0))
-    .map((key) => transformBlock(slice[key]))
-    .join('');
-
+export const getSlices = ({ data }: Document, sliceType?: ElementNameType): any => {
   const slices = data.body as PrismicSlice[];
 
-  if (sliceType) {
-    const foundSlice = slices.find((slice) => slice.slice_type === sliceType);
+  if (typeof sliceType === 'string') {
+    const foundSlices = slices.find((slice) => slice.slice_type === sliceType);
 
-    if (!foundSlice) {
-      return [];
-    }
+    const { primary, items } = foundSlices || { primary: null,
+      items: [] };
 
-    return [foundSlice.primary || {}, ...foundSlice.items].map((item) => renderSliceElements(item));
+    return {
+      primary,
+      items
+    };
   }
 
-  return slices
-    .map((slice) => [slice.primary || {}, ...slice.items]
-      .map((item) => renderSliceElements(item))
-    );
+  const filteredSlices = Array.isArray(sliceType)
+    ? slices.filter((slice) => sliceType.includes(slice.slice_type))
+    : slices;
+
+  return filteredSlices
+    .map(({ primary, items }) => ({
+      primary,
+      items
+    }));
 };
