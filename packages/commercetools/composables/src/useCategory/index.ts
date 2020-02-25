@@ -31,8 +31,9 @@ export default function useCategory(): UseCategory<Category, Search, any, any, a
   const clearFilters = () => {};
 
   const search = async (params: UseCategorySearchParams) => {
+    // loading.value = true;
     categories.value = await persistedResource<Category[]>(loadCategories, params);
-    loading.value = false;
+    // loading.value = false;
   };
 
   return {

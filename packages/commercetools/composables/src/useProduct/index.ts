@@ -35,5 +35,5 @@ export default function useProduct(): UseProduct<ProductVariant, Search> {
     search,
     loading,
     error
-  } as any;
+  };
 }
