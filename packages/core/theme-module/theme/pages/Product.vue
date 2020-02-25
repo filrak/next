@@ -226,7 +226,6 @@ import {
 import InstagramFeed from '~/components/InstagramFeed.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
 import { ref, computed } from '@vue/composition-api';
-
 import { useProduct, useCart } from '<%= options.composables %>';
 import {
   getProductVariants,

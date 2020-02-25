@@ -1,4 +1,5 @@
 import { UseCategory } from '@vue-storefront/interfaces';
+import { persistedResource } from '@vue-storefront/utils';
 import { ref } from '@vue/composition-api';
 import { getCategory, getProduct } from '@vue-storefront/commercetools-api';
 import { enhanceProduct, enhanceCategory } from './../helpers/internals';
@@ -20,8 +21,8 @@ const loadCategories = async (params: UseCategorySearchParams) => {
   return enhancedCategory.data.categories.results;
 };
 
-export default function useCategory(rootState): UseCategory<Category, Search, any, any, any> {
-  const categories = ref(rootState.categories || []);
+export default function useCategory(): UseCategory<Category, Search, any, any, any> {
+  const categories = ref([]);
   const appliedFilters = ref(null);
   const loading = ref(false);
   const error = ref(null);
@@ -30,9 +31,8 @@ export default function useCategory(rootState): UseCategory<Category, Search, an
   const clearFilters = () => {};
 
   const search = async (params: UseCategorySearchParams) => {
-    categories.value = await loadCategories(params);
+    categories.value = await persistedResource<Category[]>(loadCategories, params);
     loading.value = false;
-    rootState.categories = categories.value;
   };
 
   return {

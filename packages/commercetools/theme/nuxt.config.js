@@ -77,7 +77,8 @@ export default {
   },
   buildModules: [
     // to core
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    'pinia/nuxt'
   ],
   modules: [
     ['@vue-storefront/nuxt', {
@@ -85,11 +86,13 @@ export default {
       useRawSource: {
         dev: [
           '@vue-storefront/commercetools-composables',
-          '@vue-storefront/prismic'
+          '@vue-storefront/prismic',
+          '@vue-storefront/utils'
         ],
         prod: [
           '@vue-storefront/commercetools-composables',
-          '@vue-storefront/prismic'
+          '@vue-storefront/prismic',
+          '@vue-storefront/utils'
         ]
       }
     }],
@@ -103,8 +106,7 @@ export default {
   plugins: [
     './plugins/commercetools.js',
     './plugins/prismic.js',
-    './plugins/i18n.js',
-    './plugins/ssr.js'
+    './plugins/i18n.js'
   ],
   build: {
     extend(buildConfig) {

@@ -1,4 +1,5 @@
 import { UseProduct } from '@vue-storefront/interfaces';
+import { persistedResource } from '@vue-storefront/utils';
 import { ref, Ref } from '@vue/composition-api';
 import { getProduct } from '@vue-storefront/commercetools-api';
 import { enhanceProduct } from './../helpers/internals';
@@ -20,12 +21,13 @@ const loadProductVariants = async (params: UseProductSearchParams): Promise<Prod
 };
 
 export default function useProduct(): UseProduct<ProductVariant, Search> {
+
   const products: Ref<ProductVariant[]> = ref([]);
   const loading = ref(false);
   const error = ref(null);
 
   const search = async (params: UseProductSearchParams) => {
-    products.value = await loadProductVariants(params);
+    products.value = await persistedResource<ProductVariant[]>(loadProductVariants, params);
   };
 
   return {
@@ -33,5 +35,5 @@ export default function useProduct(): UseProduct<ProductVariant, Search> {
     search,
     loading,
     error
-  };
+  } as any;
 }

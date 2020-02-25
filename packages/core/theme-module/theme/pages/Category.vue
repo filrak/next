@@ -267,7 +267,7 @@ export default {
       params.slug_1
     );
 
-    const { categories, search, loading } = useCategory(context.rootState);
+    const { categories, search, loading } = useCategory();
 
     search({ slug: lastSlug });
 
