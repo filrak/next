@@ -71,18 +71,17 @@ export const getBlocks = (data: any, blockName?: ElementNameType, transform: Tra
   return filteredBlockKeys.map((key) => transform(data[key]));
 };
 
-export const getSlices = ({ data }: Document, sliceType?: ElementNameType | FilterSlice): any => {
+export const getSlices = ({ data }: Document, sliceType?: ElementNameType | FilterSlice): PrismicSlice | PrismicSlice[] => {
   const slices = data.body as PrismicSlice[];
 
   if (typeof sliceType === 'string') {
-    const foundSlices = slices.find((slice) => slice.slice_type === sliceType);
+    const foundSlice = slices.find((slice) => slice.slice_type === sliceType);
 
-    const { primary, items } = foundSlices || { primary: null,
-      items: [] };
-
-    return {
-      primary,
-      items
+    return foundSlice || {
+      primary: null,
+      items: [],
+      slice_type: '', // eslint-disable-line
+      slice_label: null // eslint-disable-line
     };
   }
 
@@ -90,18 +89,7 @@ export const getSlices = ({ data }: Document, sliceType?: ElementNameType | Filt
     ? slices.filter((slice) => sliceType.includes(slice.slice_type))
     : slices;
 
-  if (typeof sliceType === 'function') {
-    return filteredSlices
-      .filter((slice) => sliceType(slice))
-      .map(({ primary, items }) => ({
-        primary,
-        items
-      }));
-  }
-
-  return filteredSlices
-    .map(({ primary, items }) => ({
-      primary,
-      items
-    }));
+  return typeof sliceType === 'function'
+    ? filteredSlices.filter((slice) => sliceType(slice))
+    : filteredSlices;
 };
