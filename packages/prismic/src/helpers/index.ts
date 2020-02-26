@@ -1,5 +1,5 @@
-import { transformBlock } from './_utils';
-import { PrismicSlice, PrismicMeta } from '../types';
+import { transform as transformFunction } from '../index';
+import { PrismicSlice, PrismicMeta, TransformBlock } from '../types';
 import { Document } from 'prismic-javascript/d.ts/documents';
 
 export const getPages = (doc: Document | Document[], pageUid?: string): Document | null | Document[] => {
@@ -43,8 +43,9 @@ export const getPageSlugs = (page: Document): string[] => page.slugs;
 export const getPageLang = (page: Document): string => page.lang;
 
 type ElementNameType = string | string[] | null | undefined;
+type FilterSlice = (slice: PrismicSlice) => boolean;
 
-export const getBlocks = (data: any, blockName?: ElementNameType): string | string[] => {
+export const getBlocks = (data: any, blockName?: ElementNameType, transform: TransformBlock = transformFunction): string | string[] => {
   if (typeof data !== 'object' || data === null) {
     return blockName ? '' : [];
   }
@@ -60,17 +61,17 @@ export const getBlocks = (data: any, blockName?: ElementNameType): string | stri
       return '';
     }
 
-    return transformBlock(data[key]);
+    return transform(data[key]);
   }
 
   const filteredBlockKeys = Array.isArray(blockName)
     ? blockKeys.filter((key) => blockName.includes(key))
     : blockKeys;
 
-  return filteredBlockKeys.map((key) => transformBlock(data[key]));
+  return filteredBlockKeys.map((key) => transform(data[key]));
 };
 
-export const getSlices = ({ data }: Document, sliceType?: ElementNameType): any => {
+export const getSlices = ({ data }: Document, sliceType?: ElementNameType | FilterSlice): any => {
   const slices = data.body as PrismicSlice[];
 
   if (typeof sliceType === 'string') {
@@ -88,6 +89,15 @@ export const getSlices = ({ data }: Document, sliceType?: ElementNameType): any 
   const filteredSlices = Array.isArray(sliceType)
     ? slices.filter((slice) => sliceType.includes(slice.slice_type))
     : slices;
+
+  if (typeof sliceType === 'function') {
+    return filteredSlices
+      .filter((slice) => sliceType(slice))
+      .map(({ primary, items }) => ({
+        primary,
+        items
+      }));
+  }
 
   return filteredSlices
     .map(({ primary, items }) => ({
