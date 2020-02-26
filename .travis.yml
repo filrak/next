@@ -12,6 +12,8 @@ cache:
     - packages/commercetools/composables/lib
     - packages/commercetools/theme/.nuxt
     - packages/commercetools/theme/node_modules
+    - packages/core/utils/node_modules
+    - packages/core/utils/lib
     - packages/prismic/node_modules
     - packages/prismic/lib
 
