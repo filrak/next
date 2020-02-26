@@ -71,7 +71,13 @@ export const getBlocks = (data: any, blockName?: ElementNameType, transform: Tra
   return filteredBlockKeys.map((key) => transform(data[key]));
 };
 
-export const getSlices = ({ data }: Document, sliceType?: ElementNameType | FilterSlice): PrismicSlice | PrismicSlice[] => {
+type GetSlicesTypes = {
+  (doc: Document, sliceType: string): PrismicSlice;
+  (doc: Document, sliceType: string[] | null | undefined | FilterSlice): PrismicSlice[];
+  (doc: Document): PrismicSlice[];
+};
+
+export const getSlices: GetSlicesTypes = ({ data }: Document, sliceType?: ElementNameType | FilterSlice): any => {
   const slices = data.body as PrismicSlice[];
 
   if (typeof sliceType === 'string') {

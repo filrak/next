@@ -253,6 +253,35 @@ describe('[prismic] usePrismic', () => {
     expect(getBlocks(data, 'sampleElement')).toBe('<p>sample content</p>');
   });
 
+  it('should ignore empty strings in block', async () => {
+    const emptyString = {
+      empty: ''
+    };
+
+    const { getBlocks } = helpers;
+
+    expect(getBlocks(emptyString, 'empty')).toBe('');
+  });
+
+  it('should override getBlocks rendering function', async () => {
+    const { doc, search } = usePrismic();
+
+    createMock(prismicResponseMock);
+
+    await search({});
+
+    const { data } = doc.value[0];
+    const { getBlocks } = helpers;
+
+    const block = getBlocks(data, 'sampleElement', () => 'override');
+    const blocks = getBlocks(data, null, () => 'override');
+
+    expect(block).toBe('override');
+    expect(Array.isArray(blocks)).toBeTruthy();
+    expect(blocks).toHaveLength(1);
+    expect(blocks[0]).toBe('override');
+  });
+
   it('should render collection of slices items', async () => {
     const { doc, search } = usePrismic();
 
@@ -320,6 +349,24 @@ describe('[prismic] usePrismic', () => {
     expect(slices).toHaveLength(1);
     expect(slices[0].primary).toBeNull();
     expect(slices[0].items).toHaveLength(3);
+  });
+
+  it('should use filtering function when provided', async () => {
+    const { doc, search } = usePrismic();
+
+    createMock(prismicResponseMock);
+
+    await search({});
+
+    const page = doc.value[0];
+
+    const { getSlices } = helpers;
+
+    const slices = getSlices(page, (slice) => slice.slice_type !== 'list-slice');
+
+    expect(Array.isArray(slices)).toBeTruthy();
+    expect(slices).toHaveLength(1);
+    expect(slices[0].slice_type).toBe('grid-slice');
   });
 
   it('should return empty collection if slice not found', async () => {
