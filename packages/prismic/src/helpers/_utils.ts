@@ -39,7 +39,7 @@ const getElement = (block: PrismicBlock | number | string): PrismicBlock | Prism
     spans: [] }];
 };
 
-const transformBlock = (block: TransformBlock<PrismicBlock | PrismicBlock[] | number | string>): string => {
+const transformBlock: TransformBlock<PrismicBlock | PrismicBlock[] | number | string> = (block): string => {
   const blockType = getType(block);
   const element = getElement(block) as PrismicBlock;
 
