@@ -1,5 +1,3 @@
-import { persistedResource } from './ssr';
+import usePersistedState from './ssr';
 
-export {
-  persistedResource
-};
+export { usePersistedState };

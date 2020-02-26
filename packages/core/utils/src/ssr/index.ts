@@ -1,34 +1,40 @@
-import { createStore } from 'pinia';
-import { onServerPrefetch } from '@vue/composition-api';
+import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
 
 type ResourceFunction<T> = (params: any) => Promise<T>
 
-const hashObject = (obj: any): string => {
-  const hashNumber = JSON.stringify(obj)
-    .split('')
-    .reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0);
-
-      return a & a;
-    }, 0);
-
-  return (hashNumber < 0 ? hashNumber >>> 0 : hashNumber).toString(16);
-};
-
-const persistedResource = <T>(fn: ResourceFunction<T>, params: any): Promise<T> => new Promise((resolve) => {
-  const store = createStore({ id: hashObject(params) });
-  const handleRequest = () => fn(params).then((res) => {
-    (store as any).state = res;
-    resolve((store as any).state);
-  });
-
-  // @ts-ignore
-  if (typeof window === 'undefined') {
-    onServerPrefetch(() => handleRequest());
-    return;
+const getRootState = (vm) => {
+  if (vm.$isServer) {
+    return vm.$ssrContext.nuxt.vsfState || {};
   }
 
-  handleRequest();
-});
+  // @ts-ignore
+  return window.__VSF_STATE__ || {};
+};
 
-export { persistedResource };
+const usePersistedState = (id: string) => {
+  const vm = getCurrentInstance() as any;
+  const isServer = vm.$isServer;
+
+  if (isServer && !vm.$ssrContext.nuxt.vsfState) {
+    vm.$ssrContext.nuxt.vsfState = {};
+  }
+
+  const persistedResource = async <T>(fn: ResourceFunction<T>, params: any) => new Promise((resolve) => {
+    onServerPrefetch(() => fn(params).then(((result) => {
+      vm.$ssrContext.nuxt.vsfState[id] = result;
+
+      resolve(result);
+    })));
+
+    if (!isServer) {
+      fn(params).then(resolve);
+    }
+  });
+
+  return {
+    persistedResource,
+    state: getRootState(vm)[id]
+  };
+};
+
+export default usePersistedState;

@@ -241,7 +241,7 @@ export default {
   setup(props, context) {
     const qty = ref(1);
     const { slug } = context.root.$route.params;
-    const { products, search } = useProduct();
+    const { products, search } = useProduct('product-page');
     const { addToCart, loading } = useCart();
 
     search({ slug });

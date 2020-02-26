@@ -13,7 +13,6 @@
   "dependencies": {
     "@vue/composition-api": "^0.4.0",
     "add": "^2.0.6",
-    "pinia": "^0.0.5",
     "vue": "^2.6.11",
     "yarn": "^1.22.0"
   },
