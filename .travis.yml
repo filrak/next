@@ -34,25 +34,25 @@ jobs:
 
     - stage: test commercetools
       script: yarn test:ct:api-client --coverage
-      name: Test commercetools api-client
+      name: Test api-client
       after_script:
         - cat ./packages/commercetools/api-client/coverage/lcov.info | coveralls
 
     - stage: test commercetools
       script: yarn test:ct:composables --coverage
-      name: Test commercetools composables
+      name: Test composables
       after_script:
         - cat ./packages/commercetools/composables/coverage/lcov.info | coveralls
 
     - stage: test commercetools
       script: yarn test:ct:helpers --coverage
-      name: Test commercetools helpers
+      name: Test helpers
       after_script:
         - cat ./packages/commercetools/helpers/coverage/lcov.info | coveralls
 
     - stage: test core
       script: yarn test:core:utils --coverage
-      name: Test core utils
+      name: Test utils
       after_script:
         - cat ./packages/core/utils/coverage/lcov.info | coveralls
 
