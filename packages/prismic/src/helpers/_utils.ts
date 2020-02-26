@@ -2,6 +2,10 @@ import PrismicDOM from 'prismic-dom';
 import { PrismicBlockType, PrismicBlock, TransformBlock } from 'src/types';
 
 const getType = (block: PrismicBlock | number | string | PrismicBlock[]): PrismicBlockType | undefined => {
+  if (!block) {
+    return undefined;
+  }
+
   if (typeof block === 'string' || typeof block === 'number') {
     return 'text';
   }
