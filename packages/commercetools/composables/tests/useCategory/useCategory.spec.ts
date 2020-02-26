@@ -1,4 +1,5 @@
 import useCategory from './../../src/useCategory';
+import { usePersistedState } from '@vue-storefront/utils';
 
 const product = (name, slug, id) => ({
   masterData: {
@@ -46,8 +47,9 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
 
 describe('[commercetools-composables] useCategory', () => {
   it('returns category response with the products inside', async () => {
-    const { search, categories } = useCategory();
+    const { search, categories, loading } = useCategory('test-use-category');
 
+    expect(loading.value).toBeFalsy();
     await search({ slug: 'category-slug' });
 
     expect(categories.value).toEqual([
@@ -109,16 +111,30 @@ describe('[commercetools-composables] useCategory', () => {
         id: 'fcd',
         name: 'cat3' }
     ]);
+
+    expect(loading.value).toBeFalsy();
+  });
+
+  it('does not trigger loading when there are categories', () => {
+    (usePersistedState as any).mockImplementation(() => ({
+      state: [1],
+      persistedResource: async (fn, params) => fn(params)
+    }));
+
+    const { search, loading } = useCategory('test-use-category');
+    expect(loading.value).toBeFalsy();
+    search({ slug: 'category-slug' });
+    expect(loading.value).toBeFalsy();
   });
 
   it.skip('applies filter', async () => {
-    const { applyFilter } = useCategory();
+    const { applyFilter } = useCategory('test-use-category');
 
     applyFilter();
   });
 
   it.skip('clear filters', async () => {
-    const { clearFilters } = useCategory();
+    const { clearFilters } = useCategory('test-use-category');
 
     clearFilters();
   });

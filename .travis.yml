@@ -32,25 +32,31 @@ jobs:
       script:
       - yarn build:prismic && yarn build:ct
 
-    - stage: test
+    - stage: test-commercetools
       script: yarn test:ct:api-client --coverage
       name: Test commercetools api-client
       after_script:
         - cat ./packages/commercetools/api-client/coverage/lcov.info | coveralls
 
-    - stage: test
+    - stage: test-commercetools
       script: yarn test:ct:composables --coverage
       name: Test commercetools composables
       after_script:
         - cat ./packages/commercetools/composables/coverage/lcov.info | coveralls
 
-    - stage: test
+    - stage: test-commercetools
       script: yarn test:ct:helpers --coverage
       name: Test commercetools helpers
       after_script:
         - cat ./packages/commercetools/helpers/coverage/lcov.info | coveralls
 
-    - stage: test
+    - stage: test-core
+      script: yarn test:core:utils --coverage
+      name: Test core utils
+      after_script:
+        - cat ./packages/core/utils/coverage/lcov.info | coveralls
+
+    - stage: test-prismic
       script: yarn test:prismic --coverage
       name: Test prismic
       after_script:

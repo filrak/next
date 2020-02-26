@@ -12,8 +12,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "chokidar": "^3.3.1",
-    "consola": "^2.10.1",
-    "pinia": "^0.0.5"
+    "consola": "^2.10.1"
   },
   "publishConfig": {
     "access": "public"

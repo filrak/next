@@ -29,7 +29,7 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
 
 describe('[commercetools-composables] useProduct', () => {
   it('returns product response', async () => {
-    const { search, products } = useProduct();
+    const { search, products } = useProduct('test-use-product');
 
     await search({ slug: 'product-slug' });
 
