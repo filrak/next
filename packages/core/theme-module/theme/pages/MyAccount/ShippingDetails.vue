@@ -10,82 +10,115 @@
         <p class="message">
           Keep your addresses and contact details updated.
         </p>
-        <div class="form">
-          <SfInput
-            v-model="firstName"
-            name="firstName"
-            label="First Name"
-            required
-            class="form__element form__element--half"
-          />
-          <SfInput
-            v-model="lastName"
-            name="lastName"
-            label="Last Name"
-            required
-            class="form__element form__element--half form__element--half-even"
-          />
-          <SfInput
-            v-model="streetName"
-            name="streetName"
-            label="Street Name"
-            required
-            class="form__element"
-          />
-          <SfInput
-            v-model="apartment"
-            name="apartment"
-            label="House/Apartment number"
-            required
-            class="form__element"
-          />
-          <SfInput
-            v-model="city"
-            name="city"
-            label="City"
-            required
-            class="form__element form__element--half"
-          />
-          <SfInput
-            v-model="state"
-            name="state"
-            label="State/Province"
-            required
-            class="form__element form__element--half form__element--half-even"
-          />
-          <SfInput
-            v-model="zipCode"
-            name="zipCode"
-            label="Zip-code"
-            required
-            class="form__element form__element--half"
-          />
-          <SfSelect
-            v-model="country"
-            name="country"
-            label="Country"
-            required
-            class="sf-select--underlined form__select form__element form__element--half form__element--half-even"
-          >
-            <SfSelectOption
-              v-for="countryOption in countries"
-              :key="countryOption"
-              :value="countryOption"
-            >
-              {{ countryOption }}
-            </SfSelectOption>
-          </SfSelect>
-          <SfInput
-            v-model="phoneNumber"
-            name="phone"
-            label="Phone number"
-            required
-            class="form__element"
-          />
-          <SfButton class="form__button" @click="updateAddress"
-            >Update the address</SfButton
-          >
-        </div>
+
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form class="form" @submit.prevent="handleSubmit(updateAddress)">
+            <ValidationProvider rules="required|min:2" v-slot="{ errors }">
+              <SfInput
+                v-model="firstName"
+                name="firstName"
+                label="First Name"
+                required
+                class="form__element form__element--half"
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+            <ValidationProvider rules="required|min:2" v-slot="{ errors }">
+              <SfInput
+                v-model="lastName"
+                name="lastName"
+                label="Last Name"
+                required
+                class="form__element form__element--half form__element--half-even"
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+            <ValidationProvider rules="required|min:5" v-slot="{ errors }">
+              <SfInput
+                v-model="streetName"
+                name="streetName"
+                label="Street Name"
+                required
+                class="form__element"
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+            <SfInput
+              v-model="apartment"
+              name="apartment"
+              label="House/Apartment number"
+              required
+              class="form__element"
+            />
+            <ValidationProvider rules="required|min:2" v-slot="{ errors }">
+              <SfInput
+                v-model="city"
+                name="city"
+                label="City"
+                required
+                class="form__element form__element--half"
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+            <ValidationProvider rules="required|min:2" v-slot="{ errors }">
+            <SfInput
+                v-model="state"
+                name="state"
+                label="State/Province"
+                required
+                class="form__element form__element--half form__element--half-even"
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+            <ValidationProvider rules="required|min:4" v-slot="{ errors }">
+              <SfInput
+                v-model="zipCode"
+                name="zipCode"
+                label="Zip-code"
+                required
+                class="form__element form__element--half"
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+            <ValidationProvider :rules="`required|oneOf:${countries.join(',')}`" v-slot="{ errors }">
+              <SfSelect
+                v-model="country"
+                name="country"
+                label="Country"
+                required
+                class="sf-select--underlined form__select form__element form__element--half form__element--half-even"
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              >
+                <SfSelectOption
+                  v-for="countryOption in countries"
+                  :key="countryOption"
+                  :value="countryOption"
+                >
+                  {{ countryOption }}
+                </SfSelectOption>
+              </SfSelect>
+            </ValidationProvider>
+            <ValidationProvider rules="required|min:8" v-slot="{ errors }">
+            <SfInput
+              v-model="phoneNumber"
+              name="phone"
+              label="Phone number"
+              required
+              class="form__element"
+              :valid="!errors[0]"
+              :errorMessage="errors[0]"
+            />
+            </ValidationProvider>
+            <SfButton class="form__button">Update the address</SfButton>
+          </form>
+        </ValidationObserver>
       </SfTab>
     </SfTabs>
     <SfTabs v-else key="address-list" :open-tab="1" class="tab-orphan">
@@ -148,6 +181,24 @@ import {
   SfSelect,
   SfIcon
 } from '@storefront-ui/vue';
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
+import { required, min, oneOf } from 'vee-validate/dist/rules';
+
+extend('required', {
+  ...required,
+  message: 'This field is required'
+});
+
+extend('min', {
+  ...min,
+  message: 'The field should have at least {length} characters'
+});
+
+extend('oneOf', {
+  ...oneOf,
+  message: 'Invalid country'
+});
+
 export default {
   name: 'ShippingDetails',
   components: {
@@ -155,7 +206,9 @@ export default {
     SfInput,
     SfButton,
     SfSelect,
-    SfIcon
+    SfIcon,
+    ValidationProvider,
+    ValidationObserver
   },
   props: {
     account: {
