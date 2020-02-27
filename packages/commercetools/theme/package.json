@@ -23,7 +23,6 @@
     "core-js": "^2.6.5",
     "nuxt": "^2.10.2",
     "nuxt-i18n": "^6.5.0",
-    "pinia": "^0.0.5",
     "vee-validate": "^3.2.3"
   },
   "devDependencies": {

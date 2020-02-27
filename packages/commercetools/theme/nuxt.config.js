@@ -41,8 +41,7 @@ export default {
   },
   buildModules: [
     // to core
-    '@nuxt/typescript-build',
-    'pinia/nuxt'
+    '@nuxt/typescript-build'
   ],
   modules: [
     ['@vue-storefront/nuxt', {

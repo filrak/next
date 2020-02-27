@@ -15,7 +15,7 @@ const loadCategories = async (params) => {
   return enhancedCategory.data.categories.results;
 };
 
-export default function useCategory(id): UseCategory<Category, any, any> {
+export default function useCategory(id: string): UseCategory<Category, any, any> {
   const { state, persistedResource } = usePersistedState(id);
   const categories: Ref<Category[]> = ref(state || []);
   const appliedFilters = ref(null);
