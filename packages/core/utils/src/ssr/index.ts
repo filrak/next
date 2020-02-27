@@ -19,7 +19,7 @@ const usePersistedState = (id: string) => {
     vm.$ssrContext.nuxt.vsfState = {};
   }
 
-  const persistedResource = async <T>(fn: ResourceFunction<T>, params: any) => new Promise((resolve) => {
+  const persistedResource = async <T>(fn: ResourceFunction<T>, params: any): Promise<T> => new Promise((resolve) => {
     onServerPrefetch(() => fn(params).then(((result) => {
       vm.$ssrContext.nuxt.vsfState[id] = result;
 

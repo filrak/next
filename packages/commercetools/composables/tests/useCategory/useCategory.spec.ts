@@ -46,6 +46,15 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
 }));
 
 describe('[commercetools-composables] useCategory', () => {
+  it('creates properties', () => {
+    const { categories, appliedFilters, loading, error } = useCategory('test-category');
+
+    expect(categories.value).toEqual([]);
+    expect(appliedFilters.value).toEqual(null);
+    expect(loading.value).toEqual(false);
+    expect(error.value).toEqual(null);
+  });
+
   it('returns category response with the products inside', async () => {
     const { search, categories, loading } = useCategory('test-use-category');
 
