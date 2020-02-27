@@ -18,7 +18,6 @@ import updateShippingDetails from './api/updateShippingDetails';
 import customerSignMeUp from './api/customerSignMeUp';
 import customerSignMeIn from './api/customerSignMeIn';
 import customerSignOut from './api/customerSignOut';
-import getStorage from './helpers/createCommerceToolsLink/getStorage';
 
 let apolloClient: ApolloClient<any> = null;
 let locale = 'en';
@@ -30,7 +29,8 @@ let locales = [];
 let cookies = {
   currencyCookieName: 'vsf-currency',
   countryCookieName: 'vsf-country',
-  localeCookieName: 'vsf-locale'
+  localeCookieName: 'vsf-locale',
+  tokenCookieName: 'vsf-token'
 };
 
 const setup = <TCacheShape>(setupConfig: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
@@ -53,9 +53,19 @@ const setup = <TCacheShape>(setupConfig: SetupConfig<TCacheShape>): ApolloClient
   return apolloClient;
 };
 
+const tokenChangeListeners = [];
+
+const onTokenChange = (fn: (token) => void): void => {
+  tokenChangeListeners.push(fn);
+};
+
+const tokenChanged = (newToken) => tokenChangeListeners.forEach(fn => fn(newToken));
+
 export {
   apolloClient,
   setup,
+  onTokenChange,
+  tokenChanged,
   cookies,
   locale,
   locales,
@@ -63,7 +73,6 @@ export {
   currency,
   countries,
   currencies,
-  getStorage,
   getProduct,
   getCategory,
   createCart,

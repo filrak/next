@@ -1,7 +1,7 @@
 import webpack from 'webpack';
-import { config } from './plugins/commercetools.js';
+import { config } from './config.js';
 
-const localeNames = config.locales.map((l) => l.name);
+const localeNames = config.locales.map(l => l.name);
 
 export default {
   mode: 'universal',
@@ -39,11 +39,14 @@ export default {
       });
     }
   },
+  plugins: [
+    './plugins/api-client.js',
+    './plugins/prismic.js',
+    './plugins/i18n.js'
+  ],
   buildModules: [
     // to core
-    '@nuxt/typescript-build'
-  ],
-  modules: [
+    '@nuxt/typescript-build',
     ['@vue-storefront/nuxt', {
       coreDevelopment: true,
       useRawSource: {
@@ -63,13 +66,11 @@ export default {
       apiClient: '@vue-storefront/commercetools-api',
       composables: '@vue-storefront/commercetools-composables',
       helpers: '@vue-storefront/commercetools-helpers'
-    }],
-    'nuxt-i18n'
+    }]
   ],
-  plugins: [
-    './plugins/commercetools.js',
-    './plugins/prismic.js',
-    './plugins/i18n.js'
+  modules: [
+    'nuxt-i18n',
+    'cookie-universal-nuxt'
   ],
   build: {
     transpile: [

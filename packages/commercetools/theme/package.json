@@ -20,6 +20,7 @@
     "@vue-storefront/nuxt": "^0.0.3",
     "@vue-storefront/nuxt-theme": "^0.0.1",
     "@vue-storefront/prismic": "^0.0.1",
+    "cookie-universal-nuxt": "^2.1.2",
     "core-js": "^2.6.5",
     "nuxt": "^2.10.2",
     "nuxt-i18n": "^6.5.0",

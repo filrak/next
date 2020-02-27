@@ -1,5 +1,3 @@
-import { setup } from '@vue-storefront/commercetools-api';
-
 export const config = {
   api: {
     uri: 'https://api.commercetools.com/vsf-ct-dev/graphql',
@@ -45,7 +43,6 @@ export const config = {
   cookies: {
     currencyCookieName: 'vsf-currency',
     countryCookieName: 'vsf-country',
-    localeCookieName: 'vsf-locale'
+    localeCookieName: 'vsf-locale',
+    tokenCookieName: 'vsf-token'
   }};
-
-setup(config);
