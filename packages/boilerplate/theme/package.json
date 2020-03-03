@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate-theme",
+  "name": "@vue-storefront/boilerplate-theme",
   "description": "My breathtaking Nuxt.js project",
   "author": "Filip Rakowski",
   "version": "0.0.3",
@@ -13,14 +13,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@storefront-ui/shared": "^0.6.1",
-    "@storefront-ui/vue": "^0.6.1",
+    "@storefront-ui/vue": "^0.5.1",
     "@vue-storefront/boilerplate-api": "^0.0.1",
     "@vue-storefront/boilerplate-composables": "^0.0.1",
     "@vue-storefront/boilerplate-helpers": "^0.0.1",
     "@vue-storefront/nuxt": "^0.0.3",
     "@vue-storefront/nuxt-theme": "^0.0.1",
-    "@vue/composition-api": "^0.4.0",
     "core-js": "^2.6.5",
     "nuxt": "^2.10.2",
     "vee-validate": "^3.2.5"

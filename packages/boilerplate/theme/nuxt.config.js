@@ -16,15 +16,7 @@ export default {
     ]
   },
   loading: { color: '#fff' },
-  router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        name: 'product',
-        path: '/product',
-        component: resolve(__dirname, 'pages/Product.vue')
-      });
-    }
-  },
+  router: {},
   buildModules: ['@nuxt/typescript-build'],
   modules: [
     ['@vue-storefront/nuxt', {

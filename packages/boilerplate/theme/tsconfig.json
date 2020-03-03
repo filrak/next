@@ -22,11 +22,7 @@
         "./*"
       ]
     },
-    "types": [
-      "@types/node",
-      "@nuxt/types",
-      "nuxt-i18n"
-    ]
+    "types": []
   },
   "exclude": [
     "node_modules"
