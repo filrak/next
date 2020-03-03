@@ -1,4 +1,4 @@
-import { setup } from '@vue-storefront/about-you-api';
+import { setup } from '@vue-storefront/boilerplate-api';
 
 const config = {};
 setup(config);
