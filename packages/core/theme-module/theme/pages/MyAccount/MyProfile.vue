@@ -7,36 +7,35 @@
       </p>
       <ValidationObserver v-slot="{ handleSubmit }">
         <form class="form" @submit.prevent="handleSubmit(updatePersonal)">
-          <ValidationProvider rules="required|min:2" v-slot="{ errors }">
-            <SfInput
-              v-model="firstName"
-              name="firstName"
-              label="First Name"
-              required
-              class="form__element form__element--half"
-              :valid="!errors[0]"
-              :errorMessage="errors[0]"
-            />
-          </ValidationProvider>
-          <ValidationProvider rules="required|min:2" v-slot="{ errors }">
-            <SfInput
-              v-model="lastName"
-              name="lastName"
-              label="Last Name"
-              required
-              class="form__element form__element--half form__element--half-even"
-              :valid="!errors[0]"
-              :errorMessage="errors[0]"
-            />
-          </ValidationProvider>
-          <ValidationProvider rules="required|email" v-slot="{ errors }">
+          <div class="form__horizontal">
+            <ValidationProvider rules="required|min:2" v-slot="{ errors }" class="form__element">
+              <SfInput
+                v-model="firstName"
+                name="firstName"
+                label="First Name"
+                required
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+            <ValidationProvider rules="required|min:2" v-slot="{ errors }" class="form__element">
+              <SfInput
+                v-model="lastName"
+                name="lastName"
+                label="Last Name"
+                required
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+          </div>
+          <ValidationProvider rules="required|email" v-slot="{ errors }" class="form__element">
             <SfInput
               v-model="email"
               type="email"
               name="email"
               label="Your e-mail"
               required
-              class="form__element"
               :valid="!errors[0]"
               :errorMessage="errors[0]"
             />
@@ -59,42 +58,41 @@
       </p>
       <ValidationObserver v-slot="{ handleSubmit }">
         <form class="form" @submit.prevent="handleSubmit(updatePassword)">
-          <ValidationProvider rules="required" v-slot="{ errors }" vid="password">
+          <ValidationProvider rules="required" v-slot="{ errors }" vid="password" class="form__element">
             <SfInput
               v-model="currentPassword"
               type="password"
               name="currentPassword"
               label="Current Password"
               required
-              class="form__element"
               :valid="!errors[0]"
               :errorMessage="errors[0]"
             />
           </ValidationProvider>
-          <ValidationProvider rules="required|password" v-slot="{ errors }" vid="password">
-            <SfInput
-              v-model="newPassword"
-              type="password"
-              name="newPassword"
-              label="New Password"
-              required
-              class="form__element form__element--half"
-              :valid="!errors[0]"
-              :errorMessage="errors[0]"
-            />
-          </ValidationProvider>
-          <ValidationProvider rules="required|confirmed:password" v-slot="{ errors }">
-            <SfInput
-              v-model="repeatPassword"
-              type="password"
-              name="repeatPassword"
-              label="Repeat Password"
-              required
-              class="form__element form__element--half form__element--half-even"
-              :valid="!errors[0]"
-              :errorMessage="errors[0]"
-            />
-          </ValidationProvider>
+          <div class="form__horizontal">
+            <ValidationProvider rules="required|password" v-slot="{ errors }" vid="password" class="form__element">
+              <SfInput
+                v-model="newPassword"
+                type="password"
+                name="newPassword"
+                label="New Password"
+                required
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+            <ValidationProvider rules="required|confirmed:password" v-slot="{ errors }" class="form__element">
+              <SfInput
+                v-model="repeatPassword"
+                type="password"
+                name="repeatPassword"
+                label="Repeat Password"
+                required
+                :valid="!errors[0]"
+                :errorMessage="errors[0]"
+              />
+            </ValidationProvider>
+          </div>
           <SfButton class="form__button">Update password</SfButton>
         </form>
       </ValidationObserver>
@@ -191,32 +189,33 @@ export default {
     @content;
   }
 }
+
 .form {
-  @include for-desktop {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
   &__element {
+    display: block;
     margin-bottom: $spacer-extra-big;
-    @include for-desktop {
-      flex: 0 0 100%;
-    }
-    &--half {
-      @include for-desktop {
-        flex: 1 1 50%;
-      }
-      &-even {
-        @include for-desktop {
-          padding-left: $spacer-extra-big;
-        }
-      }
-    }
   }
+
   &__button {
-    width: 100%;
+    display: block;
+  }
+
+  &__horizontal {
     @include for-desktop {
-      width: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .form__element {
+      @include for-desktop {
+        flex: 1;
+        margin-right: $spacer-extra-big;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }
