@@ -1,0 +1,322 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.7.8",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "@vue-storefront/docs!",
+  "docComment": "",
+  "name": "@vue-storefront/docs",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "@vue-storefront/docs!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Function",
+          "canonicalReference": "@vue-storefront/docs!useCart:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export default function useCart(): "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseCart",
+              "canonicalReference": "@vue-storefront/docs!~UseCart:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "useCart"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@vue-storefront/docs!useCategory:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export default function useCategory(id: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseCategory",
+              "canonicalReference": "@vue-storefront/interfaces!UseCategory:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Category",
+              "canonicalReference": "@vue-storefront/docs!Category:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", any, any>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "id",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "useCategory"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@vue-storefront/docs!useCheckout:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export default function useCheckout(): "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseCheckout",
+              "canonicalReference": "@vue-storefront/interfaces!UseCheckout:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<any, any, any, any, any, any, any, any>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "useCheckout"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@vue-storefront/docs!useLocale:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export default function useLocale(): "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseLocale",
+              "canonicalReference": "@vue-storefront/interfaces!UseLocale:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Locale",
+              "canonicalReference": "@vue-storefront/docs!~Locale:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Country",
+              "canonicalReference": "@vue-storefront/docs!~Country:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "Currency",
+              "canonicalReference": "@vue-storefront/docs!~Currency:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "AvailableLocales",
+              "canonicalReference": "@vue-storefront/docs!~AvailableLocales:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "AvailableCountries",
+              "canonicalReference": "@vue-storefront/docs!~AvailableCountries:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "AvailableCurrencies",
+              "canonicalReference": "@vue-storefront/docs!~AvailableCurrencies:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 15
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "useLocale"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@vue-storefront/docs!useProduct:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export default function useProduct(id: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseProduct",
+              "canonicalReference": "@vue-storefront/interfaces!UseProduct:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ProductVariant",
+              "canonicalReference": "@vue-storefront/docs!ProductVariant:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "id",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "useProduct"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@vue-storefront/docs!useUser:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export default function useUser(): "
+            },
+            {
+              "kind": "Reference",
+              "text": "UseUser",
+              "canonicalReference": "@vue-storefront/interfaces!UseUser:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Customer",
+              "canonicalReference": "@vue-storefront/commercetools-api!Customer:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "useUser"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.7.8",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "@vue-storefront/docs!",
+  "docComment": "",
+  "name": "@vue-storefront/docs",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "@vue-storefront/docs!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!addCoupon:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "addCoupon: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "addCouponApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "addCoupon",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!addToCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "addToCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "addToCartApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "addToCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!api:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "api: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "api",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!clearCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "clearCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "clearCartApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "clearCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getCategory:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getCategory: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "getCategoryApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getCategory",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getProduct:var",
+          "docComment": "/**\n * just because you can't simply do \"export x as y...\"\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getProduct: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "getProductApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getProduct",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getUser:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getUser: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "getUserApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getUser",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@vue-storefront/docs!override:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "declare function override(overrides: "
+            },
+            {
+              "kind": "Content",
+              "text": "any"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "overrides",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "override"
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!placeOrder:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "placeOrder: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "placeOrderApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "placeOrder",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!removeCoupon:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "removeCoupon: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "removeCouponApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "removeCoupon",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!removeFromCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "removeFromCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "typeof "
+            },
+            {
+              "kind": "Reference",
+              "text": "removeFromCartApi",
+              "canonicalReference": "@vue-storefront/docs!default:function"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "removeFromCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@vue-storefront/docs!setup:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "declare function setup(): "
+            },
+            {
+              "kind": "Content",
+              "text": "void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [],
+          "name": "setup"
+        }
+      ]
+    }
+  ]
+}

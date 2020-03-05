@@ -1,0 +1,1238 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.7.8",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "@vue-storefront/docs!",
+  "docComment": "",
+  "name": "@vue-storefront/docs",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "@vue-storefront/docs!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!addToCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "addToCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "(cart: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Cart",
+              "canonicalReference": "@vue-storefront/docs!Cart:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", product: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ProductVariant",
+              "canonicalReference": "@vue-storefront/docs!ProductVariant:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", quantity: number) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "CartResponse",
+              "canonicalReference": "@vue-storefront/docs!CartResponse:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "addToCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!apolloClient:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "apolloClient: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloClient",
+              "canonicalReference": "apollo-client!default:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<any>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "apolloClient",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!cookies:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "cookies: "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    currencyCookieName: string;\n    countryCookieName: string;\n    localeCookieName: string;\n}"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "cookies",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!countries:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "countries: "
+            },
+            {
+              "kind": "Content",
+              "text": "any[]"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "countries",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!country:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "country: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "country",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!createCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "createCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "(cartDraft?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CartData",
+              "canonicalReference": "@vue-storefront/docs!~CartData:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<import(\"apollo-link\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "FetchResult",
+              "canonicalReference": "apollo-link!FetchResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"cart\", import(\"../../types/GraphQL\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Cart",
+              "canonicalReference": "@vue-storefront/docs!Cart:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, any>, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, any>>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "createCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 16
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!createMyOrderFromCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "createMyOrderFromCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "(draft: "
+            },
+            {
+              "kind": "Reference",
+              "text": "OrderMyCartCommand",
+              "canonicalReference": "@vue-storefront/docs!OrderMyCartCommand:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<import(\"apollo-link\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "FetchResult",
+              "canonicalReference": "apollo-link!FetchResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"order\", import(\"../../types/GraphQL\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Order",
+              "canonicalReference": "@vue-storefront/docs!Order:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, any>, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, any>>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "createMyOrderFromCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 16
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!currencies:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "currencies: "
+            },
+            {
+              "kind": "Content",
+              "text": "any[]"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "currencies",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!currency:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "currency: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "currency",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!customerSignMeIn:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "customerSignMeIn: "
+            },
+            {
+              "kind": "Content",
+              "text": "(draft: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CustomerSignMeInDraft",
+              "canonicalReference": "@vue-storefront/docs!CustomerSignMeInDraft:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<import(\"apollo-client\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloQueryResult",
+              "canonicalReference": "apollo-client!ApolloQueryResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"user\", import(\"../../types/GraphQL\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CustomerSignInResult",
+              "canonicalReference": "@vue-storefront/docs!CustomerSignInResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "customerSignMeIn",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 12
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!customerSignMeUp:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "customerSignMeUp: "
+            },
+            {
+              "kind": "Content",
+              "text": "(draft: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CustomerSignMeUpDraft",
+              "canonicalReference": "@vue-storefront/docs!CustomerSignMeUpDraft:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<import(\"apollo-client\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloQueryResult",
+              "canonicalReference": "apollo-client!ApolloQueryResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"user\", import(\"../../types/GraphQL\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CustomerSignInResult",
+              "canonicalReference": "@vue-storefront/docs!CustomerSignInResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "customerSignMeUp",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 12
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!customerSignOut:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "customerSignOut: "
+            },
+            {
+              "kind": "Content",
+              "text": "() => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<void>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "customerSignOut",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "(cartId: string) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<import(\"apollo-client\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloQueryResult",
+              "canonicalReference": "apollo-client!ApolloQueryResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"cart\", import(\"../../types/GraphQL\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Cart",
+              "canonicalReference": "@vue-storefront/docs!Cart:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getCategory:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getCategory: "
+            },
+            {
+              "kind": "Content",
+              "text": "(search?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CategorySearch",
+              "canonicalReference": "@vue-storefront/docs!CategorySearch:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloQueryResult",
+              "canonicalReference": "apollo-client!ApolloQueryResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "CategoryData",
+              "canonicalReference": "@vue-storefront/docs!~CategoryData:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getCategory",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getMe:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getMe: "
+            },
+            {
+              "kind": "Content",
+              "text": "(options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Options",
+              "canonicalReference": "@vue-storefront/docs!~Options:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<import(\"apollo-client\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloQueryResult",
+              "canonicalReference": "apollo-client!ApolloQueryResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"me\", import(\"../../types/GraphQL\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Me",
+              "canonicalReference": "@vue-storefront/docs!Me:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getMe",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 12
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getProduct:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getProduct: "
+            },
+            {
+              "kind": "Content",
+              "text": "(search: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ProductSearch",
+              "canonicalReference": "@vue-storefront/docs!ProductSearch:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloQueryResult",
+              "canonicalReference": "apollo-client!ApolloQueryResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ProductData",
+              "canonicalReference": "@vue-storefront/docs!~ProductData:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getProduct",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getShippingMethods:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getShippingMethods: "
+            },
+            {
+              "kind": "Content",
+              "text": "() => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloQueryResult",
+              "canonicalReference": "apollo-client!ApolloQueryResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ShippingMethodData",
+              "canonicalReference": "@vue-storefront/docs!~ShippingMethodData:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getShippingMethods",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!getStorage:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "getStorage: "
+            },
+            {
+              "kind": "Content",
+              "text": "() => any"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "getStorage",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!locale:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "locale: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "locale",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!locales:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "locales: "
+            },
+            {
+              "kind": "Content",
+              "text": "any[]"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "locales",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!placeOrder:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "placeOrder: "
+            },
+            {
+              "kind": "Content",
+              "text": "(cart: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Cart",
+              "canonicalReference": "@vue-storefront/docs!Cart:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", order: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Order",
+              "canonicalReference": "@vue-storefront/docs!~Order:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "PlaceOrderResponse",
+              "canonicalReference": "@vue-storefront/docs!~PlaceOrderResponse:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "placeOrder",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!removeFromCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "removeFromCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "(cart: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Cart",
+              "canonicalReference": "@vue-storefront/docs!Cart:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", product: "
+            },
+            {
+              "kind": "Reference",
+              "text": "LineItem",
+              "canonicalReference": "@vue-storefront/docs!LineItem:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "CartResponse",
+              "canonicalReference": "@vue-storefront/docs!CartResponse:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "removeFromCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!setup:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "setup: "
+            },
+            {
+              "kind": "Content",
+              "text": "<TCacheShape>(setupConfig: "
+            },
+            {
+              "kind": "Reference",
+              "text": "SetupConfig",
+              "canonicalReference": "@vue-storefront/docs!SetupConfig:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TCacheShape>) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "ApolloClient",
+              "canonicalReference": "apollo-client!default:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<TCacheShape>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "setup",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!updateCart:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "updateCart: "
+            },
+            {
+              "kind": "Content",
+              "text": "(cartData: "
+            },
+            {
+              "kind": "Reference",
+              "text": "UpdateCart",
+              "canonicalReference": "@vue-storefront/docs!~UpdateCart:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<import(\"apollo-link\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "FetchResult",
+              "canonicalReference": "apollo-link!FetchResult:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<\"cart\", import(\"../../types/GraphQL\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "Cart",
+              "canonicalReference": "@vue-storefront/docs!Cart:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, any>, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, any>>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "updateCart",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 16
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!updateCartQuantity:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "updateCartQuantity: "
+            },
+            {
+              "kind": "Content",
+              "text": "(cart: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Cart",
+              "canonicalReference": "@vue-storefront/docs!Cart:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", product: "
+            },
+            {
+              "kind": "Reference",
+              "text": "LineItem",
+              "canonicalReference": "@vue-storefront/docs!LineItem:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "CartResponse",
+              "canonicalReference": "@vue-storefront/docs!CartResponse:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "updateCartQuantity",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@vue-storefront/docs!updateShippingDetails:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "updateShippingDetails: "
+            },
+            {
+              "kind": "Content",
+              "text": "(cart: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Cart",
+              "canonicalReference": "@vue-storefront/docs!Cart:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", shippingDetails: "
+            },
+            {
+              "kind": "Reference",
+              "text": "AddressInput",
+              "canonicalReference": "@vue-storefront/docs!AddressInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "CartResponse",
+              "canonicalReference": "@vue-storefront/docs!CartResponse:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "updateShippingDetails",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 10
+          }
+        }
+      ]
+    }
+  ]
+}
