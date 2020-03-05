@@ -1,4 +1,3 @@
-// DEPENDENCIES
 const path = require('path');
 const apiExtractor = require('@microsoft/api-extractor');
 const fs = require('fs');
@@ -30,7 +29,6 @@ function createApiDoc(integration) {
     const moduleRootPath = pathResolver(`${rootPath}/${integration}/${module}`);
     let mainEntryPointFilePath = pathResolver(`${moduleRootPath}/lib/index.d.ts`);
 
-    // check of module exists
     if (!fs.existsSync(moduleRootPath)) {
       log.error(`The module ${module} does not exist for integration: ${integration}.`);
     } else {
