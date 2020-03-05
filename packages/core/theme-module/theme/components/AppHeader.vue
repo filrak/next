@@ -31,8 +31,8 @@
 
 <script>
 import { SfHeader, SfImage } from '@storefront-ui/vue';
-import { useUser } from '<%= options.composables %>';
 import uiState from '~/assets/ui-state';
+import { useUser } from '<%= options.composables %>';
 
 const { toggleCartSidebar, toggleLoginModal } = uiState;
 
