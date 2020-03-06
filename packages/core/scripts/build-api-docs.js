@@ -46,7 +46,8 @@ function createApiDoc(integration) {
         apiReport: {
           enabled: true,
           reportFolder: pathResolver(`${moduleRootPath}/api`),
-          reportTempFolder: pathResolver(`${moduleRootPath}/api/temp`)
+          reportTempFolder: pathResolver(`${moduleRootPath}/api/temp`),
+          reportFileName: `${module}.api.md`
         },
         docModel: {
           enabled: true,
