@@ -45,9 +45,9 @@
         following information:<br />Your current email address is
         <span class="message__label">example@email.com</span>
       </p>
-      <div class="form">
+      <form class="form" @submit.prevent="updatePassword">
         <SfInput
-          v-model="currentPassword"
+          v-model="form.currentPassword"
           type="password"
           name="currentPassword"
           label="Current Password"
@@ -55,7 +55,7 @@
           class="form__element"
         />
         <SfInput
-          v-model="newPassword"
+          v-model="form.newPassword"
           type="password"
           name="newPassword"
           label="New Password"
@@ -63,28 +63,31 @@
           class="form__element form__element--half"
         />
         <SfInput
-          v-model="repeatPassword"
+          v-model="form.repeatPassword"
           type="password"
           name="repeatPassword"
           label="Repeat Password"
           required
           class="form__element form__element--half form__element--half-even"
         />
-        <SfButton class="form__button" @click="updatePassword"
-          >Update password</SfButton
-        >
-      </div>
+        <SfButton class="form__button" type="submit">Update password</SfButton>
+        <SfAlert v-if="error" class="alert" type="danger" :message="error" />
+      </form>
     </SfTab>
   </SfTabs>
 </template>
 <script>
-import { SfTabs, SfInput, SfButton } from '@storefront-ui/vue';
+import { SfTabs, SfInput, SfButton, SfAlert } from '@storefront-ui/vue';
+import { useUser } from '@vue-storefront/commercetools-composables';
+import { ref } from '@vue/composition-api';
+// import { useUser } from '<%= options.composables %>';
 export default {
   name: 'PersonalDetails',
   components: {
     SfTabs,
     SfInput,
-    SfButton
+    SfButton,
+    SfAlert
   },
   props: {
     account: {
@@ -92,14 +95,29 @@ export default {
       default: () => ({})
     }
   },
+  setup() {
+    const { user, changePassword, error } = useUser();
+    const form = ref({});
+
+    const updatePassword = async () => {
+      await changePassword(form.value.currentPassword, form.value.newPassword);
+      if (!error.value) {
+        form.value = {};
+      }
+    };
+
+    return {
+      user,
+      error,
+      form,
+      updatePassword
+    };
+  },
   data() {
     return {
       firstName: '',
       lastName: '',
-      email: '',
-      currentPassword: '',
-      newPassword: '',
-      repeatPassword: ''
+      email: ''
     };
   },
   watch: {
@@ -120,12 +138,6 @@ export default {
         email: this.email
       };
       this.$emit('update:personal', personal);
-    },
-    updatePassword() {
-      const password = {
-        password: this.newPassword
-      };
-      this.$emit('update:password', password);
     }
   }
 };
