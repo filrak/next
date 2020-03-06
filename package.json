@@ -5,7 +5,7 @@
     "node": "10.x"
   },
   "scripts": {
-    "build:api-docs": "cd packages/core/docs && yarn build:api-docs",
+    "build:api-docs": "cd packages/core/scripts && node ./build-api-docs.js",
     "build:docs": "cd packages/commercetools/docs && yarn build",
     "dev:docs": "cd packages/commercetools/docs && yarn dev",
     "build:core:interfaces": "cd packages/core/interfaces && tsc",
@@ -40,6 +40,7 @@
     "lint": "eslint . --ext .js,.ts,.vue"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.7.8",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.14",
     "@typescript-eslint/eslint-plugin": "^2.20.0",
