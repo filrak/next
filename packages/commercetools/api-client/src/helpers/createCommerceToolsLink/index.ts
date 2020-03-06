@@ -4,13 +4,13 @@ import { ApolloLink } from 'apollo-link';
 import fetch from 'isomorphic-fetch';
 import loadAccessToken from './loadAccessToken';
 import { ApiConfig } from './../../types/setup';
-import { tokenChanged } from './../..';
+import { changeToken } from './../..';
 
 const createCommerceToolsLink = (config: ApiConfig): ApolloLink => {
   const httpLink = createHttpLink({ uri: config.uri, fetch });
   const authLink = setContext(async (_, { headers }) => {
     const token = await loadAccessToken(config);
-    tokenChanged(token);
+    changeToken(token);
     return {
       headers: {
         ...headers,

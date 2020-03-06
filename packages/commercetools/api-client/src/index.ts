@@ -55,17 +55,17 @@ const setup = <TCacheShape>(setupConfig: SetupConfig<TCacheShape>): ApolloClient
 
 const tokenChangeListeners = [];
 
-const onTokenChange = (fn: (token) => void): void => {
+const onTokenChange = (fn: (token: string) => void): void => {
   tokenChangeListeners.push(fn);
 };
 
-const tokenChanged = (newToken) => tokenChangeListeners.forEach(fn => fn(newToken));
+const changeToken = (newToken: string): void => tokenChangeListeners.forEach(fn => fn(newToken));
 
 export {
   apolloClient,
   setup,
   onTokenChange,
-  tokenChanged,
+  changeToken,
   cookies,
   locale,
   locales,
