@@ -14,6 +14,7 @@ setup({
   cookies: {
     currencyCookieName: 'test-vsf-currency',
     countryCookieName: 'test-vsf-country',
-    localeCookieName: 'test-vsf-locale'
+    localeCookieName: 'test-vsf-locale',
+    tokenCookieName: 'test-vsf-token'
   }
 });

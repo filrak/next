@@ -18,6 +18,7 @@ import updateShippingDetails from './api/updateShippingDetails';
 import customerSignMeUp from './api/customerSignMeUp';
 import customerSignMeIn from './api/customerSignMeIn';
 import customerSignOut from './api/customerSignOut';
+import getStorage from './helpers/createCommerceToolsLink/getStorage';
 
 let apolloClient: ApolloClient<any> = null;
 let locale = 'en';
@@ -73,6 +74,7 @@ export {
   currency,
   countries,
   currencies,
+  getStorage,
   getProduct,
   getCategory,
   createCart,
