@@ -18,7 +18,8 @@ export default ({ app }) => {
   onTokenChange(token => {
     try {
       app.$cookies.set(config.cookies.tokenCookieName, token, { maxAge: 60 * 60 * 24 * 365 });
-    // eslint-disable-next-line no-empty
-    } catch {}
+    } catch {
+      // Sometimes cookie is set on server after request is send, it can fail silently
+    }
   });
 };
