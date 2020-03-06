@@ -6,18 +6,18 @@
     "oldestForwardsCompatibleVersion": 1001
   },
   "kind": "Package",
-  "canonicalReference": "@vue-storefront/docs!",
+  "canonicalReference": "root!",
   "docComment": "",
-  "name": "@vue-storefront/docs",
+  "name": "root",
   "members": [
     {
       "kind": "EntryPoint",
-      "canonicalReference": "@vue-storefront/docs!",
+      "canonicalReference": "root!",
       "name": "",
       "members": [
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!addToCart:var",
+          "canonicalReference": "root!addToCart:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -31,7 +31,7 @@
             {
               "kind": "Reference",
               "text": "Cart",
-              "canonicalReference": "@vue-storefront/docs!Cart:type"
+              "canonicalReference": "root!Cart:type"
             },
             {
               "kind": "Content",
@@ -40,7 +40,7 @@
             {
               "kind": "Reference",
               "text": "ProductVariant",
-              "canonicalReference": "@vue-storefront/docs!ProductVariant:type"
+              "canonicalReference": "root!ProductVariant:type"
             },
             {
               "kind": "Content",
@@ -58,7 +58,7 @@
             {
               "kind": "Reference",
               "text": "CartResponse",
-              "canonicalReference": "@vue-storefront/docs!CartResponse:type"
+              "canonicalReference": "root!CartResponse:type"
             },
             {
               "kind": "Content",
@@ -74,7 +74,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!apolloClient:var",
+          "canonicalReference": "root!apolloClient:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -100,7 +100,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!cookies:var",
+          "canonicalReference": "root!cookies:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -121,7 +121,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!countries:var",
+          "canonicalReference": "root!countries:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -142,7 +142,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!country:var",
+          "canonicalReference": "root!country:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -163,7 +163,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!createCart:var",
+          "canonicalReference": "root!createCart:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -177,7 +177,7 @@
             {
               "kind": "Reference",
               "text": "CartData",
-              "canonicalReference": "@vue-storefront/docs!~CartData:interface"
+              "canonicalReference": "root!~CartData:interface"
             },
             {
               "kind": "Content",
@@ -213,7 +213,7 @@
             {
               "kind": "Reference",
               "text": "Cart",
-              "canonicalReference": "@vue-storefront/docs!Cart:type"
+              "canonicalReference": "root!Cart:type"
             },
             {
               "kind": "Content",
@@ -247,7 +247,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!createMyOrderFromCart:var",
+          "canonicalReference": "root!createMyOrderFromCart:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -261,7 +261,7 @@
             {
               "kind": "Reference",
               "text": "OrderMyCartCommand",
-              "canonicalReference": "@vue-storefront/docs!OrderMyCartCommand:type"
+              "canonicalReference": "root!OrderMyCartCommand:type"
             },
             {
               "kind": "Content",
@@ -297,7 +297,7 @@
             {
               "kind": "Reference",
               "text": "Order",
-              "canonicalReference": "@vue-storefront/docs!Order:type"
+              "canonicalReference": "root!Order:type"
             },
             {
               "kind": "Content",
@@ -331,7 +331,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!currencies:var",
+          "canonicalReference": "root!currencies:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -352,7 +352,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!currency:var",
+          "canonicalReference": "root!currency:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -373,7 +373,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!customerSignMeIn:var",
+          "canonicalReference": "root!customerSignMeIn:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -387,7 +387,7 @@
             {
               "kind": "Reference",
               "text": "CustomerSignMeInDraft",
-              "canonicalReference": "@vue-storefront/docs!CustomerSignMeInDraft:type"
+              "canonicalReference": "root!CustomerSignMeInDraft:type"
             },
             {
               "kind": "Content",
@@ -423,7 +423,7 @@
             {
               "kind": "Reference",
               "text": "CustomerSignInResult",
-              "canonicalReference": "@vue-storefront/docs!CustomerSignInResult:type"
+              "canonicalReference": "root!CustomerSignInResult:type"
             },
             {
               "kind": "Content",
@@ -439,7 +439,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!customerSignMeUp:var",
+          "canonicalReference": "root!customerSignMeUp:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -453,7 +453,7 @@
             {
               "kind": "Reference",
               "text": "CustomerSignMeUpDraft",
-              "canonicalReference": "@vue-storefront/docs!CustomerSignMeUpDraft:type"
+              "canonicalReference": "root!CustomerSignMeUpDraft:type"
             },
             {
               "kind": "Content",
@@ -489,7 +489,7 @@
             {
               "kind": "Reference",
               "text": "CustomerSignInResult",
-              "canonicalReference": "@vue-storefront/docs!CustomerSignInResult:type"
+              "canonicalReference": "root!CustomerSignInResult:type"
             },
             {
               "kind": "Content",
@@ -505,7 +505,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!customerSignOut:var",
+          "canonicalReference": "root!customerSignOut:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -535,7 +535,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!getCart:var",
+          "canonicalReference": "root!getCart:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -576,7 +576,7 @@
             {
               "kind": "Reference",
               "text": "Cart",
-              "canonicalReference": "@vue-storefront/docs!Cart:type"
+              "canonicalReference": "root!Cart:type"
             },
             {
               "kind": "Content",
@@ -592,7 +592,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!getCategory:var",
+          "canonicalReference": "root!getCategory:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -606,7 +606,7 @@
             {
               "kind": "Reference",
               "text": "CategorySearch",
-              "canonicalReference": "@vue-storefront/docs!CategorySearch:interface"
+              "canonicalReference": "root!CategorySearch:interface"
             },
             {
               "kind": "Content",
@@ -633,7 +633,7 @@
             {
               "kind": "Reference",
               "text": "CategoryData",
-              "canonicalReference": "@vue-storefront/docs!~CategoryData:interface"
+              "canonicalReference": "root!~CategoryData:interface"
             },
             {
               "kind": "Content",
@@ -649,7 +649,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!getMe:var",
+          "canonicalReference": "root!getMe:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -663,7 +663,7 @@
             {
               "kind": "Reference",
               "text": "Options",
-              "canonicalReference": "@vue-storefront/docs!~Options:interface"
+              "canonicalReference": "root!~Options:interface"
             },
             {
               "kind": "Content",
@@ -699,7 +699,7 @@
             {
               "kind": "Reference",
               "text": "Me",
-              "canonicalReference": "@vue-storefront/docs!Me:type"
+              "canonicalReference": "root!Me:type"
             },
             {
               "kind": "Content",
@@ -715,7 +715,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!getProduct:var",
+          "canonicalReference": "root!getProduct:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -729,7 +729,7 @@
             {
               "kind": "Reference",
               "text": "ProductSearch",
-              "canonicalReference": "@vue-storefront/docs!ProductSearch:interface"
+              "canonicalReference": "root!ProductSearch:interface"
             },
             {
               "kind": "Content",
@@ -756,7 +756,7 @@
             {
               "kind": "Reference",
               "text": "ProductData",
-              "canonicalReference": "@vue-storefront/docs!~ProductData:interface"
+              "canonicalReference": "root!~ProductData:interface"
             },
             {
               "kind": "Content",
@@ -772,7 +772,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!getShippingMethods:var",
+          "canonicalReference": "root!getShippingMethods:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -804,7 +804,7 @@
             {
               "kind": "Reference",
               "text": "ShippingMethodData",
-              "canonicalReference": "@vue-storefront/docs!~ShippingMethodData:interface"
+              "canonicalReference": "root!~ShippingMethodData:interface"
             },
             {
               "kind": "Content",
@@ -820,7 +820,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!getStorage:var",
+          "canonicalReference": "root!getStorage:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -841,7 +841,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!locale:var",
+          "canonicalReference": "root!locale:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -862,7 +862,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!locales:var",
+          "canonicalReference": "root!locales:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -883,7 +883,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!placeOrder:var",
+          "canonicalReference": "root!placeOrder:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -897,7 +897,7 @@
             {
               "kind": "Reference",
               "text": "Cart",
-              "canonicalReference": "@vue-storefront/docs!Cart:type"
+              "canonicalReference": "root!Cart:type"
             },
             {
               "kind": "Content",
@@ -906,7 +906,7 @@
             {
               "kind": "Reference",
               "text": "Order",
-              "canonicalReference": "@vue-storefront/docs!~Order:interface"
+              "canonicalReference": "root!~Order:interface"
             },
             {
               "kind": "Content",
@@ -924,7 +924,7 @@
             {
               "kind": "Reference",
               "text": "PlaceOrderResponse",
-              "canonicalReference": "@vue-storefront/docs!~PlaceOrderResponse:interface"
+              "canonicalReference": "root!~PlaceOrderResponse:interface"
             },
             {
               "kind": "Content",
@@ -940,7 +940,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!removeFromCart:var",
+          "canonicalReference": "root!removeFromCart:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -954,7 +954,7 @@
             {
               "kind": "Reference",
               "text": "Cart",
-              "canonicalReference": "@vue-storefront/docs!Cart:type"
+              "canonicalReference": "root!Cart:type"
             },
             {
               "kind": "Content",
@@ -963,7 +963,7 @@
             {
               "kind": "Reference",
               "text": "LineItem",
-              "canonicalReference": "@vue-storefront/docs!LineItem:type"
+              "canonicalReference": "root!LineItem:type"
             },
             {
               "kind": "Content",
@@ -981,7 +981,7 @@
             {
               "kind": "Reference",
               "text": "CartResponse",
-              "canonicalReference": "@vue-storefront/docs!CartResponse:type"
+              "canonicalReference": "root!CartResponse:type"
             },
             {
               "kind": "Content",
@@ -997,7 +997,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!setup:var",
+          "canonicalReference": "root!setup:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1011,7 +1011,7 @@
             {
               "kind": "Reference",
               "text": "SetupConfig",
-              "canonicalReference": "@vue-storefront/docs!SetupConfig:interface"
+              "canonicalReference": "root!SetupConfig:interface"
             },
             {
               "kind": "Content",
@@ -1036,7 +1036,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!updateCart:var",
+          "canonicalReference": "root!updateCart:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1050,7 +1050,7 @@
             {
               "kind": "Reference",
               "text": "UpdateCart",
-              "canonicalReference": "@vue-storefront/docs!~UpdateCart:interface"
+              "canonicalReference": "root!~UpdateCart:interface"
             },
             {
               "kind": "Content",
@@ -1086,7 +1086,7 @@
             {
               "kind": "Reference",
               "text": "Cart",
-              "canonicalReference": "@vue-storefront/docs!Cart:type"
+              "canonicalReference": "root!Cart:type"
             },
             {
               "kind": "Content",
@@ -1120,7 +1120,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!updateCartQuantity:var",
+          "canonicalReference": "root!updateCartQuantity:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1134,7 +1134,7 @@
             {
               "kind": "Reference",
               "text": "Cart",
-              "canonicalReference": "@vue-storefront/docs!Cart:type"
+              "canonicalReference": "root!Cart:type"
             },
             {
               "kind": "Content",
@@ -1143,7 +1143,7 @@
             {
               "kind": "Reference",
               "text": "LineItem",
-              "canonicalReference": "@vue-storefront/docs!LineItem:type"
+              "canonicalReference": "root!LineItem:type"
             },
             {
               "kind": "Content",
@@ -1161,7 +1161,7 @@
             {
               "kind": "Reference",
               "text": "CartResponse",
-              "canonicalReference": "@vue-storefront/docs!CartResponse:type"
+              "canonicalReference": "root!CartResponse:type"
             },
             {
               "kind": "Content",
@@ -1177,7 +1177,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "@vue-storefront/docs!updateShippingDetails:var",
+          "canonicalReference": "root!updateShippingDetails:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1191,7 +1191,7 @@
             {
               "kind": "Reference",
               "text": "Cart",
-              "canonicalReference": "@vue-storefront/docs!Cart:type"
+              "canonicalReference": "root!Cart:type"
             },
             {
               "kind": "Content",
@@ -1200,7 +1200,7 @@
             {
               "kind": "Reference",
               "text": "AddressInput",
-              "canonicalReference": "@vue-storefront/docs!AddressInput:type"
+              "canonicalReference": "root!AddressInput:type"
             },
             {
               "kind": "Content",
@@ -1218,7 +1218,7 @@
             {
               "kind": "Reference",
               "text": "CartResponse",
-              "canonicalReference": "@vue-storefront/docs!CartResponse:type"
+              "canonicalReference": "root!CartResponse:type"
             },
             {
               "kind": "Content",

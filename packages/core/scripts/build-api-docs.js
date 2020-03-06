@@ -12,7 +12,7 @@ const integrationMap = {
 const pathResolver = (arg) => path.resolve(__dirname, arg);
 
 const configFileName = 'api-extractor.json';
-const integrations = ['about-you'];
+const integrations = ['about-you', 'commercetools'];
 const modules = ['api-client', 'composables'];
 const rootPath = pathResolver('../../../packages');
 
@@ -36,39 +36,40 @@ function createApiDoc(integration) {
           process.exit(1);
         }
         mainEntryPointFilePath = pathResolver(`${moduleRootPath}/lib/src/index.d.ts`);
+      }
+      console.log(mainEntryPointFilePath);
 
-        const config = {
-          ...baseConfig,
-          mainEntryPointFilePath,
-          projectFolder: moduleRootPath,
-          apiReport: {
-            enabled: true,
-            reportFolder: pathResolver(`${moduleRootPath}/api`),
-            reportTempFolder: pathResolver(`${moduleRootPath}/api/temp`)
-          },
-          docModel: {
-            enabled: true,
-            apiJsonFilePath: pathResolver(`${moduleRootPath}/api.json`)
-          }
-        };
-
-        fs.writeFileSync(configFileName, JSON.stringify(config), 'utf8', () => { });
-
-        const apiExtractorJsonPath = path.join(__dirname, `./${configFileName}`);
-        const extractorConfig = apiExtractor.ExtractorConfig.loadFileAndPrepare(apiExtractorJsonPath);
-        const extractorResult = apiExtractor.Extractor.invoke(extractorConfig, {
-          localBuild: true,
-          showVerboseMessages: true
-        });
-
-        if (extractorResult.succeeded) {
-          console.log('API Extractor completed successfully.');
-          fs.unlinkSync(path.join(__dirname, `./${configFileName}`));
-        } else {
-          console.log(`API Extractor completed with ${extractorResult.errorCount} errors` + ` and ${extractorResult.warningCount} warnings.`);
-          fs.unlinkSync(path.join(__dirname, `./${configFileName}`));
-          process.exit(1);
+      const config = {
+        ...baseConfig,
+        mainEntryPointFilePath,
+        projectFolder: moduleRootPath,
+        apiReport: {
+          enabled: true,
+          reportFolder: pathResolver(`${moduleRootPath}/api`),
+          reportTempFolder: pathResolver(`${moduleRootPath}/api/temp`)
+        },
+        docModel: {
+          enabled: true,
+          apiJsonFilePath: pathResolver(`${moduleRootPath}/api.json`)
         }
+      };
+
+      fs.writeFileSync(configFileName, JSON.stringify(config), 'utf8', () => { });
+
+      const apiExtractorJsonPath = path.join(__dirname, `./${configFileName}`);
+      const extractorConfig = apiExtractor.ExtractorConfig.loadFileAndPrepare(apiExtractorJsonPath);
+      const extractorResult = apiExtractor.Extractor.invoke(extractorConfig, {
+        localBuild: true,
+        showVerboseMessages: true
+      });
+
+      if (extractorResult.succeeded) {
+        console.log('API Extractor completed successfully.');
+        fs.unlinkSync(path.join(__dirname, `./${configFileName}`));
+      } else {
+        console.log(`API Extractor completed with ${extractorResult.errorCount} errors` + ` and ${extractorResult.warningCount} warnings.`);
+        fs.unlinkSync(path.join(__dirname, `./${configFileName}`));
+        process.exit(1);
       }
     }
   });
