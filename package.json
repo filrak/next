@@ -33,6 +33,7 @@
     "dev:ct:composables": "cd packages/commercetools/composables && yarn dev",
     "dev:ct:helpers": "cd packages/commercetools/helpers && yarn dev",
     "dev:ay:api-client": "cd packages/about-you/api-client && yarn dev",
+    "dev:ay:theme": "cd packages/about-you/theme && yarn dev",
     "dev:ct": "cd packages/commercetools/theme && yarn dev",
     "dev:bp": "cd packages/boilerplate/theme && yarn dev",
     "lint": "eslint . --ext .js,.ts,.vue"
