@@ -1,10 +1,11 @@
 
 import { api } from './index';
 import { CategoryWith } from '@aboutyou/backbone/types/CategoryWith';
+import { BapiCategory } from '@aboutyou/backbone/types/BapiCategory';
 
-export type getCategorySearchParams = { ids: number[]; path: string; with: CategoryWith; depth: number} | any
+export type getCategorySearchParams = { ids: number[]; path: string; with: CategoryWith; depth: number}
 
-export default async function(options: getCategorySearchParams) {
+export default async function(options: getCategorySearchParams): Promise<BapiCategory[]> {
   if (!options) {
     this.options = {};
   }
@@ -14,10 +15,11 @@ export default async function(options: getCategorySearchParams) {
       { with: options.with }
     );
   } else if (options.path) {
-    return api.ctagories.getByPath(
+    const response = await api.ctagories.getByPath(
       options.path,
       { width: options.with }
     );
+    return [response];
   } else {
     return await api.categories.getRoots({
       with: options.with
