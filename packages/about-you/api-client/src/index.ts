@@ -1,7 +1,7 @@
 import { BapiClient } from '@aboutyou/backbone';
 import getProductApi from './getProduct';
 
-let api = null;
+let api: BapiClient = null;
 
 let methods = {
   getProduct: getProductApi

@@ -1,44 +1,51 @@
 import { api } from './';
-import { ProductWith, ProductSearchQuery, ProductSortConfig, Pagination } from './types/productSearchParams';
+import { ProductWith } from '@aboutyou/backbone/types/ProductWith';
+import { ProductSearchQuery } from '@aboutyou/backbone/types/ProductSearchQuery';
+import { BapiProduct } from '@aboutyou/backbone/types/BapiProduct';
+import { ProductSortConfig } from '@aboutyou/backbone/endpoints/products/products';
+import { Pagination } from '@aboutyou/backbone/endpoints/products/productsByIds';
 
-type getProductSearchParams = { id: number; pWith: ProductWith; pWhere: ProductSearchQuery; pSort: ProductSortConfig; pPagination: Pagination; masterKey: string };
+type getProductSearchParams = { ids: number[]; pWith: ProductWith; where: ProductSearchQuery; sort: ProductSortConfig; pagination: Pagination; masterKey: string; campaignKey; term: string };
 
-export default function(params: getProductSearchParams): Promise<any> {
+export default async function(params: getProductSearchParams): Promise<BapiProduct[]> {
   let {
     pWith,
-    pWhere,
-    pSort,
-    pPagination
+    where,
+    sort,
+    campaignKey
   } = params;
 
+  if (!campaignKey) {
+    campaignKey = '';
+  }
   if (!pWith) {
     pWith = {};
   }
-  if (!pWhere) {
-    pWhere = {};
+  if (!where) {
+    where = {};
   }
-  if (!pSort) {
-    pSort = {};
-  }
-  if (!pPagination) {
-    pPagination = {};
+  if (!sort) {
+    sort = {};
   }
 
   const {
-    id,
-    masterKey
+    ids,
+    masterKey,
+    pagination,
+    term
   } = params;
 
-  if (id) {
-    return api.products.getById(id, { with: pWith });
+  if (ids) {
+    const response = await api.products.getByIds(ids, { with: pWith, campaignKey });
+    return response;
   } else if (masterKey) {
-    return api.products.getByMasterkey(masterKey);
+    const response = await api.masters.getByKey(masterKey, { with: { products: pWith }, campaignKey });
+    return response.products;
+  } else if (term) {
+    const response = await api.search.suggestions(term, campaignKey);
+    return response.products;
   } else {
-    return api.products.query({
-      with: pWith,
-      where: pWhere,
-      sort: pSort,
-      pagination: pPagination
-    });
+    const response = await api.products.query({ where, with: pWith, sort, pagination });
+    return response.entities;
   }
 }
