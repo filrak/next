@@ -69,7 +69,9 @@ export default function useUser(): UseUser<Customer> {
     loading.value = true;
     try {
       const userResponse = await customerChangeMyPassword(user.value.version, currentPassword, newPassword);
-      await authenticate({ email: user.value.email, password: newPassword }, customerSignMeIn);
+      // we do need to re-authenticate user to acquire new token - otherwise all subsequent requests will fail as unauthorized
+      await logout();
+      await authenticate({ email: userResponse.data.user.email, password: newPassword }, customerSignMeIn);
       user.value = userResponse.data.user;
     } catch (err) {
       error.value = err.graphQLErrors ? err.graphQLErrors[0].message : err;
