@@ -105,9 +105,7 @@ import { ref } from '@vue/composition-api';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { email, required, min, confirmed } from 'vee-validate/dist/rules';
 import { SfTabs, SfInput, SfButton, SfAlert } from '@storefront-ui/vue';
-
-// import { useUser } from '<%= options.composables %>';
-import { useUser } from '@vue-storefront/commercetools-composables';
+import { useUser } from '<%= options.composables %>';
 
 extend('email', {
   ...email,
@@ -151,13 +149,14 @@ export default {
     }
   },
   setup() {
+    const resetPassForm = () => ({ currentPassword: '', newPassword: '', repeatPassword: '' });
     const { user, changePassword, error } = useUser();
-    const form = ref({});
+    const form = ref(resetPassForm());
 
     const updatePassword = async () => {
       await changePassword(form.value.currentPassword, form.value.newPassword);
       if (!error.value) {
-        form.value = {};
+        form.value = resetPassForm();
       }
     };
 

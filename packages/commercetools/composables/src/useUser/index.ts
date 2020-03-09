@@ -54,8 +54,8 @@ export default function useUser(): UseUser<Customer> {
     await authenticate(userData, customerSignMeUp);
   };
 
-  const login = async (userData) => {
-    const customerLoginDraft = { email: userData.username, password: userData.password };
+  const login = async ({ username, password }) => {
+    const customerLoginDraft = { email: username, password };
     await authenticate(customerLoginDraft, customerSignMeIn);
   };
 
