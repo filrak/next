@@ -12,9 +12,6 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
         customer: {
           firstName: 'loaded customer',
           lastName: 'loaded customer'
-        },
-        orders: {
-          results: []
         }
       }
     }
@@ -99,13 +96,6 @@ describe('[commercetools-composables] useUser', () => {
       firstName: 'loaded customer',
       lastName: 'loaded customer'
     });
-  });
-
-  it('loads current customer with orders', async () => {
-    const wrapper = mountComposable(useUser);
-    await wrapper.vm.$nextTick();
-    await wrapper.vm.$nextTick();
-    expect(wrapper.vm.$data.orders).toEqual([]);
   });
 
 });
