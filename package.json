@@ -7,6 +7,9 @@
   "scripts": {
     "build:docs": "cd packages/commercetools/docs && yarn build",
     "dev:docs": "cd packages/commercetools/docs && yarn dev",
+    "build:ay:api-client": "cd packages/about-you/api-client && yarn build",
+    "build:ay:composables": "cd packages/about-you/composables && yarn build",
+    "build:ct:helpers": "cd packages/commercetools/helpers && yarn build",
     "build:core:interfaces": "cd packages/core/interfaces && tsc",
     "build:core:factories": "cd packages/core/factories && yarn build",
     "build:core:utils": "cd packages/core/utils && yarn build",
@@ -22,6 +25,8 @@
     "build:bp:composables": "cd packages/boilerplate/composables && yarn build",
     "build:bp:helpers": "cd packages/boilerplate/helpers && yarn build",
     "build:bp:theme": "cd packages/boilerplate/theme && yarn build",
+    "test:ay:api-client": "cd packages/about-you/api-client && yarn test",
+    "test:ay:composables": "cd packages/about-you/composables && yarn test",
     "test:ct:api-client": "cd packages/commercetools/api-client && yarn test",
     "test:ct:composables": "cd packages/commercetools/composables && yarn test",
     "test:ct:helpers": "cd packages/commercetools/helpers && yarn test",
@@ -35,7 +40,7 @@
     "dev:ct:composables": "cd packages/commercetools/composables && yarn dev",
     "dev:ct:helpers": "cd packages/commercetools/helpers && yarn dev",
     "dev:ay:api-client": "cd packages/about-you/api-client && yarn dev",
-    "dev:ay:theme": "cd packages/about-you/theme && yarn dev",
+    "dev:ay:composables": "cd packages/about-you/composables && yarn dev",
     "dev:ct": "cd packages/commercetools/theme && yarn dev",
     "dev:bp": "cd packages/boilerplate/theme && yarn dev",
     "lint": "eslint . --ext .js,.ts,.vue"
