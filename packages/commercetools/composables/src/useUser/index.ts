@@ -1,11 +1,16 @@
 import { ref, Ref, watch, computed } from '@vue/composition-api';
 import { UseUser } from '@vue-storefront/interfaces';
-import { Customer, CustomerSignMeUpDraft, CustomerSignMeInDraft } from '@vue-storefront/commercetools-api/lib/src/types/GraphQL';
+import {
+  Customer,
+  CustomerSignMeUpDraft,
+  CustomerSignMeInDraft
+} from '@vue-storefront/commercetools-api/lib/src/types/GraphQL';
 import {
   customerSignMeUp,
   customerSignMeIn,
   customerSignOut,
-  getMe
+  getMe,
+  customerChangeMyPassword
 } from '@vue-storefront/commercetools-api';
 import { cart } from './../useCart';
 
@@ -52,9 +57,8 @@ export default function useUser(): UseUser<Customer, any> {
     await authenticate(userData, customerSignMeUp);
   };
 
-  const login = async (userData) => {
-    const customerLoginDraft = { email: userData.username,
-      password: userData.password };
+  const login = async ({ username, password }) => {
+    const customerLoginDraft = { email: username, password };
     await authenticate(customerLoginDraft, customerSignMeIn);
   };
 
@@ -64,12 +68,27 @@ export default function useUser(): UseUser<Customer, any> {
     cart.value = null;
   };
 
+  const changePassword = async (currentPassword: string, newPassword: string) => {
+    loading.value = true;
+    try {
+      const userResponse = await customerChangeMyPassword(user.value.version, currentPassword, newPassword);
+      // we do need to re-authenticate user to acquire new token - otherwise all subsequent requests will fail as unauthorized
+      await logout();
+      await authenticate({ email: userResponse.data.user.email, password: newPassword }, customerSignMeIn);
+      user.value = userResponse.data.user;
+    } catch (err) {
+      error.value = err.graphQLErrors ? err.graphQLErrors[0].message : err;
+    }
+    loading.value = false;
+  };
+
   return {
     user: computed(() => user.value),
     updateUser,
     register,
     login,
     logout,
+    changePassword,
     isAuthenticated,
     loading: computed(() => loading.value)
   };

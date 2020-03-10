@@ -48,13 +48,6 @@ const getUser = methods.getUser;
 const addCoupon = methods.addCoupon;
 const removeCoupon = methods.removeCoupon;
 
-setup();
-async function getCat() {
-  const cat = await getCategory({ depth: 3 });
-  console.log(JSON.stringify(cat));
-}
-getCat();
-
 export {
   getProduct,
   getCategory,
