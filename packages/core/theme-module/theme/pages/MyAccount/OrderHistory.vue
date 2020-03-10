@@ -50,8 +50,9 @@ import {
   SfTable,
   SfButton
 } from '@storefront-ui/vue';
+import { computed } from '@vue/composition-api';
 
-import { useUser } from '<%= options.composables %>';
+import { useUserOrders } from '<%= options.composables %>';
 import {
   getOrderDate,
   getOrderNumber,
@@ -68,7 +69,9 @@ export default {
     SfButton
   },
   setup() {
-    const { orders } = useUser();
+    const { orders, searchOrders } = useUserOrders();
+
+    searchOrders();
 
     const tableHeaders = [
       'Order ID',
@@ -91,7 +94,7 @@ export default {
 
     return {
       tableHeaders,
-      orders,
+      orders: computed(() => orders.value ? orders.value.data : []),
       getOrderNumber,
       getOrderDate,
       getOrderTotal,
