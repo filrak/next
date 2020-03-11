@@ -1,4 +1,4 @@
-import { useUser } from '@vue-storefront/commercetools-composables';
+import { useUser } from '<%= options.composables %>';
 
 export default ({ redirect }) => {
   const { isAuthenticated } = useUser();
