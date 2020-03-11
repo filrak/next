@@ -1,5 +1,5 @@
 import useUser from '../../src/useUser';
-import { customerSignMeUp, customerSignMeIn, customerSignOut } from '@vue-storefront/commercetools-api';
+import { customerSignMeUp, customerSignMeIn, customerSignOut, customerChangeMyPassword } from '@vue-storefront/commercetools-api';
 import mountComposable from '../_mountComposable';
 
 jest.mock('@vue-storefront/commercetools-api', () => ({
@@ -24,11 +24,9 @@ describe('[commercetools-composables] useUser', () => {
   });
 
   it('creates properties', () => {
-    const { loading, error, orders } = useUser();
-
+    const { loading, error } = useUser();
     expect(loading.value).toEqual(true);
     expect(error.value).toEqual(null);
-    expect(orders.value).toEqual([]);
   });
 
   it('registers new customer', async () => {
@@ -98,4 +96,23 @@ describe('[commercetools-composables] useUser', () => {
     });
   });
 
+  it('changes password', async () => {
+    (customerChangeMyPassword as any).mockReturnValue({ data: { user: { firstName: 'loaded customer' } } });
+    const wrapper = mountComposable(useUser);
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$data.changePassword();
+    expect(wrapper.vm.$data.user).toEqual({ firstName: 'loaded customer' });
+  });
+
+  it('catches change password error', async () => {
+    (customerChangeMyPassword as any).mockImplementation(() => {
+      throw new Error('error from API');
+    });
+    const wrapper = mountComposable(useUser);
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$data.changePassword();
+    expect(wrapper.vm.$data.error.message).toEqual('error from API');
+  });
 });

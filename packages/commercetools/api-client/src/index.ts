@@ -20,6 +20,7 @@ import customerSignMeIn from './api/customerSignMeIn';
 import customerSignOut from './api/customerSignOut';
 import getStorage from './helpers/createCommerceToolsLink/getStorage';
 import getMyOrders from './api/getMyOrders';
+import customerChangeMyPassword from './api/customerChangeMyPassword';
 
 let apolloClient: ApolloClient<any> = null;
 let locale = 'en';
@@ -81,5 +82,6 @@ export {
   customerSignMeUp,
   customerSignMeIn,
   customerSignOut,
-  getMyOrders
+  getMyOrders,
+  customerChangeMyPassword
 };
