@@ -1,5 +1,5 @@
 import { setup, onTokenChange } from '@vue-storefront/commercetools-api';
-import { config } from '../config';
+import { config } from './commercetools-config';
 
 export default ({ app }) => {
   if (!app.$cookies) {
@@ -8,7 +8,7 @@ export default ({ app }) => {
   const contextToken = app.$cookies.get(config.cookies.authTokenCookieName) || '';
 
   /**
-   * Setup Shopware API client
+   * Setup commercetools API client
    */
   setup({
     ...config,

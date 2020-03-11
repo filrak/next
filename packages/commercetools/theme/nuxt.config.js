@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import { config } from './config.js';
+import { config } from './plugins/commercetools-config.js';
 
 const localeNames = config.locales.map(l => l.name);
 
@@ -40,7 +40,7 @@ export default {
     }
   },
   plugins: [
-    './plugins/api-client.js',
+    './plugins/commercetools.js',
     './plugins/prismic.js',
     './plugins/i18n.js'
   ],
