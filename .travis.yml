@@ -34,7 +34,7 @@ jobs:
     - stage: Build
       name: Build
       script:
-      - yarn build:prismic && yarn build:ct
+        - yarn build:prismic && yarn build:ct
 
     - stage: test commercetools
       script: yarn test:ct:api-client --coverage
