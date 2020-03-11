@@ -3,6 +3,8 @@ import getProduct from './../../../src/api/getProduct';
 import { apolloClient } from './../../../src/index';
 import defaultQuery from './../../../src/api/getProduct/defaultQuery';
 
+console.log(apolloClient.query);
+
 describe('[commercetools-api-client] getProduct', () => {
   it('fetches product with default query', async () => {
     const givenVariables = {
