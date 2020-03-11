@@ -6,6 +6,7 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
   customerSignMeUp: jest.fn(),
   customerSignMeIn: jest.fn(),
   customerSignOut: jest.fn(),
+  customerChangeMyPassword: jest.fn(),
   getMe: () => ({
     data: {
       me: {
