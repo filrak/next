@@ -3,7 +3,7 @@ import { getProduct } from '@vue-storefront/about-you-api';
 import { BapiProduct } from '@aboutyou/backbone/types/BapiProduct';
 import { useProductFactory } from '@vue-storefront/factories';
 
-const useProduct: () => UseProduct<BapiProduct> = useProductFactory<BapiProduct, any>({
+const useProduct: (params) => UseProduct<BapiProduct> = useProductFactory<BapiProduct, any>({
   productsSearch: getProduct
 });
 

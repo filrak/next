@@ -1,61 +1,38 @@
 import useProduct from '../../src/useProduct';
 
-const product = (name, slug, id) => ({
-  masterData: {
-    current: {
-      name,
-      slug,
-      masterVariant: {
-        id
-      },
-      categoriesRef: [{ id: 'aaa' }],
-      allVariants: [{ id: '123' }, { id: '456' }, { id: '789' }]
-    }
+const mockedResponse = [
+  {
+    id: 4004080,
+    isActive: true,
+    isSoldOut: false,
+    isNew: true,
+    createdAt: '2018-09-17T14:34:37+02:00',
+    updatedAt: '2018-09-17T14:34:37+02:00',
+    masterKey: '298022-74',
+    images: []
   }
-});
+];
 
-jest.mock('@vue-storefront/commercetools-api', () => ({
+jest.mock('@vue-storefront/about-you-api', () => ({
   getProduct: () =>
     Promise.resolve({
-      data: {
-        products: {
-          results: [
-            product('prod1', 'prod-1', 'sde213')
-          ]
-        }
-      }
+      data: mockedResponse
     })
 }));
 
-describe('[commercetools-composables] useProduct', () => {
+describe('[about-you-composables] useProduct', () => {
   it('creates properties', () => {
-    const { products, loading } = useProduct('test-product');
+    const { products, loading } = useProduct({});
 
     expect(products.value).toEqual([]);
     expect(loading.value).toEqual(false);
   });
 
   it('returns product response', async () => {
-    const { search, products } = useProduct('test-use-product');
+    const { search, products } = useProduct({});
 
-    await search({ slug: 'product-slug' });
+    await search({ term: 'product-slug' });
 
-    expect(products.value).toEqual([
-      { _categoriesRef: ['aaa'],
-        _master: false,
-        _name: 'prod1',
-        _slug: 'prod-1',
-        id: '123' },
-      { _categoriesRef: ['aaa'],
-        _master: false,
-        _name: 'prod1',
-        _slug: 'prod-1',
-        id: '456' },
-      { _categoriesRef: ['aaa'],
-        _master: false,
-        _name: 'prod1',
-        _slug: 'prod-1',
-        id: '789' }
-    ]);
+    expect(products.value).toEqual(mockedResponse);
   });
 });
