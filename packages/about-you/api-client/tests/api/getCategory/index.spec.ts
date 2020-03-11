@@ -1,5 +1,5 @@
-import getCategory from './../../src/api/getCategory';
-import { apiClient } from './../../src/index';
+import getCategory from '../../../src/api/getCategory';
+import { apiClient } from '../../../src/index';
 
 const mockGetByIds = jest.fn((params) => params);
 const mockGetByPath = jest.fn((params) => params);

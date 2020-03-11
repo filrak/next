@@ -1,5 +1,5 @@
-import getProduct from './../../src/api/getProduct';
-import { apiClient } from './../../src/index';
+import getProduct from '../../../src/api/getProduct';
+import { apiClient } from '../../../src/index';
 
 const mockGetById = jest.fn((params) => params);
 const mockGetByIds = jest.fn((params) => params);
