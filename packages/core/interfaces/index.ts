@@ -13,11 +13,9 @@ export interface UseProduct<PRODUCT> {
 
 export interface UseUser
 <
-  USER,
-  ORDER
+  USER
 > {
   user: Readonly<Ref<Readonly<USER>>>;
-  orders: Readonly<Ref<Readonly<ORDER[]>>>;
   register: (user: {
     email: string;
     password: string;
