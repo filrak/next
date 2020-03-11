@@ -22,7 +22,7 @@ export interface CookiesConfig {
   currencyCookieName: string;
   countryCookieName: string;
   localeCookieName: string;
-  tokenCookieName: string;
+  authTokenCookieName: string;
 }
 
 export interface LocaleItem {

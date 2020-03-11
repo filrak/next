@@ -31,7 +31,7 @@ let cookies = {
   currencyCookieName: 'vsf-currency',
   countryCookieName: 'vsf-country',
   localeCookieName: 'vsf-locale',
-  tokenCookieName: 'vsf-token'
+  authTokenCookieName: 'vsf-token'
 };
 
 const setup = <TCacheShape>(setupConfig: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
