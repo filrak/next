@@ -1,7 +1,15 @@
 import { UseProduct } from '@vue-storefront/interfaces';
 import { ref, Ref, computed } from '@vue/composition-api';
 
-export type UseProductFactoryParams<PRODUCT, PRODUCT_SEARCH_PARAMS> = {
+type SearchParams = {
+  perPage?: number;
+  page?: number;
+  sort?: any;
+  term?: any;
+  filters?: any;
+}
+
+export type UseProductFactoryParams<PRODUCT, PRODUCT_SEARCH_PARAMS extends SearchParams> = {
   productsSearch: (searchParams: PRODUCT_SEARCH_PARAMS) => Promise<PRODUCT[]>;
 };
 

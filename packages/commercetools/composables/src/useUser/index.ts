@@ -68,7 +68,7 @@ const params: UseUserFactoryParams<Customer, Cart, any> = {
       const userLogged = await authenticate({ email: userResponse.data.user.email, password: newPassword }, apiCustomerSignMeIn);
       return userLogged.user.value;
     } catch (err) {
-      error.value = err.graphQLErrors ? err.graphQLErrors[0].message : err;
+      console.error(err.graphQLErrors ? err.graphQLErrors[0].message : err);
     }
   }
 };

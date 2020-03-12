@@ -1,7 +1,6 @@
 import pkg from './package.json';
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
-import sourcemaps from 'rollup-plugin-sourcemaps';
 
 export function generateBaseConfig(pkg) {
   return {
@@ -20,7 +19,6 @@ export function generateBaseConfig(pkg) {
       ...Object.keys(pkg.dependencies || {})
     ],
     plugins: [
-      sourcemaps(),
       typescript({
         // eslint-disable-next-line global-require
         typescript: require('typescript')

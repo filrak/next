@@ -16,30 +16,30 @@ const params: UseCartFactoryParams<Cart, LineItem, ProductVariant, any> = {
   loadCart: async () => {
     return await loadCurrentCart();
   },
-  addToCart: async (currentCart: Cart, product: ProductVariant, quantity: any) => {
+  addToCart: async ({ currentCart, product, quantity }) => {
     const updatedCart = await apiAddToCart(currentCart, product, quantity);
     return updatedCart.data.cart;
   },
-  removeFromCart: async (currentCart: Cart, product: LineItem) => {
+  removeFromCart: async ({ currentCart, product }) => {
     const updateResponse = await apiRemoveFromCart(currentCart, product);
     return updateResponse.data.cart;
   },
-  updateQuantity: async (currentCart: Cart, product: LineItem, quantity: number) => {
+  updateQuantity: async ({ currentCart, product, quantity }) => {
     const updatedCart = await apiUpdateCartQuantity(
       currentCart, { ...product, quantity }
     );
     return updatedCart.data.cart;
   },
-  clearCart: async (currentCart: Cart) => {
+  clearCart: async ({ currentCart }) => {
     return currentCart;
   },
-  applyCoupon: async (currentCart: Cart, coupon: string) => {
-    return { cart: currentCart, coupon };
+  applyCoupon: async ({ currentCart, coupon }) => {
+    return { updatedCart: currentCart, updatedCoupon: coupon };
   },
-  removeCoupon: async (currenCart: Cart) => {
-    return currenCart;
+  removeCoupon: async ({ currentCart }) => {
+    return { updatedCart: currentCart, updatedCoupon: null };
   },
-  isOnCart: (currentCart: Cart) => {
+  isOnCart: ({ currentCart }) => {
     console.log('Mocked isOnCart', currentCart);
     return true;
   }
