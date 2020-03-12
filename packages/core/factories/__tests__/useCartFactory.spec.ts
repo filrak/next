@@ -80,6 +80,7 @@ describe('[CORE - factories] useCartFactory', () => {
     describe('refreshCart', () => {
       it('should refresh cart', async () => {
         inputCart = { id: 'existingCart' };
+        createComposable();
         const { refreshCart, cart } = useCart();
         await refreshCart();
         expect(params.loadCart).toHaveBeenCalled();

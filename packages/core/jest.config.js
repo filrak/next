@@ -5,11 +5,10 @@ module.exports = {
   coverageReporters: ['html', 'lcov', 'text'],
   collectCoverageFrom: [
     './**/*.ts',
+    '!./**/*.d.ts',
     '!**/__tests__/**/*.ts',
     // TODO add tests after factories
-    '!theme-module/**/*',
-    // TODO add tests after factories
-    '!utils/**/*'
+    '!theme-module/**/*'
   ],
   watchPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['ts', 'js', 'json'],

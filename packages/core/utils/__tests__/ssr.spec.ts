@@ -1,5 +1,5 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
-import usePersistedState from './../src/ssr';
+import usePersistedState from '../src/ssr';
 
 jest.mock('@vue/composition-api');
 
@@ -68,7 +68,7 @@ describe('[core/utils] cart helpers', () => {
     };
     (getCurrentInstance as any).mockImplementation(() => vm);
 
-    (onServerPrefetch as any).mockImplementation((fn) => fn());
+    (onServerPrefetch as any).mockImplementation((fn: any) => fn());
     const { persistedResource } = usePersistedState('some-id');
 
     const result = await persistedResource(() => Promise.resolve('some-response'), 1);

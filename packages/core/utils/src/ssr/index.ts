@@ -2,7 +2,7 @@ import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
 
 type ResourceFunction<T> = (params: any) => Promise<T>
 
-const getRootState = (vm) => {
+const getRootState = (vm: any) => {
   if (vm.$isServer) {
     return vm.$ssrContext.nuxt.vsfState || {};
   }
