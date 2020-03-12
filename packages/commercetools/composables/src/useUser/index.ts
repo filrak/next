@@ -34,12 +34,12 @@ const authenticate = async (userData: UserData, fn) => {
 
 const params: UseUserFactoryParams<Customer, Cart, any> = {
   cart,
-  logOut: async () => {
-    return await apiCustomerSignOut();
-  },
   loadUser: async () => {
     const profile = await apiGetMe();
     return profile.data.me.customer;
+  },
+  logOut: async () => {
+    return await apiCustomerSignOut();
   },
   updateUser: async ({currentUser, paramsToUpdate}): Promise<Customer> => {
     // Change code below if the apiClient receive userUpdate method

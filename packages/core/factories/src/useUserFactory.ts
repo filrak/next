@@ -58,7 +58,7 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
         user.value = await factoryParams.register(registerUserData);
         loading.value = false;
       } catch (err) {
-        console.log('useUser:Factory:register', err);
+        console.error('useUser:Factory:register', err);
         loading.value = false;
       }
     };
@@ -73,7 +73,7 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
         user.value = updatedUser;
         factoryParams.cart.value = updatedCart;
       } catch (err) {
-        console.log('useUser:Factory:logIn', err);
+        console.error('useUser:Factory:logIn', err);
         loading.value = false;
       }
     };
@@ -83,7 +83,7 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
         user.value = await factoryParams.logOut() as USER;
         factoryParams.cart.value = null;
       } catch (err) {
-        console.log('useUser:Factory:logOut', err);
+        console.error('useUser:Factory:logOut', err);
       }
     };
 
@@ -93,7 +93,7 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
         user.value = await factoryParams.changePassword({currentUser: user.value, currentPassword, newPassword});
         loading.value = false;
       } catch (err) {
-        console.log('useUser:Factory:changePassword', err);
+        console.error('useUser:Factory:changePassword', err);
         loading.value = false;
       }
     };

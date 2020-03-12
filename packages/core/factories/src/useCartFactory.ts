@@ -11,6 +11,7 @@ export type UseCartFactoryParams<CART, CART_ITEM, PRODUCT, COUPON> = {
   applyCoupon: (params: { currentCart: CART; coupon: string }) => Promise<{ updatedCart: CART; updatedCoupon: COUPON }>;
   removeCoupon: (params: {currentCart: CART }) => Promise<{ updatedCart: CART; updatedCoupon: COUPON }>;
   isOnCart: (params: { currentCart: CART; product: PRODUCT }) => boolean;
+  // isOnCart: (params: { currentCart: CART; product: PRODUCT }) => Readonly<Ref<boolean>>;
 };
 
 export function useCartFactory<CART, CART_ITEM, PRODUCT, COUPON> (factoryParams: UseCartFactoryParams<CART, CART_ITEM, PRODUCT, COUPON>) {
