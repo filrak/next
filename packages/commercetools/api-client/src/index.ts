@@ -30,8 +30,7 @@ let locales = [];
 let cookies = {
   currencyCookieName: 'vsf-currency',
   countryCookieName: 'vsf-country',
-  localeCookieName: 'vsf-locale',
-  authTokenCookieName: 'vsf-token'
+  localeCookieName: 'vsf-locale'
 };
 
 const setup = <TCacheShape>(setupConfig: SetupConfig<TCacheShape>): ApolloClient<TCacheShape> => {
@@ -54,19 +53,9 @@ const setup = <TCacheShape>(setupConfig: SetupConfig<TCacheShape>): ApolloClient
   return apolloClient;
 };
 
-const tokenChangeListeners = [];
-
-const onTokenChange = (fn: (token: string) => void): void => {
-  tokenChangeListeners.push(fn);
-};
-
-const changeToken = (newToken: string): void => tokenChangeListeners.forEach(fn => fn(newToken));
-
 export {
   apolloClient,
   setup,
-  onTokenChange,
-  changeToken,
   cookies,
   locale,
   locales,

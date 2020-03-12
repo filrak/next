@@ -1,5 +1,5 @@
 import { Token } from './../../types/setup';
-import getStorage from './getStorage';
+import getStorage from './../../helpers/createCommerceToolsLink/getStorage';
 
 const TOKEN_KEY = 'vsf-commercetools-token';
 

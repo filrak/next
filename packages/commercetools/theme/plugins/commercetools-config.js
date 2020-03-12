@@ -43,6 +43,5 @@ export const config = {
   cookies: {
     currencyCookieName: 'vsf-currency',
     countryCookieName: 'vsf-country',
-    localeCookieName: 'vsf-locale',
-    authTokenCookieName: 'vsf-token'
+    localeCookieName: 'vsf-locale'
   }};

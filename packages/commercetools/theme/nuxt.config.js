@@ -69,8 +69,7 @@ export default {
     }]
   ],
   modules: [
-    'nuxt-i18n',
-    'cookie-universal-nuxt'
+    'nuxt-i18n'
   ],
   build: {
     transpile: [

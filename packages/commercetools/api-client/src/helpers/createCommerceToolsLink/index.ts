@@ -4,13 +4,12 @@ import { ApolloLink } from 'apollo-link';
 import fetch from 'isomorphic-fetch';
 import loadAccessToken from './loadAccessToken';
 import { ApiConfig } from './../../types/setup';
-import { changeToken } from './../..';
 
 const createCommerceToolsLink = (config: ApiConfig): ApolloLink => {
-  const httpLink = createHttpLink({ uri: config.uri, fetch });
+  const httpLink = createHttpLink({ uri: config.uri,
+    fetch });
   const authLink = setContext(async (_, { headers }) => {
     const token = await loadAccessToken(config);
-    changeToken(token);
     return {
       headers: {
         ...headers,
@@ -18,16 +17,18 @@ const createCommerceToolsLink = (config: ApiConfig): ApolloLink => {
       }
     };
   });
-  const customerLink = new ApolloLink((operation, forward) => forward(operation).map((response) => {
-    const { operationName, variables } = operation;
+  const customerLink = new ApolloLink((operation, forward) =>
+    forward(operation).map((response) => {
+      const { operationName, variables } = operation;
 
-    if (!response.errors && ['customerSignMeUp', 'customerSignMeIn'].includes(operationName)) {
-      const { email, password } = variables.draft;
-      loadAccessToken(config, { username: email, password });
-    }
+      if (!response.errors && ['customerSignMeUp', 'customerSignMeIn'].includes(operationName)) {
+        const { email, password } = variables.draft;
+        loadAccessToken(config, { username: email,
+          password });
+      }
 
-    return response;
-  }));
+      return response;
+    }));
 
   return ApolloLink.from([authLink, customerLink, httpLink]);
 };

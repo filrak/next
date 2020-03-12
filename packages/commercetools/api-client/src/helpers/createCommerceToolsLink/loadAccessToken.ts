@@ -3,8 +3,11 @@ import { storeToken, getToken } from './../../helpers/createCommerceToolsLink/to
 import createAccessTokenFlow from './tokenFlow';
 
 const loadAccessToken = async (config: ApiConfig, customerCredentials?: CustomerCredentials): Promise<string> => {
-  const token = await createAccessTokenFlow(config, { currentToken: getToken(), customerCredentials });
+  const token = await createAccessTokenFlow(config, { currentToken: getToken(),
+    customerCredentials });
+
   storeToken(token);
+
   return token.access_token;
 };
 

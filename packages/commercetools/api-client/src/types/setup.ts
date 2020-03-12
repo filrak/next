@@ -22,7 +22,6 @@ export interface CookiesConfig {
   currencyCookieName: string;
   countryCookieName: string;
   localeCookieName: string;
-  authTokenCookieName: string;
 }
 
 export interface LocaleItem {
@@ -40,7 +39,6 @@ export interface SetupConfig<TCacheShape> {
   currencies?: LocaleItem[];
   locales?: LocaleItem[];
   cookies?: CookiesConfig;
-  contextToken?: string;
 }
 
 export interface CustomerCredentials {
