@@ -1,17 +1,23 @@
+import Vue from 'vue';
+import VueCompositionApi from '@vue/composition-api';
+Vue.use(VueCompositionApi);
 import { useProductFactory } from '../src/useProductFactory';
 import { UseProduct } from '@vue-storefront/interfaces';
 
-const useProduct: (
-  cacheId: string
-) => UseProduct<any> = useProductFactory<any, any>({
-  productsSearch: (searchParams) => {
-    return Promise.resolve([{
-      name: 'product' + searchParams
-    }]);
+const useProduct: (cacheId: string) => UseProduct<any> = useProductFactory<
+  any,
+  any
+>({
+  productsSearch: searchParams => {
+    return Promise.resolve([
+      {
+        name: 'product' + searchParams
+      }
+    ]);
   }
 });
 
-describe('[commercetools-composables] useProduct', () => {
+describe('[CORE - factories] useProductFactory', () => {
   it('creates properties', () => {
     const { products, loading, totalProducts } = useProduct('test-product');
 
@@ -25,8 +31,10 @@ describe('[commercetools-composables] useProduct', () => {
 
     await search({ slug: 'product-slug' });
 
-    expect(products.value).toEqual([{
-      name: 'product' + { slug: 'product-slug' }
-    }]);
+    expect(products.value).toEqual([
+      {
+        name: 'product' + { slug: 'product-slug' }
+      }
+    ]);
   });
 });
