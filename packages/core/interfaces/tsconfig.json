@@ -1,9 +1,12 @@
 {
+  "exclude": ["node_modules", "lib"],
+  "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./lib",
+    "strict": true,
     "esModuleInterop": true,
     "target": "es5",
-    "module": "ES2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "importHelpers": true,
     "noEmitHelpers": true,
@@ -12,11 +15,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
-    "lib": ["es6", "es7"],
-    "strict": false,
-    "paths": {
-      "@vue-storefront/interfaces": ["core/interfaces/src"]
-    },
-  },
-  "exclude": ["node_modules", "**/*.spec.ts"]
+    "lib": ["es6", "es7"]
+  }
 }
