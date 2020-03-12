@@ -10,7 +10,7 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
   customerChangeMyPassword: jest.fn()
 }));
 
-describe('[commercetools-composables] useUser', () => {
+describe.skip('[commercetools-composables] useUser', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

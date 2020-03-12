@@ -19,7 +19,7 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
     })
 }));
 
-describe('[commercetools-composables] useCategory', () => {
+describe.skip('[commercetools-composables] useCategory', () => {
   it('creates properties', () => {
     const { categories, loading } = useCategory('test-category');
 
