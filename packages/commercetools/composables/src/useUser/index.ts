@@ -1,5 +1,5 @@
 import { UseUser } from '@vue-storefront/interfaces';
-import { ref, Ref } from '@vue/composition-api';
+import { cart } from '../useCart/';
 import {
   customerSignMeUp as apiCustomerSignMeUp,
   customerSignMeIn as apiCustomerSignMeIn,
@@ -20,8 +20,6 @@ import {
 
 type UserData = CustomerSignMeUpDraft | CustomerSignMeInDraft;
 
-export const error: Ref<any> = ref({});
-
 const authenticate = async (userData: UserData, fn) => {
   try {
     const userResponse = await fn(userData);
@@ -35,34 +33,31 @@ const authenticate = async (userData: UserData, fn) => {
 };
 
 const params: UseUserFactoryParams<Customer, Cart, any> = {
-  getUser: async (customer = true) => {
-    const profile = await apiGetMe({ customer });
+  cart,
+  logOut: async () => {
+    return await apiCustomerSignOut();
+  },
+  loadUser: async () => {
+    const profile = await apiGetMe();
     return profile.data.me.customer;
   },
-
-  updateUser: async (currentUser: Customer): Promise<Customer> => {
+  updateUser: async ({currentUser, paramsToUpdate}): Promise<Customer> => {
     // Change code below if the apiClient receive userUpdate method
+    console.log('useUser:UpdateUser', paramsToUpdate);
     return Promise.resolve(currentUser);
   },
-
-  register: async userData => {
-    const registeredUser = await authenticate(userData, apiCustomerSignMeUp);
+  register: async ({email, password, firstName, lastName}) => {
+    const registeredUser = await authenticate({email, password, firstName, lastName}, apiCustomerSignMeUp);
     return registeredUser.user;
   },
-
-  login: async ({ username, password }) => {
+  logIn: async ({ username, password }) => {
     const customerLoginDraft = { email: username, password };
     const user = await authenticate(customerLoginDraft, apiCustomerSignMeIn);
-    return ({user: user.user, cart: user.cart});
+    return ({updatedUser: user.user, updatedCart: user.cart});
   },
-
-  logout: async () => {
-    await apiCustomerSignOut();
-  },
-
-  changePassword: async (user: Customer, currentPassword: string, newPassword: string) => {
+  changePassword: async ({currentUser, currentPassword, newPassword}) => {
     try {
-      const userResponse = await apiCustomerChangeMyPassword(user.version, currentPassword, newPassword);
+      const userResponse = await apiCustomerChangeMyPassword(currentUser.version, currentPassword, newPassword);
       // we do need to re-authenticate user to acquire new token - otherwise all subsequent requests will fail as unauthorized
       await this.logout();
       const userLogged = await authenticate({ email: userResponse.data.user.email, password: newPassword }, apiCustomerSignMeIn);
