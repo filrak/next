@@ -1,5 +1,5 @@
-import mountComposable from '../_mountComposable';
 import useUserOrders from '../../src/useUserOrders';
+import mountComposable from '../_mountComposable';
 
 jest.mock('@vue-storefront/commercetools-api', () => ({
   getMyOrders: () => ({
@@ -17,6 +17,9 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
 }));
 
 describe('[commercetools-composables] useUserOrders', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('loads current customer\'s orders', async () => {
     const wrapper = mountComposable(useUserOrders);
