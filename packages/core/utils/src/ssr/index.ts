@@ -4,7 +4,7 @@ type ResourceFunction<T> = (params: any) => Promise<T>
 
 const getRootState = (vm: any) => {
   if (vm.$isServer) {
-    return vm.$ssrContext.nuxt.vsfState || {};
+    return vm.$ssrContext.nuxt.vsfState;
   }
 
   // @ts-ignore

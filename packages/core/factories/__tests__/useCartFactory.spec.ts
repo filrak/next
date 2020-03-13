@@ -1,4 +1,4 @@
-import { useCartFactory, UseCartFactoryParams } from '../src/useCartFactory';
+import { useCartFactory, UseCartFactoryParams } from '../src';
 import { UseCart } from '@vue-storefront/interfaces';
 import Vue from 'vue';
 import VueCompositionApi, { ref } from '@vue/composition-api';
