@@ -2,10 +2,7 @@ import { getProduct } from '@vue-storefront/about-you-api';
 import useProduct from './../../src/useProduct';
 import { enhanceProduct } from './../../src/helpers';
 
-jest.mock('@vue-storefront/about-you-api', () => ({
-  getProduct: jest.fn()
-}));
-
+jest.mock('@vue-storefront/about-you-api');
 jest.mock('@vue-storefront/factories', () => ({
   useProductFactory: jest.fn(() => () => ({ foo: 'bar' }))
 }));
