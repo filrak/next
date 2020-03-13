@@ -3,7 +3,6 @@ jest.mock('@vue-storefront/factories', () => ({
 }));
 jest.mock('@vue-storefront/commercetools-api', () => ({
   getMe: jest.fn()
-
 }));
 
 import { getMe as apiGetMe } from '@vue-storefront/commercetools-api';
@@ -22,10 +21,10 @@ describe('useUser', () => {
     const factoryParams = (useUserFactory as jest.Mock).mock.calls[0][0];
     expect(await factoryParams.loadUser()).toBe(customer);
   });
-  // it('logOut return empty object', async () => {
-  //
-  // });
-  // it('register function return new user', () => {
-  //   // const customer = { firstName: 'loaded customer', lastName: 'loaded customer' };
-  // });
+  it('logOut return empty object', async () => {
+
+  });
+  it('register function return new user', () => {
+    // const customer = { firstName: 'loaded customer', lastName: 'loaded customer' };
+  });
 });

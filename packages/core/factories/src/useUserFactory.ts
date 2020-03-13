@@ -4,7 +4,7 @@ import { UseUser } from '@vue-storefront/interfaces';
 export type UseUserFactoryParams<USER, CART, UPDATE_USER_PARAMS> = {
   cart: Ref<CART>;
   loadUser: () => Promise<USER>;
-  logOut: (params?: {currentUser?: USER}) => Promise<USER>;
+  logOut: (params?: {currentUser?: USER}) => Promise<void>;
   updateUser: (params: {currentUser: USER; paramsToUpdate: UPDATE_USER_PARAMS}) => Promise<USER>;
   register: (params: { email: string; password: string; firstName?: string; lastName?: string }) => Promise<USER>;
   logIn: (params: { username: string; password: string }) => Promise<({updatedUser: USER; updatedCart: CART})>;
@@ -16,7 +16,6 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
 ) {
   const user: Ref<USER> = ref({});
   const loading: Ref<boolean> = ref(false);
-
   const isAuthenticated = computed(
     () => user.value && Object.keys(user.value).length > 0
   );
@@ -80,7 +79,8 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
 
     const logout = async () => {
       try {
-        user.value = await factoryParams.logOut() as USER;
+        await factoryParams.logOut();
+        user.value = {} as USER;
         factoryParams.cart.value = null;
       } catch (err) {
         console.error('useUser:Factory:logOut', err);
