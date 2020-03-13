@@ -94,7 +94,7 @@ export default {
 
     return {
       tableHeaders,
-      orders: computed(() => orders.value ? orders.value.data : []),
+      orders: computed(() => orders ? orders.data.value : []),
       getOrderNumber,
       getOrderDate,
       getOrderTotal,

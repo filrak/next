@@ -1,4 +1,5 @@
 import { ref, Ref, computed } from '@vue/composition-api';
+import { UseUserOrders } from '@vue-storefront/interfaces';
 
 export type OrdersSearchResult<ORDER> = {
   data: ORDER[];
@@ -10,9 +11,10 @@ export type UseUserOrdersFactoryParams<ORDER, ORDER_SEARCH_PARAMS> = {
 };
 
 export function useUserOrdersFactory<ORDER, ORDER_SEARCH_PARAMS>(factoryParams: UseUserOrdersFactoryParams<ORDER, ORDER_SEARCH_PARAMS>) {
-  return function useUserOrders() {
-    const orders: Ref<OrdersSearchResult<ORDER>> = ref(null);
+  return function useUserOrders(): UseUserOrders<ORDER> {
+    const orders: Ref<OrdersSearchResult<ORDER>> = ref({ data: [], total: 0 });
     const loading: Ref<boolean> = ref(false);
+
     const searchOrders = async (params?: ORDER_SEARCH_PARAMS): Promise<void> => {
       loading.value = true;
       orders.value = await factoryParams.searchOrders(params);
@@ -20,7 +22,10 @@ export function useUserOrdersFactory<ORDER, ORDER_SEARCH_PARAMS>(factoryParams: 
     };
 
     return {
-      orders: computed(() => orders.value),
+      orders: {
+        data: computed(() => orders.value.data),
+        total: computed(() => orders.value.total)
+      },
       searchOrders,
       loading: computed(() => loading.value)
     };
