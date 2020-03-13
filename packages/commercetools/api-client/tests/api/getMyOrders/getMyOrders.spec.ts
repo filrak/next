@@ -1,7 +1,7 @@
 import getMyOrders from '../../../src/api/getMyOrders';
 import { apolloClient } from '../../../src/index';
 import defaultQuery from '../../../src/api/getMyOrders/defaultQuery';
-import { OrderSearch } from 'api-client/src/types/Api';
+import { OrderSearch } from '../../../src/types/Api';
 
 describe('[commercetools-api-client] getMyOrders', () => {
   it('fetches current user data', async () => {
