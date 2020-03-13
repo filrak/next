@@ -9,8 +9,7 @@
     "build": "vuepress build"
   },
   "dependencies": {
-    "@vue-storefront/docs": "^0.0.1",
-    "marked": "^0.8.0"
+    "@vue-storefront/docs": "^0.0.1"
   },
   "devDependencies": {
     "vuepress": "^1.2.0"
