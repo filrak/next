@@ -16,7 +16,7 @@
 <script>
 import api from '../../api.json'
 
-function parseResponseObject (type) {
+function parseType (type) {
   if (type.typeArguments) {
     return type.name + '<' + type.typeArguments[0].name + '>'
   }
@@ -31,7 +31,7 @@ function getFunctions (children, file) {
       name: fn.name,
       file: file.substring(file.indexOf("/packages") + 1),
       params: fn.signatures[0].parameters, 
-      returns: parseResponseObject(fn.signatures[0].type)
+      returns: parseType(fn.signatures[0].type)
     }
   })
 }
