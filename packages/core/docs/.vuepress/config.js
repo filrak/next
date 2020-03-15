@@ -14,7 +14,7 @@ module.exports = {
   themeConfig: {
     locales: {
       '/' : {
-        selectText: 'eCommerce platform',
+        selectText: 'Choose eCommerce platform',
         label: 'Overview',
         sidebar: [
           {
@@ -28,16 +28,16 @@ module.exports = {
       },
       '/commercetools/' : {
         // text for the language dropdown
-        selectText: 'eCommerce platform',
+        selectText: 'Commercetools',
         // label for this locale in the language dropdown
         label: 'Commercetools',
         platformName: 'Commercetools',
         sidebar: [
-          ['/commercetools/', 'Introduction'],
           {
             title: 'Essentials',
             collapsable: false,
             children: [
+              ['/commercetools/', 'Introduction'],
               ['/commercetools/getting-started', 'Getting Started'],
               ['/commercetools/api-client', 'API Client'],
             ],
