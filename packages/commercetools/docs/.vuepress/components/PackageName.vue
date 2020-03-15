@@ -1,4 +1,4 @@
-<template functional>
+<template>
   <span>commercetools</span>
 </template>
 

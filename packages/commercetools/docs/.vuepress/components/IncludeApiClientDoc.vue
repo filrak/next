@@ -54,7 +54,6 @@ function parse() {
 
 const parsedApi = parse()
 
-console.log(parsedApi)
 export default {
   data () {
     return {
