@@ -3,14 +3,14 @@ module.exports = {
   description: 'Vue Storefront 2 documentation',
   locales: {
     '/': {
-      title: 'VuePress',
-      description: 'Vue-powered Static Site Generator',
+      title: 'Vue Storefront Next',
+      description: '',
       lang: 'en-US',
     },
     '/commercetools/': {
-      title: 'VuePress',
-      description: 'Vue-powered Static Site Generator',
-      lang: 'en-GB'
+      title: 'Vue Storefront Commercetools',
+      description: '',
+      lang: 'en-US'
     }
   },
   themeConfig: {

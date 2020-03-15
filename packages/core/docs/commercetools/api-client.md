@@ -64,7 +64,7 @@ export interface CookiesConfig {
 
 ::: slot methods
 
-<IncludeApiClientDoc />
+<CTIncludeApiClientDoc />
 
 :::
 
