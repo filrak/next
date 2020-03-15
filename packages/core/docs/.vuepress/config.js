@@ -4,13 +4,11 @@ module.exports = {
   locales: {
     '/': {
       title: 'Vue Storefront Next',
-      description: '',
-      lang: 'en-US',
+      description: ''
     },
     '/commercetools/': {
       title: 'Vue Storefront Commercetools',
-      description: '',
-      lang: 'en-US'
+      description: ''
     }
   },
   themeConfig: {
