@@ -1,7 +1,5 @@
-<GettingStarted 
-  platform-plugin-file="commercetools.js"
-  platform-name="Commercetools"
-/>
+<IncludeContent content-key="getting-started" />
+
 
 <!-- Installation command -->
 ::: slot installation

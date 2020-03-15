@@ -1,6 +1,7 @@
 module.exports = {
   title: 'VSF Next',
   description: 'Vue Storefront 2 documentation',
+  a: 'aa',
   themeConfig: {
     sidebar: [
       {

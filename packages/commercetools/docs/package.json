@@ -9,9 +9,11 @@
     "build": "vuepress build"
   },
   "dependencies": {
-    "@vue-storefront/docs": "^0.0.1"
+    "@vue-storefront/docs": "^0.0.1",
+    "typedoc": "^0.16.11"
   },
   "devDependencies": {
+    "@vue-storefront/commercetools-api": "^0.0.3",
     "vuepress": "^1.2.0"
   },
   "author": "DivanteLtd",
