@@ -5,8 +5,6 @@ export default ({
   router, // the router instance for the app
   siteData // site metadata
 }) => {
-  options.platformName = 'Commercetools'
   Vue.component('Block', Block)
-  Vue.component('Overview', () => import('@vue-storefront/docs/Overview.vue'))
   Vue.component('Theme', () => import('@vue-storefront/docs/contributing/Theme.vue'))
 }
