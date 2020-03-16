@@ -1,14 +1,13 @@
 import { BapiClient } from '@aboutyou/backbone';
-import { SetupConfig } from './types';
-import getProductApi from './api/getProduct';
-import getCategoryApi from './api/getCategory';
+import getProductApi from './getProduct';
+import getCategoryApi from './getCategory';
 import addToCartApi from './api/addToCart';
 import removeFromCartApi from './api/removeFromCart';
 import clearCartApi from './api/clearCart';
-import placeOrderApi from './api/placeOrder';
-import getUserApi from './api/getUser';
-import addCouponApi from './api/addCoupon';
-import removeCouponApi from './api/removeCoupon';
+import placeOrderApi from './placeOrder';
+import getUserApi from './getUser';
+import addCouponApi from './addCoupon';
+import removeCouponApi from './removeCoupon';
 
 let apiClient: BapiClient = null;
 
@@ -29,9 +28,13 @@ function override(overrides) {
     ...overrides };
 }
 
-function setup(setupConfig: SetupConfig) {
-  apiClient = new BapiClient(setupConfig);
-  return apiClient;
+function setup() {
+  apiClient = new BapiClient({
+    host: 'https://boston.backbone-api.demo.aboutyou.cloud/v1/',
+    auth: { username: 'aboutyou',
+      password: 'OmNErAb96Y5Qn75SFhXr' },
+    shopId: 121
+  });
 }
 
 /** just because you can't simply do "export x as y..." */
