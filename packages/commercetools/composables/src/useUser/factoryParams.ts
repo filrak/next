@@ -17,7 +17,7 @@ export const params: UseUserFactoryParams<Customer, Cart, any> = {
     return profile.data.me.customer;
   },
   logOut: async () => {
-    return await apiCustomerSignOut();
+    await apiCustomerSignOut();
   },
   updateUser: async ({currentUser, paramsToUpdate}): Promise<Customer> => {
     // Change code below if the apiClient receive userUpdate method
@@ -33,11 +33,11 @@ export const params: UseUserFactoryParams<Customer, Cart, any> = {
     const user = await authenticate(customerLoginDraft, apiCustomerSignMeIn);
     return ({updatedUser: user.user, updatedCart: user.cart});
   },
-  changePassword: async ({currentUser, currentPassword, newPassword}) => {
+  changePassword: async function changePassword({currentUser, currentPassword, newPassword}) {
     try {
       const userResponse = await apiCustomerChangeMyPassword(currentUser.version, currentPassword, newPassword);
       // we do need to re-authenticate user to acquire new token - otherwise all subsequent requests will fail as unauthorized
-      await this.logout();
+      this.logOut();
       const userLogged = await authenticate({ email: userResponse.data.user.email, password: newPassword }, apiCustomerSignMeIn);
       return userLogged.user.value;
     } catch (err) {
