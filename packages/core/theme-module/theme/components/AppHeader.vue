@@ -3,6 +3,7 @@
     active-sidebar="activeSidebar"
     @click:cart="toggleCartSidebar"
     @click:account="onAccountClicked"
+    :cartItemsQty="cartTotalItems"
     >
     <template #logo>
       <nuxt-link to="/" class="sf-header__logo">
@@ -32,11 +33,19 @@
 <script>
 import { SfHeader, SfImage } from '@storefront-ui/vue';
 import uiState from '~/assets/ui-state';
+import { useCart } from '<%= options.composables %>';
+import { getCartTotalItems } from '<%= options.helpers %>';
+import { computed } from '@vue/composition-api';
 const { toggleCartSidebar, toggleLoginModal } = uiState;
 
 export default {
   setup() {
+    const { cart } = useCart();
+    const cartTotalItems = computed(() => {
+      return getCartTotalItems(cart.value);
+    });
     return {
+      cartTotalItems,
       toggleCartSidebar,
       toggleLoginModal
     };
