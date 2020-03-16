@@ -1,11 +1,7 @@
-
 import { apiClient } from '../..';
-import { CategoryWith } from '@aboutyou/backbone/types/CategoryWith';
-import { BapiCategory } from '@aboutyou/backbone/types/BapiCategory';
+import { BapiCategory, GetCategorySearchParams } from '../../types';
 
-export type getCategorySearchParams = { ids?: number[]; path?: string[]; with?: CategoryWith; depth?: number }
-
-export default async function(options: getCategorySearchParams = {}): Promise<BapiCategory[]> {
+export default async function(options: GetCategorySearchParams = {}): Promise<BapiCategory[]> {
   if (options.ids) {
     return await apiClient.categories.getByIds(
       options.ids,

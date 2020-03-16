@@ -1,7 +1,6 @@
-import { UseProduct } from '@vue-storefront/interfaces';
-import { BapiProduct } from '@aboutyou/backbone/types/BapiProduct';
 import { useProductFactory } from '@vue-storefront/factories';
-import { enhanceProduct } from '../helpers';
+import { enhanceProduct } from '../../helpers';
+import { UseProduct, BapiProduct } from '../../types';
 
 const useProduct: (cacheId: string) => UseProduct<BapiProduct> = useProductFactory<BapiProduct, any>({
   productsSearch: enhanceProduct

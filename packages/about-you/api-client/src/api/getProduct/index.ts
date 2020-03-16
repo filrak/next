@@ -1,13 +1,8 @@
+import { BapiProduct, GetProductSearchParams } from '../../types';
+
 import { apiClient } from '../..';
-import { ProductWith } from '@aboutyou/backbone/types/ProductWith';
-import { ProductSearchQuery } from '@aboutyou/backbone/types/ProductSearchQuery';
-import { BapiProduct } from '@aboutyou/backbone/types/BapiProduct';
-import { ProductSortConfig } from '@aboutyou/backbone/endpoints/products/products';
-import { Pagination } from '@aboutyou/backbone/endpoints/products/productsByIds';
 
-type getProductSearchParams = { ids?: number[]; with?: ProductWith; where?: ProductSearchQuery; sort?: ProductSortConfig; pagination?: Pagination; masterKey?: string; term?: string };
-
-export default async function(options: getProductSearchParams = {}): Promise<BapiProduct[]> {
+export default async function(options: GetProductSearchParams = {}): Promise<BapiProduct[]> {
   if (options.ids) {
     return await apiClient.products.getByIds(
       options.ids,

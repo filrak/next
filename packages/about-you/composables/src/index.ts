@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import useCategory from './useCategory';
-import useProduct from './useProduct';
+import useCategory from './composables/useCategory';
+import useProduct from './composables/useProduct';
 
 export {
   useCategory,

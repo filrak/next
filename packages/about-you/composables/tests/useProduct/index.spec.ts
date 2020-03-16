@@ -1,5 +1,5 @@
 import { getProduct } from '@vue-storefront/about-you-api';
-import useProduct from './../../src/useProduct';
+import useProduct from './../../src/composables/useProduct';
 import { enhanceProduct } from './../../src/helpers';
 
 jest.mock('@vue-storefront/about-you-api');
