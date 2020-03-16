@@ -11,21 +11,21 @@
       </nuxt-link>
     </template>
     <template #navigation>
-      <nuxt-link to="/c/women">
-        <SfHeaderNavigationItem>
+      <SfHeaderNavigationItem>
+        <nuxt-link to="/c/women">
           WOMEN
-        </SfHeaderNavigationItem>
-      </nuxt-link>
-      <nuxt-link to="/c/men">
-        <SfHeaderNavigationItem>
+        </nuxt-link>
+      </SfHeaderNavigationItem>
+      <SfHeaderNavigationItem>
+        <nuxt-link to="/c/men">
           MEN
-        </SfHeaderNavigationItem>
-      </nuxt-link>
-      <nuxt-link to="/c/cat">
-        <SfHeaderNavigationItem>
+        </nuxt-link>
+      </SfHeaderNavigationItem>
+      <SfHeaderNavigationItem>
+        <nuxt-link to="/c/cat">
           KIDS
-        </SfHeaderNavigationItem>
-      </nuxt-link>
+        </nuxt-link>
+      </SfHeaderNavigationItem>
     </template>
   </SfHeader>
 </template>
@@ -42,7 +42,7 @@ export default {
   setup() {
     const { cart } = useCart();
     const cartTotalItems = computed(() => {
-      return getCartTotalItems(cart.value);
+      return getCartTotalItems(cart.value).toString();
     });
     return {
       cartTotalItems,
