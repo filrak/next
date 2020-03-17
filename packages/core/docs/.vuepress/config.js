@@ -41,6 +41,12 @@ module.exports = {
               ['/commercetools/getting-started', 'Getting Started'],
               ['/commercetools/api-client', 'API Client'],
             ],
+          }, {
+            title: 'Theme',
+            collapsable: false,
+            children: [
+              ['/commercetools/auth-middleware', 'Auth Middleware']
+            ],
           }
         ]
       }
