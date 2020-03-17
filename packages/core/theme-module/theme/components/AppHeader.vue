@@ -33,32 +33,31 @@
 <script>
 import { SfHeader, SfImage } from '@storefront-ui/vue';
 import uiState from '~/assets/ui-state';
-import { useCart } from '<%= options.composables %>';
+import { useCart, useUser } from '<%= options.composables %>';
 import { getCartTotalItems } from '<%= options.helpers %>';
 import { computed } from '@vue/composition-api';
 const { toggleCartSidebar, toggleLoginModal } = uiState;
 
 export default {
-  setup() {
+  components: {
+    SfHeader,
+    SfImage
+  },
+  setup(props, { root }) {
+    const { isAuthenticated } = useUser();
+    const onAccountClicked = () => {
+      isAuthenticated && isAuthenticated.value ? root.$router.push('/my-account') : toggleLoginModal();
+    };
     const { cart } = useCart();
     const cartTotalItems = computed(() => {
       return getCartTotalItems(cart.value).toString();
     });
     return {
       cartTotalItems,
-      toggleCartSidebar,
-      toggleLoginModal
+      toggleLoginModal,
+      onAccountClicked,
+      toggleCartSidebar
     };
-  },
-  components: {
-    SfHeader,
-    SfImage
-  },
-  methods: {
-    onAccountClicked() {
-      // When need to go to another page or do something else when logged in
-      toggleLoginModal();
-    }
   }
 };
 </script>
