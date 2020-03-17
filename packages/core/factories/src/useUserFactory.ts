@@ -41,7 +41,7 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
         user.value = await factoryParams.updateUser({currentUser: user.value, paramsToUpdate: params});
         loading.value = false;
       } catch (err) {
-        console.log('useUser:Factory:updateUser', err);
+        console.error('useUser:Factory:updateUser', err);
         loading.value = false;
       }
     };
@@ -99,7 +99,9 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
     };
 
     return {
-      user: computed(() => user.value),
+      user: computed(
+        () => user.value
+      ),
       updateUser,
       register,
       login,

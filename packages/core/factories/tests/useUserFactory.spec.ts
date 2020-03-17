@@ -1,5 +1,5 @@
-import { useUserFactory } from '../src/';
-import { params } from '../../../commercetools/composables/src/useUser/factoryParams';
+import { useUserFactory } from '../src/useUserFactory';
+import { params as factoryParams } from '../../../commercetools/composables/src/useUser/factoryParams';
 
 jest.mock('../../../commercetools/composables/src/useUser/factoryParams', () => ({
   params: {
@@ -13,12 +13,29 @@ jest.mock('../../../commercetools/composables/src/useUser/factoryParams', () => 
   }
 }));
 
-describe('useUser', () => {
+const useUserMethods = useUserFactory(factoryParams)();
+
+describe('useUserFactory', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  it('creates properties', () => {
-    const { user } = useUserFactory(params);
-    expect(user.value).toEqual(null);
+
+  describe('updateUser method', () => {
+    it('updateUser return updated user data', async () => {
+      const paramsToUpdate = { name: 'Test'};
+
+      await useUserMethods.updateUser(paramsToUpdate);
+      (factoryParams.updateUser as jest.Mock).mockReturnValueOnce(paramsToUpdate);
+
+      expect(useUserMethods.user.value).toEqual(paramsToUpdate);
+      expect(useUserMethods.loading.value).toBe(false);
+    });
+    it('console error is called', () => {});
+  });
+
+  describe('register method', () => {
+    it('', () => {
+
+    });
   });
 });
