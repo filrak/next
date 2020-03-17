@@ -1,4 +1,4 @@
-const baseConfig = require('./../../commercetools/jest.base.config');
+const baseConfig = require('../../commercetools/composables/jest.config');
 
 module.exports = {
   ...baseConfig,
