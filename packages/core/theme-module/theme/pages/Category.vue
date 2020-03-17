@@ -148,11 +148,7 @@
           <SfPagination
             class="products__pagination desktop-only"
             :current="currentPage"
-            @click="
-              page => {
-                this.currentPage = page;
-              }
-            "
+            @click="page => currentPage = page"
             :total="4"
             :visible="5"
           />
@@ -274,10 +270,12 @@ export default {
 
     // ugly workaround until we will have async setup
     watch(categories, () => {
-      if (categories.value.length) productsSearch({ catId: categories.value[0].id });
+      if (categories.value.length) {
+        productsSearch({ catId: categories.value[0].id });
+      }
     });
 
-    const products = computed(() => getProductVariants(categoryProducts.value, { master: true}));
+    const products = computed(() => getProductVariants(categoryProducts.data.value, { master: true}));
     const categoryTree = computed(() => getCategoryTree(categories.value[0]));
 
     const getCategoryUrl = (slug) => `/c/${params.slug_1}/${slug}`;

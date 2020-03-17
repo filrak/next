@@ -9,8 +9,13 @@ type SearchParams = {
   filters?: any;
 }
 
+export type ProductsSearchResult<PRODUCT> = {
+  data: PRODUCT[];
+  total: number;
+};
+
 export type UseProductFactoryParams<PRODUCT, PRODUCT_SEARCH_PARAMS extends SearchParams> = {
-  productsSearch: (searchParams: PRODUCT_SEARCH_PARAMS) => Promise<PRODUCT[]>;
+  productsSearch: (searchParams: PRODUCT_SEARCH_PARAMS) => Promise<ProductsSearchResult<PRODUCT>>;
 };
 
 export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
@@ -24,11 +29,10 @@ export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
     // const { state, persistedResource } = usePersistedState(id);
 
     // const products: Ref<ProductVariant[]> = ref(state || []);\
-    const products: Ref<PRODUCT[]> = ref([]);
+    const products: Ref<ProductsSearchResult<PRODUCT>> = ref({ data: [], total: 0 });
     const loading = ref(false);
-    const totalProducts = ref(0);
 
-    const search = async (params: any) => {
+    const search = async (params: PRODUCT_SEARCH_PARAMS) => {
       loading.value = true;
       // products.value = await persistedResource<ProductVariant[]>(loadProductVariants, params);
       products.value = await factoryParams.productsSearch(params);
@@ -36,10 +40,12 @@ export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
     };
 
     return {
-      products: computed(() => products.value),
+      products: {
+        data: computed(() => products.value.data),
+        total: computed(() => products.value.total)
+      },
       search,
-      loading: computed(() => loading.value),
-      totalProducts: computed(() => totalProducts.value)
+      loading: computed(() => loading.value)
     };
   };
 }

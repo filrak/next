@@ -9,21 +9,17 @@ const useProduct: (cacheId: string) => UseProduct<any> = useProductFactory<
   any
 >({
   productsSearch: searchParams => {
-    return Promise.resolve([
-      {
-        name: 'product' + searchParams
-      }
-    ]);
+    return Promise.resolve({ data: [{ name: 'product' + searchParams }], total: 1 });
   }
 });
 
 describe('[CORE - factories] useProductFactory', () => {
   it('creates properties', () => {
-    const { products, loading, totalProducts } = useProduct('test-product');
+    const { products, loading } = useProduct('test-product');
 
-    expect(products.value).toEqual([]);
+    expect(products.data.value).toEqual([]);
     expect(loading.value).toEqual(false);
-    expect(totalProducts.value).toEqual(0);
+    expect(products.total.value).toEqual(0);
   });
 
   it('returns product response', async () => {
@@ -31,10 +27,6 @@ describe('[CORE - factories] useProductFactory', () => {
 
     await search({ slug: 'product-slug' });
 
-    expect(products.value).toEqual([
-      {
-        name: 'product' + { slug: 'product-slug' }
-      }
-    ]);
+    expect(products.data.value).toEqual([{name: 'product' + { slug: 'product-slug' }}]);
   });
 });

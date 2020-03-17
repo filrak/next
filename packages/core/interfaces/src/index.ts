@@ -3,8 +3,10 @@ import { Ref } from '@vue/composition-api';
 type ComputedProperty<T> = Readonly<Ref<Readonly<T>>>;
 
 export interface UseProduct<PRODUCT> {
-  products: ComputedProperty<PRODUCT[]>;
-  totalProducts: ComputedProperty<number>;
+  products: {
+    data: ComputedProperty<PRODUCT[]>;
+    total: ComputedProperty<number>;
+  };
   search: (params: {
     perPage?: number;
     page?: number;
@@ -42,7 +44,7 @@ export interface UseUser
     newPassword: string
   ) => Promise<void>;
   isAuthenticated: Ref<boolean>;
-  loading: Ref<boolean>;
+  loading: ComputedProperty<boolean>;
 }
 
 export interface UseUserOrders<ORDER> {
@@ -56,30 +58,27 @@ export interface UseUserOrders<ORDER> {
     perPage?: number;
     [x: string]: any;
   }) => Promise<void>;
-  loading: Ref<boolean>;
+  loading: ComputedProperty<boolean>;
 }
 
-/** check if we always have those addresses together or we need pagination  */
 export interface UseUserAddress<ADDRESS> {
-  addresses: ComputedProperty<ADDRESS[]>;
+  addresses: {
+    data: ComputedProperty<ADDRESS[]>;
+    total: ComputedProperty<number>;
+  };
   addAddress: (address: ADDRESS) => Promise<void>;
   deleteAddress: (address: ADDRESS) => Promise<void>;
   updateAddress: (address: ADDRESS) => Promise<void>;
-  searchAddresses: (params?: {
-    [x: string]: any;
-  }) => Promise<void>;
-  loading: Ref<boolean>;
+  searchAddresses: (params?: { [x: string]: any }) => Promise<void>;
+  loading: ComputedProperty<boolean>;
 }
 
-export interface UseCategory
-<
-  CATEGORY
-> {
+export interface UseCategory<CATEGORY> {
   categories: ComputedProperty<CATEGORY[]>;
   search: (params: {
     [x: string]: any;
   }) => Promise<void>;
-  loading: Ref<boolean>;
+  loading: ComputedProperty<boolean>;
 }
 
 export interface UseCart
@@ -99,7 +98,7 @@ export interface UseCart
   applyCoupon: (coupon: string) => Promise<void>;
   removeCoupon: () => Promise<void>;
   refreshCart: () => Promise<void>;
-  loading: Ref<boolean>;
+  loading: ComputedProperty<boolean>;
 }
 
 export interface UseWishlist
@@ -114,18 +113,15 @@ export interface UseWishlist
   removeFromWishlist: (product: WISHLIST_ITEM) => Promise<void>;
   clearWishlist: () => Promise<void>;
   refreshWishlist: () => Promise<void>;
-  loading: Ref<boolean>;
+  loading: ComputedProperty<boolean>;
 }
 
-export interface UseCompare
-<
-  PRODUCT
-> {
+export interface UseCompare<PRODUCT> {
   compare: ComputedProperty<PRODUCT[]>;
   addToCompare: (product: PRODUCT) => Promise<void>;
   removeFromCompare: (product: PRODUCT) => Promise<void>;
   clearCompare: () => Promise<void>;
-  loading: Ref<boolean>;
+  loading: ComputedProperty<boolean>;
 }
 
 export interface UseCheckout
@@ -147,7 +143,7 @@ export interface UseCheckout
   chosenPaymentMethod: CHOOSEN_PAYMENT_METHOD;
   chosenShippingMethod: CHOOSEN_SHIPPING_METHOD;
   placeOrder: PLACE_ORDER;
-  loading: Ref<boolean>;
+  loading: ComputedProperty<boolean>;
 }
 
 export interface UseLocale
@@ -165,7 +161,7 @@ export interface UseLocale
   availableLocales: AVAILABLE_LOCALES;
   availableCountries: AVAILABLE_COUNTRIES;
   availableCurrencies: AVAILABLE_CURRENCIES;
-  loading: Ref<boolean>;
+  loading: ComputedProperty<boolean>;
 }
 
 export interface UiMediaGalleryItem {
