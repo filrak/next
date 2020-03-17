@@ -5,7 +5,7 @@
     "node": "10.x"
   },
   "scripts": {
-    "build::docs": "cd packages/core/docs && yarn build",
+    "build:docs": "cd packages/core/docs && yarn build",
     "dev:docs": "cd packages/core/docs && yarn dev",
     "build:core:interfaces": "cd packages/core/interfaces && tsc",
     "build:core:utils": "cd packages/core/utils && yarn build",
