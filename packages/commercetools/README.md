@@ -10,10 +10,10 @@
 ## Setup / CI Checklist
 
 - [x] Readme explains how to setup the project.
-- [ ] CI works well.
+- [x] CI works well.
 - [x] Test coverage check is added to the pipeline.
-- [ ] Continuous deployment to unstable test environment works.
-- [ ] Stable demo store is available.
+- [x] Continuous deployment to unstable test environment works.
+- [x] Stable demo store is available.
 
 ## API Client Checklist
 
@@ -24,7 +24,7 @@
 
 ### Category Page
 
-- [ ] I want to see a category tree So I can understand the structure of eCommerce's offer.
+- [x] I want to see a category tree So I can understand the structure of eCommerce's offer.
 - [ ] I want to use filters in category page So I can limit the products visible in the category page.
 - [ ] I want to use sorting in the category page so I can change the order of the products to find these easily.
 - [x] I want to open the specific category So I can see products inside.
@@ -34,9 +34,9 @@
 
 ### Navigation
 
-- [ ] I want to see the category tree So I can go through the page structure.
-- [ ] Navigation in the mobile view works well.
+- [x] I want to see the category tree So I can go through the page structure.
 - [ ] I want to use Mega Menu.
+- [ ] I want to see breadcrumbs So I can see where I am.
 
 ### Product Page
 
@@ -60,13 +60,13 @@
 
 ### Checkout
 
-- [ ] I want to proceed to the checkout So I can place the order
+- [x] I want to proceed to the checkout So I can place the order
 - [ ] I want to be redirected to the thank you page after placing an order.
-- [ ] I want to create a guest order.
-- [ ] I want to select shipping address.
-- [ ] I want to select billing address.
-- [ ] I want to select a payment method.
-- [ ] I want to select a shipping method.
+- [x] I want to create a guest order.
+- [x] I want to select shipping address.
+- [x] I want to select billing address.
+- [x] I want to select a payment method.
+- [x] I want to select a shipping method.
 - [ ] I want to apply coupon code.
 
 ### Thank You Page
@@ -76,7 +76,7 @@
 ### User Management
 
 - [x] I want to login as a customer So I can access My Account details and continue shopping as a recognized user.
-- [ ] I want to logout.
+- [x] I want to logout.
 - [x] I want to register as a new customer So I can later log in to My Account.
 - [ ] I want to reset the password So I can get a new one when I forgot the current one.
 
@@ -95,8 +95,12 @@
 - [x] I want to change the language of the shop So I can easily understand the content.
 - [ ] I want to see translated STATIC content to the language that I set So I can finally read the site in the language that I know.
 - [x] I want to see translated DYNAMIC content to the language that I set So I can finally read the site in the language that I know.
-- [ ] I want to change the currency.
-- [ ] I want to change the country.
+- [x] I want to change the currency.
+- [x] I want to change the country.
+
+### SEO / SSR
+- [x] I want to have pages pre-rendered on server-side
+
 
 ### Prismic
 
