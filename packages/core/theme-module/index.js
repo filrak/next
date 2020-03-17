@@ -122,7 +122,9 @@ module.exports = function DefaultThemeModule(moduleOptions) {
   });
 
   if (global.coreDev) {
-    chokidar.watch(path.join(__dirname, '../theme/')).on('all', () => {
+    log.info('Watching changes in @vue-storefront/nuxt-theme');
+    chokidar.watch(path.join(__dirname, '/theme/')).on('all', () => {
+      // TODO: Compile only the template that has changed
       compileAgnosticTemplates();
       log.success('Theme files recompiled');
     });

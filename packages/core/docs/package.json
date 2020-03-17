@@ -5,8 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": " vuepress dev",
-    "build": "vuepress build"
+    "dev": "yarn typedoc && vuepress dev",
+    "build": "yarn typedoc && vuepress build"
   },
   "dependencies": {
   },
