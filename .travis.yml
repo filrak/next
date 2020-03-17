@@ -31,6 +31,12 @@ install:
 
 jobs:
   include:
+    - stage: test core
+      script: yarn test:core --coverage
+      name: Test core packages
+      after_script:
+        - cat ./packages/core/coverage/lcov.info | coveralls
+
     - stage: Build
       name: Build
       script:
@@ -53,12 +59,6 @@ jobs:
       name: Test helpers
       after_script:
         - cat ./packages/commercetools/helpers/coverage/lcov.info | coveralls
-
-    - stage: test core
-      script: yarn test:core --coverage
-      name: Test core packages
-      after_script:
-        - cat ./packages/core/coverage/lcov.info | coveralls
 
     - stage: test prismic
       script: yarn test:prismic --coverage
