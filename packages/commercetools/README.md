@@ -68,6 +68,7 @@
 - [x] I want to select a payment method.
 - [x] I want to select a shipping method.
 - [ ] I want to apply coupon code.
+- [ ] I want to proceed my payment with external service.
 
 ### Thank You Page
 
@@ -90,6 +91,10 @@
 - [x] I want to see the history of my orders (list) So I can track the status of my shopping experiences.
 - [ ] I want to see the history of my orders (details) So I can track the status of my shopping experiences.
 
+### Prices / Tax
+- [ ] I want to see the prices in the right currency and with applied tax.
+- [ ] I want to see applied taxes depending on the selected country / area So I can display price properly.
+
 ### Multistores / Currencies / I18n
 
 - [x] I want to change the language of the shop So I can easily understand the content.
@@ -99,8 +104,8 @@
 - [x] I want to change the country.
 
 ### SEO / SSR
-- [x] I want to have pages pre-rendered on server-side
-
+- [x] I want to have pages pre-rendered on server-side.
+- [ ] I want to have pretty urls.
 
 ### Prismic
 
@@ -113,3 +118,10 @@
 - [x] I want to customize own rendering strategy for any CMS element
 - [x] I want to overwrite filtering method for taking content slices
 - [ ] I want to fetch a content depending on website's language
+
+
+### Algolia
+- [ ] I want to search my products via Algolia engine.
+
+### Others
+- [ ] I want to have newsletter So I can notify my customers.
