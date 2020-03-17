@@ -71,6 +71,7 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
         const { updatedUser, updatedCart } = await factoryParams.logIn(loginUserData);
         user.value = updatedUser;
         factoryParams.cart.value = updatedCart;
+        loading.value = false;
       } catch (err) {
         console.error('useUser:Factory:logIn', err);
         loading.value = false;
@@ -99,9 +100,7 @@ export function useUserFactory<USER, CART, UPDATE_USER_PARAMS>(
     };
 
     return {
-      user: computed(
-        () => user.value
-      ),
+      user: computed(() => user.value),
       updateUser,
       register,
       login,
