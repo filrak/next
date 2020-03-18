@@ -56,8 +56,8 @@
         </div>
         <div class="navbar__counter">
           <span class="navbar__label desktop-only">Products found: </span>
-          <strong class="desktop-only">280</strong>
-          <span class="navbar__label mobile-only">280 Items</span>
+          <strong class="desktop-only">{{ totalProducts }}</strong>
+          <span class="navbar__label mobile-only">{{ totalProducts }} Items</span>
         </div>
         <div class="navbar__view desktop-only">
           <span>View </span>
@@ -149,7 +149,7 @@
             class="products__pagination desktop-only"
             :current="currentPage"
             @click="page => currentPage = page"
-            :total="4"
+            :total="totalProducts"
             :visible="5"
           />
         </div>
@@ -243,7 +243,7 @@ import {
   SfLoader,
   SfColor
 } from '@storefront-ui/vue';
-import { computed, watch } from '@vue/composition-api';
+import { computed, ref, watch } from '@vue/composition-api';
 import { useCategory, useProduct } from '<%= options.composables %>';
 import {
   getProductName,
@@ -264,7 +264,9 @@ export default {
     );
 
     const { categories, search, loading } = useCategory('category-page');
-    const { products: categoryProducts, search: productsSearch, loading: productsLoading } = useProduct('category-products');
+    const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('category-products');
+    const currentPage = ref(1);
+    const itemsPerPage = ref(1);
 
     search({ slug: lastSlug });
 
@@ -291,7 +293,10 @@ export default {
       getProductSlug,
       getCategoryUrl,
       isCategorySelected,
-      loading
+      loading,
+      totalProducts,
+      currentPage,
+      itemsPerPage
     };
   },
   components: {
@@ -311,7 +316,6 @@ export default {
   },
   data() {
     return {
-      currentPage: 1,
       sortBy: 'price-up',
       isFilterSidebarOpen: false,
       sortByOptions: [
