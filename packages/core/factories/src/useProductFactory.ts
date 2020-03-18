@@ -1,4 +1,4 @@
-import { UseProduct } from '@vue-storefront/interfaces';
+import { UseProduct, SearchResult } from '@vue-storefront/interfaces';
 import { ref, Ref, computed } from '@vue/composition-api';
 
 type SearchParams = {
@@ -9,13 +9,8 @@ type SearchParams = {
   filters?: any;
 }
 
-export type ProductsSearchResult<PRODUCT> = {
-  data: PRODUCT[];
-  total: number;
-};
-
 export type UseProductFactoryParams<PRODUCT, PRODUCT_SEARCH_PARAMS extends SearchParams> = {
-  productsSearch: (searchParams: PRODUCT_SEARCH_PARAMS) => Promise<ProductsSearchResult<PRODUCT>>;
+  productsSearch: (searchParams: PRODUCT_SEARCH_PARAMS) => Promise<SearchResult<PRODUCT>>;
 };
 
 export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
@@ -29,21 +24,22 @@ export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
     // const { state, persistedResource } = usePersistedState(id);
 
     // const products: Ref<ProductVariant[]> = ref(state || []);\
-    const products: Ref<ProductsSearchResult<PRODUCT>> = ref({ data: [], total: 0 });
+    const products: Ref<PRODUCT[]> = ref([]);
+    const totalProducts: Ref<number> = ref(0);
     const loading = ref(false);
 
     const search = async (params: PRODUCT_SEARCH_PARAMS) => {
       loading.value = true;
       // products.value = await persistedResource<ProductVariant[]>(loadProductVariants, params);
-      products.value = await factoryParams.productsSearch(params);
+      const { data, total } = await factoryParams.productsSearch(params);
+      products.value = data;
+      totalProducts.value = total;
       loading.value = false;
     };
 
     return {
-      products: {
-        data: computed(() => products.value.data),
-        total: computed(() => products.value.total)
-      },
+      products: computed(() => products.value),
+      totalProducts: computed(() => totalProducts.value),
       search,
       loading: computed(() => loading.value)
     };

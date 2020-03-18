@@ -275,7 +275,7 @@ export default {
       }
     });
 
-    const products = computed(() => getProductVariants(categoryProducts.data.value, { master: true}));
+    const products = computed(() => getProductVariants(categoryProducts.value, { master: true}));
     const categoryTree = computed(() => getCategoryTree(categories.value[0]));
 
     const getCategoryUrl = (slug) => `/c/${params.slug_1}/${slug}`;

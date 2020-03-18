@@ -3,10 +3,8 @@ import { Ref } from '@vue/composition-api';
 type ComputedProperty<T> = Readonly<Ref<Readonly<T>>>;
 
 export interface UseProduct<PRODUCT> {
-  products: {
-    data: ComputedProperty<PRODUCT[]>;
-    total: ComputedProperty<number>;
-  };
+  products: ComputedProperty<PRODUCT[]>;
+  totalProducts: ComputedProperty<number>;
   search: (params: {
     perPage?: number;
     page?: number;
@@ -48,10 +46,8 @@ export interface UseUser
 }
 
 export interface UseUserOrders<ORDER> {
-  orders: {
-    data: ComputedProperty<ORDER[]>;
-    total: ComputedProperty<number>;
-  };
+  orders: ComputedProperty<ORDER[]>;
+  totalOrders: ComputedProperty<number>;
   searchOrders: (params?: {
     id?: any;
     page?: number;
@@ -62,10 +58,8 @@ export interface UseUserOrders<ORDER> {
 }
 
 export interface UseUserAddress<ADDRESS> {
-  addresses: {
-    data: ComputedProperty<ADDRESS[]>;
-    total: ComputedProperty<number>;
-  };
+  addresses: ComputedProperty<ADDRESS[]>;
+  totalAddresses: ComputedProperty<number>;
   addAddress: (address: ADDRESS) => Promise<void>;
   deleteAddress: (address: ADDRESS) => Promise<void>;
   updateAddress: (address: ADDRESS) => Promise<void>;
@@ -190,4 +184,9 @@ export interface AgnosticProductAttribute {
   name?: string;
   value: string | Record<string, any>;
   label: string;
+}
+
+export interface SearchResult<T> {
+  data: T[];
+  total: number;
 }

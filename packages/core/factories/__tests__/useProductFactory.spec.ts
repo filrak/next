@@ -15,18 +15,19 @@ const useProduct: (cacheId: string) => UseProduct<any> = useProductFactory<
 
 describe('[CORE - factories] useProductFactory', () => {
   it('creates properties', () => {
-    const { products, loading } = useProduct('test-product');
+    const { products, loading, totalProducts } = useProduct('test-product');
 
-    expect(products.data.value).toEqual([]);
+    expect(products.value).toEqual([]);
     expect(loading.value).toEqual(false);
-    expect(products.total.value).toEqual(0);
+    expect(totalProducts.value).toEqual(0);
   });
 
   it('returns product response', async () => {
-    const { search, products } = useProduct('test-use-product');
+    const { search, products, totalProducts } = useProduct('test-use-product');
 
     await search({ slug: 'product-slug' });
 
-    expect(products.data.value).toEqual([{name: 'product' + { slug: 'product-slug' }}]);
+    expect(products.value).toEqual([{name: 'product' + { slug: 'product-slug' }}]);
+    expect(totalProducts.value).toEqual(1);
   });
 });
