@@ -61,7 +61,6 @@ export default {
           '@vue-storefront/prismic',
           '@vue-storefront/utils',
           '@vue-storefront/factories'
-
         ]
       }
     }],
@@ -91,7 +90,7 @@ export default {
   i18n: {
     locales: localeNames,
     defaultLocale: localeNames[0],
-    strategy: 'no_prefix',
+    strategy: 'prefix_except_default',
     vueI18n: {
       fallbackLocale: localeNames[0]
     },

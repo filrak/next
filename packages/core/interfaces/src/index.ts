@@ -190,3 +190,13 @@ export interface SearchResult<T> {
   data: T[];
   total: number;
 }
+
+export enum AgnosticOrderStatus {
+  Open = 'Open',
+  Pending = 'Pending',
+  Confirmed = 'Confirmed',
+  Shipped = 'Shipped',
+  Complete = 'Complete',
+  Cancelled = 'Cancelled',
+  Refunded = 'Refunded'
+}

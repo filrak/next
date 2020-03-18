@@ -32,7 +32,7 @@
       </SfContentCategory>
       <SfContentCategory title="Order details">
         <SfContentPage title="Order history">
-          <OrderHistory :account="account" />
+          <OrderHistory />
         </SfContentPage>
         <SfContentPage title="My reviews">
           <MyReviews />
@@ -166,7 +166,7 @@ export default {
   }
 }
 .breadcrumbs {
-  padding: $spacer-big $spacer-extra-big $spacer-extra-big;
+  padding: var(--spacer-big) var(--spacer-extra-big) var(--spacer-extra-big);
 }
 .my-account {
   height: 100%;
