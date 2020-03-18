@@ -27,7 +27,7 @@ jest.mock('@vue-storefront/commercetools-api', () => ({
     })
 }));
 
-describe('[commercetools-composables] useProduct', () => {
+describe.skip('[commercetools-composables] useProduct', () => {
   it('creates properties', () => {
     const { products, loading } = useProduct('test-product');
 
