@@ -17,7 +17,11 @@ export function useUserOrdersFactory<ORDER, ORDER_SEARCH_PARAMS>(factoryParams: 
 
     const searchOrders = async (params?: ORDER_SEARCH_PARAMS): Promise<void> => {
       loading.value = true;
-      orders.value = await factoryParams.searchOrders(params);
+      try {
+        orders.value = await factoryParams.searchOrders(params);
+      } catch (err) {
+        console.error(err.graphQLErrors ? err.graphQLErrors[0].message : err);
+      }
       loading.value = false;
     };
 
