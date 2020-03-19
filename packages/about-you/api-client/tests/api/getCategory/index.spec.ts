@@ -1,33 +1,44 @@
 import getCategory from '../../../src/api/getCategory';
 import { apiClient } from '../../../src/index';
 
-const mockGetByIds = jest.fn((params) => params);
-const mockGetByPath = jest.fn((params) => params);
-const mockGetRoots = jest.fn((params) => params);
-
-apiClient.categories.getByIds = mockGetByIds;
-apiClient.categories.getByPath = mockGetByPath;
-apiClient.categories.getRoots = mockGetRoots;
+jest.mock('../../../src/index', () => ({
+  apiClient: {
+    categories: {
+      getByPath: jest.fn(),
+      getByIds: jest.fn(),
+      getRoots: jest.fn()
+    }
+  }
+}));
 
 describe('[about-you-api-client] getCategory', () => {
   it('fetches category with default query', async () => {
     const searchParams = {};
-    await getCategory(searchParams);
+    const result = [{ id: 1, categoryName: 'shoes' }];
 
-    expect(mockGetRoots).toHaveBeenCalledWith(searchParams);
+    (apiClient.categories.getRoots as any).mockReturnValueOnce(result);
+    const response = await getCategory(searchParams);
+
+    expect(response).toEqual(result);
   });
 
   it('fetches categoy by ids', async () => {
     const searchParams = { ids: [1], depth: 1 };
-    await getCategory(searchParams);
+    const result = [{ id: 1, categoryName: 'shoes' }];
 
-    expect(mockGetByIds).toHaveBeenCalledWith(searchParams.ids, { depth: searchParams.depth });
+    (apiClient.categories.getByIds as any).mockReturnValueOnce(result);
+    const response = await getCategory(searchParams);
+
+    expect(response).toEqual(result);
   });
 
   it('fetches category with path', async () => {
     const searchParams = { path: [''], with: {} };
-    await getCategory(searchParams);
+    const result = [{ id: 1, categoryName: 'shoes' }];
 
-    expect(mockGetByPath).toHaveBeenCalledWith(searchParams.path, { with: searchParams.with });
+    (apiClient.categories.getByPath as any).mockReturnValueOnce({ id: 1, categoryName: 'shoes' });
+    const response = await getCategory(searchParams);
+
+    expect(response).toEqual(result);
   });
 });

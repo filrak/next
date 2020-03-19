@@ -1,46 +1,59 @@
 import getProduct from '../../../src/api/getProduct';
 import { apiClient } from '../../../src/index';
 
-const mockGetById = jest.fn((params) => params);
-const mockGetByIds = jest.fn((params) => params);
-const mockQuery = jest.fn((params) => params);
-
-const mockGetByKey = jest.fn((params) => params);
-const mockSuggestions = jest.fn((params) => params);
-
-apiClient.products.getById = mockGetById;
-apiClient.products.getByIds = mockGetByIds;
-apiClient.products.query = mockQuery;
-
-apiClient.masters.getByKey = mockGetByKey;
-apiClient.search.suggestions = mockSuggestions;
+jest.mock('../../../src/index', () => ({
+  apiClient: {
+    products: {
+      query: jest.fn(),
+      getByIds: jest.fn()
+    },
+    masters: {
+      getByKey: jest.fn()
+    },
+    search: {
+      suggestions: jest.fn()
+    }
+  }
+}));
 
 describe('[about-you-api-client] getProduct', () => {
   it('fetches product with default query', async () => {
     const searchParams = {};
-    await getProduct(searchParams);
+    const result = [{ id: 1, name: 'shirt' }];
 
-    expect(mockQuery).toHaveBeenCalledWith(searchParams);
+    (apiClient.products.query as any).mockReturnValueOnce({ entities: result });
+    const response = await getProduct(searchParams);
+
+    expect(response).toEqual(result);
   });
 
   it('fetches product by Ids', async () => {
     const searchParams = { ids: [1], with: {} };
-    await getProduct(searchParams);
+    const result = [{ id: 1, name: 'shirt' }];
 
-    expect(mockGetByIds).toHaveBeenCalledWith(searchParams.ids, { with: searchParams.with });
+    (apiClient.products.getByIds as any).mockReturnValueOnce(result);
+    const response = await getProduct(searchParams);
+
+    expect(response).toEqual(result);
   });
 
   it('fetches product with masterKey', async () => {
     const searchParams = { masterKey: '123', with: {} };
-    await getProduct(searchParams);
+    const result = [{ id: 1, name: 'shirt' }];
 
-    expect(mockGetByKey).toHaveBeenCalledWith(searchParams.masterKey, { with: { products: searchParams.with }});
+    (apiClient.masters.getByKey as any).mockReturnValueOnce({ products: result });
+    const response = await getProduct(searchParams);
+
+    expect(response).toEqual(result);
   });
 
   it('fetches product with term', async () => {
     const searchParams = { term: 'shirt' };
-    await getProduct(searchParams);
+    const result = [{ id: 1, name: 'shirt' }];
 
-    expect(mockSuggestions).toHaveBeenCalledWith(searchParams.term);
+    (apiClient.search.suggestions as any).mockReturnValueOnce({ products: result });
+    const response = await getProduct(searchParams);
+
+    expect(response).toEqual(result);
   });
 });
