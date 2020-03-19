@@ -1,8 +1,8 @@
-import { UseUserOrders, SearchResult } from '@vue-storefront/interfaces';
-import { UseUserOrdersFactoryParams, useUserOrdersFactory } from '../src';
+import { UseUserOrders } from '@vue-storefront/interfaces';
+import { UseUserOrdersFactoryParams, useUserOrdersFactory, OrdersSearchResult } from '../src';
 import { Ref } from '@vue/composition-api';
 
-let useUserOrders: () => UseUserOrders<Readonly<Ref<Readonly<SearchResult<any>>>>>;
+let useUserOrders: () => UseUserOrders<Readonly<Ref<Readonly<OrdersSearchResult<any>>>>>;
 let params: UseUserOrdersFactoryParams<any, any>;
 
 function createComposable(): void {
@@ -20,29 +20,20 @@ describe('[CORE - factories] useUserOrderFactory', () => {
 
   describe('initial setup', () => {
     it('should have proper initial props', () => {
-      const { loading, orders, totalOrders } = useUserOrders();
+      const { loading, orders } = useUserOrders();
       expect(loading.value).toEqual(false);
-      expect(orders.value).toEqual([]);
-      expect(totalOrders.value).toEqual(0);
+      expect(orders.data.value).toEqual([]);
+      expect(orders.total.value).toEqual(0);
     });
   });
 
   describe('methods', () => {
     describe('search', () => {
       it('should set search results', async () => {
-        const { searchOrders, orders, totalOrders } = useUserOrders();
+        const { searchOrders, orders } = useUserOrders();
         await searchOrders();
-        expect(orders.value).toEqual(['first', 'second']);
-        expect(totalOrders.value).toEqual(10);
-      });
-
-      it('should disable loading flag on error', async () => {
-        params.searchOrders = jest.fn().mockImplementationOnce(() => {
-          throw new Error();
-        });
-        const { searchOrders, loading } = useUserOrders();
-        await expect(searchOrders()).rejects.toThrow(Error);
-        expect(loading.value).toEqual(false);
+        expect(orders.data.value).toEqual(['first', 'second']);
+        expect(orders.total.value).toEqual(10);
       });
     });
   });
