@@ -5,14 +5,7 @@ type ComputedProperty<T> = Readonly<Ref<Readonly<T>>>;
 export interface UseProduct<PRODUCT> {
   products: ComputedProperty<PRODUCT[]>;
   totalProducts: ComputedProperty<number>;
-  search: (params: {
-    perPage?: number;
-    page?: number;
-    sort?: any;
-    term?: any;
-    filters?: any;
-    [x: string]: any;
-  }) => Promise<void>;
+  search: (params: AgnosticProductSearchParams) => Promise<void>;
   loading: ComputedProperty<boolean>;
   [x: string]: any;
 }
@@ -48,12 +41,7 @@ export interface UseUser
 export interface UseUserOrders<ORDER> {
   orders: ComputedProperty<ORDER[]>;
   totalOrders: ComputedProperty<number>;
-  searchOrders: (params?: {
-    id?: any;
-    page?: number;
-    perPage?: number;
-    [x: string]: any;
-  }) => Promise<void>;
+  searchOrders: (params?: AgnosticOrdersSearchParams) => Promise<void>;
   loading: ComputedProperty<boolean>;
 }
 
@@ -184,6 +172,23 @@ export interface AgnosticProductAttribute {
   name?: string;
   value: string | Record<string, any>;
   label: string;
+}
+
+export interface AgnosticPaginatedSearchParams {
+  perPage?: number;
+  page?: number;
+}
+
+export interface AgnosticProductSearchParams extends AgnosticPaginatedSearchParams {
+  sort?: any;
+  term?: any;
+  filters?: any;
+  [x: string]: any;
+}
+
+export interface AgnosticOrdersSearchParams extends AgnosticPaginatedSearchParams {
+  id?: any;
+  [x: string]: any;
 }
 
 export interface SearchResult<T> {

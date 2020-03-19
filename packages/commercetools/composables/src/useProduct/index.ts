@@ -1,12 +1,15 @@
 import { getProduct } from '@vue-storefront/commercetools-api';
-import { enhanceProduct } from './../helpers/internals';
+import { enhanceProduct, mapPaginationParams } from './../helpers/internals';
 import { ProductVariant } from './../types/GraphQL';
 import { useProductFactory } from '@vue-storefront/factories';
-import { ProductSearch } from '@vue-storefront/commercetools-api/lib/src/types/Api';
-import { SearchResult } from '@vue-storefront/interfaces';
+import { SearchResult, AgnosticProductSearchParams } from '@vue-storefront/interfaces';
 
-const loadProductVariants = async (params: ProductSearch): Promise<SearchResult<ProductVariant>> => {
-  const productResponse = await getProduct(params);
+const loadProductVariants = async (params: AgnosticProductSearchParams): Promise<SearchResult<ProductVariant>> => {
+  const apiSearchParams = {
+    ...params,
+    ...mapPaginationParams(params)
+  };
+  const productResponse = await getProduct(apiSearchParams);
   const enhancedProductResponse = enhanceProduct(productResponse);
   return {
     data: (enhancedProductResponse.data as any)._variants,
@@ -14,4 +17,4 @@ const loadProductVariants = async (params: ProductSearch): Promise<SearchResult<
   };
 };
 
-export default useProductFactory<ProductVariant, ProductSearch>({ productsSearch: loadProductVariants });
+export default useProductFactory<ProductVariant, AgnosticProductSearchParams>({ productsSearch: loadProductVariants });

@@ -149,7 +149,7 @@
             class="products__pagination desktop-only"
             :current="currentPage"
             @click="page => currentPage = page"
-            :total="totalProducts"
+            :total="totalPages"
             :visible="5"
           />
         </div>
@@ -266,14 +266,18 @@ export default {
     const { categories, search, loading } = useCategory('category-page');
     const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('category-products');
     const currentPage = ref(1);
-    const itemsPerPage = ref(1);
+    const itemsPerPage = ref(4);
 
     search({ slug: lastSlug });
 
     // ugly workaround until we will have async setup
-    watch(categories, () => {
+    watch([categories, currentPage, itemsPerPage], () => {
       if (categories.value.length) {
-        productsSearch({ catId: categories.value[0].id });
+        productsSearch({
+          catId: categories.value[0].id,
+          page: currentPage.value,
+          perPage: itemsPerPage.value
+        });
       }
     });
 
@@ -295,6 +299,7 @@ export default {
       isCategorySelected,
       loading,
       totalProducts,
+      totalPages: computed(() => Math.ceil(totalProducts.value / itemsPerPage.value)),
       currentPage,
       itemsPerPage
     };
