@@ -35,7 +35,7 @@ const authenticate = async (userData: UserData, fn) => {
 export default function useUser(): UseUser<Customer, any> {
 
   watch(user, async () => {
-    if (isAuthenticated.value) {
+    if (!isAuthenticated.value) {
       return;
     }
 

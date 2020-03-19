@@ -1,5 +1,9 @@
 import { useProductFactory } from '../src';
 import { UseProduct } from '@vue-storefront/interfaces';
+import * as vsfUtils from '@vue-storefront/utils';
+
+jest.mock('@vue-storefront/utils');
+const mockedUtils = vsfUtils as jest.Mocked<typeof vsfUtils>;
 
 const useProduct: (cacheId: string) => UseProduct<any> = useProductFactory<
   any,
@@ -12,6 +16,10 @@ const useProduct: (cacheId: string) => UseProduct<any> = useProductFactory<
 
 describe('[CORE - factories] useProductFactory', () => {
   it('creates properties', () => {
+    mockedUtils.useSSR.mockReturnValueOnce({
+      state: null
+    });
+
     const { products, loading, totalProducts } = useProduct('test-product');
 
     expect(products.value).toEqual([]);
@@ -20,6 +28,10 @@ describe('[CORE - factories] useProductFactory', () => {
   });
 
   it('returns product response', async () => {
+    mockedUtils.useSSR.mockReturnValueOnce({
+      state: null
+    });
+
     const { search, products, totalProducts } = useProduct('test-use-product');
 
     await search({ slug: 'product-slug' });

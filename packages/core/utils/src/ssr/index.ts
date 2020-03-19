@@ -1,7 +1,5 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
 
-type ResourceFunction<T> = (params: any) => Promise<T>
-
 const getRootState = (vm: any) => {
   if (vm.$isServer) {
     return vm.$ssrContext.nuxt.vsfState;
@@ -11,7 +9,7 @@ const getRootState = (vm: any) => {
   return window.__VSF_STATE__ || {};
 };
 
-const usePersistedState = (id: string) => {
+export const useSSR = (id: string) => {
   const vm = getCurrentInstance() as any;
   const isServer = vm.$isServer;
 
@@ -19,22 +17,28 @@ const usePersistedState = (id: string) => {
     vm.$ssrContext.nuxt.vsfState = {};
   }
 
-  const persistedResource = async <T>(fn: ResourceFunction<T>, params: any): Promise<T> => new Promise((resolve) => {
-    onServerPrefetch(() => fn(params).then(((result) => {
-      vm.$ssrContext.nuxt.vsfState[id] = result;
-
-      resolve(result);
-    })));
-
-    if (!isServer) {
-      fn(params).then(resolve);
-    }
-  });
-
   return {
-    persistedResource,
     state: getRootState(vm)[id]
   };
 };
 
-export default usePersistedState;
+export const onSSR = (func, cacheIds) => {
+  const vm = getCurrentInstance() as any;
+  const isServer = vm.$isServer;
+
+  if (isServer && !vm.$ssrContext.nuxt.vsfState) {
+    vm.$ssrContext.nuxt.vsfState = {};
+  }
+
+  onServerPrefetch(async () => {
+    await func();
+
+    Object.keys(cacheIds).forEach((key) => {
+      vm.$ssrContext.nuxt.vsfState[key] = cacheIds[key].value;
+    });
+  });
+
+  if (!isServer) {
+    func();
+  }
+};
