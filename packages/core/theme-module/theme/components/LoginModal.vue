@@ -129,7 +129,7 @@ import { ref, watch } from '@vue/composition-api';
 import { SfModal, SfInput, SfButton, SfCheckbox, SfLoader, SfAlert } from '@storefront-ui/vue';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
-import { useUser } from '@vue-storefront/commercetools-composables';
+import { useUser } from '<%= options.composables %>';
 import uiState from '~/assets/ui-state';
 
 const { isLoginModalOpen, toggleLoginModal } = uiState;
@@ -208,28 +208,28 @@ export default {
 }
 .form {
   &__input {
-    margin-bottom: $spacer-extra-big;
+    margin-bottom: var(--spacer-extra-big);
   }
   &__checkbox {
-    margin-bottom: $spacer-big;
+    margin-bottom: var(--spacer-big);
   }
   &__button {
-    margin-top: $spacer-big;
+    margin-top: var(--spacer-big);
   }
 }
 .action {
-  margin-top: $spacer-big;
+  margin-top: var(--spacer-big);
   text-align: center;
 }
 .bottom {
-  padding-top: $spacer-extra-big;
-  margin-top: $spacer-extra-big;
-  border-top: 1px solid $c-light;
+  padding-top: var(--spacer-extra-big);
+  margin-top: var(--spacer-extra-big);
+  border-top: 1px solid var(--c-light);
   line-height: 1.6;
   text-align: center;
 }
 .sf-button--muted {
-  color: $c-text-muted;
+  color: var(--c-text-muted);
 }
 
 .loader {
