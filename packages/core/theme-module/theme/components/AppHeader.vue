@@ -50,7 +50,8 @@ export default {
     };
     const { cart } = useCart();
     const cartTotalItems = computed(() => {
-      return getCartTotalItems(cart.value).toString();
+      const count = getCartTotalItems(cart.value);
+      return count ? count.toString() : null;
     });
     return {
       cartTotalItems,
