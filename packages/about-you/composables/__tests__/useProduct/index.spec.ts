@@ -8,10 +8,6 @@ jest.mock('@vue-storefront/factories', () => ({
 }));
 
 describe('[about-you-composables] useProduct', () => {
-  it('is type of function', () => {
-    expect(useProduct).toBeInstanceOf(Function);
-  });
-
   it('returns value of factory execution', () => {
     expect(useProduct('test')).toEqual({ foo: 'bar' });
   });
