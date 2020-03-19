@@ -8,7 +8,8 @@ module.exports = {
     '!./**/*.d.ts',
     '!**/__tests__/**/*.ts',
     // TODO add tests after factories
-    '!theme-module/**/*'
+    '!theme-module/**/*',
+    '!interfaces/**/*'
   ],
   watchPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['ts', 'js', 'json'],
