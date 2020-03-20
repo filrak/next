@@ -68,11 +68,11 @@ describe('[CORE - utils] usePersistedState', () => {
   });
 
   it('reads CSR state', () => {
-    // (eventBus.emit as any).mockImplementation((_, fn) =>
-    //   fn({ key: 'cache-id', value: 'test-value' })
-    // );
-    // const { saveCache } = useSSR('some-cache-id');
+    (eventBus.emit as any).mockImplementation(() => {});
+    const { saveCache } = useSSR('some-cache-id');
+    saveCache('test-value');
 
+    expect(eventBus.emit).toBeCalled();
   });
 
   it('set SSR state', () => {
