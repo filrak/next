@@ -56,12 +56,12 @@
 - [x] I can see the totals in the cart So I know the values before I decide on placing an order.
 - [x] I want to remove the product from the cart As I do not want to buy it any longer.
 - [x] I want to edit the quantity of the product in a Cart Page.
-- [ ] I want to choose a shipping method So it may get calculated into the cart totals.
 
 ### Checkout
 
 - [ ] I want to proceed to the checkout So I can place the order
 - [ ] I want to be redirected to the thank you page after placing an order.
+- [ ] I want to choose a shipping method So it may get calculated into the cart totals.
 - [ ] I want to create a guest order.
 - [ ] I want to select shipping address.
 - [ ] I want to select billing address.
