@@ -1,13 +1,13 @@
 import { BapiClient } from '@aboutyou/backbone';
-import getProductApi from './getProduct';
-import getCategoryApi from './getCategory';
+import getProductApi from './api/getProduct';
+import getCategoryApi from './api/getCategory';
 import addToCartApi from './api/addToCart';
 import removeFromCartApi from './api/removeFromCart';
 import clearCartApi from './api/clearCart';
-import placeOrderApi from './placeOrder';
-import getUserApi from './getUser';
-import addCouponApi from './addCoupon';
-import removeCouponApi from './removeCoupon';
+import placeOrderApi from './api/placeOrder';
+import getUserApi from './api/getUser';
+import addCouponApi from './api/addCoupon';
+import removeCouponApi from './api/removeCoupon';
 
 let apiClient: BapiClient = null;
 

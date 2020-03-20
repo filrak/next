@@ -1,9 +1,13 @@
 import addToCart from '../../../src/api/addToCart';
 import { apiClient } from '../../../src/index';
 
-const mockAddItem = jest.fn((params) => params);
-
-apiClient.basket.addItem = mockAddItem;
+jest.mock('../../../src/index', () => ({
+  apiClient: {
+    basket: {
+      addItem: jest.fn()
+    }
+  }
+}));
 
 describe('[about-you-api-client] addToCart', () => {
   it('adds item to cart', async () => {
@@ -14,6 +18,6 @@ describe('[about-you-api-client] addToCart', () => {
 
     await addToCart(addToBasketParams);
 
-    expect(mockAddItem).toHaveBeenCalledWith(addToBasketParams.basketKey, addToBasketParams.variantId);
+    expect(apiClient.basket.addItem).toHaveBeenCalledWith(addToBasketParams.basketKey, addToBasketParams.variantId);
   });
 });
