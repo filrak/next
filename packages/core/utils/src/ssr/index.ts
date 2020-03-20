@@ -1,4 +1,5 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
+import eventBus from './../event-bus';
 
 const getRootState = (vm: any) => {
   if (vm.$isServer) {
@@ -22,7 +23,7 @@ export const useSSR = (id: string) => {
   };
 };
 
-export const onSSR = (func, cacheIds) => {
+export const onSSR = (func) => {
   const vm = getCurrentInstance() as any;
   const isServer = vm.$isServer;
 
@@ -33,8 +34,8 @@ export const onSSR = (func, cacheIds) => {
   onServerPrefetch(async () => {
     await func();
 
-    Object.keys(cacheIds).forEach((key) => {
-      vm.$ssrContext.nuxt.vsfState[key] = cacheIds[key].value;
+    eventBus.on('set-ssr-cache', ({ key, value }) => {
+      vm.$ssrContext.nuxt.vsfState[key] = value;
     });
   });
 

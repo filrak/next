@@ -1,5 +1,5 @@
 import { UseCategory } from '@vue-storefront/interfaces';
-import { useSSR } from '@vue-storefront/utils';
+import { useSSR, eventBus } from '@vue-storefront/utils';
 import { ref, Ref, computed } from '@vue/composition-api';
 
 export type UseCategoryFactoryParams<CATEGORY, CATEGORY_SEARCH_PARAMS> = {
@@ -19,6 +19,7 @@ export function useCategoryFactory<CATEGORY, CATEGORY_SEARCH_PARAMS>(
         loading.value = true;
       }
       categories.value = await factoryParams.categorySearch(params);
+      eventBus.emit('set-ssr-cache', { key: cacheId, value: categories.value });
       loading.value = false;
     };
 

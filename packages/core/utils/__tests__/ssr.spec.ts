@@ -1,7 +1,11 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
-import { useSSR, onSSR } from '../src';
+import { useSSR, onSSR, eventBus } from '../src';
 
 jest.mock('@vue/composition-api');
+jest.mock('./../src/event-bus', () => ({
+  on: jest.fn(),
+  emit: jest.fn()
+}));
 
 describe('[CORE - utils] usePersistedState', () => {
   beforeEach(() => {
@@ -72,14 +76,18 @@ describe('[CORE - utils] usePersistedState', () => {
         }
       }
     };
+    (eventBus.on as any).mockImplementation((_, fn) =>
+      fn({ key: 'cache-id', value: 'test-value' })
+    );
     (getCurrentInstance as any).mockImplementation(() => vm);
     (onServerPrefetch as any).mockImplementation(async (fn: any) => {
       await fn();
-      expect(vm.$ssrContext.nuxt.vsfState).toEqual({ cacheId: 'test-value' });
+      expect(eventBus.on).toBeCalled();
+      expect(vm.$ssrContext.nuxt.vsfState).toEqual({ 'cache-id': 'test-value' });
     });
     const mockedFunc = jest.fn();
 
-    onSSR(mockedFunc, { cacheId: { value: 'test-value' } });
+    onSSR(mockedFunc);
     expect(mockedFunc).toBeCalledTimes(1);
   });
 
@@ -96,8 +104,8 @@ describe('[CORE - utils] usePersistedState', () => {
     (onServerPrefetch as any).mockImplementation(() => {});
     const mockedFunc = jest.fn();
 
-    onSSR(mockedFunc, { cacheId: { value: 'test-value' } });
+    onSSR(mockedFunc);
     expect(mockedFunc).toBeCalledTimes(1);
-    expect(vm.$ssrContext.nuxt.vsfState).toEqual(null);
+    // expect(vm.$ssrContext.nuxt.vsfState).toEqual(null);
   });
 });

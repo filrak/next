@@ -270,7 +270,7 @@ export default {
     onSSR(async () => {
       await search({ slug: lastSlug });
       await productsSearch({ catId: categories.value[0].id });
-    }, { categories, categoryProducts });
+    });
 
     const products = computed(() => getProductVariants(categoryProducts.value, { master: true}));
     const categoryTree = computed(() => getCategoryTree(categories.value[0]));

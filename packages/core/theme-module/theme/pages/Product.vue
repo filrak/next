@@ -255,7 +255,7 @@ export default {
     onSSR(async () => {
       await search({ slug });
       await searchRelatedProducts({ catId: [categories.value[0]] });
-    }, { products, relatedProducts });
+    });
 
     const updateFilter = (filter) => {
       context.root.$router.push({
