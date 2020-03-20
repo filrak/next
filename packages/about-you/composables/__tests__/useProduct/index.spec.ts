@@ -1,6 +1,6 @@
 import { getProduct } from '@vue-storefront/about-you-api';
 import useProduct from '../../src/composables/useProduct';
-import { enhanceProduct } from '../../src/helpers';
+import { mapProductSearch } from '../../src/helpers';
 
 jest.mock('@vue-storefront/about-you-api');
 jest.mock('@vue-storefront/factories', () => ({
@@ -25,7 +25,7 @@ describe('[about-you-composables] useProduct', () => {
     const mockFn = jest.fn();
     (getProduct as jest.Mock).mockImplementation(mockFn);
 
-    await enhanceProduct(searchParams);
+    await mapProductSearch(searchParams);
     expect(mockFn).toHaveBeenLastCalledWith({
       ids: searchParams.ids,
       with: searchParams.term,

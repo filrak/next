@@ -1,9 +1,9 @@
 import { useProductFactory } from '@vue-storefront/factories';
-import { enhanceProduct } from '../../helpers';
+import { mapProductSearch } from '../../helpers';
 import { UseProduct, BapiProduct } from '../../types';
 
 const useProduct: (cacheId: string) => UseProduct<BapiProduct> = useProductFactory<BapiProduct, any>({
-  productsSearch: enhanceProduct
+  productsSearch: mapProductSearch
 });
 
 export default useProduct;

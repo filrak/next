@@ -1,5 +1,5 @@
-import enhanceProduct from './enhanceProduct';
+import mapProductSearch from './mapProductSearch';
 
 export {
-  enhanceProduct
+  mapProductSearch
 };

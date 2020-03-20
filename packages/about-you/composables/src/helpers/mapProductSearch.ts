@@ -1,7 +1,7 @@
 import { getProduct } from '@vue-storefront/about-you-api';
 import { BapiProduct } from '@aboutyou/backbone/types/BapiProduct';
 
-const enhanceProduct = async (params): Promise<BapiProduct[]> => {
+const mapProductSearch = async (params): Promise<BapiProduct[]> => {
   const searchParams = {
     ids: params.ids,
     with: params.term,
@@ -15,4 +15,4 @@ const enhanceProduct = async (params): Promise<BapiProduct[]> => {
   return await getProduct(searchParams);
 };
 
-export default enhanceProduct;
+export default mapProductSearch;
