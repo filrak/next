@@ -17,7 +17,8 @@ const useProduct: (cacheId: string) => UseProduct<any> = useProductFactory<
 describe('[CORE - factories] useProductFactory', () => {
   it('creates properties', () => {
     mockedUtils.useSSR.mockReturnValueOnce({
-      state: null
+      state: null,
+      saveCache: jest.fn()
     });
 
     const { products, loading, totalProducts } = useProduct('test-product');
@@ -29,7 +30,8 @@ describe('[CORE - factories] useProductFactory', () => {
 
   it('returns product response', async () => {
     mockedUtils.useSSR.mockReturnValueOnce({
-      state: null
+      state: null,
+      saveCache: jest.fn()
     });
 
     const { search, products, totalProducts } = useProduct('test-use-product');

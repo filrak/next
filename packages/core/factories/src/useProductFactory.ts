@@ -1,6 +1,6 @@
 import { UseProduct, SearchResult } from '@vue-storefront/interfaces';
 import { ref, Ref, computed } from '@vue/composition-api';
-import { useSSR, eventBus } from '@vue-storefront/utils';
+import { useSSR } from '@vue-storefront/utils';
 
 type SearchParams = {
   perPage?: number;
@@ -18,7 +18,7 @@ export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
   factoryParams: UseProductFactoryParams<PRODUCT, PRODUCT_SEARCH_PARAMS>
 ) {
   return function useProduct(cacheId: string): UseProduct<PRODUCT> {
-    const { state } = useSSR(cacheId);
+    const { state, saveCache } = useSSR(cacheId);
     const products: Ref<PRODUCT[]> = ref(state || []);
     const totalProducts = ref(0);
     const loading = ref(false);
@@ -28,7 +28,7 @@ export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
       const { data, total } = await factoryParams.productsSearch(params);
       products.value = data;
       totalProducts.value = total;
-      eventBus.emit('set-ssr-cache', { key: cacheId, value: data });
+      saveCache(data);
       loading.value = false;
     };
 

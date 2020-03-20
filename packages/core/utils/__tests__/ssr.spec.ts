@@ -67,6 +67,14 @@ describe('[CORE - utils] usePersistedState', () => {
     expect(state).toEqual(5);
   });
 
+  it('reads CSR state', () => {
+    // (eventBus.emit as any).mockImplementation((_, fn) =>
+    //   fn({ key: 'cache-id', value: 'test-value' })
+    // );
+    // const { saveCache } = useSSR('some-cache-id');
+
+  });
+
   it('set SSR state', () => {
     const vm = {
       $isServer: true,
@@ -106,6 +114,5 @@ describe('[CORE - utils] usePersistedState', () => {
 
     onSSR(mockedFunc);
     expect(mockedFunc).toBeCalledTimes(1);
-    // expect(vm.$ssrContext.nuxt.vsfState).toEqual(null);
   });
 });

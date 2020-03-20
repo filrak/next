@@ -10,7 +10,7 @@ const getRootState = (vm: any) => {
   return window.__VSF_STATE__ || {};
 };
 
-export const useSSR = (id: string) => {
+export const useSSR = (key: string) => {
   const vm = getCurrentInstance() as any;
   const isServer = vm.$isServer;
 
@@ -18,8 +18,13 @@ export const useSSR = (id: string) => {
     vm.$ssrContext.nuxt.vsfState = {};
   }
 
+  const saveCache = (value) => {
+    eventBus.emit('set-ssr-cache', { key, value });
+  };
+
   return {
-    state: getRootState(vm)[id]
+    saveCache,
+    state: getRootState(vm)[key]
   };
 };
 

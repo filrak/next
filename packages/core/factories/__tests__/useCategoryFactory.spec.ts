@@ -26,7 +26,8 @@ describe('[CORE - factories] useCategoryFactory', () => {
   describe('initial setup', () => {
     it('should have proper initial properties when no persisted state set', () => {
       mockedUtils.useSSR.mockReturnValueOnce({
-        state: null
+        state: null,
+        saveCache: jest.fn()
       });
       const { loading, categories } = useCategory();
 
@@ -39,7 +40,8 @@ describe('[CORE - factories] useCategoryFactory', () => {
     describe('categories', () => {
       it('should return categories from state', () => {
         mockedUtils.useSSR.mockReturnValueOnce({
-          state: [{ id: 'mockedCategory' }]
+          state: [{ id: 'mockedCategory' }],
+          saveCache: jest.fn()
         });
         const { categories } = useCategory();
         expect(categories.value).toEqual([{ id: 'mockedCategory' }]);
@@ -51,7 +53,8 @@ describe('[CORE - factories] useCategoryFactory', () => {
     describe('search', () => {
       beforeEach(() => {
         mockedUtils.useSSR.mockReturnValueOnce({
-          state: null
+          state: null,
+          saveCache: jest.fn()
         });
       });
 
