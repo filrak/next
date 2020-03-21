@@ -1,3 +1,7 @@
+---
+platform: Commercetools
+---
+ 
 
 <IncludeContent content-key="api-client" />
 
