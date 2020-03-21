@@ -54,3 +54,4 @@ describe('[commercetools-composables] useUserOrders', () => {
     expect(getMyOrders).toBeCalledWith({ param: 'param1' });
   });
 });
+
