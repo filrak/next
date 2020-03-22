@@ -1,8 +1,8 @@
-name: Build project and Run Lighthouse CI
+name: Lighthouse
 on: [push]
 jobs:
   lhci:
-    name: Lighthouse CI
+    name: Commercetools
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -17,4 +17,4 @@ jobs:
       - name: run Lighthouse CI
         run: |
           yarn add @lhci/cli@0.3.x -W
-          yarn lhci autorun --config=./../../lighthouserc.json || echo "LHCI failed!"
+          yarn lhci --config=./../../lighthouserc.json || echo "LHCI failed!"
