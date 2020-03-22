@@ -33,7 +33,6 @@
     "test:core": "jest -c ./packages/core/jest.config.js",
     "test:prismic": "cd packages/prismic && yarn test",
     "test:ct": "yarn test:ct:api-client && yarn test:ct:composables && yarn test:ct:helpers",
-    "test:ct:ci": "yarn test:ct:api-client && yarn test:ct:composables && yarn test:ct:helpers",
     "start:ct": "cd packages/commercetools/theme && yarn start",
     "dev:ct:api-client": "cd packages/commercetools/api-client && yarn dev",
     "dev:ct:composables": "cd packages/commercetools/composables && yarn dev",
