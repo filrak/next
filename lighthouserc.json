@@ -1,0 +1,13 @@
+{
+  "ci": {
+    "upload": {
+      "target": "temporary-public-storage"
+    },
+    "collect": {
+      "startServerCommand": "yarn start:ct"
+    }
+  },
+  "assert": {
+    "preset": "lighthouse:recommended"
+  }
+}
