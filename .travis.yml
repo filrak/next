@@ -100,3 +100,6 @@ jobs:
       stage: deploy
       script:
         - "curl -u $CLOUD_USERNAME:$CLOUD_PASSWORD -H 'Content-Type: application/json' -X POST -d \"{\\\"code\\\":\\\"vsf-next-demo\\\", \\\"frontContainerVersion\\\":\\\"$COMMIT\\\"}\" https://farmer.storefrontcloud.io/instances"
+
+after_success:
+  - yarn lighthousebot -- https://vsf-next-demo.storefrontcloud.io
