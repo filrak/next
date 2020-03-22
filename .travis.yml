@@ -1,6 +1,9 @@
 language: node_js
 node_js: "10"
 
+addons:
+  chrome: stable
+
 cache:
   yarn: true
   directories:
@@ -27,6 +30,9 @@ env:
 
 services:
   - docker
+
+before_install:
+  - npm install -g @lhci/cli
 
 install:
   - yarn
@@ -84,6 +90,10 @@ jobs:
       name: Test prismic
       after_script:
         - cat ./packages/prismic/coverage/lcov.info | coveralls
+
+    - stage: lighthouse
+      name: commercetools
+      script: lhci autorun --rc-overrides.upload.target=temporary-public-storage
 
     - build_image:
       if: branch = master AND type != pull_request
