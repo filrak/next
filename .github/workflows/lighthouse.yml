@@ -17,4 +17,4 @@ jobs:
       - name: run Lighthouse CI
         run: |
           yarn add @lhci/cli@0.3.x -W
-          yarn lhci --config=./../../lighthouserc.json || echo "LHCI failed!"
+          yarn lhci --config=./lighthouserc.json || echo "LHCI failed!"
