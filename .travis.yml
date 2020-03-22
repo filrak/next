@@ -1,9 +1,6 @@
 language: node_js
 node_js: "10"
 
-addons:
-  chrome: stable
-
 cache:
   yarn: true
   directories:
@@ -30,9 +27,6 @@ env:
 
 services:
   - docker
-
-before_install:
-  - yarn global add @lhci/cli@0.3.x
 
 install:
   - yarn
@@ -106,6 +100,3 @@ jobs:
       stage: deploy
       script:
         - "curl -u $CLOUD_USERNAME:$CLOUD_PASSWORD -H 'Content-Type: application/json' -X POST -d \"{\\\"code\\\":\\\"vsf-next-demo\\\", \\\"frontContainerVersion\\\":\\\"$COMMIT\\\"}\" https://farmer.storefrontcloud.io/instances"
-
-after_success:
-  - lhci autorun --upload.target=temporary-public-storage
