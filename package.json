@@ -41,8 +41,7 @@
     "dev:ay:composables": "cd packages/about-you/composables && yarn dev",
     "dev:ct": "cd packages/commercetools/theme && yarn dev",
     "dev:bp": "cd packages/boilerplate/theme && yarn dev",
-    "lint": "eslint . --ext .js,.ts,.vue",
-    "lighthouse": "lighthousebot"
+    "lint": "eslint . --ext .js,.ts,.vue"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
