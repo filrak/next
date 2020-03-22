@@ -39,10 +39,15 @@ jobs:
       after_script:
         - cat ./packages/core/coverage/lcov.info | coveralls
 
-    - stage: Build
-      name: Build
+    - stage: build
+      name: Build commercetools
       script:
         - yarn build:prismic && yarn build:ct
+
+    - stage: build
+      name: Build about you
+      script:
+        - yarn build:ay
 
     - stage: test commercetools
       script: yarn test:ct:api-client --coverage
@@ -61,6 +66,18 @@ jobs:
       name: Test helpers
       after_script:
         - cat ./packages/commercetools/helpers/coverage/lcov.info | coveralls
+
+    - stage: test about you
+      script: yarn test:ay:api-client --coverage
+      name: Test api-client
+      after_script:
+        - cat ./packages/about-you/api-client/coverage/lcov.info | coveralls
+
+    - stage: test about you
+      script: yarn test:ay:composables --coverage
+      name: Test composables
+      after_script:
+        - cat ./packages/about-you/composables/coverage/lcov.info | coveralls
 
     - stage: test prismic
       script: yarn test:prismic --coverage
