@@ -43,12 +43,6 @@ install:
 
 jobs:
   include:
-    - stage: test core
-      script: yarn test:core --coverage
-      name: Test core packages
-      after_script:
-        - cat ./packages/core/coverage/lcov.info | coveralls
-
     - stage: build
       name: Build commercetools
       script:
@@ -58,6 +52,12 @@ jobs:
       name: Build about you
       script:
         - yarn build:ay
+
+    - stage: test core
+      script: yarn test:core --coverage
+      name: Test core packages
+      after_script:
+        - cat ./packages/core/coverage/lcov.info | coveralls
 
     - stage: test commercetools
       script: yarn test:ct:api-client --coverage
