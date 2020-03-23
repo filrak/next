@@ -84,7 +84,7 @@ jobs:
         - cat ./packages/about-you/api-client/coverage/lcov.info | coveralls
 
     - stage: test about you
-      script: yarn test:ay:composables --coverage
+      script: yarn build:ay:api-client && yarn test:ay:composables --coverage
       name: Test composables
       after_script:
         - cat ./packages/about-you/composables/coverage/lcov.info | coveralls
