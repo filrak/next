@@ -153,6 +153,18 @@
             :total="totalPages"
             :visible="5"
           />
+          <div class="products__pagination__options">
+            <span class="products__pagination__label">Items per page:</span>
+            <SfSelect class="items-per-page" v-model="itemsPerPage">
+              <SfSelectOption
+                v-for="option in perPageOptions"
+                :key="option"
+                :value="option"
+                class="items-per-page__option"
+                >{{ option }}</SfSelectOption
+              >
+            </SfSelect>
+          </div>
         </div>
       </SfLoader>
     </div>
@@ -260,6 +272,8 @@ const defaultPagination = {
   itemsPerPage: 20
 };
 
+const perPageOptions = [20, 40, 100];
+
 export default {
   transition: 'fade',
   setup(props, context) {
@@ -317,7 +331,8 @@ export default {
       totalProducts,
       totalPages: computed(() => Math.ceil(totalProducts.value / itemsPerPage.value)),
       currentPage,
-      itemsPerPage
+      itemsPerPage,
+      perPageOptions
     };
   },
   components: {
@@ -631,6 +646,20 @@ export default {
         justify-content: center;
         margin-top: var(--spacer-extra-big);
       }
+    }
+    &__pagination__options {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+
+      .items-per-page {
+        min-width: 3rem;
+      }
+    }
+
+    &__pagination__label {
+      color: var(--c-text-muted);
     }
   }
   .section {
