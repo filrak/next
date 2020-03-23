@@ -146,6 +146,7 @@
             />
           </div>
           <SfPagination
+            v-show="totalPages > 1"
             class="products__pagination desktop-only"
             :current="currentPage"
             @click="page => currentPage = page"
@@ -254,10 +255,16 @@ import {
   getProductVariants
 } from '<%= options.helpers %>';
 
+const defaultPagination = {
+  page: 1,
+  itemsPerPage: 20
+};
+
 export default {
   transition: 'fade',
   setup(props, context) {
-    const { params } = context.root.$route;
+    const { params, query } = context.root.$route;
+    console.log(query);
     const lastSlug = Object.keys(params).reduce(
       (prev, curr) => params[curr] ? params[curr] : prev,
       params.slug_1
@@ -265,19 +272,28 @@ export default {
 
     const { categories, search, loading } = useCategory('category-page');
     const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('category-products');
-    const currentPage = ref(1);
-    const itemsPerPage = ref(4);
+    const currentPage = ref(parseInt(query.page, 10) || defaultPagination.page);
+    const itemsPerPage = ref(parseInt(query.items, 10) || defaultPagination.itemsPerPage);
 
-    search({ slug: lastSlug });
+    search({ slug: lastSlug }).then(() => {
+      productsSearch({
+        catId: categories.value[0].id,
+        page: currentPage.value,
+        perPage: itemsPerPage.value
+      });
+    });
 
-    // ugly workaround until we will have async setup
-    watch([categories, currentPage, itemsPerPage], () => {
+    watch([currentPage, itemsPerPage], () => {
       if (categories.value.length) {
         productsSearch({
           catId: categories.value[0].id,
           page: currentPage.value,
           perPage: itemsPerPage.value
         });
+        context.root.$router.push({ query: {
+          items: itemsPerPage.value !== defaultPagination.itemsPerPage ? itemsPerPage.value : undefined,
+          page: currentPage.value !== defaultPagination.page ? currentPage.value : undefined
+        }});
       }
     });
 
