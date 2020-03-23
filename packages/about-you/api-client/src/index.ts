@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { BapiClient } from '@aboutyou/backbone';
 import getProductApi from './api/getProduct';
 import getCategoryApi from './api/getCategory';
@@ -23,6 +25,7 @@ let methods = {
   removeCoupon: removeCouponApi
 };
 
+// TODO:: TEST THIS!!
 function override(overrides) {
   methods = { ...methods,
     ...overrides };
