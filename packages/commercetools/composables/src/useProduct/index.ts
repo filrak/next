@@ -4,7 +4,7 @@ import { ProductVariant } from './../types/GraphQL';
 import { useProductFactory } from '@vue-storefront/factories';
 import { SearchResult, AgnosticProductSearchParams } from '@vue-storefront/interfaces';
 
-const loadProductVariants = async (params: AgnosticProductSearchParams): Promise<SearchResult<ProductVariant>> => {
+const productsSearch = async (params: AgnosticProductSearchParams): Promise<SearchResult<ProductVariant>> => {
   const apiSearchParams = {
     ...params,
     ...mapPaginationParams(params)
@@ -17,4 +17,4 @@ const loadProductVariants = async (params: AgnosticProductSearchParams): Promise
   };
 };
 
-export default useProductFactory<ProductVariant, AgnosticProductSearchParams>({ productsSearch: loadProductVariants });
+export default useProductFactory<ProductVariant, AgnosticProductSearchParams>({ productsSearch });
