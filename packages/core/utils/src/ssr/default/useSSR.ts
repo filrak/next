@@ -28,6 +28,21 @@ export const useSSR = (key: string) => {
   };
 };
 
+let snapsshot = 0;
+
+const hasWindowStateChanged = () => {
+  // @ts-ignore
+  const currentSnapshot = JSON.stringify(window.__VSF_STATE__).length;
+
+  if (snapsshot !== currentSnapshot) {
+    snapsshot = currentSnapshot;
+
+    return true;
+  }
+
+  return false;
+};
+
 export const onSSR = (func) => {
   const vm = getCurrentInstance() as any;
   const isServer = vm.$isServer;
@@ -44,7 +59,7 @@ export const onSSR = (func) => {
     });
   });
 
-  if (!isServer) {
+  if (!isServer && !hasWindowStateChanged()) {
     func();
   }
 };

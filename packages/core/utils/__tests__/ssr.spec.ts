@@ -1,6 +1,7 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
 import eventBus from './../src/ssr/default/eventBus';
 import { useSSR, onSSR } from '../src';
+import { stringify } from 'querystring';
 
 jest.mock('@vue/composition-api');
 jest.mock('./../src/ssr/default/eventBus', () => ({
@@ -109,11 +110,39 @@ describe('[CORE - utils] ssr', () => {
         }
       }
     };
+
+    const jsonSpy = jest.spyOn(JSON, 'stringify').mockImplementation(() => ({ length: 0 } as any));
+
     (getCurrentInstance as any).mockImplementation(() => vm);
     (onServerPrefetch as any).mockImplementation(() => {});
     const mockedFunc = jest.fn();
 
     onSSR(mockedFunc);
     expect(mockedFunc).toBeCalledTimes(1);
+
+    jsonSpy.mockRestore();
+  });
+
+  it('should not call func on CSR', () => {
+    const vm = {
+      $isServer: false,
+      $ssrContext: {
+        nuxt: {
+          vsfState: null
+        }
+      }
+    };
+
+    // @ts-ignore
+    const windowSpy = jest.spyOn(global, 'window', 'get').mockImplementation(() => ({ __VSF_STATE__: { test: 1 } }));
+
+    (getCurrentInstance as any).mockImplementation(() => vm);
+    (onServerPrefetch as any).mockImplementation(() => {});
+    const mockedFunc = jest.fn();
+
+    onSSR(mockedFunc);
+    expect(mockedFunc).not.toBeCalled();
+
+    windowSpy.mockRestore();
   });
 });

@@ -1,7 +1,5 @@
 <template>
   <div id="category">
-    test: {{ test }}
-    <button @click="testFunc">test</button>
     <SfBreadcrumbs
       class="breadcrumbs desktop-only"
       :breadcrumbs="breadcrumbs"
@@ -259,15 +257,6 @@ import { onSSR } from '@vue-storefront/utils';
 
 export default {
   transition: 'fade',
-  asyncData() {
-    const test = ref('elo');
-
-    const testFunc = () => {
-      test.value = 'siema';
-    };
-
-    return { test: test.value, testFunc };
-  },
   setup(props, context) {
     const { params } = context.root.$route;
     const lastSlug = Object.keys(params).reduce(
