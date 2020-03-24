@@ -1,5 +1,5 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
-import eventBus from './eventBus';
+import { emit, on } from './eventBus';
 
 const getRootState = (vm: any) => {
   if (vm.$isServer) {
@@ -19,7 +19,7 @@ export const useSSR = (key: string) => {
   }
 
   const saveCache = (value) => {
-    eventBus.emit('set-ssr-cache', { key, value });
+    emit('set-ssr-cache', { key, value });
   };
 
   return {
@@ -32,7 +32,7 @@ let snapsshot = 0;
 
 const hasWindowStateChanged = () => {
   // @ts-ignore
-  const currentSnapshot = JSON.stringify(window.__VSF_STATE__).length;
+  const currentSnapshot = window.__VSF_STATE__ ? JSON.stringify(window.__VSF_STATE__).length : 0;
 
   if (snapsshot !== currentSnapshot) {
     snapsshot = currentSnapshot;
@@ -54,7 +54,7 @@ export const onSSR = (func) => {
   onServerPrefetch(async () => {
     await func();
 
-    eventBus.on('set-ssr-cache', ({ key, value }) => {
+    on('set-ssr-cache', ({ key, value }) => {
       vm.$ssrContext.nuxt.vsfState[key] = value;
     });
   });

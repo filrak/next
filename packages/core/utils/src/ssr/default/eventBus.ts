@@ -1,6 +1,3 @@
-const listeners: Listener[] = [];
-let emitted: Event[] = [];
-
 type Handler = (value?: any) => void;
 
 interface Event {
@@ -13,10 +10,8 @@ interface Listener {
   handler: Handler;
 }
 
-interface EventBus {
-  emit: (eventName: string, value: any) => void;
-  on: (eventName: string, handler: Handler) => void;
-}
+const listeners: Listener[] = [];
+let emitted: Event[] = [];
 
 const emit = (eventName: string, value: any): void => {
   const relatedListeners = listeners.filter(listener => listener.eventName === eventName);
@@ -42,6 +37,4 @@ const on = (eventName: string, handler: Handler): void => {
   emitted = emitted.filter(event => event.eventName !== eventName);
 };
 
-const eventBus: EventBus = { emit, on };
-
-export default eventBus;
+export { emit, on };

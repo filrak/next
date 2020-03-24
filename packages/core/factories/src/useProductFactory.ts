@@ -23,7 +23,7 @@ export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
     const totalProducts = ref(0);
     const loading = ref(false);
 
-    const search = async (params: any) => {
+    const search = async (params: PRODUCT_SEARCH_PARAMS) => {
       loading.value = true;
       const { data, total } = await factoryParams.productsSearch(params);
       products.value = data;

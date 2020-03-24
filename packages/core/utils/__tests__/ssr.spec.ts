@@ -1,7 +1,6 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
-import eventBus from './../src/ssr/default/eventBus';
+import { emit, on } from './../src/ssr/default/eventBus';
 import { useSSR, onSSR } from '../src';
-import { stringify } from 'querystring';
 
 jest.mock('@vue/composition-api');
 jest.mock('./../src/ssr/default/eventBus', () => ({
@@ -70,11 +69,11 @@ describe('[CORE - utils] ssr', () => {
   });
 
   it('reads CSR state', () => {
-    (eventBus.emit as any).mockImplementation(() => {});
+    (emit as any).mockImplementation(() => {});
     const { saveCache } = useSSR('some-cache-id');
     saveCache('test-value');
 
-    expect(eventBus.emit).toBeCalled();
+    expect(emit).toBeCalled();
   });
 
   it('set SSR state', () => {
@@ -86,13 +85,13 @@ describe('[CORE - utils] ssr', () => {
         }
       }
     };
-    (eventBus.on as any).mockImplementation((_, fn) =>
+    (on as any).mockImplementation((_, fn) =>
       fn({ key: 'cache-id', value: 'test-value' })
     );
     (getCurrentInstance as any).mockImplementation(() => vm);
     (onServerPrefetch as any).mockImplementation(async (fn: any) => {
       await fn();
-      expect(eventBus.on).toBeCalled();
+      expect(on).toBeCalled();
       expect(vm.$ssrContext.nuxt.vsfState).toEqual({ 'cache-id': 'test-value' });
     });
     const mockedFunc = jest.fn();
