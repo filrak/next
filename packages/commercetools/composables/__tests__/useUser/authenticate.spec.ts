@@ -2,7 +2,7 @@ import { authenticate } from '../../src/useUser/authenticate';
 
 const consoleErrorSpy = jest.spyOn(console, 'error');
 
-describe('authenticate', () => {
+describe('[commercetools-composables] useUser/authenticate', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
