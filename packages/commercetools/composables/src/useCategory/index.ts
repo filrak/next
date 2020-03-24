@@ -10,6 +10,6 @@ const params: UseCategoryFactoryParams<Category, any> = {
   }
 };
 
-const useCategory: UseCategory<Category> = useCategoryFactory<Category, any>(params);
+const useCategory: (id: string) => UseCategory<Category> = useCategoryFactory<Category, any>(params);
 
 export default useCategory;
