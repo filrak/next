@@ -19,7 +19,6 @@ export const useSSR = (key: string) => {
   }
 
   const saveCache = (value) => {
-    console.log('old save cache');
     eventBus.emit('set-ssr-cache', { key, value });
   };
 
