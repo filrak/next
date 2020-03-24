@@ -12,8 +12,16 @@ import useCart from '../useCart';
 
 export const params: UseUserFactoryParams<Customer, any> = {
   loadUser: async () => {
-    const profile = await apiGetMe();
-    return profile.data.me.customer;
+    try {
+      const profile = await apiGetMe({ customer: true });
+      return profile.data.me.customer;
+    } catch (err) {
+      const error = err.graphQLErrors ? err.graphQLErrors[0].message : err;
+      if (error.includes('Resource Owner Password Credentials Grant')) {
+        return null;
+      }
+      throw new Error(error);
+    }
   },
   logOut: async () => {
     await useCart().refreshCart();

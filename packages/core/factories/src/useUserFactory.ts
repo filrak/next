@@ -87,6 +87,8 @@ export function useUserFactory<USER, UPDATE_USER_PARAMS, REGISTER_USER_PARAMS ex
       }
     };
 
+    refreshUser();
+
     return {
       user: computed(() => user.value),
       updateUser,
