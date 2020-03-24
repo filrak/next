@@ -1,4 +1,4 @@
-import { eventBus } from '../src';
+import eventBus from '../src/ssr/default/eventBus';
 
 jest.mock('@vue/composition-api');
 

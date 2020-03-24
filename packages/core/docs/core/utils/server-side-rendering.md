@@ -5,7 +5,8 @@ We provide our custom mechanism to create server-side rendered pages used with c
 
 ## Usage
 
-if you want to build a new composable-factory that supports SSR you have to use `useSSR` function:
+In the most cases, the composable functions provide SSR support (it is always transparent for developer).
+To build that composable you have to create a new composable-factory with using `useSSR` function.
 
 ```js
 import { useSSR } from '@vue-storefront/utils';
@@ -31,7 +32,32 @@ export function useExampleFactory(factoryParams) {
 
 The `useSSR` returns `state` field that keeps shared state between client-side and server-side under the key you provided as an argument to the created composable (`cacheId`) and `saveCache` function to populate loaded data into the cache. Now created factory supports SSR.
 
-In the case of usage, you have two ways: don't do anything, just use composable in the ordinary way (you don't need SSR) or use special function onSSR to support loading data on the server-side:
+## Your own SSR implementation
+
+It's possible to create your own implementation of shared-state. In that case you have to provide implementation of the `useSSR`.
+
+```js
+import { configureSSR } from '@vue-storefront/utils';
+
+configureSSR({
+  useSSR: (id: string) => {
+    const state = {}; // persisted cache
+
+    const saveCache = (value: any) => {
+      // saving loaded data
+    };
+
+    return {
+      state,
+      saveCache
+    };
+  }
+});
+```
+
+## Temporary solution
+
+By default we do support SSR and shared-state using nuxt features. Furthermore, we can't use multiple async calls in the setup function that depend on each other (eg. loading products by id of category that you have to fetch first). To solve this problem we provide a temporary solution - `onSSR`.
 
 in your theme:
 
@@ -41,12 +67,35 @@ import { onSSR } from '@vue-storefront/utils';
 
 export default {
   setup() {
-    const { search, exmaples } = useExample('examples-page');
+    const { search: searchOne, exampleOne } = useExample('examples-page1');
+    const { search: searchTwo, exampleTwo } = useExample('examples-page2');
 
-    // remove this lines below if you don't need to support ssr
     onSSR(async () => {
-      await search();
+      await searchOne();
+      await searchTwo(exampleOne.id);
     })
+
+    return {
+      examples
+    }
+  }
+}
+
+```
+
+In the future, Vue 3 will provide an async setup and `onSSR` won't be needed anymore:
+
+```js
+import { useExample } from 'your/integration/composables';
+import { onSSR } from '@vue-storefront/utils';
+
+export default {
+  async setup() {
+    const { search: searchOne, exampleOne } = useExample('examples-page1');
+    const { search: searchTwo, exampleTwo } = useExample('examples-page2');
+
+    await searchOne();
+    await searchTwo(exampleOne.id);
 
     return {
       examples

@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 
-import { useSSR, onSSR } from './ssr';
-import eventBus from './event-bus';
+import { useSSR, onSSR, configureSSR } from './ssr';
 import wrap from './wrap';
 import makeComputedGetters from './makeComputedGetters';
 
@@ -10,5 +9,5 @@ export {
   makeComputedGetters,
   useSSR,
   onSSR,
-  eventBus
+  configureSSR
 };

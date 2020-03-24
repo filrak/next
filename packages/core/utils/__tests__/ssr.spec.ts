@@ -1,13 +1,14 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
-import { useSSR, onSSR, eventBus } from '../src';
+import eventBus from './../src/ssr/default/eventBus';
+import { useSSR, onSSR } from '../src';
 
 jest.mock('@vue/composition-api');
-jest.mock('./../src/event-bus', () => ({
+jest.mock('./../src/ssr/default/eventBus', () => ({
   on: jest.fn(),
   emit: jest.fn()
 }));
 
-describe('[CORE - utils] usePersistedState', () => {
+describe('[CORE - utils] ssr', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
