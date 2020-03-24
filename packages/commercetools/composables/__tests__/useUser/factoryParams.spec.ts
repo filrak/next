@@ -28,9 +28,22 @@ jest.mock('../../src/useUser/authenticate', () => ({
 
 describe('[commercetools-composables] factoryParams', () => {
   it('loadUser return customer data', async () => {
+    const createError = (message) => {
+      const error = new Error();
+      (error as any).graphQLErrors = [{ message }];
+
+      return error;
+    };
+
     const customer = {email: 'test@test.pl', password: '123456'};
     (apiGetMe as jest.Mock).mockReturnValueOnce({ data: { me: { customer } }});
     expect(await params.loadUser()).toEqual(customer);
+
+    (apiGetMe as jest.Mock).mockImplementationOnce(() => {
+      throw createError('Resource Owner Password Credentials Grant');
+    });
+
+    expect(await params.loadUser()).toEqual(null);
   });
   it('logOut method calls API log out method', async () => {
     const refreshCartMock = jest.fn(() => {});
