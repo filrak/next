@@ -1,17 +1,17 @@
 import { ref, Ref, computed } from '@vue/composition-api';
 import { UseUser } from '@vue-storefront/interfaces';
 
-export type UseUserFactoryParams<USER, UPDATE_USER_PARAMS> = {
+export type UseUserFactoryParams<USER, UPDATE_USER_PARAMS, REGISTER_USER_PARAMS> = {
   loadUser: () => Promise<USER>;
   logOut: (params?: {currentUser?: USER}) => Promise<void>;
   updateUser: (params: {currentUser: USER; updatedUserData: UPDATE_USER_PARAMS}) => Promise<USER>;
-  register: (params: { email: string; password: string; firstName?: string; lastName?: string }) => Promise<USER>;
+  register: (params: REGISTER_USER_PARAMS) => Promise<USER>;
   logIn: (params: { username: string; password: string }) => Promise<USER>;
   changePassword: (params: {currentUser: USER; currentPassword: string; newPassword: string}) => Promise<USER>;
 };
 
-export function useUserFactory<USER, UPDATE_USER_PARAMS>(
-  factoryParams: UseUserFactoryParams<USER, UPDATE_USER_PARAMS>
+export function useUserFactory<USER, UPDATE_USER_PARAMS, REGISTER_USER_PARAMS extends { email: string; password: string }>(
+  factoryParams: UseUserFactoryParams<USER, UPDATE_USER_PARAMS, REGISTER_USER_PARAMS>
 ) {
   const user: Ref<USER> = ref(null);
   const loading: Ref<boolean> = ref(false);
@@ -31,12 +31,7 @@ export function useUserFactory<USER, UPDATE_USER_PARAMS>(
       }
     };
 
-    const register = async (registerUserData: {
-      email: string;
-      password: string;
-      firstName?: string;
-      lastName?: string;
-    }) => {
+    const register = async (registerUserData: REGISTER_USER_PARAMS) => {
       loading.value = true;
       try {
         user.value = await factoryParams.register(registerUserData);
@@ -82,10 +77,13 @@ export function useUserFactory<USER, UPDATE_USER_PARAMS>(
     };
 
     const refreshUser = async () => {
+      loading.value = true;
       try {
         user.value = await factoryParams.loadUser();
       } catch (err) {
         throw new Error(err);
+      } finally {
+        loading.value = false;
       }
     };
 

@@ -6,6 +6,6 @@ import {
 import { params } from './factoryParams';
 import { useUserFactory } from '@vue-storefront/factories';
 
-const useUser: () => UseUser<Customer, any> = useUserFactory<Customer, any>(params);
+const useUser: () => UseUser<Customer, any> = useUserFactory<Customer, any, any>(params);
 
 export default useUser;
