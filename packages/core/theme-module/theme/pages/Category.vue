@@ -153,7 +153,10 @@
             :total="totalPages"
             :visible="5"
           />
-          <div class="products__pagination__options">
+          <div
+            v-show="totalPages > 1"
+            class="products__pagination__options"
+          >
             <span class="products__pagination__label">Items per page:</span>
             <SfSelect class="items-per-page" v-model="itemsPerPage">
               <SfSelectOption
@@ -274,15 +277,66 @@ const defaultPagination = {
 
 const perPageOptions = [20, 40, 100];
 
+const sortByOptions = [
+  { value: 'latest', label: 'Latest' },
+  { value: 'price-up', label: 'Price from low to high' },
+  { value: 'price-down', label: 'Price from high to low' }
+];
+
+const filters = {
+  collection: [
+    { label: 'Summer fly', value: 'summer-fly', count: '10', selected: false },
+    { label: 'Best 2018', value: 'best-2018', count: '23', selected: false },
+    { label: 'Your choice', value: 'your-choice', count: '54', selected: false }
+  ],
+  color: [
+    { label: 'Red', value: 'red', color: '#990611', selected: false },
+    { label: 'Black', value: 'black', color: '#000000', selected: false },
+    { label: 'Yellow', value: 'yellow', color: '#DCA742', selected: false },
+    { label: 'Blue', value: 'blue', color: '#004F97', selected: false },
+    { label: 'Navy', value: 'navy', color: '#656466', selected: false }
+  ],
+  size: [
+    { label: 'Size 2 (XXS)', value: 'xxs', count: '10', selected: false },
+    { label: 'Size 4-6 (XS)', value: 'xs', count: '23', selected: false },
+    { label: 'Size 8-10 (S)', value: 's', count: '54', selected: false },
+    { label: 'Size 12-14 (M)', value: 'm', count: '109', selected: false },
+    { label: 'Size 16-18 (L)', value: 'l', count: '23', selected: false },
+    { label: 'Size 20-22(XL)', value: 'xl', count: '12', selected: false },
+    { label: 'Size 24-26 (XXL)', value: 'xxl', count: '2', selected: false }
+  ],
+  price: [
+    { label: 'Under $200', value: 'under-200', count: '23', selected: false },
+    { label: 'Under $300', value: 'under-300', count: '54', selected: false }
+  ],
+  material: [
+    { label: 'Cotton', value: 'coton', count: '33', selected: false },
+    { label: 'Silk', value: 'silk', count: '73', selected: false }
+  ]
+};
+
+const breadcrumbs = [
+  { text: 'Home', route: { link: '#' } },
+  { text: 'Women', route: { link: '#' } }
+];
+
+function updateFilter() {}
+
+function clearAllFilters() {
+  const filtersNames = Object.keys(filters);
+  filtersNames.forEach((name) => {
+    filters[name].forEach((value) => {
+      value.selected = false;
+    });
+  });
+}
+
 export default {
   transition: 'fade',
   setup(props, context) {
     const { params, query } = context.root.$route;
-    console.log(query);
-    const lastSlug = Object.keys(params).reduce(
-      (prev, curr) => params[curr] ? params[curr] : prev,
-      params.slug_1
-    );
+
+    const lastSlug = Object.keys(params).reduce((prev, curr) => params[curr] || prev, params.slug_1);
 
     const { categories, search, loading } = useCategory('category-page');
     const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('category-products');
@@ -291,7 +345,7 @@ export default {
 
     search({ slug: lastSlug }).then(() => {
       productsSearch({
-        catId: categories.value[0].id,
+        catId: (categories.value[0] || {}).id,
         page: currentPage.value,
         perPage: itemsPerPage.value
       });
@@ -317,6 +371,14 @@ export default {
     const getCategoryUrl = (slug) => `/c/${params.slug_1}/${slug}`;
     const isCategorySelected = (slug) => slug === (categories.value && categories.value[0].slug);
 
+    const sortBy = ref('price-up');
+
+    const isFilterSidebarOpen = ref(false);
+
+    function toggleWishlist(index) {
+      products.value[index].isOnWishlist = !this.products.value[index].isOnWishlist;
+    }
+
     return {
       products,
       productsLoading,
@@ -332,7 +394,15 @@ export default {
       totalPages: computed(() => Math.ceil(totalProducts.value / itemsPerPage.value)),
       currentPage,
       itemsPerPage,
-      perPageOptions
+      perPageOptions,
+      sortBy,
+      isFilterSidebarOpen,
+      sortByOptions: computed(() => sortByOptions),
+      filters: ref(filters),
+      breadcrumbs: computed(() => breadcrumbs),
+      updateFilter,
+      clearAllFilters,
+      toggleWishlist
     };
   },
   components: {
@@ -349,161 +419,6 @@ export default {
     SfBreadcrumbs,
     SfLoader,
     SfColor
-  },
-  data() {
-    return {
-      sortBy: 'price-up',
-      isFilterSidebarOpen: false,
-      sortByOptions: [
-        {
-          value: 'latest',
-          label: 'Latest'
-        },
-        {
-          value: 'price-up',
-          label: 'Price from low to high'
-        },
-        {
-          value: 'price-down',
-          label: 'Price from high to low'
-        }
-      ],
-      filters: {
-        collection: [
-          {
-            label: 'Summer fly',
-            value: 'summer-fly',
-            count: '10',
-            selected: false
-          },
-          {
-            label: 'Best 2018',
-            value: 'best-2018',
-            count: '23',
-            selected: false
-          },
-          {
-            label: 'Your choice',
-            value: 'your-choice',
-            count: '54',
-            selected: false
-          }
-        ],
-        color: [
-          { label: 'Red',
-            value: 'red',
-            color: '#990611',
-            selected: false },
-          { label: 'Black',
-            value: 'black',
-            color: '#000000',
-            selected: false },
-          {
-            label: 'Yellow',
-            value: 'yellow',
-            color: '#DCA742',
-            selected: false
-          },
-          { label: 'Blue',
-            value: 'blue',
-            color: '#004F97',
-            selected: false },
-          { label: 'Navy',
-            value: 'navy',
-            color: '#656466',
-            selected: false }
-        ],
-        size: [
-          { label: 'Size 2 (XXS)',
-            value: 'xxs',
-            count: '10',
-            selected: false },
-          { label: 'Size 4-6 (XS)',
-            value: 'xs',
-            count: '23',
-            selected: false },
-          { label: 'Size 8-10 (S)',
-            value: 's',
-            count: '54',
-            selected: false },
-          {
-            label: 'Size 12-14 (M)',
-            value: 'm',
-            count: '109',
-            selected: false
-          },
-          { label: 'Size 16-18 (L)',
-            value: 'l',
-            count: '23',
-            selected: false },
-          {
-            label: 'Size 20-22(XL)',
-            value: 'xl',
-            count: '12',
-            selected: false
-          },
-          {
-            label: 'Size 24-26 (XXL)',
-            value: 'xxl',
-            count: '2',
-            selected: false
-          }
-        ],
-        price: [
-          {
-            label: 'Under $200',
-            value: 'under-200',
-            count: '23',
-            selected: false
-          },
-          {
-            label: 'Under $300',
-            value: 'under-300',
-            count: '54',
-            selected: false
-          }
-        ],
-        material: [
-          { label: 'Cotton',
-            value: 'coton',
-            count: '33',
-            selected: false },
-          { label: 'Silk',
-            value: 'silk',
-            count: '73',
-            selected: false }
-        ]
-      },
-      breadcrumbs: [
-        {
-          text: 'Home',
-          route: {
-            link: '#'
-          }
-        },
-        {
-          text: 'Women',
-          route: {
-            link: '#'
-          }
-        }
-      ]
-    };
-  },
-  methods: {
-    updateFilter() {},
-    clearAllFilters() {
-      const filters = Object.keys(this.filters);
-      filters.forEach((name) => {
-        const prop = this.filters[name];
-        prop.forEach((value) => {
-          value.selected = false;
-        });
-      });
-    },
-    toggleWishlist(index) {
-      this.products[index].isOnWishlist = !this.products[index].isOnWishlist;
-    }
   }
 };
 </script>

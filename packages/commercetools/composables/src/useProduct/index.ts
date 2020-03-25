@@ -2,9 +2,15 @@ import { getProduct } from '@vue-storefront/commercetools-api';
 import { enhanceProduct, mapPaginationParams } from './../helpers/internals';
 import { ProductVariant } from './../types/GraphQL';
 import { useProductFactory } from '@vue-storefront/factories';
-import { SearchResult, AgnosticProductSearchParams } from '@vue-storefront/interfaces';
+import { SearchResult } from '@vue-storefront/interfaces';
 
-const productsSearch = async (params: AgnosticProductSearchParams): Promise<SearchResult<ProductVariant>> => {
+const productsSearch = async (params: {
+  perPage?: number;
+  page?: number;
+  sort?: any;
+  term?: any;
+  filters?: any;
+}): Promise<SearchResult<ProductVariant>> => {
   const apiSearchParams = {
     ...params,
     ...mapPaginationParams(params)
@@ -17,4 +23,10 @@ const productsSearch = async (params: AgnosticProductSearchParams): Promise<Sear
   };
 };
 
-export default useProductFactory<ProductVariant, AgnosticProductSearchParams>({ productsSearch });
+export default useProductFactory<ProductVariant, {
+  perPage?: number;
+  page?: number;
+  sort?: any;
+  term?: any;
+  filters?: any;
+}>({ productsSearch });
