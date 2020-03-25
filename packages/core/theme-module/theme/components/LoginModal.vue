@@ -171,8 +171,12 @@ export default {
     });
 
     const handleForm = (fn) => async () => {
-      await fn(form.value);
-      toggleLoginModal();
+      try {
+        await fn(form.value);
+        toggleLoginModal();
+      } catch (error) {
+        throw new Error(error);
+      }
     };
 
     const handleRegister = async () => handleForm(register)();

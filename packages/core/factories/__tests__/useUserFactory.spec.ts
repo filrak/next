@@ -4,7 +4,7 @@ import VueCompositionApi from '@vue/composition-api';
 Vue.use(VueCompositionApi);
 
 const factoryParams = {
-  loadUser: jest.fn(),
+  loadUser: jest.fn(() => null),
   logOut: jest.fn(),
   updateUser: jest.fn(),
   register: jest.fn(),
