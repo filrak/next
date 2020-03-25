@@ -3,9 +3,10 @@ import {CustomerSignMeInDraft, CustomerSignMeUpDraft} from '@vue-storefront/comm
 type UserData = CustomerSignMeUpDraft | CustomerSignMeInDraft;
 
 export const authenticate = async (userData: UserData, fn) => {
-  const userResponse = await fn(userData);
-  return userResponse.data.user.customer;
-  // } catch (err) {
-  //   console.error(err.graphQLErrors ? err.graphQLErrors[0].message : err);
-  // }
+  try {
+    const userResponse = await fn(userData);
+    return userResponse.data.user.customer;
+  } catch (err) {
+    console.error(err.graphQLErrors ? err.graphQLErrors[0].message : err);
+  }
 };

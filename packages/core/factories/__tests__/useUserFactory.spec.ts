@@ -9,7 +9,8 @@ const factoryParams = {
   updateUser: jest.fn(),
   register: jest.fn(),
   logIn: jest.fn(),
-  changePassword: jest.fn()
+  changePassword: jest.fn(),
+  refreshUser: jest.fn()
 };
 
 const useUserMethods = useUserFactory(factoryParams)();

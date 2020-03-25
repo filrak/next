@@ -44,7 +44,6 @@
                   <div>Login</div>
                 </SfLoader>
               </SfButton>
-              <SfAlert v-if="error" class="alert" type="danger" :message="error" />
             </form>
           </ValidationObserver>
           <div class="action">
@@ -171,12 +170,8 @@ export default {
     });
 
     const handleForm = (fn) => async () => {
-      try {
-        await fn(form.value);
-        toggleLoginModal();
-      } catch (error) {
-        throw new Error(error);
-      }
+      await fn(form.value);
+      toggleLoginModal();
     };
 
     const handleRegister = async () => handleForm(register)();
