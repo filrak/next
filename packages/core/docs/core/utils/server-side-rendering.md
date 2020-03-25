@@ -11,26 +11,23 @@ To build that composable you have to create a new composable-factory with using 
 ```js
 import { useSSR } from '@vue-storefront/utils';
 
-export function useExampleFactory(factoryParams) {
-  return function useExample(cacheId) {
-    const { state, saveCache } = useSSR(cacheId);
-    const examples = ref(state || []);
+const useCategory = (cacheId) => {
+  const { cache, saveToCache } = useSSR(cacheId);
+  const categories = ref(cache || []);
 
-    const search = async (params) => {
-      examples.value = await factoryParams.examplesSearch(params);
-      saveCache(examples.value )
-    };
-
-    return {
-      search,
-      examples: computed(() => examples.value)
-    };
+  const search = async (params) => {
+    categories.value = await factoryParams.categorySearch(params);
+    saveToCache(categories.value )
   };
-}
 
+  return {
+    search,
+    categories: computed(() => categories.value)
+  };
+};
 ```
 
-The `useSSR` returns `state` field that keeps shared state between client-side and server-side under the key you provided as an argument to the created composable (`cacheId`) and `saveCache` function to populate loaded data into the cache. Now created factory supports SSR.
+The `useSSR` returns `cache` field that keeps shared state between client-side and server-side under the key you provided as an argument to the created composable (`cacheId`) and `saveToCache` function to populate loaded data into the cache. Now created factory supports SSR.
 
 ## Your own SSR implementation
 
@@ -41,15 +38,15 @@ import { configureSSR } from '@vue-storefront/utils';
 
 configureSSR({
   useSSR: (id: string) => {
-    const state = {}; // persisted cache
+    const cache = {}; // persisted cache
 
-    const saveCache = (value: any) => {
+    const saveToCache = (value: any) => {
       // saving loaded data
     };
 
     return {
-      state,
-      saveCache
+      cache,
+      saveToCache
     };
   }
 });

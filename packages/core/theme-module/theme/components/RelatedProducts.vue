@@ -34,20 +34,6 @@ import {
 
 export default {
   name: 'RelatedProducts',
-
-  components: {
-    SfCarousel,
-    SfProductCard,
-    SfSection,
-    SfLoader
-  },
-
-  props: {
-    title: String,
-    products: Array,
-    loading: Boolean
-  },
-
   setup() {
     return {
       getProductSlug,
@@ -55,6 +41,17 @@ export default {
       getProductGallery,
       getProductPrice
     };
+  },
+  components: {
+    SfCarousel,
+    SfProductCard,
+    SfSection,
+    SfLoader
+  },
+  props: {
+    title: String,
+    products: Array,
+    loading: Boolean
   }
 };
 </script>

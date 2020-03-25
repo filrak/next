@@ -10,14 +10,14 @@ export function useCategoryFactory<CATEGORY, CATEGORY_SEARCH_PARAMS>(
   factoryParams: UseCategoryFactoryParams<CATEGORY, CATEGORY_SEARCH_PARAMS>
 ) {
   return function useCategory(cacheId?: string): UseCategory<CATEGORY> {
-    const { state, saveCache } = useSSR(cacheId);
-    const categories: Ref<CATEGORY[]> = ref(state || []);
+    const { cache, saveToCache } = useSSR(cacheId);
+    const categories: Ref<CATEGORY[]> = ref(cache || []);
     const loading = ref(false);
 
     const search = async (params: CATEGORY_SEARCH_PARAMS) => {
       loading.value = true;
       categories.value = await factoryParams.categorySearch(params);
-      saveCache(categories.value);
+      saveToCache(categories.value);
       loading.value = false;
     };
 

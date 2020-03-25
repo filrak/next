@@ -44,9 +44,9 @@ describe('[CORE - utils] ssr', () => {
 
     (getCurrentInstance as any).mockImplementation(() => vm);
 
-    const { state } = useSSR('some-cache-id');
+    const { cache } = useSSR('some-cache-id');
 
-    expect(state).toEqual('test');
+    expect(cache).toEqual('test');
   });
 
   it('reads CSR state', () => {
@@ -63,15 +63,15 @@ describe('[CORE - utils] ssr', () => {
     window.__VSF_STATE__ = { 'some-cache-id': 5 };
     (getCurrentInstance as any).mockImplementation(() => vm);
 
-    const { state } = useSSR('some-cache-id');
+    const { cache } = useSSR('some-cache-id');
 
-    expect(state).toEqual(5);
+    expect(cache).toEqual(5);
   });
 
   it('reads CSR state', () => {
     (emit as any).mockImplementation(() => {});
-    const { saveCache } = useSSR('some-cache-id');
-    saveCache('test-value');
+    const { saveToCache } = useSSR('some-cache-id');
+    saveToCache('test-value');
 
     expect(emit).toBeCalled();
   });

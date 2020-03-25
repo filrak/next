@@ -18,8 +18,8 @@ export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
   factoryParams: UseProductFactoryParams<PRODUCT, PRODUCT_SEARCH_PARAMS>
 ) {
   return function useProduct(cacheId: string): UseProduct<PRODUCT> {
-    const { state, saveCache } = useSSR(cacheId);
-    const products: Ref<PRODUCT[]> = ref(state || []);
+    const { cache, saveToCache } = useSSR(cacheId);
+    const products: Ref<PRODUCT[]> = ref(cache || []);
     const totalProducts = ref(0);
     const loading = ref(false);
 
@@ -28,7 +28,7 @@ export function useProductFactory<PRODUCT, PRODUCT_SEARCH_PARAMS>(
       const { data, total } = await factoryParams.productsSearch(params);
       products.value = data;
       totalProducts.value = total;
-      saveCache(data);
+      saveToCache(data);
       loading.value = false;
     };
 

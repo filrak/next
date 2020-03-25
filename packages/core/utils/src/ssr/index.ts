@@ -1,8 +1,8 @@
 import { useSSR as defaultUseSSR, onSSR } from './default';
 
 interface UseSSRValues {
-  state: any;
-  saveCache: (value: any) => void;
+  cache: any;
+  saveToCache: (value: any) => void;
 }
 
 type UseSSR = (key: string) => UseSSRValues;

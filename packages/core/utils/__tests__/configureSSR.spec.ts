@@ -19,19 +19,19 @@ describe('[CORE - utils] configureSSR', () => {
   });
 
   it('configures ssr implementation', () => {
-    const saveCacheMock = jest.fn();
+    const saveToCacheMock = jest.fn();
     const useSSRMock = jest.fn(() => ({
-      state: 'some state',
-      saveCache: saveCacheMock
+      cache: 'some state',
+      saveToCache: saveToCacheMock
     }));
 
     configureSSR({ useSSR: useSSRMock });
 
-    const { state, saveCache } = useSSR('cache-id');
-    saveCache('some value');
+    const { cache, saveToCache } = useSSR('cache-id');
+    saveToCache('some value');
 
     expect(useSSRMock).toBeCalledWith('cache-id');
-    expect(saveCacheMock).toBeCalledWith('some value');
-    expect(state).toEqual('some state');
+    expect(saveToCacheMock).toBeCalledWith('some value');
+    expect(cache).toEqual('some state');
   });
 });
