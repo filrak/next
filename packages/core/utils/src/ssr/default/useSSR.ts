@@ -18,13 +18,13 @@ export const useSSR = (key: string) => {
     vm.$ssrContext.nuxt.vsfState = {};
   }
 
-  const saveToCache = (value) => {
+  const saveToInitialState = (value) => {
     emit('set-ssr-cache', { key, value });
   };
 
   return {
-    saveToCache,
-    cache: getRootState(vm)[key]
+    saveToInitialState,
+    initialState: getRootState(vm)[key]
   };
 };
 
