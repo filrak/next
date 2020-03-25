@@ -8,7 +8,6 @@ export type UseUserFactoryParams<USER, UPDATE_USER_PARAMS, REGISTER_USER_PARAMS>
   register: (params: REGISTER_USER_PARAMS) => Promise<USER>;
   logIn: (params: { username: string; password: string }) => Promise<USER>;
   changePassword: (params: {currentUser: USER; currentPassword: string; newPassword: string}) => Promise<USER>;
-  refreshUser: () => Promise<void>;
 };
 
 export function useUserFactory<USER, UPDATE_USER_PARAMS, REGISTER_USER_PARAMS extends { email: string; password: string }>(
