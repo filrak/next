@@ -643,7 +643,6 @@ export default {
 }
 .main {
   display: flex;
-  align-items: stretch;
 }
 .sidebar {
   flex: 0 0 15%;
