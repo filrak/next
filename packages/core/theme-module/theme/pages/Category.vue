@@ -145,78 +145,76 @@
         </SfLoader>
       </div>
       <div class="products">
-        <SfLoader :class="{ loading: productsLoading }" :loading="productsLoading">
-          <transition-group
-            v-if="isGridView"
-            appear
-            name="products__slide"
-            tag="div"
-            class="products__grid"
-          >
-            <SfProductCard
-              v-for="(product, i) in products"
-              :key="productGetters.getSlug(product)"
-              :style="{ '--index': i }"
-              :title="productGetters.getName(product)"
-              :image="productGetters.getCoverImage(product)"
-              :regular-price="'$' + productGetters.getPrice(product).regular"
-              :max-rating="5"
-              :score-rating="3"
-              :isOnWishlist="false"
-              @click:wishlist="toggleWishlist(i)"
-              :link="`/p/${productGetters.getSlug(product)}`"
-              class="products__product-card"
-            />
-          </transition-group>
-          <transition-group
-            v-else
-            appear
-            name="products__slide"
-            tag="div"
-            class="products__list"
-          >
-            <SfProductCardHorizontal
-              v-for="(product, i) in products"
-              :key="productGetters.getSlug(product)"
-              :style="{ '--index': i }"
-              :title="productGetters.getName(product)"
-              :description="productGetters.getDescription(product)"
-              :image="productGetters.getCoverImage(product)"
-              :regular-price="'$' + productGetters.getPrice(product)"
-              :max-rating="5"
-              :score-rating="3"
-              :is-on-wishlist="false"
-              class="products__product-card-horizontal"
-              @click:wishlist="toggleWishlist(i)"
-              :link="`/p/${productGetters.getSlug(product)}`"
-            />
-          </transition-group>
-          <SfPagination
-            v-show="totalPages > 1"
-            class="products__pagination desktop-only"
-            :current="currentPage"
-            @click="page => currentPage = page"
-            :total="totalPages"
-            :visible="5"
+        <transition-group
+          v-if="isGridView"
+          appear
+          name="products__slide"
+          tag="div"
+          class="products__grid"
+        >
+          <SfProductCard
+            v-for="(product, i) in products"
+            :key="productGetters.getSlug(product)"
+            :style="{ '--index': i }"
+            :title="productGetters.getName(product)"
+            :image="productGetters.getCoverImage(product)"
+            :regular-price="'$' + productGetters.getPrice(product).regular"
+            :max-rating="5"
+            :score-rating="3"
+            :isOnWishlist="false"
+            @click:wishlist="toggleWishlist(i)"
+            :link="`/p/${productGetters.getSlug(product)}`"
+            class="products__product-card"
           />
-          <!-- TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941 -->
-          <div
-            v-show="totalPages > 1"
-            class="products__pagination__options"
-          >
-            <span class="products__pagination__label">Items per page:</span>
-            <SfSelect class="items-per-page" v-model="itemsPerPage">
-              <SfSelectOption
-                v-for="option in perPageOptions"
-                :key="option"
-                :value="option"
-                class="items-per-page__option"
-                >{{ option }}</SfSelectOption
-              >
-            </SfSelect>
-          </div>
-          <!-- end of TODO -->
-        </SfLoader>
+        </transition-group>
+        <transition-group
+          v-else
+          appear
+          name="products__slide"
+          tag="div"
+          class="products__list"
+        >
+          <SfProductCardHorizontal
+            v-for="(product, i) in products"
+            :key="productGetters.getSlug(product)"
+            :style="{ '--index': i }"
+            :title="productGetters.getName(product)"
+            :description="productGetters.getDescription(product)"
+            :image="productGetters.getCoverImage(product)"
+            :regular-price="'$' + productGetters.getPrice(product).regular"
+            :max-rating="5"
+            :score-rating="3"
+            :is-on-wishlist="false"
+            class="products__product-card-horizontal"
+            @click:wishlist="toggleWishlist(i)"
+            :link="`/p/${productGetters.getSlug(product)}`"
+          />
+        </transition-group>
+        <SfPagination
+          v-show="totalPages > 1"
+          class="products__pagination desktop-only"
+          :current="currentPage"
+          @click="page => currentPage = page"
+          :total="totalPages"
+          :visible="5"
+        />
+        <!-- TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941 -->
+        <div
+          v-show="totalPages > 1"
+          class="products__pagination__options"
+        >
+          <span class="products__pagination__label">Items per page:</span>
+          <SfSelect class="items-per-page" v-model="itemsPerPage">
+            <SfSelectOption
+              v-for="option in perPageOptions"
+              :key="option"
+              :value="option"
+              class="items-per-page__option"
+              >{{ option }}</SfSelectOption
+            >
+          </SfSelect>
+        </div>
+        <!-- end of TODO -->
       </div>
     </div>
     <SfSidebar
@@ -618,23 +616,23 @@ export default {
       --product-card-padding: var(--spacer-big);
       flex: 1 1 25%;
     }
-    // TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941
-    &__pagination__options {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: row;
-
-      .items-per-page {
-        min-width: 3rem;
-      }
-    }
-
-    &__pagination__label {
-      color: var(--c-text-muted);
-    }
-    // end of TODO
   }
+  // TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941
+  &__pagination__options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    .items-per-page {
+      min-width: 3rem;
+    }
+  }
+
+  &__pagination__label {
+    color: var(--c-text-muted);
+  }
+  // end of TODO
   &__product-card-horizontal {
     --product-card-horizontal-padding: var(--spacer);
     flex: 0 0 100%;
