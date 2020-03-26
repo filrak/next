@@ -146,16 +146,20 @@ export interface UseLocale
   LOCALE,
   COUNTRY,
   CURRENCY,
-  AVAILABLE_LOCALES,
-  AVAILABLE_COUNTRIES,
-  AVAILABLE_CURRENCIES,
+  AVAILABLE_LOCALES = LOCALE[],
+  AVAILABLE_COUNTRIES = COUNTRY[],
+  AVAILABLE_CURRENCIES = CURRENCY[],
 > {
-  locale: LOCALE;
-  country: COUNTRY;
-  currency: CURRENCY;
-  availableLocales: AVAILABLE_LOCALES;
-  availableCountries: AVAILABLE_COUNTRIES;
-  availableCurrencies: AVAILABLE_CURRENCIES;
+  locale: ComputedProperty<LOCALE>;
+  country: ComputedProperty<COUNTRY>;
+  currency: ComputedProperty<CURRENCY>;
+  setLocale: (locale: LOCALE) => void;
+  setCountry: (country: COUNTRY) => void;
+  setCurrency: (currency: CURRENCY) => void;
+  refreshAvailableElements: () => Promise<void>;
+  availableLocales: ComputedProperty<AVAILABLE_LOCALES>;
+  availableCountries: ComputedProperty<AVAILABLE_COUNTRIES>;
+  availableCurrencies: ComputedProperty<AVAILABLE_CURRENCIES>;
   loading: ComputedProperty<boolean>;
 }
 
