@@ -116,36 +116,36 @@
     <div class="main section">
       <div class="sidebar desktop-only">
         <SfLoader :class="{ loading }" :loading="loading">
-        <SfAccordion :firstOpen="true" :showChevron="false">
-          <SfAccordionItem
-            v-for="(cat, i) in categoryTree && categoryTree.items"
-            :key="i"
-            :header="cat.label"
-          >
-            <template>
-              <SfList>
-                <SfListItem>
-                  <SfMenuItem :label="cat.label">
-                    <template #label>
-                      <nuxt-link :to="getCategoryUrl(cat.slug)" :class="isCategorySelected(cat.slug) ? 'sidebar--cat-selected' : ''">All</nuxt-link>
-                    </template>
-                  </SfMenuItem>
-                </SfListItem>
-                <SfListItem v-for="(subCat, j) in cat.items" :key="j">
-                  <SfMenuItem :label="subCat.label">
-                    <template #label="{ label }">
-                      <nuxt-link :to="getCategoryUrl(subCat.slug)" :class="isCategorySelected(subCat.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</nuxt-link>
-                    </template>
-                  </SfMenuItem>
-                </SfListItem>
-              </SfList>
-            </template>
-          </SfAccordionItem>
-        </SfAccordion>
+          <SfAccordion :firstOpen="true" :showChevron="false">
+            <SfAccordionItem
+              v-for="(cat, i) in categoryTree && categoryTree.items"
+              :key="i"
+              :header="cat.label"
+            >
+              <template>
+                <SfList>
+                  <SfListItem>
+                    <SfMenuItem :label="cat.label">
+                      <template #label>
+                        <nuxt-link :to="getCategoryUrl(cat.slug)" :class="isCategorySelected(cat.slug) ? 'sidebar--cat-selected' : ''">All</nuxt-link>
+                      </template>
+                    </SfMenuItem>
+                  </SfListItem>
+                  <SfListItem v-for="(subCat, j) in cat.items" :key="j">
+                    <SfMenuItem :label="subCat.label">
+                      <template #label="{ label }">
+                        <nuxt-link :to="getCategoryUrl(subCat.slug)" :class="isCategorySelected(subCat.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</nuxt-link>
+                      </template>
+                    </SfMenuItem>
+                  </SfListItem>
+                </SfList>
+              </template>
+            </SfAccordionItem>
+          </SfAccordion>
         </SfLoader>
       </div>
-      <SfLoader :class="{ loading: productsLoading }" :loading="productsLoading">
-        <div class="products">
+      <div class="products">
+        <SfLoader :class="{ loading: productsLoading }" :loading="productsLoading">
           <transition-group
             v-if="isGridView"
             appear
@@ -155,7 +155,7 @@
           >
             <SfProductCard
               v-for="(product, i) in products"
-              :key="i"
+              :key="getProductSlug(product)"
               :style="{ '--index': i }"
               :title="getProductName(product)"
               :image="getProductGallery(product)[0].big"
@@ -177,7 +177,7 @@
           >
             <SfProductCardHorizontal
               v-for="(product, i) in products"
-              :key="i"
+              :key="getProductSlug(product)"
               :style="{ '--index': i }"
               :title="getProductName(product)"
               :description="getProductDescription(product)"
@@ -216,8 +216,8 @@
             </SfSelect>
           </div>
           <!-- end of TODO -->
-        </div>
-      </SfLoader>
+        </SfLoader>
+      </div>
     </div>
     <SfSidebar
       :visible="isFilterSidebarOpen"
@@ -321,6 +321,7 @@ import {
   getProductVariants,
   getProductDescription
 } from '<%= options.helpers %>';
+import { onSSR } from '@vue-storefront/utils';
 
 // TODO: move to composable when core is ready: https://github.com/DivanteLtd/next/issues/296
 const defaultPagination = {
@@ -391,13 +392,14 @@ export default {
 
     const lastSlug = Object.keys(params).reduce((prev, curr) => params[curr] || prev, params.slug_1);
 
-    const { categories, search, loading } = useCategory('category-page');
-    const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('category-products');
+    const { categories, search, loading } = useCategory('categories');
+    const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('categoryProducts');
     const currentPage = ref(parseInt(query.page, 10) || defaultPagination.page);
     const itemsPerPage = ref(parseInt(query.items, 10) || defaultPagination.itemsPerPage);
 
-    search({ slug: lastSlug }).then(() => {
-      productsSearch({
+    onSSR(async () => {
+      await search({ slug: lastSlug });
+      await productsSearch({
         catId: (categories.value[0] || {}).id,
         page: currentPage.value,
         perPage: itemsPerPage.value
@@ -425,7 +427,7 @@ export default {
     const isCategorySelected = (slug) => slug === (categories.value && categories.value[0].slug);
 
     const sortBy = ref('price-up');
-
+    const isGridView = ref(true);
     const isFilterSidebarOpen = ref(false);
 
     function toggleWishlist(index) {
@@ -456,7 +458,8 @@ export default {
       breadcrumbs: computed(() => breadcrumbs),
       updateFilter,
       clearAllFilters,
-      toggleWishlist
+      toggleWishlist,
+      isGridView
     };
   },
   components: {
