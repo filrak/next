@@ -40,7 +40,7 @@ export interface UseUser
   changePassword: (
     currentPassword: string,
     newPassword: string) => Promise<void>;
-  refreshUser: () => void;
+  refreshUser: () => Promise<void>;
   isAuthenticated: Ref<boolean>;
   loading: ComputedProperty<boolean>;
 }
@@ -195,25 +195,25 @@ export interface CategoryGetters<CATEGORY> {
 }
 
 export interface UserGetters<USER> {
-  getFirstName: (customer: USER | ComputedProperty<USER>) => string;
-  getLastName: (customer: USER | ComputedProperty<USER>) => string;
-  getFullName: (customer: USER | ComputedProperty<USER>) => string;
+  getFirstName: (customer: USER) => string;
+  getLastName: (customer: USER) => string;
+  getFullName: (customer: USER) => string;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
 export interface CheckoutGetters<SHIPPING_METHOD> {
-  getShippingMethodId: (shippingMethod: SHIPPING_METHOD | ComputedProperty<SHIPPING_METHOD>) => string;
-  getShippingMethodName: (shippingMethod: SHIPPING_METHOD | ComputedProperty<SHIPPING_METHOD>) => string;
-  getShippingMethodDescription: (shippingMethod: SHIPPING_METHOD | ComputedProperty<SHIPPING_METHOD>) => string;
-  getShippingMethodPrice: (shippingMethod: SHIPPING_METHOD | ComputedProperty<SHIPPING_METHOD>) => number;
+  getShippingMethodId: (shippingMethod: SHIPPING_METHOD) => string;
+  getShippingMethodName: (shippingMethod: SHIPPING_METHOD) => string;
+  getShippingMethodDescription: (shippingMethod: SHIPPING_METHOD) => string;
+  getShippingMethodPrice: (shippingMethod: SHIPPING_METHOD) => number;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
 export interface UserOrderGetters<ORDER> {
-  getDate: (order: ORDER | ComputedProperty<ORDER>) => string;
-  getId: (order: ORDER | ComputedProperty<ORDER>) => string;
-  getStatus: (order: ORDER | ComputedProperty<ORDER>) => string;
-  getPrice: (order: ORDER | ComputedProperty<ORDER>) => number;
+  getDate: (order: ORDER) => string;
+  getId: (order: ORDER) => string;
+  getStatus: (order: ORDER) => string;
+  getPrice: (order: ORDER) => number;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
