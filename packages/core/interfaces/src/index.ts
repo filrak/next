@@ -56,7 +56,7 @@ export interface UseUserOrders<ORDER> {
     [x: string]: any;
   }) => Promise<void>;
   loading: ComputedProperty<boolean>;
-  userOrderGetters: OrderGetters<ORDER>;
+  userOrderGetters: UserOrderGetters<ORDER>;
 }
 
 export interface UseUserAddress<ADDRESS> {
