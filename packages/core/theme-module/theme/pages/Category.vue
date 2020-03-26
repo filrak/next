@@ -322,6 +322,7 @@ import {
   getProductDescription
 } from '<%= options.helpers %>';
 
+// TODO: move to composable when core is ready: https://github.com/DivanteLtd/next/issues/296
 const defaultPagination = {
   page: 1,
   itemsPerPage: 20
