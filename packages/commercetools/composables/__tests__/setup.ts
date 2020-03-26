@@ -15,5 +15,6 @@ jest.mock('@vue-storefront/factories', () => ({
   useCategoryFactory: (params) => () => params,
   useProductFactory: (params) => () => params,
   useUserOrdersFactory: (params) => () => params,
-  useUserFactory: (params) => () => params
+  useUserFactory: (params) => () => params,
+  useLocaleFactory: (params) => () => params
 }));
