@@ -1,63 +1,73 @@
-// import { CartGetters, AgnosticAttribute, AgnosticPrice, AgnosticTotals } from '@vue-storefront/interfaces';
-// import { Cart, LineItem } from './../types/GraphQL';
+import { CartGetters, AgnosticPrice, AgnosticTotals } from '@vue-storefront/interfaces';
+import { Cart, LineItem } from './../types/GraphQL';
+import { getProductAttributes } from './productGetters';
 
-// const getCartTotals = (cart: Cart): AgnosticTotals => {
+export const getCartItems = (cart: Cart): LineItem[] => {
+  if (!cart) {
+    return [];
+  }
 
-// };
+  return cart.lineItems;
+};
 
-// const getCartShippingPrice = (cart: Cart): number => {
+export const getCartItemName = (product: LineItem): string => product.name;
 
-// };
+export const getCartItemImage = (product: LineItem): string => product.variant.images[0].url;
 
-// const getCartItems = (cart: Cart): LineItem[] => {
-//   return cart.lineItems;
-// };
+export const getCartItemPrice = (product: LineItem): AgnosticPrice => {
+  const price = product.price.value.centAmount / 100;
 
-// const getCartItemName = (cart: LineItem): string => {
+  return {
+    regular: price,
+    special: price
+  };
+};
 
-// };
+export const getCartItemQty = (product: LineItem): number => product.quantity;
 
-// const getCartItemImage = (cart: LineItem): string => {
+export const getCartItemAttributes = (product: LineItem, filterByAttributeName?: Array<string>) =>
+  getProductAttributes(product.variant, filterByAttributeName);
 
-// };
+export const getCartItemSku = (product: LineItem): string => product.variant.sku;
 
-// const getCartItemPrice = (cart: LineItem): AgnosticPrice => {
+export const getCartTotals = (cart: Cart): AgnosticTotals => {
+  if (!cart) {
+    return {
+      total: 0,
+      subtotal: 0
+    };
+  }
 
-// };
+  const subtotalPrice = cart.totalPrice.centAmount;
+  const shipping = cart.shippingInfo ? cart.shippingInfo.price.centAmount : 0;
 
-// const getCartItemQty = (cart: LineItem): number => {
+  return {
+    total: (shipping + subtotalPrice) / 100,
+    subtotal: subtotalPrice / 100
+  };
+};
 
-// };
+export const getCartShippingPrice = (cart: Cart): number => cart && cart.shippingInfo ? cart.shippingInfo.price.centAmount / 100 : 0;
 
-// const getCartItemAttributes = (cart: LineItem, filters: Array<string>): AgnosticAttribute[] => {
+export const getCartTotalItems = (cart: Cart): number => {
+  if (!cart) {
+    return 0;
+  }
 
-// };
+  return cart.lineItems.reduce((previous, current) => previous + current.quantity, 0);
+};
 
-// const getCartItemSku = (cart: LineItem): string => {
+const cartGetters: CartGetters<Cart, LineItem> = {
+  getTotals: getCartTotals,
+  getShippingPrice: getCartShippingPrice,
+  getItems: getCartItems,
+  getItemName: getCartItemName,
+  getItemImage: getCartItemImage,
+  getItemPrice: getCartItemPrice,
+  getItemQty: getCartItemQty,
+  getItemAttributes: getCartItemAttributes,
+  getItemSku: getCartItemSku,
+  getTotalItems: getCartTotalItems
+};
 
-// };
-
-// const cartGetters: CartGetters<Cart, LineItem> = {
-//   getTotals: getCartTotals,
-//   getShippingPrice: getCartShippingPrice,
-//   getItems: getCartItems,
-//   getItemName: getCartItemName,
-//   getItemImage: getCartItemImage,
-//   getItemPrice: getCartItemPrice,
-//   getItemQty: getCartItemQty,
-//   getItemAttributes: getCartItemAttributes,
-//   getItemSku: getCartItemSku
-// };
-
-// export {
-//   cartGetters,
-//   getCartTotals,
-//   getCartShippingPrice,
-//   getCartItems,
-//   getCartItemName,
-//   getCartItemImage,
-//   getCartItemPrice,
-//   getCartItemQty,
-//   getCartItemAttributes,
-//   getCartItemSku
-// };
+export default cartGetters;

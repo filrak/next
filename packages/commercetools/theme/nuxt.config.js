@@ -50,8 +50,7 @@ export default {
     }],
     ['@vue-storefront/nuxt-theme', {
       apiClient: '@vue-storefront/commercetools-api',
-      composables: '@vue-storefront/commercetools-composables',
-      helpers: '@vue-storefront/commercetools-helpers'
+      composables: '@vue-storefront/commercetools-composables'
     }]
   ],
   modules: [

@@ -2,7 +2,7 @@ import { Ref } from '@vue/composition-api';
 
 export type ComputedProperty<T> = Readonly<Ref<Readonly<T>>>;
 
-export interface UseProduct<PRODUCT, PRODUCT_FILTER> {
+export interface UseProduct<PRODUCT> {
   products: ComputedProperty<PRODUCT[]>;
   totalProducts: ComputedProperty<number>;
   search: (params: {
@@ -15,7 +15,6 @@ export interface UseProduct<PRODUCT, PRODUCT_FILTER> {
   }) => Promise<void>;
   loading: ComputedProperty<boolean>;
   [x: string]: any;
-  productGetters: ProductGetters<PRODUCT, PRODUCT_FILTER>;
 }
 
 export interface UseUser
@@ -24,7 +23,6 @@ export interface UseUser
   UPDATE_USER_PARAMS
 > {
   user: ComputedProperty<USER>;
-  userGetters: UserGetters<USER>;
   updateUser: (params: UPDATE_USER_PARAMS) => Promise<void>;
   register: (user: {
     email: string;
@@ -42,6 +40,7 @@ export interface UseUser
   changePassword: (
     currentPassword: string,
     newPassword: string) => Promise<void>;
+  refreshUser: () => void;
   isAuthenticated: Ref<boolean>;
   loading: ComputedProperty<boolean>;
 }
@@ -56,7 +55,6 @@ export interface UseUserOrders<ORDER> {
     [x: string]: any;
   }) => Promise<void>;
   loading: ComputedProperty<boolean>;
-  userOrderGetters: UserOrderGetters<ORDER>;
 }
 
 export interface UseUserAddress<ADDRESS> {
@@ -77,7 +75,6 @@ export interface UseCategory
   search: (params: {
     [x: string]: any;
   }) => Promise<void>;
-  categoryGetters: CategoryGetters<CATEGORY>;
   loading: ComputedProperty<boolean>;
 }
 
@@ -98,7 +95,6 @@ export interface UseCart
   applyCoupon: (coupon: string) => Promise<void>;
   removeCoupon: () => Promise<void>;
   refreshCart: () => Promise<void>;
-  cartGetters: CartGetters<CART, PRODUCT>;
   loading: ComputedProperty<boolean>;
 }
 
@@ -135,7 +131,6 @@ export interface UseCheckout
   CHOOSEN_SHIPPING_METHOD,
   PLACE_ORDER,
 > {
-  checkoutGetters: CheckoutGetters<SHIPPING_METHODS>;
   paymentMethods: Ref<PAYMENT_METHODS>;
   shippingMethods: Ref<SHIPPING_METHODS>;
   personalDetails: PERSONAL_DETAILS;
@@ -173,17 +168,10 @@ export interface ProductGetters<PRODUCT, PRODUCT_FILTER> {
   getCoverImage: (product: PRODUCT) => string;
   getFiltered: (products: PRODUCT[], filters?: PRODUCT_FILTER) =>
     PRODUCT[];
-  getAttributes: (products: PRODUCT[] | PRODUCT, filters?: Array<string>) =>
-    AgnosticAttribute[];
+  getAttributes: (products: PRODUCT[] | PRODUCT, filters?: Array<string>) => Record<string, AgnosticAttribute | string>;
   getDescription: (product: PRODUCT) => string;
   getCategoryIds: (product: PRODUCT) => string[];
   getId: (product: PRODUCT) => string;
-
-  /**
-   * Optional option, to concider if agnostic
-   * @alpha
-   */
-  getReviews: (product: PRODUCT) => AgnosticProductReview[];
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
@@ -193,16 +181,16 @@ export interface CartGetters<CART, CART_ITEM> {
   getItemImage: (cartItem: CART_ITEM) => string;
   getItemPrice: (cartItem: CART_ITEM) => AgnosticPrice;
   getItemQty: (cartItem: CART_ITEM) => number;
-  getItemAttributes: (cartItem: CART_ITEM, filters?: Array<string>) =>
-    AgnosticAttribute[];
+  getItemAttributes: (cartItem: CART_ITEM, filters?: Array<string>) => Record<string, AgnosticAttribute | string>;
   getItemSku: (cartItem: CART_ITEM) => string;
   getTotals: (cart: CART) => AgnosticTotals;
   getShippingPrice: (cart: CART) => number;
+  getTotalItems: (cart: CART) => number;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
 export interface CategoryGetters<CATEGORY> {
-  getTree: (category: CATEGORY | ComputedProperty<CATEGORY>) => AgnosticCategoryTree | null;
+  getTree: (category: CATEGORY) => AgnosticCategoryTree | null;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
