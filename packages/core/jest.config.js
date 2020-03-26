@@ -8,7 +8,8 @@ module.exports = {
     '!./**/*.d.ts',
     '!**/__tests__/**/*.ts',
     // TODO add tests after factories
-    '!theme-module/**/*'
+    '!theme-module/**/*',
+    '!interfaces/**/*'
   ],
   watchPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['ts', 'js', 'json'],
@@ -16,5 +17,9 @@ module.exports = {
     '^@vue-storefront/(.*?)$': '<rootDir>/$1/src'
   },
   rootDir: __dirname,
+  setupFilesAfterEnv: [
+    './factories/__tests__/setup.ts',
+    './utils/__tests__/setup.ts'
+  ],
   testMatch: ['<rootDir>/**/__tests__/**/*spec.[jt]s?(x)']
 };

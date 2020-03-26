@@ -32,7 +32,7 @@
       </SfContentCategory>
       <SfContentCategory title="Order details">
         <SfContentPage title="Order history">
-          <OrderHistory :account="account" />
+          <OrderHistory />
         </SfContentPage>
         <SfContentPage title="My reviews">
           <MyReviews />
@@ -142,33 +142,17 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
-@import '~@storefront-ui/vue/styles';
-
-@mixin for-desktop {
-  @media screen and (min-width: $desktop-min) {
-    @content;
-  }
-}
-@mixin for-mobile {
-  @media screen and (max-width: $desktop-min) {
-    @content;
-  }
-}
+@import "~@storefront-ui/vue/styles";
 
 #my-account {
   box-sizing: border-box;
   @include for-desktop {
     max-width: 1240px;
-    margin: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    margin: 0 auto;
   }
 }
 .breadcrumbs {
-  padding: $spacer-big $spacer-extra-big $spacer-extra-big;
-}
-.my-account {
-  height: 100%;
+  padding: var(--spacer-big) var(--spacer-extra-big) var(--spacer-extra-big)
+    var(--spacer-extra-big);
 }
 </style>
