@@ -199,6 +199,7 @@
             :total="totalPages"
             :visible="5"
           />
+          <!-- TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941 -->
           <div
             v-show="totalPages > 1"
             class="products__pagination__options"
@@ -214,6 +215,7 @@
               >
             </SfSelect>
           </div>
+          <!-- end of TODO -->
         </div>
       </SfLoader>
     </div>
@@ -623,6 +625,7 @@ export default {
       --product-card-padding: var(--spacer-big);
       flex: 1 1 25%;
     }
+    // TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941
     &__pagination__options {
       display: flex;
       justify-content: center;
@@ -637,6 +640,7 @@ export default {
     &__pagination__label {
       color: var(--c-text-muted);
     }
+    // end of TODO
   }
   &__product-card-horizontal {
     --product-card-horizontal-padding: var(--spacer);
