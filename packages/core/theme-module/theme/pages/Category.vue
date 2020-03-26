@@ -337,6 +337,7 @@ const sortByOptions = [
   { value: 'price-down', label: 'Price from high to low' }
 ];
 
+// TODO: to be implemented in https://github.com/DivanteLtd/next/issues/200
 const filters = {
   collection: [
     { label: 'Summer fly', value: 'summer-fly', count: '10', selected: false },
@@ -369,6 +370,7 @@ const filters = {
   ]
 };
 
+// TODO: to be implemented in https://github.com/DivanteLtd/next/issues/211
 const breadcrumbs = [
   { text: 'Home', route: { link: '#' } },
   { text: 'Women', route: { link: '#' } }
