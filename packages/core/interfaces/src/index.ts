@@ -1,8 +1,8 @@
 import { Ref } from '@vue/composition-api';
 
-type ComputedProperty<T> = Readonly<Ref<Readonly<T>>>;
+export type ComputedProperty<T> = Readonly<Ref<Readonly<T>>>;
 
-export interface UseProduct<PRODUCT> {
+export interface UseProduct<PRODUCT, PRODUCT_FILTER> {
   products: ComputedProperty<PRODUCT[]>;
   totalProducts: ComputedProperty<number>;
   search: (params: {
@@ -15,6 +15,7 @@ export interface UseProduct<PRODUCT> {
   }) => Promise<void>;
   loading: ComputedProperty<boolean>;
   [x: string]: any;
+  productGetters: ProductGetters<PRODUCT, PRODUCT_FILTER>;
 }
 
 export interface UseUser
@@ -23,6 +24,7 @@ export interface UseUser
   UPDATE_USER_PARAMS
 > {
   user: ComputedProperty<USER>;
+  userGetters: UserGetters<USER>;
   updateUser: (params: UPDATE_USER_PARAMS) => Promise<void>;
   register: (user: {
     email: string;
@@ -39,11 +41,9 @@ export interface UseUser
   logout: () => Promise<void>;
   changePassword: (
     currentPassword: string,
-    newPassword: string
-  ) => Promise<void>;
+    newPassword: string) => Promise<void>;
   isAuthenticated: Ref<boolean>;
   loading: ComputedProperty<boolean>;
-  refreshUser: () => Promise<void>;
 }
 
 export interface UseUserOrders<ORDER> {
@@ -56,6 +56,7 @@ export interface UseUserOrders<ORDER> {
     [x: string]: any;
   }) => Promise<void>;
   loading: ComputedProperty<boolean>;
+  userOrderGetters: OrderGetters<ORDER>;
 }
 
 export interface UseUserAddress<ADDRESS> {
@@ -68,11 +69,15 @@ export interface UseUserAddress<ADDRESS> {
   loading: ComputedProperty<boolean>;
 }
 
-export interface UseCategory<CATEGORY> {
+export interface UseCategory
+<
+  CATEGORY
+> {
   categories: ComputedProperty<CATEGORY[]>;
   search: (params: {
     [x: string]: any;
   }) => Promise<void>;
+  categoryGetters: CategoryGetters<CATEGORY>;
   loading: ComputedProperty<boolean>;
 }
 
@@ -93,6 +98,7 @@ export interface UseCart
   applyCoupon: (coupon: string) => Promise<void>;
   removeCoupon: () => Promise<void>;
   refreshCart: () => Promise<void>;
+  cartGetters: CartGetters<CART, PRODUCT>;
   loading: ComputedProperty<boolean>;
 }
 
@@ -110,7 +116,6 @@ export interface UseWishlist
   refreshWishlist: () => Promise<void>;
   loading: ComputedProperty<boolean>;
 }
-
 export interface UseCompare<PRODUCT> {
   compare: ComputedProperty<PRODUCT[]>;
   addToCompare: (product: PRODUCT) => Promise<void>;
@@ -130,6 +135,7 @@ export interface UseCheckout
   CHOOSEN_SHIPPING_METHOD,
   PLACE_ORDER,
 > {
+  checkoutGetters: CheckoutGetters<SHIPPING_METHODS>;
   paymentMethods: Ref<PAYMENT_METHODS>;
   shippingMethods: Ref<SHIPPING_METHODS>;
   personalDetails: PERSONAL_DETAILS;
@@ -159,32 +165,106 @@ export interface UseLocale
   loading: ComputedProperty<boolean>;
 }
 
-export interface UiMediaGalleryItem {
+export interface ProductGetters<PRODUCT, PRODUCT_FILTER> {
+  getName: (product: PRODUCT) => string;
+  getSlug: (product: PRODUCT) => string;
+  getPrice: (product: PRODUCT) => AgnosticPrice;
+  getGallery: (product: PRODUCT) => AgnosticMediaGalleryItem[];
+  getCoverImage: (product: PRODUCT) => string;
+  getFiltered: (products: PRODUCT[], filters?: PRODUCT_FILTER) =>
+    PRODUCT[];
+  getAttributes: (products: PRODUCT[] | PRODUCT, filters?: Array<string>) =>
+    AgnosticAttribute[];
+  getDescription: (product: PRODUCT) => string;
+  getCategoryIds: (product: PRODUCT) => string[];
+  getId: (product: PRODUCT) => string;
+
+  /**
+   * Optional option, to concider if agnostic
+   * @alpha
+   */
+  getReviews: (product: PRODUCT) => AgnosticProductReview[];
+  [getterName: string]: (element: any, options?: any) => unknown;
+}
+
+export interface CartGetters<CART, CART_ITEM> {
+  getItems: (cart: CART) => CART_ITEM[];
+  getItemName: (cartItem: CART_ITEM) => string;
+  getItemImage: (cartItem: CART_ITEM) => string;
+  getItemPrice: (cartItem: CART_ITEM) => AgnosticPrice;
+  getItemQty: (cartItem: CART_ITEM) => number;
+  getItemAttributes: (cartItem: CART_ITEM, filters?: Array<string>) =>
+    AgnosticAttribute[];
+  getItemSku: (cartItem: CART_ITEM) => string;
+  getTotals: (cart: CART) => AgnosticTotals;
+  getShippingPrice: (cart: CART) => number;
+  [getterName: string]: (element: any, options?: any) => unknown;
+}
+
+export interface CategoryGetters<CATEGORY> {
+  getTree: (category: CATEGORY | ComputedProperty<CATEGORY>) => AgnosticCategoryTree | null;
+  [getterName: string]: (element: any, options?: any) => unknown;
+}
+
+export interface UserGetters<USER> {
+  getFirstName: (customer: USER | ComputedProperty<USER>) => string;
+  getLastName: (customer: USER | ComputedProperty<USER>) => string;
+  getFullName: (customer: USER | ComputedProperty<USER>) => string;
+  [getterName: string]: (element: any, options?: any) => unknown;
+}
+
+export interface CheckoutGetters<SHIPPING_METHOD> {
+  getShippingMethodId: (shippingMethod: SHIPPING_METHOD | ComputedProperty<SHIPPING_METHOD>) => string;
+  getShippingMethodName: (shippingMethod: SHIPPING_METHOD | ComputedProperty<SHIPPING_METHOD>) => string;
+  getShippingMethodDescription: (shippingMethod: SHIPPING_METHOD | ComputedProperty<SHIPPING_METHOD>) => string;
+  getShippingMethodPrice: (shippingMethod: SHIPPING_METHOD | ComputedProperty<SHIPPING_METHOD>) => number;
+  [getterName: string]: (element: any, options?: any) => unknown;
+}
+
+export interface UserOrderGetters<ORDER> {
+  getDate: (order: ORDER | ComputedProperty<ORDER>) => string;
+  getId: (order: ORDER | ComputedProperty<ORDER>) => string;
+  getStatus: (order: ORDER | ComputedProperty<ORDER>) => string;
+  getPrice: (order: ORDER | ComputedProperty<ORDER>) => number;
+  [getterName: string]: (element: any, options?: any) => unknown;
+}
+
+export interface AgnosticMediaGalleryItem {
   small: string;
   normal: string;
   big: string;
 }
 
-export interface UiCategory {
+export interface AgnosticCategoryTree {
   label: string;
   slug?: string;
-  items: UiCategory[];
+  items: AgnosticCategoryTree[];
+  [x: string]: unknown;
 }
 
-export interface UiCartProductPrice {
-  regular: number;
-  special?: number;
+export interface AgnosticPrice {
+  regular: number | null;
+  special?: number | null;
 }
 
 export interface AgnosticTotals {
   total: number;
   subtotal: number;
+  [x: string]: unknown;
 }
 
-export interface AgnosticProductAttribute {
+export interface AgnosticAttribute {
   name?: string;
   value: string | Record<string, any>;
   label: string;
+}
+
+export interface AgnosticProductReview {
+  id: string;
+  author: string;
+  date: Date;
+  message: string | null;
+  rating: number | null;
 }
 
 export interface SearchResult<T> {
@@ -192,6 +272,7 @@ export interface SearchResult<T> {
   total: number;
 }
 
+// TODO - remove this interface
 export enum AgnosticOrderStatus {
   Open = 'Open',
   Pending = 'Pending',
