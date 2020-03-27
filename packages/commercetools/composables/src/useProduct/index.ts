@@ -4,6 +4,8 @@ import { ProductVariant } from './../types/GraphQL';
 import { useProductFactory } from '@vue-storefront/factories';
 import { SearchResult } from '@vue-storefront/interfaces';
 
+import { foo } from '@vue-storefront/utils';
+
 const productsSearch = async (params: {
   perPage?: number;
   page?: number;
@@ -17,6 +19,7 @@ const productsSearch = async (params: {
   };
   const productResponse = await getProduct(apiSearchParams);
   const enhancedProductResponse = enhanceProduct(productResponse);
+  foo();
   return {
     data: (enhancedProductResponse.data as any)._variants,
     total: productResponse.data.products.total
