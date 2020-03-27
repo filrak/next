@@ -2,7 +2,7 @@
   <div id="cart">
     <SfSidebar
       :visible="isCartSidebarOpen"
-      headingTitle="My Cart"
+      title="My Cart"
       @close="toggleCartSidebar"
       class="sf-sidebar--right"
     >
@@ -13,12 +13,12 @@
             <transition-group name="fade" tag="div">
               <SfCollectedProduct
                 v-for="product in products"
-                :key="getCartProductName(product)"
-                :image="getCartProductImage(product)"
-                :title="getCartProductName(product)"
-                :regular-price="getCartProductPrice(product)"
+                :key="cartGetters.getItemSku(product)"
+                :image="cartGetters.getItemImage(product)"
+                :title="cartGetters.getItemName(product)"
+                :regular-price="cartGetters.getItemPrice(product).regular"
                 :stock="99999"
-                :qty="getCartProductQty(product)"
+                :qty="cartGetters.getItemQty(product)"
                 @input="updateQuantity(product, $event)"
                 @click:remove="removeFromCart(product)"
                 class="collected-product"
@@ -26,7 +26,7 @@
                 <template #configuration>
                   <div class="collected-product__properties">
                     <SfProperty
-                      v-for="(value, key) in getCartProductAttributes(product, ['color', 'size'])"
+                      v-for="(value, key) in cartGetters.getItemAttributes(product, ['color', 'size'])"
                       :key="key"
                       :name="key"
                       :value="value"
@@ -35,8 +35,8 @@
                 </template>
                 <template #actions>
                   <div class="collected-product__actions">
-                    <SfButton class="sf-button--text product__action">Save for later</SfButton>
-                    <SfButton class="sf-button--text product__action">Add to compare</SfButton>
+                    <SfButton class="sf-button--text color-secondary collected-product__action">Save for later</SfButton>
+                    <SfButton class="sf-button--text color-secondary collected-product__action">Add to compare</SfButton>
                   </div>
                 </template>
               </SfCollectedProduct>
@@ -47,7 +47,7 @@
               <span class="sf-property__name">TOTAL</span>
             </template>
             <template #value>
-              <SfPrice :regular="totals.subtotal" class="sf-price--big" />
+              <SfPrice :regular="totals.subtotal" />
             </template>
           </SfProperty>
           <nuxt-link to="/checkout/personal-details">
@@ -78,18 +78,8 @@ import {
   SfCollectedProduct
 } from '@storefront-ui/vue';
 import { computed } from '@vue/composition-api';
-import { useCart } from '<%= options.composables %>';
+import { useCart, cartGetters } from '<%= options.composables %>';
 import uiState from '~/assets/ui-state';
-import {
-  getCartProducts,
-  getCartTotalItems,
-  getCartTotals,
-  getCartProductName,
-  getCartProductImage,
-  getCartProductPrice,
-  getCartProductQty,
-  getCartProductAttributes
-} from '<%= options.helpers %>';
 
 const { isCartSidebarOpen, toggleCartSidebar } = uiState;
 
@@ -104,9 +94,9 @@ export default {
   },
   setup() {
     const { cart, removeFromCart, updateQuantity } = useCart();
-    const products = computed(() => getCartProducts(cart.value));
-    const totals = computed(() => getCartTotals(cart.value));
-    const totalItems = computed(() => getCartTotalItems(cart.value));
+    const products = computed(() => cartGetters.getItems(cart.value));
+    const totals = computed(() => cartGetters.getTotals(cart.value));
+    const totalItems = computed(() => cartGetters.getTotalItems(cart.value));
 
     return {
       products,
@@ -116,75 +106,48 @@ export default {
       toggleCartSidebar,
       totals,
       totalItems,
-      getCartProductName,
-      getCartProductImage,
-      getCartProductPrice,
-      getCartProductQty,
-      getCartProductAttributes
+      cartGetters
     };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@storefront-ui/shared/styles/variables";
-@mixin for-desktop {
-  @media screen and (min-width: $desktop-min) {
-    @content;
-  }
-}
-#cart {
-  box-sizing: border-box;
-  @include for-desktop {
-    max-width: 1240px;
-    margin: auto;
-  }
-}
+@import "~@storefront-ui/vue/styles";
 .my-cart {
   flex: 1;
   display: flex;
   flex-direction: column;
   &__total-items {
-    font-family: var(--body-font-family-secondary);
-    font-size: var(--font-size-big-mobile);
-    font-weight: var(--body-font-weight-secondary);
-    @include for-desktop {
-      font-size: var(--font-size-big-desktop);
-    }
+    font: 400 var(--font-size-big) / 1.6 var(--body-font-family-secondary);
+    margin: 0;
   }
   &__total-price {
-    margin-bottom: var(--spacer-big);
-  }
-}
-.collected-product-list {
-  flex: 1;
-  margin: var(--spacer-big) -#{var(--spacer-big)};
-}
-.collected-product {
-  margin: var(--spacer-big) 0;
-  &__properties {
-    margin-top: var(--spacer-big);
-  }
-  &__actions {
-    opacity: 0;
-    transition: opacity 300ms ease-in-out;
-    @at-root.collected-product:hover & {
-      @include for-desktop {
-        opacity: 1;
-      }
-    }
+    margin: 0 0 var(--spacer-big) 0;
   }
 }
 .empty-cart {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
   &__banner {
     flex: 1;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  &__label,
+  &__description {
+    text-align: center;
+  }
+  &__label {
+    margin: var(--spacer-extra-big) 0 0 0;
+    font: 400 var(--font-size-big) / 1.6 var(--body-font-family-secondary);
+  }
+  &__description {
+    margin: var(--spacer-big) 0 0 0;
+    font: 300 var(--font-size-regular) / 1.6 var(--body-font-family-primary);
   }
   &__icon {
     width: 18.125rem;
@@ -194,17 +157,26 @@ export default {
       margin-left: 50%;
     }
   }
-  &__label,
-  &__description {
-    line-height: 1.6;
-    text-align: center;
+}
+.collected-product-list {
+  flex: 1;
+  margin: var(--spacer-big) calc(var(--spacer-big) * -1);
+}
+.collected-product {
+  margin: var(--spacer-big) 0;
+  font: 300 var(--font-size-extra-small) / 1.6 var(--body-font-family-secondary);
+  &__properties {
+    margin: var(--spacer-big) 0 0 0;
   }
-  &__label {
-    margin-top: var(--spacer-extra-big);
-    font-size: var(--font-size-big-desktop);
+  &__actions {
+    transition: opacity 150ms ease-in-out;
+    opacity: var(--cp-actions-opacity, 0);
   }
-  &__description {
-    margin-top: var(--spacer-big);
+  &__action {
+    --button-padding: 0;
+  }
+  &:hover {
+    --cp-actions-opacity: 1;
   }
 }
 </style>

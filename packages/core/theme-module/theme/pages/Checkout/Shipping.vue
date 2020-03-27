@@ -84,19 +84,19 @@
       <div class="form__radio-group">
         <SfRadio
           v-for="item in shippingMethods"
-          :key="getShippingMethodName(item)"
-          :label="getShippingMethodName(item)"
-          :value="getShippingMethodId(item)"
-          :selected="getShippingMethodId(chosenShippingMethod)"
+          :key="checkoutGetters.getShippingMethodName(item)"
+          :label="checkoutGetters.getShippingMethodName(item)"
+          :value="checkoutGetters.getShippingMethodId(item)"
+          :selected="checkoutGetters.getShippingMethodId(chosenShippingMethod)"
           @input="() => chosenShippingMethod = item"
           name="shippingMethod"
-          :description="getShippingMethodDescription(item)"
-          class="form__element form__radio shipping"
+          :description="checkoutGetters.getShippingMethodDescription(item)"
+          class="form__radio shipping"
         >
           <template #label="{label}">
             <div class="sf-radio__label shipping__label">
               <div>{{ label }}</div>
-              <div>${{ getShippingMethodPrice(item) }}</div>
+              <div>${{ checkoutGetters.getShippingMethodPrice(item) }}</div>
             </div>
           </template>
           <template #description="{description}">
@@ -113,7 +113,7 @@
           Continue to payment
         </SfButton>
         <SfButton
-          class="sf-button--full-width sf-button--text form__action-button form__action-button--secondary"
+          class="sf-button--full-width sf-button--text color-secondary form__action-button form__action-button--secondary"
           @click="$emit('click:back')">
             Go back to Personal details
         </SfButton
@@ -131,14 +131,7 @@ import {
   SfSelect,
   SfRadio
 } from '@storefront-ui/vue';
-
-import {
-  getShippingMethodName,
-  getShippingMethodDescription,
-  getShippingMethodPrice,
-  getShippingMethodId
-} from '@vue-storefront/commercetools-helpers';
-import { useCheckout } from '@vue-storefront/commercetools-composables';
+import { useCheckout, checkoutGetters } from '<%= options.composables %>';
 
 const COUNTRIES = [
   { key: 'US',
@@ -172,10 +165,7 @@ export default {
       shippingDetails,
       chosenShippingMethod,
       shippingMethods,
-      getShippingMethodName,
-      getShippingMethodDescription,
-      getShippingMethodPrice,
-      getShippingMethodId,
+      checkoutGetters,
       COUNTRIES
     };
   }
@@ -184,15 +174,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@storefront-ui/shared/styles/variables";
-
-@mixin for-desktop {
-  @media screen and (min-width: $desktop-min) {
-    @content;
-  }
-}
+@import "~@storefront-ui/vue/styles";
 .title {
-  margin-bottom: var(--spacer-extra-big);
+  margin: 0 0 var(--spacer-extra-big);
 }
 .form {
   @include for-desktop {
@@ -201,7 +185,7 @@ export default {
     align-items: center;
   }
   &__element {
-    margin-bottom: var(--spacer-extra-big);
+    margin: 0 0 var(--spacer-extra-big) 0;
     @include for-desktop {
       flex: 0 0 100%;
     }
@@ -211,10 +195,14 @@ export default {
       }
       &-even {
         @include for-desktop {
-          padding-left: var(--spacer-extra-big);
+          padding: 0 0 0 var(--spacer-extra-big);
         }
       }
     }
+  }
+  &__group {
+    display: flex;
+    align-items: center;
   }
   &__action {
     @include for-desktop {
@@ -223,59 +211,51 @@ export default {
     }
   }
   &__action-button {
-    flex: 1;
     &--secondary {
       margin: var(--spacer-big) 0;
       @include for-desktop {
         order: -1;
-        margin: 0;
+        --button-margin: 0;
         text-align: left;
       }
     }
   }
-  &__select {
-    // todo: remove after SfSelect refactoring
-    ::v-deep .sf-select__selected {
-      padding: 5px 0;
+  &__button {
+    --button-width: 100%;
+    @include for-desktop {
+      --button-width: auto;
     }
   }
-  &__radio {
-    margin-bottom: 0;
-    &-group {
-      flex: 0 0 100%;
-      margin: 0 0 var(--spacer-extra-big) 0;
-    }
+  &__radio-group {
+    flex: 0 0 100%;
+    margin: 0 0 var(--spacer-extra-big) 0;
   }
 }
 .shipping {
-  margin: 0 -#{var(--spacer-big)};
+  margin: 0 calc(var(--spacer-big) * -1);
   &__label {
     display: flex;
     justify-content: space-between;
   }
   &__description {
-    width: 100%;
-    margin-top: 0;
+    --radio-description-margin: 0;
+    --radio-description-font-size: var(--font-size-extra-small);
   }
   &__delivery {
     color: var(--c-text-muted);
   }
   &__action {
-    align-items: center;
-    margin-left: var(--spacer);
-    text-decoration: none;
+    margin: 0 0 0 var(--spacer);
     &::before {
       content: "+";
     }
     &--is-active {
-      color: var(--c-primary);
+      --button-color: var(--c-primary);
+      --button-transition: color 150ms linear;
       &::before {
         content: "-";
       }
     }
-  }
-  &__info {
-    margin-top: var(--spacer);
   }
 }
 </style>

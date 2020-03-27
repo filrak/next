@@ -10,7 +10,7 @@
       </div>
       <div class="navbar__main">
         <SfButton
-          class="navbar__filters-button"
+          class="sf-button--text navbar__filters-button"
           @click="isFilterSidebarOpen = true"
         >
           <SfIcon size="15px" style="margin-right: 10px;">
@@ -56,34 +56,50 @@
         </div>
         <div class="navbar__counter">
           <span class="navbar__label desktop-only">Products found: </span>
-          <strong class="desktop-only">280</strong>
-          <span class="navbar__label mobile-only">280 Items</span>
+          <strong class="desktop-only">{{ totalProducts }}</strong>
+          <span class="navbar__label mobile-only">{{ totalProducts }} Items</span>
         </div>
         <div class="navbar__view desktop-only">
           <span>View </span>
-          <SfIcon class="navbar__view-icon" size="10px">
+          <SfIcon
+            class="navbar__view-icon"
+            :color="isGridView ? '#1D1F22' : '#BEBFC4'"
+            size="10px"
+            role="button"
+            aria-label="Change to grid view"
+            :aria-pressed="isGridView"
+            @click="isGridView = true"
+          >
             <svg viewBox="0 0 10 10">
-              <rect width="2" height="2" fill="#1D1F22" />
-              <rect y="4" width="2" height="2" fill="#1D1F22" />
-              <rect y="8" width="2" height="2" fill="#1D1F22" />
-              <rect x="4" width="2" height="2" fill="#1D1F22" />
-              <rect x="4" y="4" width="2" height="2" fill="#1D1F22" />
-              <rect x="4" y="8" width="2" height="2" fill="#1D1F22" />
-              <rect x="8" width="2" height="2" fill="#1D1F22" />
-              <rect x="8" y="4" width="2" height="2" fill="#1D1F22" />
-              <rect x="8" y="8" width="2" height="2" fill="#1D1F22" />
+              <rect width="2" height="2" />
+              <rect y="4" width="2" height="2" />
+              <rect y="8" width="2" height="2" />
+              <rect x="4" width="2" height="2" />
+              <rect x="4" y="4" width="2" height="2" />
+              <rect x="4" y="8" width="2" height="2" />
+              <rect x="8" width="2" height="2" />
+              <rect x="8" y="4" width="2" height="2" />
+              <rect x="8" y="8" width="2" height="2" />
             </svg>
           </SfIcon>
-          <SfIcon class="navbar__view-icon" size="11px">
-            <svg viewBox="0 0 11 10" fill="none">
-              <rect width="11" height="2" fill="#BEBFC4" />
-              <rect y="8" width="11" height="2" fill="#BEBFC4" />
-              <rect y="4" width="7" height="2" fill="#BEBFC4" />
+          <SfIcon
+            class="navbar__view-icon"
+            :color="!isGridView ? '#1D1F22' : '#BEBFC4'"
+            size="11px"
+            role="button"
+            aria-label="Change to list view"
+            :aria-pressed="!isGridView"
+            @click="isGridView = false"
+          >
+            <svg viewBox="0 0 11 10">
+              <rect width="11" height="2" />
+              <rect y="8" width="11" height="2" />
+              <rect y="4" width="7" height="2" />
             </svg>
           </SfIcon>
         </div>
         <SfButton
-          class="navbar__filters-button mobile-only"
+          class="sf-button--text navbar__filters-button mobile-only"
           @click="isFilterSidebarOpen = true"
         >
           Sort by
@@ -100,65 +116,111 @@
     <div class="main section">
       <div class="sidebar desktop-only">
         <SfLoader :class="{ loading }" :loading="loading">
-        <SfAccordion :firstOpen="true" :showChevron="false">
-          <SfAccordionItem
-            v-for="(cat, i) in categoryTree && categoryTree.items"
-            :key="i"
-            :header="cat.label"
-          >
-            <template>
-              <SfList>
-                <SfListItem>
-                  <SfMenuItem :label="cat.label">
-                    <template #label>
-                      <nuxt-link :to="getCategoryUrl(cat.slug)" :class="isCategorySelected(cat.slug) ? 'sidebar--cat-selected' : ''">All</nuxt-link>
-                    </template>
-                  </SfMenuItem>
-                </SfListItem>
-                <SfListItem v-for="(subCat, j) in cat.items" :key="j">
-                  <SfMenuItem :label="subCat.label">
-                    <template #label="{ label }">
-                      <nuxt-link :to="getCategoryUrl(subCat.slug)" :class="isCategorySelected(subCat.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</nuxt-link>
-                    </template>
-                  </SfMenuItem>
-                </SfListItem>
-              </SfList>
-            </template>
-          </SfAccordionItem>
-        </SfAccordion>
+          <SfAccordion :firstOpen="true" :showChevron="false">
+            <SfAccordionItem
+              v-for="(cat, i) in categoryTree && categoryTree.items"
+              :key="i"
+              :header="cat.label"
+            >
+              <template>
+                <SfList>
+                  <SfListItem>
+                    <SfMenuItem :label="cat.label">
+                      <template #label>
+                        <nuxt-link :to="getCategoryUrl(cat.slug)" :class="isCategorySelected(cat.slug) ? 'sidebar--cat-selected' : ''">All</nuxt-link>
+                      </template>
+                    </SfMenuItem>
+                  </SfListItem>
+                  <SfListItem v-for="(subCat, j) in cat.items" :key="j">
+                    <SfMenuItem :label="subCat.label">
+                      <template #label="{ label }">
+                        <nuxt-link :to="getCategoryUrl(subCat.slug)" :class="isCategorySelected(subCat.slug) ? 'sidebar--cat-selected' : ''">{{ label }}</nuxt-link>
+                      </template>
+                    </SfMenuItem>
+                  </SfListItem>
+                </SfList>
+              </template>
+            </SfAccordionItem>
+          </SfAccordion>
         </SfLoader>
       </div>
-      <SfLoader :class="{ loading: productsLoading }" :loading="productsLoading">
-        <div class="products">
-          <div class="products__list">
-            <SfProductCard
-              v-for="(product, i) in products"
-              :key="i"
-              :title="getProductName(product)"
-              :image="getProductGallery(product)[0].big"
-              :regular-price="'$' + getProductPrice(product)"
-              :max-rating="5"
-              :score-rating="3"
-              :isOnWishlist="false"
-              @click:wishlist="toggleWishlist(i)"
-              :link="`/p/${getProductSlug(product)}`"
-              class="products__product-card"
-            />
-          </div>
-          <SfPagination
-            class="products__pagination desktop-only"
-            :current="currentPage"
-            @click="page => currentPage = page"
-            :total="4"
-            :visible="5"
+      <div class="products">
+        <transition-group
+          v-if="isGridView"
+          appear
+          name="products__slide"
+          tag="div"
+          class="products__grid"
+        >
+          <SfProductCard
+            v-for="(product, i) in products"
+            :key="productGetters.getSlug(product)"
+            :style="{ '--index': i }"
+            :title="productGetters.getName(product)"
+            :image="productGetters.getCoverImage(product)"
+            :regular-price="'$' + productGetters.getPrice(product).regular"
+            :max-rating="5"
+            :score-rating="3"
+            :isOnWishlist="false"
+            @click:wishlist="toggleWishlist(i)"
+            :link="`/p/${productGetters.getSlug(product)}`"
+            class="products__product-card"
           />
+        </transition-group>
+        <transition-group
+          v-else
+          appear
+          name="products__slide"
+          tag="div"
+          class="products__list"
+        >
+          <SfProductCardHorizontal
+            v-for="(product, i) in products"
+            :key="productGetters.getSlug(product)"
+            :style="{ '--index': i }"
+            :title="productGetters.getName(product)"
+            :description="productGetters.getDescription(product)"
+            :image="productGetters.getCoverImage(product)"
+            :regular-price="'$' + productGetters.getPrice(product).regular"
+            :max-rating="5"
+            :score-rating="3"
+            :is-on-wishlist="false"
+            class="products__product-card-horizontal"
+            @click:wishlist="toggleWishlist(i)"
+            :link="`/p/${productGetters.getSlug(product)}`"
+          />
+        </transition-group>
+        <SfPagination
+          v-show="totalPages > 1"
+          class="products__pagination desktop-only"
+          :current="currentPage"
+          @click="page => currentPage = page"
+          :total="totalPages"
+          :visible="5"
+        />
+        <!-- TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941 -->
+        <div
+          v-show="totalPages > 1"
+          class="products__pagination__options"
+        >
+          <span class="products__pagination__label">Items per page:</span>
+          <SfSelect class="items-per-page" v-model="itemsPerPage">
+            <SfSelectOption
+              v-for="option in perPageOptions"
+              :key="option"
+              :value="option"
+              class="items-per-page__option"
+              >{{ option }}</SfSelectOption
+            >
+          </SfSelect>
         </div>
-      </SfLoader>
+        <!-- end of TODO -->
+      </div>
     </div>
     <SfSidebar
       :visible="isFilterSidebarOpen"
+      title="Filters"
       @close="isFilterSidebarOpen = false"
-      class="filters_sidebar"
     >
       <div class="filters">
         <h3 class="filters__title">Collection</h3>
@@ -172,14 +234,16 @@
           @change="filter.selected = !filter.selected"
         />
         <h3 class="filters__title">Color</h3>
-        <SfColor
-          v-for="filter in filters.color"
-          :key="filter.value"
-          :color="filter.color"
-          :selected="filter.selected"
-          class="filters__item--color"
-          @click="filter.selected = !filter.selected"
-        />
+        <div class="filters__colors">
+          <SfColor
+            v-for="filter in filters.color"
+            :key="filter.value"
+            :color="filter.color"
+            :selected="filter.selected"
+            class="filters__color"
+            @click="filter.selected = !filter.selected"
+          />
+        </div>
         <h3 class="filters__title">Size</h3>
         <SfFilter
           v-for="filter in filters.size"
@@ -236,6 +300,7 @@ import {
   SfMenuItem,
   SfFilter,
   SfProductCard,
+  SfProductCardHorizontal,
   SfPagination,
   SfAccordion,
   SfSelect,
@@ -243,55 +308,145 @@ import {
   SfLoader,
   SfColor
 } from '@storefront-ui/vue';
-import { computed, watch } from '@vue/composition-api';
-import { useCategory, useProduct } from '<%= options.composables %>';
-import {
-  getProductName,
-  getProductGallery,
-  getProductPrice,
-  getProductSlug,
-  getCategoryTree,
-  getProductVariants
-} from '<%= options.helpers %>';
+import { computed, ref, watch } from '@vue/composition-api';
+import { useCategory, useProduct, productGetters, categoryGetters } from '<%= options.composables %>';
+import { onSSR } from '@vue-storefront/utils';
+
+// TODO: move to composable when core is ready: https://github.com/DivanteLtd/next/issues/296
+const defaultPagination = {
+  page: 1,
+  itemsPerPage: 20
+};
+
+const perPageOptions = [20, 40, 100];
+
+const sortByOptions = [
+  { value: 'latest', label: 'Latest' },
+  { value: 'price-up', label: 'Price from low to high' },
+  { value: 'price-down', label: 'Price from high to low' }
+];
+
+// TODO: to be implemented in https://github.com/DivanteLtd/next/issues/200
+const filters = {
+  collection: [
+    { label: 'Summer fly', value: 'summer-fly', count: '10', selected: false },
+    { label: 'Best 2018', value: 'best-2018', count: '23', selected: false },
+    { label: 'Your choice', value: 'your-choice', count: '54', selected: false }
+  ],
+  color: [
+    { label: 'Red', value: 'red', color: '#990611', selected: false },
+    { label: 'Black', value: 'black', color: '#000000', selected: false },
+    { label: 'Yellow', value: 'yellow', color: '#DCA742', selected: false },
+    { label: 'Blue', value: 'blue', color: '#004F97', selected: false },
+    { label: 'Navy', value: 'navy', color: '#656466', selected: false }
+  ],
+  size: [
+    { label: 'Size 2 (XXS)', value: 'xxs', count: '10', selected: false },
+    { label: 'Size 4-6 (XS)', value: 'xs', count: '23', selected: false },
+    { label: 'Size 8-10 (S)', value: 's', count: '54', selected: false },
+    { label: 'Size 12-14 (M)', value: 'm', count: '109', selected: false },
+    { label: 'Size 16-18 (L)', value: 'l', count: '23', selected: false },
+    { label: 'Size 20-22(XL)', value: 'xl', count: '12', selected: false },
+    { label: 'Size 24-26 (XXL)', value: 'xxl', count: '2', selected: false }
+  ],
+  price: [
+    { label: 'Under $200', value: 'under-200', count: '23', selected: false },
+    { label: 'Under $300', value: 'under-300', count: '54', selected: false }
+  ],
+  material: [
+    { label: 'Cotton', value: 'coton', count: '33', selected: false },
+    { label: 'Silk', value: 'silk', count: '73', selected: false }
+  ]
+};
+
+// TODO: to be implemented in https://github.com/DivanteLtd/next/issues/211
+const breadcrumbs = [
+  { text: 'Home', route: { link: '#' } },
+  { text: 'Women', route: { link: '#' } }
+];
+
+function updateFilter() {}
+
+function clearAllFilters() {
+  const filtersNames = Object.keys(filters);
+  filtersNames.forEach((name) => {
+    filters[name].forEach((value) => {
+      value.selected = false;
+    });
+  });
+}
 
 export default {
   transition: 'fade',
   setup(props, context) {
-    const { params } = context.root.$route;
-    const lastSlug = Object.keys(params).reduce(
-      (prev, curr) => params[curr] ? params[curr] : prev,
-      params.slug_1
-    );
+    const { params, query } = context.root.$route;
 
-    const { categories, search, loading } = useCategory('category-page');
-    const { products: categoryProducts, search: productsSearch, loading: productsLoading } = useProduct('category-products');
+    const lastSlug = Object.keys(params).reduce((prev, curr) => params[curr] || prev, params.slug_1);
 
-    search({ slug: lastSlug });
+    const { categories, search, loading } = useCategory('categories');
+    const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('categoryProducts');
+    const currentPage = ref(parseInt(query.page, 10) || defaultPagination.page);
+    const itemsPerPage = ref(parseInt(query.items, 10) || defaultPagination.itemsPerPage);
 
-    // ugly workaround until we will have async setup
-    watch(categories, () => {
+    onSSR(async () => {
+      await search({ slug: lastSlug });
+      await productsSearch({
+        catId: (categories.value[0] || {}).id,
+        page: currentPage.value,
+        perPage: itemsPerPage.value
+      });
+    });
+
+    watch([currentPage, itemsPerPage], () => {
       if (categories.value.length) {
-        productsSearch({ catId: categories.value[0].id });
+        productsSearch({
+          catId: categories.value[0].id,
+          page: currentPage.value,
+          perPage: itemsPerPage.value
+        });
+        context.root.$router.push({ query: {
+          items: itemsPerPage.value !== defaultPagination.itemsPerPage ? itemsPerPage.value : undefined,
+          page: currentPage.value !== defaultPagination.page ? currentPage.value : undefined
+        }});
       }
     });
 
-    const products = computed(() => getProductVariants(categoryProducts.value, { master: true}));
-    const categoryTree = computed(() => getCategoryTree(categories.value[0]));
+    const products = computed(() => productGetters.getFiltered(categoryProducts.value, { master: true}));
+    const categoryTree = computed(() => categoryGetters.getTree(categories.value[0]));
 
     const getCategoryUrl = (slug) => `/c/${params.slug_1}/${slug}`;
     const isCategorySelected = (slug) => slug === (categories.value && categories.value[0].slug);
+
+    const sortBy = ref('price-up');
+    const isGridView = ref(true);
+    const isFilterSidebarOpen = ref(false);
+
+    function toggleWishlist(index) {
+      products.value[index].isOnWishlist = !this.products.value[index].isOnWishlist;
+    }
 
     return {
       products,
       productsLoading,
       categoryTree,
-      getProductName,
-      getProductGallery,
-      getProductPrice,
-      getProductSlug,
       getCategoryUrl,
       isCategorySelected,
-      loading
+      loading,
+      productGetters,
+      totalProducts,
+      totalPages: computed(() => Math.ceil(totalProducts.value / itemsPerPage.value)),
+      currentPage,
+      itemsPerPage,
+      perPageOptions,
+      sortBy,
+      isFilterSidebarOpen,
+      sortByOptions: computed(() => sortByOptions),
+      filters: ref(filters),
+      breadcrumbs: computed(() => breadcrumbs),
+      updateFilter,
+      clearAllFilters,
+      toggleWishlist,
+      isGridView
     };
   },
   components: {
@@ -301,6 +456,7 @@ export default {
     SfList,
     SfFilter,
     SfProductCard,
+    SfProductCardHorizontal,
     SfPagination,
     SfMenuItem,
     SfAccordion,
@@ -308,352 +464,224 @@ export default {
     SfBreadcrumbs,
     SfLoader,
     SfColor
-  },
-  data() {
-    return {
-      currentPage: 1,
-      sortBy: 'price-up',
-      isFilterSidebarOpen: false,
-      sortByOptions: [
-        {
-          value: 'latest',
-          label: 'Latest'
-        },
-        {
-          value: 'price-up',
-          label: 'Price from low to high'
-        },
-        {
-          value: 'price-down',
-          label: 'Price from high to low'
-        }
-      ],
-      filters: {
-        collection: [
-          {
-            label: 'Summer fly',
-            value: 'summer-fly',
-            count: '10',
-            selected: false
-          },
-          {
-            label: 'Best 2018',
-            value: 'best-2018',
-            count: '23',
-            selected: false
-          },
-          {
-            label: 'Your choice',
-            value: 'your-choice',
-            count: '54',
-            selected: false
-          }
-        ],
-        color: [
-          { label: 'Red',
-            value: 'red',
-            color: '#990611',
-            selected: false },
-          { label: 'Black',
-            value: 'black',
-            color: '#000000',
-            selected: false },
-          {
-            label: 'Yellow',
-            value: 'yellow',
-            color: '#DCA742',
-            selected: false
-          },
-          { label: 'Blue',
-            value: 'blue',
-            color: '#004F97',
-            selected: false },
-          { label: 'Navy',
-            value: 'navy',
-            color: '#656466',
-            selected: false }
-        ],
-        size: [
-          { label: 'Size 2 (XXS)',
-            value: 'xxs',
-            count: '10',
-            selected: false },
-          { label: 'Size 4-6 (XS)',
-            value: 'xs',
-            count: '23',
-            selected: false },
-          { label: 'Size 8-10 (S)',
-            value: 's',
-            count: '54',
-            selected: false },
-          {
-            label: 'Size 12-14 (M)',
-            value: 'm',
-            count: '109',
-            selected: false
-          },
-          { label: 'Size 16-18 (L)',
-            value: 'l',
-            count: '23',
-            selected: false },
-          {
-            label: 'Size 20-22(XL)',
-            value: 'xl',
-            count: '12',
-            selected: false
-          },
-          {
-            label: 'Size 24-26 (XXL)',
-            value: 'xxl',
-            count: '2',
-            selected: false
-          }
-        ],
-        price: [
-          {
-            label: 'Under $200',
-            value: 'under-200',
-            count: '23',
-            selected: false
-          },
-          {
-            label: 'Under $300',
-            value: 'under-300',
-            count: '54',
-            selected: false
-          }
-        ],
-        material: [
-          { label: 'Cotton',
-            value: 'coton',
-            count: '33',
-            selected: false },
-          { label: 'Silk',
-            value: 'silk',
-            count: '73',
-            selected: false }
-        ]
-      },
-      breadcrumbs: [
-        {
-          text: 'Home',
-          route: {
-            link: '#'
-          }
-        },
-        {
-          text: 'Women',
-          route: {
-            link: '#'
-          }
-        }
-      ]
-    };
-  },
-  methods: {
-    updateFilter() {},
-    clearAllFilters() {
-      const filters = Object.keys(this.filters);
-      filters.forEach((name) => {
-        const prop = this.filters[name];
-        prop.forEach((value) => {
-          value.selected = false;
-        });
-      });
-    },
-    toggleWishlist(index) {
-      this.products[index].isOnWishlist = !this.products[index].isOnWishlist;
-    }
   }
 };
 </script>
 
 <style lang="scss">
 @import "~@storefront-ui/vue/styles";
-
-@mixin for-desktop {
-  @media screen and (min-width: $desktop-min) {
-    @content;
-  }
-}
-
 #category {
-  .breadcrumbs {
-    padding: var(--spacer-big) var(--spacer-extra-big) var(--spacer-extra-big);
+  box-sizing: border-box;
+  @include for-desktop {
+    max-width: 1240px;
+    margin: 0 auto;
   }
-  .main {
-    display: flex;
-  }
-  .navbar {
-    position: relative;
-    display: flex;
-    @include for-desktop {
-      border-top: 1px solid var(--c-light);
-      border-bottom: 1px solid var(--c-light);
-    }
-    &::after {
-      position: absolute;
-      bottom: 0;
-      left: var(--spacer-big);
-      width: calc(100% - (#{var(--spacer-big)} * 2));
-      height: 1px;
-      background-color: var(--c-light);
-      content: "";
-      @include for-desktop {
-        content: none;
-      }
-    }
-    &__aside {
-      display: flex;
-      align-items: center;
-      flex: 0 0 15%;
-      padding: var(--spacer-big) var(--spacer-extra-big);
-      border-right: 1px solid var(--c-light);
-    }
-    &__main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: var(--spacer-medium) 0;
-      font-size: var(--font-size-small-desktop);
-      @include for-desktop {
-        padding: var(--spacer-big) 0;
-      }
-    }
-    &__title {
-      padding: 0;
-      font-size: var(--font-size-big-desktop);
-      line-height: 2.23;
-    }
-    &__filters-button {
-      display: flex;
-      align-items: center;
-      margin: 0;
-      padding: 0;
-      background: transparent;
-      color: inherit;
-      font-size: inherit;
-      font-weight: 500;
-      @include for-desktop {
-        margin: 0 0 0 var(--spacer-extra-big);
-        font-weight: 400;
-        text-transform: none;
-      }
-      svg {
-        fill: var(--c-dark);
-        @include for-desktop {
-          fill: var(--c-gray-variant);
-        }
-      }
-      &:hover {
-        color: var(--c-primary);
-        svg {
-          fill: var(--c-primary);
-        }
-      }
-    }
-    &__label {
-      color: var(--c-gray-variant);
-    }
-    &__sort {
-      display: flex;
-      align-items: center;
-      margin-left: var(--spacer-extra-big);
-      margin-right: auto;
-    }
-    &__counter {
-      margin: auto;
-      @include for-desktop {
-        margin-right: 0;
-      }
-    }
-    &__view {
-      display: flex;
-      align-items: center;
-      margin: 0 var(--spacer-extra-big);
-      &-icon {
-        margin-left: 10px;
-      }
-    }
-  }
-
-.loading{
-  height: 300px;
 }
-
+.section {
+  padding: 0 var(--spacer-big);
+  @include for-desktop {
+    padding: 0;
+  }
+}
+.breadcrumbs {
+  padding: var(--spacer-big) var(--spacer-extra-big) var(--spacer-extra-big)
+    var(--spacer-extra-big);
+}
+.navbar {
+  position: relative;
+  display: flex;
+  font: 300 var(--font-size-small) / 1.6 var(--body-font-family-primary);
+  @include for-desktop {
+    border: 1px solid var(--c-light);
+    border-width: 1px 0 1px 0;
+  }
+  &::after {
+    position: absolute;
+    bottom: 0;
+    left: var(--spacer-big);
+    width: calc(100% - calc(var(--spacer-big) * 2));
+    height: 1px;
+    background: var(--c-light);
+    content: "";
+    @include for-desktop {
+      content: none;
+    }
+  }
+  &__aside,
+  &__main {
+    display: flex;
+    align-items: center;
+    padding: var(--spacer-medium) 0;
+    font-size: var(--font-size-small);
+    line-height: 1.6;
+    @include for-desktop {
+      padding: var(--spacer-big) 0;
+    }
+  }
+  &__aside {
+    flex: 0 0 15%;
+    padding: var(--spacer-big) var(--spacer-extra-big);
+    border: 1px solid var(--c-light);
+    border-width: 0 1px 0 0;
+  }
+  &__main {
+    flex: 1;
+  }
+  &__title {
+    padding: 0;
+    font-size: var(--font-size-big);
+    font-family: var(--body-font-family-secondary);
+    font-weight: 500;
+    line-height: 1.6;
+  }
+  &__filters-button {
+    --button-text-decoration: none;
+    --button-font-weight: var(--body-font-weight-secondary);
+    --button-color: var(--c-text);
+    --button-transition: all 150ms linear;
+    display: flex;
+    align-items: center;
+    @include for-desktop {
+      margin: 0 0 0 var(--spacer-extra-big);
+    }
+    svg {
+      fill: var(--c-text-muted);
+    }
+    &:hover {
+      --button-color: var(--c-primary);
+      svg {
+        fill: var(--c-primary);
+      }
+    }
+  }
+  &__label {
+    color: var(--c-text-muted);
+  }
+  &__sort {
+    display: flex;
+    align-items: center;
+    margin: 0 auto 0 var(--spacer-extra-big);
+    --select-font-size: var(--font-size-small);
+  }
+  &__counter {
+    margin: auto;
+    @include for-desktop {
+      margin: auto 0 auto auto;
+    }
+  }
+  &__view {
+    display: flex;
+    align-items: center;
+    margin: 0 var(--spacer-extra-big);
+    @include for-desktop {
+      margin: var(--spacer-big);
+    }
+    &-icon {
+      margin: 0 0 0 0.625rem;
+      cursor: pointer;
+    }
+  }
+}
+.sort-by {
+  /*--select-padding: 0 0.625rem;*/
+  flex: unset;
+  width: 11.875rem;
+  --select-dropdown-z-index: 10;
+}
+.main {
+  display: flex;
+}
+.sidebar {
+  flex: 0 0 15%;
+  padding: var(--spacer-extra-big);
+  border: 1px solid var(--c-light);
+  border-width: 0 1px 0 0;
+}
 .products {
   box-sizing: border-box;
   flex: 1;
-  margin: 0 -#{var(--spacer)};
+  margin: 0 calc(var(--spacer) * -1);
   @include for-desktop {
     margin: var(--spacer-big);
   }
+  &__grid,
   &__list {
     display: flex;
     flex-wrap: wrap;
   }
-    &__product-card {
-      flex: 0 0 50%;
-      padding: var(--spacer);
-      @include for-desktop {
-        flex: 0 0 25%;
-        padding: var(--spacer-big);
-      }
-    }
-    &__pagination {
-      @include for-desktop {
-        display: flex;
-        justify-content: center;
-        margin-top: var(--spacer-extra-big);
-      }
-    }
-  }
-  .section {
-    padding-left: var(--spacer-big);
-    padding-right: var(--spacer-big);
+  &__product-card {
+    --product-card-padding: var(--spacer);
+    flex: 1 1 50%;
     @include for-desktop {
-      padding-left: 0;
-      padding-right: 0;
+      --product-card-padding: var(--spacer-big);
+      flex: 1 1 25%;
     }
   }
-  .sidebar {
-    flex: 0 0 15%;
-    padding: var(--spacer-extra-big);
-    border-right: 1px solid var(--c-light);
+  // TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941
+  &__pagination__options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 
-    &--cat-selected {
-      font-weight: bold
+    .items-per-page {
+      min-width: 3rem;
     }
   }
-  .sort-by {
-    flex: unset;
-    width: 190px;
-    padding: 0 10px;
-    font-size: inherit;
+
+  &__pagination__label {
+    color: var(--c-text-muted);
+  }
+  // end of TODO
+  &__product-card-horizontal {
+    --product-card-horizontal-padding: var(--spacer);
+    flex: 0 0 100%;
+    @include for-desktop {
+      --product-card-horizontal-padding: var(--spacer-big);
+    }
+  }
+  &__slide-enter {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  &__slide-enter-active {
+    transition: all 0.2s ease;
+    transition-delay: calc(0.1s * var(--index));
+  }
+  &__pagination {
+    @include for-desktop {
+      display: flex;
+      justify-content: center;
+      margin: var(--spacer-extra-big) 0 0 0;
+    }
   }
 }
 .filters {
+  padding: var(--spacer-big);
   &__title {
-    margin: calc(var(--spacer-big) * 3) 0 var(--spacer-big);
-    font-size: var(--font-size-big-desktop);
+    margin: calc(var(--spacer-big) * 3) 0 var(--spacer-big) 0;
+    font: 400 var(--font-size-extra-big) / 1.6 var(--body-font-family-secondary);
     line-height: 1.6;
     &:first-child {
       margin: 0 0 var(--spacer-big) 0;
     }
   }
+  &__colors {
+    margin: calc(var(--spacer) * -1);
+  }
+  &__color {
+    margin: var(--spacer);
+  }
   &__item {
-    padding: var(--spacer-small) 0;
-    &--color {
-      margin: 0 var(--spacer);
-    }
+    margin: var(--spacer) 0;
   }
   &__buttons {
     margin: calc(var(--spacer-big) * 3) 0 0 0;
   }
   &__button-clear {
-    color: #a3a5ad;
-    margin-top: 10px;
-    background-color: var(--c-light);
+    --button-background: var(--c-light);
+    --button-color: var(--c-dark-variant);
+    margin: 0.625rem 0 0 0;
   }
 }
 </style>
