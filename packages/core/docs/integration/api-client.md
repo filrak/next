@@ -28,23 +28,41 @@ There is one particularly important element in `src/index.ts` file of your integ
 const { setup, override, update, settings } = apiClientFactory<MyPlatformApiClientMethods, MyPlatformApiClientSettings>({ defaultSettings, onSetup })
 ```
 
-Now lets take a look at what `apiClientFactory` accepts and returns:
+Now, let's take a look at what `apiClientFactory` accepts and returns:
 
-```ts
+```js
 apiClientFactory<API_CLIENT_METHODS, API_CLIENT_SETTINGS> (
   factoryParams: { 
-    defaultSettings: API_CLIENT_SETTINGS, 
-    onSetup: (config: API_CLIENT_SETTINGS) => void
+    defaultSettings: API_CLIENT_SETTINGS;
+    onSetup: (config: API_CLIENT_SETTINGS) => void;
   }
 ) => { 
-  override: (overrides: API_CLIENT_METHODS) => void
-  setup: (config: API_CLIENT_SETTINGS) => void
-  update: (config: API_CLIENT_SETTINGS) => void
+  override: (overrides: API_CLIENT_METHODS) => void;
+  setup: (settings: API_CLIENT_SETTINGS) => void;
+  update: (settings: API_CLIENT_SETTINGS) => void;
   getSettings: () => API_CLIENT_SETTINGS
 })
 ```
 
+### Types
 
+- `API_CLIENT_METHODS` - This should be an interface containing signatures of all your API Client methods
+```ts
+interface MyPlatformApiClientMethods {
+  getProduct(params: { id: string; sku: string; catId: string })
+  getCategory(...)
+  ...
+} 
+```
+- `API_CLIENT_SETTINGS` - Here you should specify all possible settings that can be passed to your API Client
+```ts
+interface MyPlatformApiClientSettings {
+  api: string;
+  authSecret: string;
+  defaultLocale: string
+  ...
+} 
+```
 ### Params
 
 - `defaultSettings` - This is a default configuration for your API Client. It's just an object similar to this one:
