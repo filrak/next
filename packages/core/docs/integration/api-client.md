@@ -20,18 +20,28 @@ By default fresh API Client package has following structure:
 - `src/types.ts` - This is a place where all your types should be placed. Especially interfaces for API Client methods and data entities like `category`, `product` etc.
 - `src/api` - This is a directory where you will put all API Client methods. It contains some example functions but feel free to remove them or add new. The content of this folder highly depend on eCommerce platform you're integrating with.
 
-## Using `ApiClientFactory`
+## Using `apiClientFactory`
 
-There is one particularly important element in `src/index.ts` file of your integration - `ApiClientFactory`. This function takes care of setting up everything you will need to implement API Client non-eCommerce functionalities like setup or overriding mechanism.
+There is one particularly important element in `src/index.ts` file of your integration - `apiClientFactory`. This function takes care of setting up everything you will need to implement API Client non-eCommerce functionalities like setup or overriding mechanism.
 
 ```js
-const { setup, override, settings } = ApiClientFactory<MyPlatformApiClientMethods>(defaultSettings, onSetup)
+const { setup, override, update, settings } = apiClientFactory<MyPlatformApiClientMethods, MyPlatformApiClientSettings>({ defaultSettings, onSetup })
 ```
 
-Now lets take a look at what `ApiClientFactory` accepts and returns:
+Now lets take a look at what `apiClientFactory` accepts and returns:
 
-```js
-ApiClientFactory<API_CLIENT_METHODS>(defaultSettings, onSetup: (settings) => void)
+```ts
+apiClientFactory<API_CLIENT_METHODS, API_CLIENT_SETTINGS> (
+  factoryParams: { 
+    defaultSettings: API_CLIENT_SETTINGS, 
+    onSetup: (config: API_CLIENT_SETTINGS) => void
+  }
+) => { 
+  override: (overrides: API_CLIENT_METHODS) => void
+  setup: (config: API_CLIENT_SETTINGS) => void
+  update: (config: API_CLIENT_SETTINGS) => void
+  getSettings: () => API_CLIENT_SETTINGS
+})
 ```
 
 
