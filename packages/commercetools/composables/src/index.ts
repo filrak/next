@@ -7,6 +7,7 @@ import useCheckout from './useCheckout';
 import useUser from './useUser';
 import useLocale from './useLocale';
 import useUserOrders from './useUserOrders';
+import { foo } from '@vue-storefront/utils';
 import {
   cartGetters,
   categoryGetters,
@@ -29,6 +30,7 @@ export {
   checkoutGetters,
   productGetters,
   userGetters,
-  orderGetters
+  orderGetters,
+  foo
 };
 
