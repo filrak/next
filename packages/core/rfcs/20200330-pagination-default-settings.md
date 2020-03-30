@@ -28,6 +28,9 @@ export type UseProductFactoryParams<PRODUCT, PRODUCT_SEARCH_PARAMS extends Searc
 };
 ```
 
+Why `loadDefaultPaginationSettings` is asynchronous?
+This way it's possible to fetch such settings from the underlying platform.
+
 ### Composables
 
 The composable function exposes those settings as a computed property and also a function that will modify those defaults.
@@ -51,4 +54,4 @@ return {
 
 ## Migration process
 
-Providing `loadDefaultPaginationSettings` in composables with paginated search is the only step needed.
+Providing `loadDefaultPaginationSettings` in the composables having paginated search (`useProduct`, `useUserOrders` for now) is the only step needed.
