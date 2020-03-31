@@ -119,6 +119,7 @@ export function useCartFactory<CART, CART_ITEM, PRODUCT, COUPON>(
       loading.value = false;
     };
 
+    // Temporary enabled by default, related rfc: https://github.com/DivanteLtd/next/pull/330
     onSSR(async () => {
       if (!factoryParams.cart.value) {
         await refreshCart();
