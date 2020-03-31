@@ -34,7 +34,7 @@ module.exports = function DefaultThemeModule(moduleOptions) {
   const compileAgnosticTemplates = () => {
     themeFiles.forEach((file) => {
       compileTemplates(
-        path.join(__dirname, file),
+        file,
         this.options.buildDir.split('.nuxt').pop() + '.theme/' + file.split('theme/').pop(),
         {
           apiClient: moduleOptions.apiClient,
