@@ -7,6 +7,11 @@ import getCategory from './api/getCategory';
 import createCart from './api/createCart';
 import updateCart from './api/updateCart';
 import getCart from './api/getCart';
+import addCustomerAddress from './api/addCustomerAddress';
+import assignCustomerAddress from './api/assignCustomerAddress';
+import removeCustomerAddress from './api/removeCustomerAddress';
+import updateCustomerAddress from './api/updateCustomerAddress';
+import updateCustomerPersonalDetails from './api/updateCustomerPersonalDetails';
 import addToCart from './api/addToCart';
 import removeFromCart from './api/removeFromCart';
 import updateCartQuantity from './api/updateCartQuantity';
@@ -84,6 +89,11 @@ export {
   updateCart,
   getCart,
   addToCart,
+  addCustomerAddress,
+  assignCustomerAddress,
+  removeCustomerAddress,
+  updateCustomerAddress,
+  updateCustomerPersonalDetails,
   removeFromCart,
   getMe,
   updateCartQuantity,

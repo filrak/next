@@ -1,7 +1,8 @@
-import {UseUserFactoryParams} from '@vue-storefront/factories';
-import {Customer} from '@vue-storefront/commercetools-api/lib//types/GraphQL';
+import { UseUserFactoryParams } from '@vue-storefront/factories';
+import { Customer } from '@vue-storefront/commercetools-api/lib//types/GraphQL';
 import { authenticate } from './authenticate';
 import {
+  updateCustomerPersonalDetails,
   customerSignMeUp as apiCustomerSignMeUp,
   customerSignMeIn as apiCustomerSignMeIn,
   customerSignOut as apiCustomerSignOut,
@@ -10,7 +11,9 @@ import {
 } from '@vue-storefront/commercetools-api';
 import useCart from '../useCart';
 
-export const params: UseUserFactoryParams<Customer, any, any> = {
+export type UpdateUserParams = Customer & { clientSideOnly?: boolean };
+
+export const params: UseUserFactoryParams<Customer, UpdateUserParams, any> = {
   loadUser: async () => {
     try {
       const profile = await apiGetMe({ customer: true });
@@ -27,9 +30,19 @@ export const params: UseUserFactoryParams<Customer, any, any> = {
     await useCart().refreshCart();
     await apiCustomerSignOut();
   },
-  updateUser: async ({currentUser, updatedUserData}): Promise<Customer> => {
-    // Change code below if the apiClient receive userUpdate method
-    return Promise.resolve({currentUser, updatedUserData} as any);
+  updateUser: async ({ currentUser, updatedUserData }): Promise<Customer> => {
+    if (updatedUserData.clientSideOnly) {
+      return Promise.resolve({currentUser, updatedUserData} as any);
+    }
+
+    const { firstName, lastName, email } = updatedUserData;
+
+    const { data } = await updateCustomerPersonalDetails(currentUser, { firstName, lastName, email });
+
+    return {
+      ...currentUser,
+      ...data.updateMyCustomer
+    };
   },
   register: async ({email, password, firstName, lastName}) => {
     return await authenticate({email, password, firstName, lastName}, apiCustomerSignMeUp);

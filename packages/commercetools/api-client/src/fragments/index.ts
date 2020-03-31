@@ -1,6 +1,7 @@
 
 export const AddressFragment = `
   fragment DefaultAddress on Address {
+    id
     title
     firstName
     lastName
@@ -11,6 +12,13 @@ export const AddressFragment = `
     region
     country
     company
+    apartment
+    contactInfo {
+      phone
+      mobile
+      email
+      fax
+    }
   }
 `;
 

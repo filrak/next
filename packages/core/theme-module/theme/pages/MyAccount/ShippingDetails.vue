@@ -1,18 +1,18 @@
 <template>
   <transition name="fade">
     <SfTabs
-      v-if="editAddress"
+      v-if="showAddUpdateForm"
       key="edit-address"
       :open-tab="1"
       class="tab-orphan"
     >
       <SfTab title="Change the address">
         <p class="message">
-          Keep your addresses and contact details updated.
+          Keep your shipping and contact details updated.
         </p>
 
         <ValidationObserver v-slot="{ handleSubmit }">
-          <form id="shipping-details-form" class="form" @submit.prevent="handleSubmit(updateAddress)">
+          <form id="shipping-details-form" class="form" @submit.prevent="handleSubmit(handleForm)">
             <div class="form__horizontal">
               <ValidationProvider rules="required|min:2" v-slot="{ errors }" class="form__element">
                 <SfInput
@@ -46,8 +46,8 @@
               />
             </ValidationProvider>
             <SfInput
-              v-model="apartment"
-              name="apartment"
+              v-model="streetNumber"
+              name="streetNumber"
               label="House/Apartment number"
               required
               class="form__element"
@@ -77,8 +77,8 @@
             <div class="form__horizontal">
               <ValidationProvider rules="required|min:4" v-slot="{ errors }" class="form__element">
                 <SfInput
-                  v-model="zipCode"
-                  name="zipCode"
+                  v-model="postalCode"
+                  name="postalCode"
                   label="Zip-code"
                   required
                   :valid="!errors[0]"
@@ -106,7 +106,7 @@
             </div>
             <ValidationProvider rules="required|min:8" v-slot="{ errors }" class="form__element">
               <SfInput
-                v-model="phoneNumber"
+                v-model="phone"
                 name="phone"
                 label="Phone number"
                 required
@@ -114,7 +114,8 @@
                 :errorMessage="errors[0]"
               />
             </ValidationProvider>
-            <SfButton class="form__button">Update the address</SfButton>
+            <SfButton v-if="formType === 'UPDATE'" :type="submit" class="form__button">Update the address</SfButton>
+            <SfButton v-if="formType === 'CREATE'" :type="submit" class="form__button">Create a new address</SfButton>
           </form>
         </ValidationObserver>
       </SfTab>
@@ -128,22 +129,22 @@
         </p>
         <transition-group tag="div" name="fade" class="shipping-list">
           <div
-            v-for="(shipping, key) in account.shipping"
-            :key="shipping.streetName + shipping.apartment"
+            v-for="(address) in account.getShippingAddresses()"
+            :key="address.id"
             class="shipping"
           >
             <div class="shipping__content">
               <p class="shipping__address">
                 <span class="shipping__client-name"
-                  >{{ shipping.firstName }} {{ shipping.lastName }}</span
+                  >{{ address.firstName }} {{ address.lastName }}</span
                 ><br />
-                {{ shipping.streetName }} {{ shipping.apartment }}<br />{{
-                  shipping.zipCode
+                {{ address.streetName }} {{ address.streetNumber }}<br />{{
+                  address.postalCode
                 }}
-                {{ shipping.city }},<br />{{ shipping.country }}
+                {{ address.city }},<br />{{ address.country }}
               </p>
               <p class="shipping__address">
-                {{ shipping.phoneNumber }}
+                {{ address.phone }}
               </p>
             </div>
             <div class="shipping__actions">
@@ -153,18 +154,18 @@
                 size="14px"
                 role="button"
                 class="mobile-only"
-                @click="deleteAddress(key)"
+                @click="deleteAddress(address)"
               />
-              <SfButton @click="changeAddress(key)">Change</SfButton>
+              <SfButton @click="changeAddress(address.id)">Change</SfButton>
               <SfButton
                 class="shipping__button-delete desktop-only"
-                @click="deleteAddress(key)"
+                @click="deleteAddress(address)"
                 >Delete</SfButton
               >
             </div>
           </div>
         </transition-group>
-        <SfButton class="action-button" @click="changeAddress(-1)"
+        <SfButton class="action-button" @click="changeAddress()"
           >Add new address</SfButton
         >
       </SfTab>
@@ -179,6 +180,8 @@ import {
   SfSelect,
   SfIcon
 } from '@storefront-ui/vue';
+import { ref } from '@vue/composition-api';
+import { useUserAddress } from '<%= options.composables %>';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required, min, oneOf } from 'vee-validate/dist/rules';
 
@@ -214,116 +217,150 @@ export default {
       default: () => ({})
     }
   },
-  data() {
-    return {
-      editAddress: false,
-      editedAddress: -1,
-      firstName: '',
-      lastName: '',
-      streetName: '',
-      apartment: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      country: '',
-      phoneNumber: '',
-      countries: [
-        'Austria',
-        'Azerbaijan',
-        'Belarus',
-        'Belgium',
-        'Bosnia and Herzegovina',
-        'Bulgaria',
-        'Croatia',
-        'Cyprus',
-        'Czech Republic',
-        'Denmark',
-        'Estonia',
-        'Finland',
-        'France',
-        'Georgia',
-        'Germany',
-        'Greece',
-        'Hungary',
-        'Iceland',
-        'Ireland',
-        'Italy',
-        'Kosovo',
-        'Latvia',
-        'Liechtenstein',
-        'Lithuania',
-        'Luxembourg',
-        'Macedonia',
-        'Malta',
-        'Moldova',
-        'Monaco',
-        'Montenegro',
-        'The Netherlands',
-        'Norway',
-        'Poland',
-        'Portugal',
-        'Romania',
-        'Russia',
-        'San Marino',
-        'Serbia',
-        'Slovakia',
-        'Slovenia',
-        'Spain',
-        'Sweden',
-        'Switzerland',
-        'Turkey',
-        'Ukraine',
-        'United Kingdom',
-        'Vatican City'
-      ]
+  setup({ account }) {
+    const userAddress = useUserAddress();
+    const showAddUpdateForm = ref(false);
+    const formType = ref('CREATE');
+    const editedAddress = ref(-1);
+    const countries = [
+      'PL',
+      'DE',
+      'US',
+      'Austria',
+      'Azerbaijan',
+      'Belarus',
+      'Belgium',
+      'Bosnia and Herzegovina',
+      'Bulgaria',
+      'Croatia',
+      'Cyprus',
+      'Czech Republic',
+      'Denmark',
+      'Estonia',
+      'Finland',
+      'France',
+      'Georgia',
+      'Germany',
+      'Greece',
+      'Hungary',
+      'Iceland',
+      'Ireland',
+      'Italy',
+      'Kosovo',
+      'Latvia',
+      'Liechtenstein',
+      'Lithuania',
+      'Luxembourg',
+      'Macedonia',
+      'Malta',
+      'Moldova',
+      'Monaco',
+      'Montenegro',
+      'The Netherlands',
+      'Norway',
+      'Poland',
+      'Portugal',
+      'Romania',
+      'Russia',
+      'San Marino',
+      'Serbia',
+      'Slovakia',
+      'Slovenia',
+      'Spain',
+      'Sweden',
+      'Switzerland',
+      'Turkey',
+      'Ukraine',
+      'United Kingdom',
+      'Vatican City'
+    ];
+    const addressId = ref('');
+    const firstName = ref('');
+    const lastName = ref('');
+    const streetName = ref('');
+    const streetNumber = ref('');
+    const city = ref('');
+    const state = ref('');
+    const postalCode = ref('');
+    const country = ref('');
+    const phone = ref('');
+
+    const changeAddress = (id = null) => {
+      const address = id !== null
+        ? account.getShippingAddresses().find(shippingAddress => id === shippingAddress.id)
+        : {};
+
+      formType.value = id === null ? 'CREATE' : 'UPDATE';
+      showAddUpdateForm.value = true;
+
+      addressId.value = id || '';
+      firstName.value = address.firstName || account.firstName || '';
+      lastName.value = address.lastName || account.lastName || '';
+      streetName.value = address.streetName || '';
+      city.value = address.city || '';
+      state.value = address.state || '';
+      postalCode.value = address.postalCode || '';
+      country.value = address.country || '';
+      phone.value = address.contactInfo ? address.contactInfo.phone || '' : '';
     };
-  },
-  methods: {
-    changeAddress(index) {
-      const account = this.account;
-      const shipping = account.shipping[index];
-      if (index > -1) {
-        this.firstName = account.firstName;
-        this.lastName = account.lastName;
-        this.streetName = shipping.streetName;
-        this.apartment = shipping.apartment;
-        this.city = shipping.city;
-        this.state = shipping.state;
-        this.zipCode = shipping.zipCode;
-        this.country = shipping.country;
-        this.phoneNumber = shipping.phoneNumber;
-        this.editedAddress = index;
-      }
-      this.editAddress = true;
-    },
-    updateAddress() {
-      const account = { ...this.account };
-      const shipping = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        apartment: this.apartment,
-        streetName: this.streetName,
-        city: this.city,
-        state: this.state,
-        zipCode: this.zipCode,
-        country: this.country,
-        phoneNumber: this.phoneNumber
-      };
-      const index = this.editedAddress;
-      if (index > -1) {
-        account.shipping[index] = shipping;
-        this.editedAddress = -1;
-      } else {
-        account.shipping.push(shipping);
-      }
-      this.editAddress = false;
-      this.$emit('update:shipping', account);
-    },
-    deleteAddress(index) {
-      const account = { ...this.account };
-      account.shipping.splice(index, 1);
-      this.$emit('update:shipping', account);
-    }
+
+    const addAddress = () => userAddress.addAddress(
+      {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        streetName: streetName.value,
+        city: city.value,
+        state: state.value,
+        postalCode: postalCode.value,
+        country: country.value,
+        phone: phone.value
+      },
+      'shipping'
+    );
+
+    const updateAddress = () => userAddress.updateAddress({
+      id: addressId.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      streetName: streetName.value,
+      city: city.value,
+      state: state.value,
+      postalCode: postalCode.value,
+      country: country.value,
+      phone: phone.value
+    });
+
+    const deleteAddress = (address) => userAddress.deleteAddress(address);
+
+    const handleForm = () => (formType.value === 'CREATE' ? addAddress : updateAddress)()
+      .then(() => {
+        showAddUpdateForm.value = false;
+      })
+      .catch((err) => {
+        // TODO: Need to handle it somehow
+        console.log(err, 'error');
+      });
+
+    return {
+      countries,
+      firstName,
+      lastName,
+      streetName,
+      streetNumber,
+      city,
+      state,
+      postalCode,
+      country,
+      phone,
+      showAddUpdateForm,
+      formType,
+      handleForm,
+      editedAddress,
+      addAddress,
+      changeAddress,
+      updateAddress,
+      deleteAddress
+    };
   }
 };
 </script>

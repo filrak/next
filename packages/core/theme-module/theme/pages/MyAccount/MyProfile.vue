@@ -54,13 +54,13 @@
       <p class="message">
         If you want to change the password to access your account, enter the
         following information:<br />Your current email address is
-        <span class="message__label">example@email.com</span>
+        <span class="message__label">{{account.email}}</span>
       </p>
       <ValidationObserver v-slot="{ handleSubmit }">
         <form class="form" @submit.prevent="handleSubmit(updatePassword)">
           <ValidationProvider rules="required" v-slot="{ errors }" vid="password" class="form__element">
             <SfInput
-              v-model="form.currentPassword"
+              v-model="currentPassword"
               type="password"
               name="currentPassword"
               label="Current Password"
@@ -72,7 +72,7 @@
           <div class="form__horizontal">
             <ValidationProvider rules="required|password" v-slot="{ errors }" vid="password" class="form__element">
               <SfInput
-                v-model="form.newPassword"
+                v-model="newPassword"
                 type="password"
                 name="newPassword"
                 label="New Password"
@@ -83,7 +83,7 @@
             </ValidationProvider>
             <ValidationProvider rules="required|confirmed:password" v-slot="{ errors }" class="form__element">
               <SfInput
-                v-model="form.repeatPassword"
+                v-model="repeatPassword"
                 type="password"
                 name="repeatPassword"
                 label="Repeat Password"
@@ -93,7 +93,7 @@
               />
             </ValidationProvider>
           </div>
-          <SfAlert v-if="error" class="alert" type="danger" :message="error" />
+          <SfAlert v-if="error" class="alert" type="danger" :message="'Something went wrong'" />
           <SfButton class="form__button">Update password</SfButton>
         </form>
       </ValidationObserver>
@@ -148,50 +148,48 @@ export default {
       default: () => ({})
     }
   },
-  setup() {
-    const resetPassForm = () => ({ currentPassword: '', newPassword: '', repeatPassword: '' });
-    const { user, changePassword } = useUser();
-    const error = ref(null);
-    const form = ref(resetPassForm());
+  setup({ account }) {
+    const { user, changePassword, updateUser } = useUser();
+
+    const error = ref(false);
+
+    const currentPassword = ref('');
+    const repeatPassword = ref('');
+    const newPassword = ref('');
+    const firstName = ref(account.firstName || '');
+    const lastName = ref(account.lastName || '');
+    const email = ref(account.email || '');
+
+    const resetPassForm = () => {
+      currentPassword.value = '';
+      repeatPassword.value = '';
+      newPassword.value = '';
+    };
 
     const updatePassword = async () => {
-      await changePassword(form.value.currentPassword, form.value.newPassword);
-      form.value = resetPassForm();
+      await changePassword(currentPassword.value, newPassword.value);
+
+      resetPassForm();
     };
+
+    const updatePersonal = () => updateUser({
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value
+    });
 
     return {
       user,
       error,
-      form,
-      updatePassword
+      currentPassword,
+      newPassword,
+      repeatPassword,
+      firstName,
+      lastName,
+      email,
+      updatePassword,
+      updatePersonal
     };
-  },
-  data() {
-    return {
-      firstName: '',
-      lastName: '',
-      email: ''
-    };
-  },
-  watch: {
-    account: {
-      handler(value) {
-        this.firstName = value.firstName;
-        this.lastName = value.lastName;
-        this.email = value.email;
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    updatePersonal() {
-      const personal = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email
-      };
-      this.$emit('update:personal', personal);
-    }
   }
 };
 </script>

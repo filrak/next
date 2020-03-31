@@ -41,3 +41,4 @@ export type OrderResponse = OrderQueryResponse | OrderMutationResponse
 export type ShippingMethodsResponse = QueryResponse<'shippingMethods', ShippingMethod>
 export type SignInResponse = QueryResponse<'user', CustomerSignInResult>
 export type ChangeMyPasswordResponse = QueryResponse<'user', Customer>
+export type UpdateMyCustomerResponse = MutationResponse<'updateMyCustomer', Customer>

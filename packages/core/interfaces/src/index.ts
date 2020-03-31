@@ -23,7 +23,7 @@ export interface UseUser
   UPDATE_USER_PARAMS
 > {
   user: ComputedProperty<USER>;
-  updateUser: (params: UPDATE_USER_PARAMS) => Promise<void>;
+  updateUser: (params: UPDATE_USER_PARAMS) => void;
   register: (user: {
     email: string;
     password: string;
@@ -57,14 +57,19 @@ export interface UseUserOrders<ORDER> {
   loading: ComputedProperty<boolean>;
 }
 
-export interface UseUserAddress<ADDRESS> {
+export type UserAddressType = 'billing' | 'shipping';
+
+/** check if we always have those addresses together or we need pagination  */
+export interface UseUserAddress<ADDRESS, ADDRESS_TYPE = UserAddressType, SEARCH_PARAMS = { [x: string]: any }> {
   addresses: ComputedProperty<ADDRESS[]>;
   totalAddresses: ComputedProperty<number>;
-  addAddress: (address: ADDRESS) => Promise<void>;
-  deleteAddress: (address: ADDRESS) => Promise<void>;
+  addAddress: (address: ADDRESS, type: ADDRESS_TYPE) => Promise<void>;
   updateAddress: (address: ADDRESS) => Promise<void>;
-  searchAddresses: (params?: { [x: string]: any }) => Promise<void>;
-  loading: ComputedProperty<boolean>;
+  deleteAddress: (address: ADDRESS) => Promise<void>;
+  getBillingAddresses: () => ADDRESS[];
+  getShippingAddresses: () => ADDRESS[];
+  searchAddresses: (params?: SEARCH_PARAMS) => Promise<void>;
+  loading: Ref<boolean>;
 }
 
 export interface UseCategory

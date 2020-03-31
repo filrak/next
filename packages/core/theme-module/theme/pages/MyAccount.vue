@@ -12,16 +12,10 @@
     >
       <SfContentCategory title="Personal Details">
         <SfContentPage title="My profile">
-          <MyProfile
-            :account="account"
-            @update:personal="account = { ...account, ...$event }"
-          />
+          <MyProfile :account="account" />
         </SfContentPage>
         <SfContentPage title="Shipping details">
-          <ShippingDetails
-            :account="account"
-            @update:shipping="account = { ...account, ...$event }"
-          />
+          <ShippingDetails :account="account" />
         </SfContentPage>
         <SfContentPage title="Loyalty card">
           <LoyaltyCard />
@@ -44,6 +38,8 @@
 </template>
 <script>
 import { SfBreadcrumbs, SfContentPages } from '@storefront-ui/vue';
+import { useUser, useUserAddress } from '<%= options.composables %>';
+import { computed } from '@vue/composition-api';
 import MyProfile from './MyAccount/MyProfile';
 import ShippingDetails from './MyAccount/ShippingDetails';
 import LoyaltyCard from './MyAccount/LoyaltyCard';
@@ -65,79 +61,64 @@ export default {
     OrderHistory,
     MyReviews
   },
-  data() {
-    return {
-      breadcrumbs: [
-        {
-          text: 'Home',
-          route: {
-            link: '#'
-          }
-        },
-        {
-          text: 'My Account',
-          route: {
-            link: '#'
-          }
+  setup(props, { root }) {
+    const { user } = useUser();
+    const { getShippingAddresses, searchAddresses } = useUserAddress();
+
+    const breadcrumbs = [
+      {
+        text: 'Home',
+        route: {
+          link: '#'
         }
-      ],
-      account: {
-        firstName: 'Sviatlana',
-        lastName: 'Havaka',
-        email: 'example@email.com',
-        password: 'a*23Et',
-        shipping: [
-          {
-            firstName: 'Sviatlana',
-            lastName: 'Havaka',
-            streetName: 'Zielinskiego',
-            apartment: '24/193A',
-            city: 'Wroclaw',
-            state: 'Lower Silesia',
-            zipCode: '53-540',
-            country: 'Poland',
-            phoneNumber: '(00)560 123 456'
-          },
-          {
-            firstName: 'Sviatlana',
-            lastName: 'Havaka',
-            streetName: 'Zielinskiego',
-            apartment: '20/193A',
-            city: 'Wroclaw',
-            state: 'Lower Silesia',
-            zipCode: '53-603',
-            country: 'Poland',
-            phoneNumber: '(00)560 123 456'
-          }
-        ],
-        orders: [
-          ['#35765', '4th Nov, 2019', 'Visa card', '$12.00', 'In process'],
-          ['#35766', '4th Nov, 2019', 'Paypal', '$12.00', 'Finalised'],
-          ['#35768', '4th Nov, 2019', 'Mastercard', '$12.00', 'Finalised'],
-          ['#35769', '4th Nov, 2019', 'Paypal', '$12.00', 'Finalised']
-        ]
+      },
+      {
+        text: 'My Account',
+        route: {
+          link: '#'
+        }
       }
-    };
-  },
-  computed: {
-    activePage() {
-      const { pageName } = this.$route.params;
+    ];
 
-      if (pageName) {
-        return (pageName.charAt(0).toUpperCase() + pageName.slice(1)).replace('-', ' ');
-      }
+    const activePage = computed(() => {
+      const { pageName } = root.$route.params;
 
-      return 'My profile';
-    }
-  },
-  methods: {
-    changeActivePage(title) {
+      return pageName
+        ? (pageName.charAt(0).toUpperCase() + pageName.slice(1)).replace('-', ' ')
+        : 'My profile';
+    });
+
+    searchAddresses();
+
+    const changeActivePage = (title) => {
       if (title === 'Log out') {
         return;
       }
 
-      this.$router.push(`/my-account/${title.toLowerCase().replace(' ', '-')}`);
-    }
+      root.$router.push(`/my-account/${title.toLowerCase().replace(' ', '-')}`);
+    };
+
+    const account = computed(() => ({
+      firstName: user.value.firstName,
+      lastName: user.value.lastName,
+      email: user.value.email,
+      getShippingAddresses,
+      // TODO: User orders list
+      orders: [
+        ['#35765', '4th Nov, 2019', 'Visa card', '$12.00', 'In process'],
+        ['#35766', '4th Nov, 2019', 'Paypal', '$12.00', 'Finalised'],
+        ['#35768', '4th Nov, 2019', 'Mastercard', '$12.00', 'Finalised'],
+        ['#35769', '4th Nov, 2019', 'Paypal', '$12.00', 'Finalised']
+      ]
+    }));
+
+    return {
+      user,
+      account,
+      breadcrumbs,
+      changeActivePage,
+      activePage
+    };
   }
 };
 </script>
