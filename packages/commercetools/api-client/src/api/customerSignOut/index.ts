@@ -1,7 +1,7 @@
-import { tokenEvents } from './../../index';
+import { auth } from './../../index';
 
 const customerSignOut = async (): Promise<void> => {
-  tokenEvents.onTokenRemove();
+  auth.onTokenRemove();
 };
 
 export default customerSignOut;

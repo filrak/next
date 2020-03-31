@@ -64,9 +64,9 @@ export interface CookiesConfig {
   localeCookieName: string;
 }
 ```
-- `tokenEvents?: TokenEvents`
+- `auth?: Auth`
 ```js
-export interface TokenEvents {
+export interface Auth {
   onTokenChange?: (token: Token) => void;
   onTokenRemove?: () => void;
 }
@@ -88,7 +88,7 @@ const onTokenChange = (token) => {
   app.$cookies.set('ct-token', token);
 };
 
-setup({ ...config, currentToken, tokenEvents: { onTokenChange } });
+setup({ ...config, currentToken, auth: { onTokenChange } });
 ```
 
 Sometimes, you may need more flexibility and you want to create a new token by yourself. It's useful, for instance when you want to integrate it with server middlewares and fetch the token first, before others calls.

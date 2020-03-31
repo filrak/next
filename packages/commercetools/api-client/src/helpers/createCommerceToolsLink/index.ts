@@ -3,12 +3,12 @@ import { setContext } from 'apollo-link-context';
 import { ApolloLink } from 'apollo-link';
 import fetch from 'isomorphic-fetch';
 import createAccessToken from './../createAccessToken';
-import { api, currentToken, tokenEvents } from './../../index';
+import { api, currentToken, auth } from './../../index';
 import { Token, CustomerCredentials } from '../../types/setup';
 
 const refreshToken = async (customerCredentials?: CustomerCredentials): Promise<Token> => {
   const token = await createAccessToken({ currentToken, customerCredentials });
-  tokenEvents.onTokenChange(token);
+  auth.onTokenChange(token);
 
   return token;
 };

@@ -29,7 +29,7 @@ export interface LocaleItem {
   label: string;
 }
 
-export interface TokenEvents {
+export interface Auth {
   onTokenChange?: (token: Token) => void;
   onTokenRemove?: () => void;
 }
@@ -45,7 +45,7 @@ export interface SetupConfig<TCacheShape> {
   currencies?: LocaleItem[];
   locales?: LocaleItem[];
   cookies?: CookiesConfig;
-  tokenEvents?: TokenEvents;
+  auth?: Auth;
 }
 
 export interface CustomerCredentials {

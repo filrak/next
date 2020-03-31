@@ -1,6 +1,6 @@
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { SetupConfig, TokenEvents, ApiConfig } from './types/setup';
+import { SetupConfig, Auth, ApiConfig } from './types/setup';
 import createCommerceToolsLink from './helpers/createCommerceToolsLink';
 import getProduct from './api/getProduct';
 import getCategory from './api/getCategory';
@@ -22,8 +22,6 @@ import getMyOrders from './api/getMyOrders';
 import customerChangeMyPassword from './api/customerChangeMyPassword';
 import createAccessToken from './helpers/createAccessToken';
 
-import { Token } from './types/setup';
-
 let apolloClient: ApolloClient<any> = null;
 let locale = 'en';
 let currency = '';
@@ -33,7 +31,7 @@ let currencies = [];
 let locales = [];
 let currentToken: Token = null;
 let api: ApiConfig = null;
-let tokenEvents: TokenEvents = {
+let auth: Auth = {
   onTokenChange: (token: Token) => {},
   onTokenRemove: () => {}
 };
@@ -52,7 +50,7 @@ const setup = <TCacheShape>(setupConfig: SetupConfig<TCacheShape>): ApolloClient
   currencies = setupConfig.currencies || currencies;
   locales = setupConfig.locales || locales;
   cookies = setupConfig.cookies || cookies;
-  tokenEvents = setupConfig.tokenEvents || tokenEvents;
+  auth = setupConfig.auth || auth;
   currentToken = setupConfig.currentToken || currentToken;
 
   if (setupConfig.api) {
@@ -70,7 +68,7 @@ export {
   api,
   currentToken,
   createAccessToken,
-  tokenEvents,
+  auth,
   apolloClient,
   setup,
   cookies,

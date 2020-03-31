@@ -20,7 +20,7 @@ setup({
     countryCookieName: 'test-vsf-country',
     localeCookieName: 'test-vsf-locale'
   },
-  tokenEvents: {
+  auth: {
     onTokenChange: jest.fn(),
     onTokenRemove: jest.fn()
   }

@@ -23,7 +23,7 @@ export default ({ app }) => {
   setup({
     ...config,
     currentToken,
-    tokenEvents: {
+    auth: {
       onTokenChange,
       onTokenRemove
     }
