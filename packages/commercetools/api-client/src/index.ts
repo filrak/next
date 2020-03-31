@@ -1,6 +1,6 @@
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { SetupConfig, Auth, ApiConfig } from './types/setup';
+import { SetupConfig, Auth, ApiConfig, Token } from './types/setup';
 import createCommerceToolsLink from './helpers/createCommerceToolsLink';
 import getProduct from './api/getProduct';
 import getCategory from './api/getCategory';
