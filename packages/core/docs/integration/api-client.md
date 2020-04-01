@@ -145,3 +145,6 @@ First we are checking if user provided `getCategory` method to `override` functi
 Thats all! This is more or less how every API Client method works.
 
 ## To do
+
+1. Fill in the apiClientFactory types and params
+2. Implement API Client methods for interactions with product, cart, checkout, user, wishlist. If you're not sure how to handle some specific case check `commercetools` integration for reference.
