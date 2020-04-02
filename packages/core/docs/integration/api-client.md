@@ -154,4 +154,4 @@ Every integration needs to have 100% unit tests coverage
 
 ## Common problems
 
-- **Sharing platform token:** We suggest using same approach as in within commercetools integration https://vsf-next-docs.netlify.com/commercetools/api-client.html#token-handling . kee in mind that the solution shouldn't depend on Nuxt (but Nuxt theme can implement a solution using what integration has provided)
+- **Sharing platform token:** We suggest using same approach as in within commercetools integration https://vsf-next-docs.netlify.com/commercetools/api-client.html#token-handling. Keep in mind that the solution shouldn't depend on Nuxt (but Nuxt theme can implement a solution using what integration has provided)
