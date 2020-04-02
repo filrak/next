@@ -11,33 +11,39 @@ export type UseLocaleFactoryParams = {
 };
 
 export function useLocaleFactory(factoryParams: UseLocaleFactoryParams) {
-  const loadingLocale = false;
-  const localeState: Ref<AgnosticLocale> = ref(null);
-  const countryState: Ref<AgnosticCountry> = ref(null);
-  const currencyState: Ref<AgnosticCurrency> = ref(null);
+  let loadingLocale = false;
+  const currentLocale: Ref<AgnosticLocale> = ref(null);
+  const currentCountry: Ref<AgnosticCountry> = ref(null);
+  const currentState: Ref<AgnosticCurrency> = ref(null);
   const availableLocalesState: Ref<AgnosticLocale[]> = ref([]);
   const availableCountriesState: Ref<AgnosticCountry[]> = ref([]);
   const availableCurrenciesState: Ref<AgnosticCurrency[]> = ref([]);
 
   const loading = computed<boolean>(() => loadingLocale);
-  const locale = computed<AgnosticLocale>(() => localeState.value);
-  const country = computed<AgnosticCountry>(() => countryState.value);
-  const currency = computed<AgnosticCurrency>(() => currencyState.value);
+  const locale = computed<AgnosticLocale>(() => currentLocale.value);
+  const country = computed<AgnosticCountry>(() => currentCountry.value);
+  const currency = computed<AgnosticCurrency>(() => currentState.value);
   const availableLocales = computed<AgnosticLocale[]>(() => availableLocalesState.value);
   const availableCountries = computed<AgnosticCountry[]>(() => availableCountriesState.value);
   const availableCurrencies = computed<AgnosticCurrency[]>(() => availableCurrenciesState.value);
 
   const setLocale = async (locale: AgnosticLocale) => {
+    loadingLocale = true;
     await factoryParams.setLocale(locale);
-    localeState.value = locale;
+    currentLocale.value = locale;
+    loadingLocale = false;
   };
   const setCountry = async (country: AgnosticCountry) => {
+    loadingLocale = true;
     await factoryParams.setCountry(country);
-    countryState.value = country;
+    currentCountry.value = country;
+    loadingLocale = false;
   };
   const setCurrency = async (currency: AgnosticCurrency) => {
+    loadingLocale = true;
     await factoryParams.setCurrency(currency);
-    currencyState.value = currency;
+    currentState.value = currency;
+    loadingLocale = false;
   };
   const loadAvailableLocales = async () => {
     availableLocalesState.value = await factoryParams.loadAvailableLocales();
