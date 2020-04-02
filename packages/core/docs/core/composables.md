@@ -29,6 +29,6 @@ const { products, search, loading, productGetters } = useProduct()
 search({ id: '12345' })
 // Once the api call is done `products` object is populated with the result and `loading` becomes `false` again.
 
-// Then when we want to extract attributes list from prduct object and transform them to UI-friendly form ([{ name, value, label }]) we can use a getter. We're making it a computed property so when the `search` method will be invoked again and `product` will change the `attribute` object will change as well.
+// Then when we want to extract attributes list from prduct object and transform them to UI-friendly form ([{ name, value, label }]) we can use a getter. We're making it a computed property so when the `search` method will be invoked again and `product` will change the `attributes` object will change as well.
 const attributes = computed(() => productGetters(product.value[0]))
 ```
