@@ -142,26 +142,20 @@ export interface UseCheckout
   loading: ComputedProperty<boolean>;
 }
 
-export interface UseLocale
-<
-  LOCALE,
-  COUNTRY,
-  CURRENCY,
-  AVAILABLE_LOCALES = LOCALE[],
-  AVAILABLE_COUNTRIES = COUNTRY[],
-  AVAILABLE_CURRENCIES = CURRENCY[],
-> {
-  locale: ComputedProperty<LOCALE>;
-  country: ComputedProperty<COUNTRY>;
-  currency: ComputedProperty<CURRENCY>;
-  setLocale: (locale: LOCALE) => void;
-  setCountry: (country: COUNTRY) => void;
-  setCurrency: (currency: CURRENCY) => void;
-  refreshAvailableElements: () => Promise<void>;
-  availableLocales: ComputedProperty<AVAILABLE_LOCALES>;
-  availableCountries: ComputedProperty<AVAILABLE_COUNTRIES>;
-  availableCurrencies: ComputedProperty<AVAILABLE_CURRENCIES>;
+export interface UseLocale {
+  availableLocales: ComputedProperty<AgnosticLocale[]>;
+  availableCountries: ComputedProperty<AgnosticCountry[]>;
+  availableCurrencies: ComputedProperty<AgnosticCurrency[]>;
+  country: ComputedProperty<AgnosticCountry>;
+  currency: ComputedProperty<AgnosticCurrency>;
+  loadAvailableLocales: () => Promise<void>;
+  loadAvailableCountries: () => Promise<void>;
+  loadAvailableCurrencies: () => Promise<void>;
   loading: ComputedProperty<boolean>;
+  locale: ComputedProperty<AgnosticLocale>;
+  setLocale: (locale: AgnosticLocale) => Promise<void>;
+  setCountry: (country: AgnosticCountry) => Promise<void>;
+  setCurrency: (currency: AgnosticCurrency) => Promise<void>;
 }
 
 export interface ProductGetters<PRODUCT, PRODUCT_FILTER> {
@@ -262,6 +256,26 @@ export interface AgnosticProductReview {
 export interface SearchResult<T> {
   data: T[];
   total: number;
+}
+
+export interface AgnosticLocale {
+  code: string;
+  label: string;
+  [x: string]: unknown;
+}
+
+export interface AgnosticCountry {
+  code: string;
+  label: string;
+  [x: string]: unknown;
+}
+
+export interface AgnosticCurrency {
+  code: string;
+  label: string;
+  prefixSign: boolean;
+  sign: string;
+  [x: string]: unknown;
 }
 
 // TODO - remove this interface

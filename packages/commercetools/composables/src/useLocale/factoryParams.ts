@@ -9,5 +9,8 @@ import {
 export const params: UseLocaleFactoryParams = {
   loadAvailableLocales: async () => locales,
   loadAvailableCountries: async () => countries,
-  loadAvailableCurrencies: async () => currencies
+  loadAvailableCurrencies: async () => currencies,
+  setCountry: async () => {},
+  setCurrency: async () => {},
+  setLocale: async () => {}
 };

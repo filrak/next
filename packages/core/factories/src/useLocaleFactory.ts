@@ -1,88 +1,69 @@
-import {computed, Ref, ref} from '@vue/composition-api';
-import { UseLocale } from '@vue-storefront/interfaces';
+import { computed, Ref, ref } from '@vue/composition-api';
+import { AgnosticCountry, AgnosticCurrency, AgnosticLocale, UseLocale } from '@vue-storefront/interfaces';
 
-export type UseLocaleFactoryParams<
-  LOCALE,
-  COUNTRY,
-  CURRENCY,
-  AVAILABLE_LOCALES = LOCALE[],
-  AVAILABLE_COUNTRIES = COUNTRY[],
-  AVAILABLE_CURRENCIES = CURRENCY[]> = {
-  loadAvailableLocales: () => Promise<AVAILABLE_LOCALES>;
-  loadAvailableCountries: () => Promise<AVAILABLE_COUNTRIES>;
-  loadAvailableCurrencies: () => Promise<AVAILABLE_CURRENCIES>;
+export type UseLocaleFactoryParams = {
+  setLocale: (AgnosticLocale) => Promise<void>;
+  setCountry: (AgnosticCountry) => Promise<void>;
+  setCurrency: (AgnosticCurrency) => Promise<void>;
+  loadAvailableLocales: () => Promise<AgnosticLocale[]>;
+  loadAvailableCountries: () => Promise<AgnosticCountry[]>;
+  loadAvailableCurrencies: () => Promise<AgnosticCurrency[]>;
 };
 
-export function useLocaleFactory<
-  LOCALE,
-  COUNTRY,
-  CURRENCY,
-  AVAILABLE_LOCALES = LOCALE[],
-  AVAILABLE_COUNTRIES = COUNTRY[],
-  AVAILABLE_CURRENCIES = CURRENCY[],
-  >(factoryParams: UseLocaleFactoryParams<
-  LOCALE,
-  COUNTRY,
-  CURRENCY,
-  AVAILABLE_LOCALES,
-  AVAILABLE_COUNTRIES,
-  AVAILABLE_CURRENCIES>
-) {
-  let loadingLocale = false;
-  const localeCache: Ref<LOCALE> = ref(null);
-  const countryCache: Ref<COUNTRY> = ref(null);
-  const currencyCache: Ref<CURRENCY> = ref(null);
-  const availableLocalesCache: Ref<AVAILABLE_LOCALES> = ref([]);
-  const availableCountriesCache: Ref<AVAILABLE_COUNTRIES> = ref([]);
-  const availableCurrenciesCache: Ref<AVAILABLE_CURRENCIES> = ref([]);
+export function useLocaleFactory(factoryParams: UseLocaleFactoryParams) {
+  const loadingLocale = false;
+  const localeState: Ref<AgnosticLocale> = ref(null);
+  const countryState: Ref<AgnosticCountry> = ref(null);
+  const currencyState: Ref<AgnosticCurrency> = ref(null);
+  const availableLocalesState: Ref<AgnosticLocale[]> = ref([]);
+  const availableCountriesState: Ref<AgnosticCountry[]> = ref([]);
+  const availableCurrenciesState: Ref<AgnosticCurrency[]> = ref([]);
 
   const loading = computed<boolean>(() => loadingLocale);
-  const locale = computed<LOCALE>(() => localeCache.value);
-  const country = computed<COUNTRY>(() => countryCache.value);
-  const currency = computed<CURRENCY>(() => currencyCache.value);
-  const availableLocales = computed<AVAILABLE_LOCALES>(() => availableLocalesCache.value);
-  const availableCountries = computed<AVAILABLE_COUNTRIES>(() => availableCountriesCache.value);
-  const availableCurrencies = computed<AVAILABLE_CURRENCIES>(() => availableCurrenciesCache.value);
+  const locale = computed<AgnosticLocale>(() => localeState.value);
+  const country = computed<AgnosticCountry>(() => countryState.value);
+  const currency = computed<AgnosticCurrency>(() => currencyState.value);
+  const availableLocales = computed<AgnosticLocale[]>(() => availableLocalesState.value);
+  const availableCountries = computed<AgnosticCountry[]>(() => availableCountriesState.value);
+  const availableCurrencies = computed<AgnosticCurrency[]>(() => availableCurrenciesState.value);
 
-  const setLocale = (locale: LOCALE) => localeCache.value = locale;
-  const setCountry = (country: COUNTRY) => countryCache.value = country;
-  const setCurrency = (currency: CURRENCY) => currencyCache.value = currency;
-  const refreshAvailableElements = async () => {
-    loadingLocale = true;
-
-    try {
-      await Promise.all([
-        (async () => availableLocalesCache.value = await factoryParams.loadAvailableLocales())(),
-        (async () => availableCountriesCache.value = await factoryParams.loadAvailableCountries())(),
-        (async () => availableCurrenciesCache.value = await factoryParams.loadAvailableCurrencies())()
-      ]);
-    } finally {
-      loadingLocale = false;
-    }
+  const setLocale = async (locale: AgnosticLocale) => {
+    await factoryParams.setLocale(locale);
+    localeState.value = locale;
+  };
+  const setCountry = async (country: AgnosticCountry) => {
+    await factoryParams.setCountry(country);
+    countryState.value = country;
+  };
+  const setCurrency = async (currency: AgnosticCurrency) => {
+    await factoryParams.setCurrency(currency);
+    currencyState.value = currency;
+  };
+  const loadAvailableLocales = async () => {
+    availableLocalesState.value = await factoryParams.loadAvailableLocales();
+  };
+  const loadAvailableCountries = async () => {
+    availableCountriesState.value = await factoryParams.loadAvailableCountries();
+  };
+  const loadAvailableCurrencies = async () => {
+    availableCurrenciesState.value = await factoryParams.loadAvailableCurrencies();
   };
 
-  refreshAvailableElements();
-
-  return function useLocale(): UseLocale<
-    LOCALE,
-    COUNTRY,
-    CURRENCY,
-    AVAILABLE_LOCALES,
-    AVAILABLE_COUNTRIES,
-    AVAILABLE_CURRENCIES
-    > {
+  return function useLocale(): UseLocale {
     return {
-      locale,
-      country,
-      currency,
-      setLocale,
-      setCountry,
-      setCurrency,
       availableLocales,
       availableCountries,
       availableCurrencies,
-      refreshAvailableElements,
-      loading
+      country,
+      currency,
+      loadAvailableLocales,
+      loadAvailableCountries,
+      loadAvailableCurrencies,
+      loading,
+      locale,
+      setCountry,
+      setCurrency,
+      setLocale
     };
   };
 }
