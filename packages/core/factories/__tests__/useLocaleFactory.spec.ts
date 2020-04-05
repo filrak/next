@@ -1,15 +1,18 @@
 import { UseLocale } from '@vue-storefront/interfaces';
-import { UseLocaleFactoryParams, useLocaleFactory } from '../src';
+import { UseLocaleFactoryParams, useLocaleFactory } from '../src/useLocaleFactory';
 
-const params: UseLocaleFactoryParams<string, string, string> = {
+const params: UseLocaleFactoryParams = {
+  setCountry: jest.fn(async () => {}),
+  setLocale: jest.fn(async () => {}),
+  setCurrency: jest.fn(async () => {}),
   loadAvailableLocales: jest.fn(async () => []),
   loadAvailableCountries: jest.fn(async () => []),
   loadAvailableCurrencies: jest.fn(async () => [])
 };
-let useLocale: () => UseLocale<string, string, string, string[], string[], string[]>;
+let useLocale: () => UseLocale;
 
 function createComposable(): void {
-  useLocale = useLocaleFactory<any, any, any>(params);
+  useLocale = useLocaleFactory(params);
 }
 
 describe('[CORE - factories] useLocaleFactory', () => {
@@ -21,27 +24,13 @@ describe('[CORE - factories] useLocaleFactory', () => {
     it('should have proper initial props', () => {
       createComposable();
       const { loading, currency, locale, country, availableLocales, availableCountries, availableCurrencies } = useLocale();
-      expect(loading.value).toEqual(true);
+      expect(loading.value).toEqual(false);
       expect(currency.value).toEqual(null);
       expect(locale.value).toEqual(null);
       expect(country.value).toEqual(null);
       expect(availableLocales.value).toEqual([]);
       expect(availableCountries.value).toEqual([]);
       expect(availableCurrencies.value).toEqual([]);
-    });
-
-    it('asynchronously loads available settings on initialization', done => {
-      (params.loadAvailableLocales as jest.Mock).mockResolvedValue(['en']);
-      (params.loadAvailableCountries as jest.Mock).mockResolvedValue(['us']);
-      (params.loadAvailableCurrencies as jest.Mock).mockResolvedValue(['usd']);
-      createComposable();
-      const { availableLocales, availableCountries, availableCurrencies } = useLocale();
-      process.nextTick(() => {
-        expect(availableLocales.value).toEqual(['en']);
-        expect(availableCountries.value).toEqual(['us']);
-        expect(availableCurrencies.value).toEqual(['usd']);
-        done();
-      });
     });
   });
 
@@ -53,20 +42,20 @@ describe('[CORE - factories] useLocaleFactory', () => {
     describe('setters', () => {
       it('should set exported locale to provided value', async () => {
         const { setLocale, locale } = useLocale();
-        setLocale('en');
-        expect(locale.value).toEqual('en');
+        await setLocale({ code: 'en' } as any);
+        expect(locale.value.code).toEqual('en');
       });
 
       it('should set exported country to provided value', async () => {
         const { setCountry, country } = useLocale();
-        setCountry('us');
-        expect(country.value).toEqual('us');
+        await setCountry({ code: 'us' } as any);
+        expect(country.value.code).toEqual('us');
       });
 
       it('should set exported currency to provided value', async () => {
         const { setCurrency, currency } = useLocale();
-        setCurrency('usd');
-        expect(currency.value).toEqual('usd');
+        await setCurrency({ code: 'usd' } as any);
+        expect(currency.value.code).toEqual('usd');
       });
     });
 
@@ -75,16 +64,21 @@ describe('[CORE - factories] useLocaleFactory', () => {
         (params.loadAvailableLocales as jest.Mock).mockResolvedValue(['en']);
         (params.loadAvailableCountries as jest.Mock).mockResolvedValue(['gb']);
         (params.loadAvailableCurrencies as jest.Mock).mockResolvedValue(['gbp']);
-        const { refreshAvailableElements, availableLocales, availableCountries, availableCurrencies } = useLocale();
-        await refreshAvailableElements();
+        const {
+          loadAvailableLocales,
+          loadAvailableCountries,
+          loadAvailableCurrencies,
+          availableLocales,
+          availableCountries,
+          availableCurrencies
+        } = useLocale();
+        await loadAvailableLocales();
+        await loadAvailableCountries();
+        await loadAvailableCurrencies();
+
         expect(availableLocales.value).toEqual(['en']);
         expect(availableCountries.value).toEqual(['gb']);
         expect(availableCurrencies.value).toEqual(['gbp']);
-      });
-      it('throws error when one of settings loaders rejects', () => {
-        (params.loadAvailableLocales as jest.Mock).mockRejectedValue('error');
-        const { refreshAvailableElements } = useLocale();
-        return expect(refreshAvailableElements()).rejects.toEqual('error');
       });
     });
   });

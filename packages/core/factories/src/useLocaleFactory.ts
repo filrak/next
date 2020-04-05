@@ -11,7 +11,7 @@ export type UseLocaleFactoryParams = {
 };
 
 export function useLocaleFactory(factoryParams: UseLocaleFactoryParams) {
-  let loadingLocale = false;
+  const loading: Ref<boolean> = ref(false);
   const currentLocale: Ref<AgnosticLocale> = ref(null);
   const currentCountry: Ref<AgnosticCountry> = ref(null);
   const currentState: Ref<AgnosticCurrency> = ref(null);
@@ -19,31 +19,23 @@ export function useLocaleFactory(factoryParams: UseLocaleFactoryParams) {
   const availableCountriesState: Ref<AgnosticCountry[]> = ref([]);
   const availableCurrenciesState: Ref<AgnosticCurrency[]> = ref([]);
 
-  const loading = computed<boolean>(() => loadingLocale);
-  const locale = computed<AgnosticLocale>(() => currentLocale.value);
-  const country = computed<AgnosticCountry>(() => currentCountry.value);
-  const currency = computed<AgnosticCurrency>(() => currentState.value);
-  const availableLocales = computed<AgnosticLocale[]>(() => availableLocalesState.value);
-  const availableCountries = computed<AgnosticCountry[]>(() => availableCountriesState.value);
-  const availableCurrencies = computed<AgnosticCurrency[]>(() => availableCurrenciesState.value);
-
   const setLocale = async (locale: AgnosticLocale) => {
-    loadingLocale = true;
+    loading.value = true;
     await factoryParams.setLocale(locale);
     currentLocale.value = locale;
-    loadingLocale = false;
+    loading.value = false;
   };
   const setCountry = async (country: AgnosticCountry) => {
-    loadingLocale = true;
+    loading.value = true;
     await factoryParams.setCountry(country);
     currentCountry.value = country;
-    loadingLocale = false;
+    loading.value = false;
   };
   const setCurrency = async (currency: AgnosticCurrency) => {
-    loadingLocale = true;
+    loading.value = true;
     await factoryParams.setCurrency(currency);
     currentState.value = currency;
-    loadingLocale = false;
+    loading.value = false;
   };
   const loadAvailableLocales = async () => {
     availableLocalesState.value = await factoryParams.loadAvailableLocales();
@@ -57,19 +49,19 @@ export function useLocaleFactory(factoryParams: UseLocaleFactoryParams) {
 
   return function useLocale(): UseLocale {
     return {
-      availableLocales,
-      availableCountries,
-      availableCurrencies,
-      country,
-      currency,
       loadAvailableLocales,
       loadAvailableCountries,
       loadAvailableCurrencies,
-      loading,
-      locale,
       setCountry,
       setCurrency,
-      setLocale
+      setLocale,
+      loading: computed<boolean>(() => loading.value),
+      locale: computed<AgnosticLocale>(() => currentLocale.value),
+      country: computed<AgnosticCountry>(() => currentCountry.value),
+      currency: computed<AgnosticCurrency>(() => currentState.value),
+      availableLocales: computed<AgnosticLocale[]>(() => availableLocalesState.value),
+      availableCountries: computed<AgnosticCountry[]>(() => availableCountriesState.value),
+      availableCurrencies: computed<AgnosticCurrency[]>(() => availableCurrenciesState.value)
     };
   };
 }
