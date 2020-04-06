@@ -2,9 +2,9 @@ import { computed, Ref, ref } from '@vue/composition-api';
 import { AgnosticCountry, AgnosticCurrency, AgnosticLocale, UseLocale } from '@vue-storefront/interfaces';
 
 export type UseLocaleFactoryParams = {
-  setLocale: (AgnosticLocale) => Promise<void>;
-  setCountry: (AgnosticCountry) => Promise<void>;
-  setCurrency: (AgnosticCurrency) => Promise<void>;
+  setLocale: (locale: AgnosticLocale) => Promise<AgnosticLocale>;
+  setCountry: (country: AgnosticCountry) => Promise<AgnosticCountry>;
+  setCurrency: (currency: AgnosticCurrency) => Promise<AgnosticCurrency>;
   loadAvailableLocales: () => Promise<AgnosticLocale[]>;
   loadAvailableCountries: () => Promise<AgnosticCountry[]>;
   loadAvailableCurrencies: () => Promise<AgnosticCurrency[]>;
@@ -21,20 +21,17 @@ export function useLocaleFactory(factoryParams: UseLocaleFactoryParams) {
 
   const setLocale = async (locale: AgnosticLocale) => {
     loading.value = true;
-    await factoryParams.setLocale(locale);
-    currentLocale.value = locale;
+    currentLocale.value = await factoryParams.setLocale(locale);
     loading.value = false;
   };
   const setCountry = async (country: AgnosticCountry) => {
     loading.value = true;
-    await factoryParams.setCountry(country);
-    currentCountry.value = country;
+    currentCountry.value = await factoryParams.setCountry(country);
     loading.value = false;
   };
   const setCurrency = async (currency: AgnosticCurrency) => {
     loading.value = true;
-    await factoryParams.setCurrency(currency);
-    currentState.value = currency;
+    currentState.value = await factoryParams.setCurrency(currency);
     loading.value = false;
   };
   const loadAvailableLocales = async () => {

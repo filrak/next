@@ -2,9 +2,9 @@ import { UseLocale } from '@vue-storefront/interfaces';
 import { UseLocaleFactoryParams, useLocaleFactory } from '../src/useLocaleFactory';
 
 const params: UseLocaleFactoryParams = {
-  setCountry: jest.fn(async () => {}),
-  setLocale: jest.fn(async () => {}),
-  setCurrency: jest.fn(async () => {}),
+  setCountry: jest.fn(async (country) => country),
+  setLocale: jest.fn(async (locale) => locale),
+  setCurrency: jest.fn(async (currency) => currency),
   loadAvailableLocales: jest.fn(async () => []),
   loadAvailableCountries: jest.fn(async () => []),
   loadAvailableCurrencies: jest.fn(async () => [])
