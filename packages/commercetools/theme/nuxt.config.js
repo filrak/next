@@ -58,7 +58,8 @@ export default {
   ],
   modules: [
     'nuxt-i18n',
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
+    'vue-scrollto/nuxt'
   ],
   build: {
     transpile: [
