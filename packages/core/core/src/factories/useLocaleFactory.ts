@@ -1,5 +1,5 @@
 import { computed, Ref, ref } from '@vue/composition-api';
-import { AgnosticCountry, AgnosticCurrency, AgnosticLocale, UseLocale } from '@vue-storefront/core';
+import { AgnosticCountry, AgnosticCurrency, AgnosticLocale, UseLocale } from '../types';
 
 export type UseLocaleFactoryParams = {
   setLocale: (locale: AgnosticLocale) => Promise<AgnosticLocale>;
