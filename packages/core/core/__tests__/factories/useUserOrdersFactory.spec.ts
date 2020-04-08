@@ -1,9 +1,9 @@
 import { UseUserOrders, SearchResult } from '../../src/types';
 import { UseUserOrdersFactoryParams, useUserOrdersFactory } from '../../src/factories';
 import { Ref } from '@vue/composition-api';
-import * as vsfUtils from '@vue-storefront/core';
+import * as vsfUtils from '../../src/utils';
 
-jest.mock('@vue-storefront/core');
+jest.mock('../../src/utils');
 const mockedUtils = vsfUtils as jest.Mocked<typeof vsfUtils>;
 mockedUtils.onSSR.mockImplementation((fn) => fn());
 
