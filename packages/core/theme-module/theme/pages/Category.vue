@@ -425,10 +425,10 @@ export default {
       products.value[index].isOnWishlist = !this.products.value[index].isOnWishlist;
     }
 
-    function goToPage(pageNumber) {
+    const goToPage = (pageNumber) => {
       currentPage.value = pageNumber;
       context.root.$scrollTo(context.root.$el, 2000);
-    }
+    };
 
     return {
       products,
