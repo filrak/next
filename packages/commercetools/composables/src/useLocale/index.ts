@@ -11,7 +11,7 @@ import {
 } from '@vue-storefront/commercetools-api';
 import { LocaleItem } from '@vue-storefront/commercetools-api/lib//types/setup';
 import Cookies from 'js-cookie';
-import { UseLocale } from '@vue-storefront/interfaces';
+import { UseLocale } from '@vue-storefront/core';
 
 type Locale = Ref<string>
 type Country = Ref<string>

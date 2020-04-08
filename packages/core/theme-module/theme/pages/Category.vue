@@ -310,7 +310,7 @@ import {
 } from '@storefront-ui/vue';
 import { computed, ref, watch } from '@vue/composition-api';
 import { useCategory, useProduct, productGetters, categoryGetters } from '<%= options.composables %>';
-import { onSSR } from '@vue-storefront/utils';
+import { onSSR } from '@vue-storefront/core';
 
 // TODO: move to composable when core is ready: https://github.com/DivanteLtd/next/issues/296
 const defaultPagination = {

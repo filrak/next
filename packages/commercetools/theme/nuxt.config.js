@@ -41,13 +41,11 @@ export default {
       useRawSource: {
         dev: [
           '@vue-storefront/commercetools',
-          '@vue-storefront/utils',
-          '@vue-storefront/factories'
+          '@vue-storefront/core'
         ],
         prod: [
           '@vue-storefront/commercetools',
-          '@vue-storefront/utils',
-          '@vue-storefront/factories'
+          '@vue-storefront/core'
         ]
       }
     }],
