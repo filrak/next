@@ -1,5 +1,5 @@
 import { UseLocale } from '@vue-storefront/core';
-import { UseLocaleFactoryParams, useLocaleFactory } from '../src/useLocaleFactory';
+import { UseLocaleFactoryParams, useLocaleFactory } from '../../src/factories/useLocaleFactory';
 
 const params: UseLocaleFactoryParams = {
   setCountry: jest.fn(async (country) => country),
