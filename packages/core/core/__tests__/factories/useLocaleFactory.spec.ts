@@ -1,4 +1,4 @@
-import { UseLocale } from '@vue-storefront/interfaces';
+import { UseLocale } from '@vue-storefront/core';
 import { UseLocaleFactoryParams, useLocaleFactory } from '../src/useLocaleFactory';
 
 const params: UseLocaleFactoryParams = {
