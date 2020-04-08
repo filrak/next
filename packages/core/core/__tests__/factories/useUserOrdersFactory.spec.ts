@@ -1,5 +1,5 @@
-import { UseUserOrders, SearchResult } from '@vue-storefront/interfaces';
-import { UseUserOrdersFactoryParams, useUserOrdersFactory } from '../src';
+import { UseUserOrders, SearchResult } from '../../src/types';
+import { UseUserOrdersFactoryParams, useUserOrdersFactory } from '../../src/factories';
 import { Ref } from '@vue/composition-api';
 
 let useUserOrders: () => UseUserOrders<Readonly<Ref<Readonly<SearchResult<any>>>>>;

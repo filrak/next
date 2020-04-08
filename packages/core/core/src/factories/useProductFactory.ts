@@ -1,21 +1,6 @@
-import { UseProduct, SearchResult } from '@vue-storefront/interfaces';
+import { UseProduct, SearchResult } from '../types';
 import { ref, Ref, computed } from '@vue/composition-api';
-import { useSSR } from '@vue-storefront/utils';
-
-export interface UseProduct<PRODUCT> {
-  products: ComputedProperty<PRODUCT[]>;
-  totalProducts: ComputedProperty<number>;
-  search: (params: {
-    perPage?: number;
-    page?: number;
-    sort?: any;
-    term?: any;
-    filters?: any;
-    [x: string]: any;
-  }) => Promise<void>;
-  loading: ComputedProperty<boolean>;
-  [x: string]: any;
-}
+import { useSSR } from '../utils';
 
 type SearchParams = {
   perPage?: number;

@@ -1,8 +1,8 @@
-import { useProductFactory } from '../src';
-import { UseProduct } from '@vue-storefront/interfaces';
-import * as vsfUtils from '@vue-storefront/utils';
+import { useProductFactory } from '../../src/factories';
+import { UseProduct } from '../../src/types';
+import * as vsfUtils from '../../src/utils';
 
-jest.mock('@vue-storefront/utils');
+jest.mock('../../src/utils');
 const mockedUtils = vsfUtils as jest.Mocked<typeof vsfUtils>;
 
 const useProduct: (cacheId: string) => UseProduct<any> = useProductFactory<

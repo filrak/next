@@ -1,9 +1,9 @@
 import { getCurrentInstance, onServerPrefetch } from '@vue/composition-api';
-import { emit, on } from './../src/ssr/default/eventBus';
-import { useSSR, onSSR } from '../src';
+import { emit, on } from '../../src/utils/ssr/default/eventBus';
+import { useSSR, onSSR } from '../../src/utils/ssr';
 
 jest.mock('@vue/composition-api');
-jest.mock('./../src/ssr/default/eventBus', () => ({
+jest.mock('../../src/utils/ssr/default/eventBus', () => ({
   on: jest.fn(),
   emit: jest.fn()
 }));

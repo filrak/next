@@ -1,20 +1,6 @@
-import { UseCart } from '@vue-storefront/interfaces';
+import { UseCart } from '../types';
 import { Ref, ref, computed } from '@vue/composition-api';
 import { useSSR, onSSR } from '../utils';
-
-export interface UseCart<CART, CART_ITEM, PRODUCT, COUPON> {
-  cart: ComputedProperty<CART>;
-  addToCart: (product: PRODUCT, quantity: number) => Promise<void>;
-  isOnCart: (product: PRODUCT) => boolean;
-  removeFromCart: (product: CART_ITEM,) => Promise<void>;
-  updateQuantity: (product: CART_ITEM, quantity?: number) => Promise<void>;
-  clearCart: () => Promise<void>;
-  coupon: ComputedProperty<COUPON | null>;
-  applyCoupon: (coupon: string) => Promise<void>;
-  removeCoupon: () => Promise<void>;
-  refreshCart: () => Promise<void>;
-  loading: ComputedProperty<boolean>;
-}
 
 export type UseCartFactoryParams<CART, CART_ITEM, PRODUCT, COUPON> = {
   cart: Ref<CART>;

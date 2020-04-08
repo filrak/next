@@ -1,33 +1,5 @@
 import { ref, Ref, computed } from '@vue/composition-api';
-import { UseUser } from '@vue-storefront/interfaces';
-
-export interface UseUser
-<
-  USER,
-  UPDATE_USER_PARAMS
-> {
-  user: ComputedProperty<USER>;
-  updateUser: (params: UPDATE_USER_PARAMS) => Promise<void>;
-  register: (user: {
-    email: string;
-    password: string;
-    firstName?: string;
-    lastName?: string;
-    [x: string]: any;
-  }) => Promise<void>;
-  login: (user: {
-    username: string;
-    password: string;
-    [x: string]: any;
-  }) => Promise<void>;
-  logout: () => Promise<void>;
-  changePassword: (
-    currentPassword: string,
-    newPassword: string) => Promise<void>;
-  refreshUser: () => Promise<void>;
-  isAuthenticated: Ref<boolean>;
-  loading: ComputedProperty<boolean>;
-}
+import { UseUser } from '../types';
 
 export type UseUserFactoryParams<USER, UPDATE_USER_PARAMS, REGISTER_USER_PARAMS> = {
   loadUser: () => Promise<USER>;

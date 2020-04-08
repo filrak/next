@@ -1,14 +1,6 @@
-import { UseCategory } from '@vue-storefront/interfaces';
-import { useSSR } from '@vue-storefront/utils';
+import { UseCategory } from '../types';
+import { useSSR } from '../utils';
 import { ref, Ref, computed } from '@vue/composition-api';
-
-export interface UseCategory<CATEGORY> {
-  categories: ComputedProperty<CATEGORY[]>;
-  search: (params: {
-    [x: string]: any;
-  }) => Promise<void>;
-  loading: ComputedProperty<boolean>;
-}
 
 export type UseCategoryFactoryParams<CATEGORY, CATEGORY_SEARCH_PARAMS> = {
   categorySearch: (searchParams: CATEGORY_SEARCH_PARAMS) => Promise<CATEGORY[]>;

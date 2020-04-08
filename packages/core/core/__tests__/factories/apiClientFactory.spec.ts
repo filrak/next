@@ -1,4 +1,4 @@
-import { apiClientFactory } from '../src/apiClientFactory';
+import { apiClientFactory } from '../../src/factories/apiClientFactory';
 
 describe('[CORE - factories] apiClientFactory', () => {
   it('Should return passed config with overrides property', () => {

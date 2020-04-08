@@ -1,9 +1,9 @@
-import { useCartFactory, UseCartFactoryParams } from '../src';
-import { UseCart } from '@vue-storefront/interfaces';
+import { useCartFactory, UseCartFactoryParams } from '../../src/factories';
+import { UseCart } from '../../src/types';
 import { ref } from '@vue/composition-api';
-import * as vsfUtils from '@vue-storefront/utils';
+import * as vsfUtils from '../../src/utils';
 
-jest.mock('@vue-storefront/utils');
+jest.mock('../../src/utils');
 const mockedUtils = vsfUtils as jest.Mocked<typeof vsfUtils>;
 mockedUtils.onSSR.mockImplementation((fn) => fn());
 

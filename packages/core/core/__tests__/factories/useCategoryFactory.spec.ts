@@ -1,8 +1,8 @@
-import { useCategoryFactory, UseCategoryFactoryParams } from '../src';
-import { UseCategory } from '@vue-storefront/interfaces';
-import * as vsfUtils from '@vue-storefront/utils';
+import { useCategoryFactory, UseCategoryFactoryParams } from '../../src/factories';
+import { UseCategory } from '../../src/types';
+import * as vsfUtils from '../../src/utils';
 
-jest.mock('@vue-storefront/utils');
+jest.mock('../../src/utils');
 const mockedUtils = vsfUtils as jest.Mocked<typeof vsfUtils>;
 
 let useCategory: (cacheId?: string) => UseCategory<any>;

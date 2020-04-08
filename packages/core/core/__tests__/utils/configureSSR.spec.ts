@@ -1,4 +1,4 @@
-import { configureSSR, useSSR } from './../src/ssr';
+import { configureSSR, useSSR } from '../../src/utils/ssr';
 
 const vm = {
   $isServer: true,

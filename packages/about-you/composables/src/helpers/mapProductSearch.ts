@@ -1,4 +1,4 @@
-import { SearchResult } from '@vue-storefront/interfaces';
+import { SearchResult } from '@vue-storefront/core';
 import { getProduct } from '@vue-storefront/about-you-api';
 import { BapiProduct } from '@aboutyou/backbone/types/BapiProduct';
 
