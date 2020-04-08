@@ -32,6 +32,8 @@
       image="/homepage/newsletter.jpg"
       class="call-to-action"
     />
+          test: {{ $t('welcome') }}
+
     <SfSection title-heading="Best Sellers" class="section">
       <SfCarousel class="product-carousel">
         <SfCarouselItem v-for="(product, i) in products" :key="i">
