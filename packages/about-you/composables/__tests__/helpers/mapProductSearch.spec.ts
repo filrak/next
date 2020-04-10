@@ -2,7 +2,7 @@ import { getProduct } from '@vue-storefront/about-you-api';
 import mapProductSearch from '../../src/helpers/mapProductSearch';
 
 jest.mock('@vue-storefront/about-you-api', () => ({
-  getProduct: jest.fn(() => {})
+  getProduct: jest.fn()
 }));
 
 describe('[about-you-helpers] mapProductSearch', () => {
@@ -18,11 +18,12 @@ describe('[about-you-helpers] mapProductSearch', () => {
       masterKey: 321,
       term: ''
     };
-    getProduct.mockReturnValueOnce([params]);
+    const product = {...params, name: 'Test', price: 499 };
+    getProduct.mockReturnValueOnce([product]);
     const products = await mapProductSearch(params);
 
     expect(getProduct).toHaveBeenCalled();
-    expect(products).toEqual({data: [params], total: 1});
+    expect(products).toEqual({data: [product], total: 1});
   });
 });
 
