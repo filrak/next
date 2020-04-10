@@ -6,7 +6,7 @@ Filtering products is an important part of any products listing page. To ensure 
 
 ### Modify `useProduct` composable
 
-Since there are several factors that the filters depend on (products type, category, available products, their attributes) and the set of filters might be dynamic, this feature should introduce new fields in the `useProduct` composable, those are `availableFilters` and `chosenFilters`, like in the example below.
+Since there are several factors that the filters depend on (products type, category, available products, their attributes) and the set of filters might be dynamic, this feature should introduce new fields in the `useProduct` composable, those are `availableFilters`, like in the example below.
 
 **New interface**:
 
@@ -15,7 +15,6 @@ export interface UseProduct<PRODUCT, FILTER_BASE> {
   products: ComputedProperty<PRODUCT[]>;
   totalProducts: ComputedProperty<number>;
   availableFilters: ComputedProperty<Filter<FILTER_BASE>[]>;
-  selectedFilters: ComputedProperty<Filter<FILTER_BASE>[]>
   search: (params: {
     perPage?: number;
     page?: number;
@@ -36,7 +35,6 @@ Loading filters, their possible values, counts, etc. will require an integration
 ```typescript
 export interface FilteredSearchResult<T, FILTER_BASE> extends SearchResult<T> {
   availableFilters: Filter<FILTER_BASE>[];
-  selectedFilters: Filter<FILTER_BASE>[];
 }
 ```
 
