@@ -1,6 +1,7 @@
-/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
+/* istanbul ignore file */
+
 import { ComputedProperty, UseWishlist } from '@vue-storefront/interfaces';
-import { computed, Ref, ref, watch } from '@vue/composition-api';
+import { computed, Ref, ref } from '@vue/composition-api';
 import { BapiProduct, BapiWishlist, BapiWishlistProduct } from '../../types';
 
 // ishlist-specific typings.
@@ -17,8 +18,11 @@ const wishlist: Ref<BapiWishlist> = ref<BapiWishlist>(null);
 const loading: Ref<boolean> = ref<boolean>(true);
 const error: Ref<any> = ref<any>(null);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const addToWishlist: AddToWishlist = async (product) => {};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const removeFromWishlist: RemoveFromWishlist = async (product) => {};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isOnWishlist: IsOnWishlist = (product) => computed(() => false);
 
 const clearWishlist: ClearWishlist = async () => {};

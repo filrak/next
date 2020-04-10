@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { CheckoutGetters} from '@vue-storefront/interfaces';
 import { ShippingMethod } from '@vue-storefront/boilerplate-api/src/types';
 

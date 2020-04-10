@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { UseUserFactoryParams } from '@vue-storefront/factories';
 import { BapiUser } from '../../types';
 

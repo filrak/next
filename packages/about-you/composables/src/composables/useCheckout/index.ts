@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { UseCheckout } from '@vue-storefront/interfaces';
 import { ref, Ref, computed } from '@vue/composition-api';
 import { BapiUser, BapiShippingMethod, BapiUserAddress } from '../../types';

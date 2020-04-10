@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { UserOrderGetters } from '@vue-storefront/interfaces';
 import { BapiOrder } from '../../types';
 

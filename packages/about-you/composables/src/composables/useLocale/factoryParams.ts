@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { UseLocaleFactoryParams } from '@vue-storefront/factories';
 
 import {

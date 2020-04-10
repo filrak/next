@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { UseCart } from '@vue-storefront/interfaces';
 import { useCartFactory, UseCartFactoryParams } from '@vue-storefront/factories';
 import { ref, Ref } from '@vue/composition-api';

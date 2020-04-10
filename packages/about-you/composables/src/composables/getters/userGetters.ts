@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { UserGetters} from '@vue-storefront/interfaces';
 import {BapiUser} from '../../types';
 

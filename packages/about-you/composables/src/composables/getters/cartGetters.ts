@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { CartGetters, AgnosticPrice, AgnosticTotals } from '@vue-storefront/interfaces';
 import { Cart, LineItem } from '@vue-storefront/boilerplate-api/src/types';
 

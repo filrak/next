@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { CategoryGetters, AgnosticCategoryTree } from '@vue-storefront/interfaces';
 import { Category } from '@vue-storefront/boilerplate-api/src/types';
 
