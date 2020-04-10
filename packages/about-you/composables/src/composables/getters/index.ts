@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import cartGetters from './cartGetters';
 import categoryGetters from './categoryGetters';
 import checkoutGetters from './checkoutGetters';
