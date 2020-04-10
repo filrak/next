@@ -8,18 +8,24 @@ jest.mock('@vue-storefront/about-you-api', () => ({
 describe('[about-you-helpers] mapProductSearch', () => {
   it('return products and it total length', async () => {
     const params = {
-      ids: 123,
+      ids: [22],
       with: 10,
       where: 45,
       sort: 0,
       pagination: {
         page: 1
       },
-      masterKey: 321,
+      masterKey: '321',
       term: ''
     };
-    const product = {...params, name: 'Test', price: 499 };
+
+    const product = {
+      id: 22,
+      masterKey: params.masterKey,
+      name: 'Test',
+      price: 499 };
     getProduct.mockReturnValueOnce([product]);
+
     const products = await mapProductSearch(params);
 
     expect(getProduct).toHaveBeenCalled();
