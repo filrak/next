@@ -141,7 +141,7 @@ module.exports = function DefaultThemeModule(moduleOptions) {
     chokidar.watch(themeComponentsDir).on('all', () => {
       copyThemeFiles(themeComponentsDir);
     });
-    chokidar.watch(path.join(__dirname, '/theme/')).on('all', () => {
+    chokidar.watch(themePagesDir).on('all', () => {
       copyThemeFiles(themePagesDir);
     });
   }
