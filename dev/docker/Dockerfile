@@ -14,4 +14,6 @@ RUN yarn install \
 
 COPY dev/docker/vue-storefront.sh /usr/local/bin/
 
+EXPOSE 3000
+
 ENTRYPOINT ["vue-storefront.sh"]
