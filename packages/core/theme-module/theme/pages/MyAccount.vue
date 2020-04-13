@@ -37,6 +37,9 @@
         <SfContentPage title="My reviews">
           <MyReviews />
         </SfContentPage>
+        <SfContentPage title="Order details">
+          <OrderDetails />
+        </SfContentPage>
       </SfContentCategory>
       <SfContentPage title="Log out" />
     </SfContentPages>
@@ -44,11 +47,13 @@
 </template>
 <script>
 import { SfBreadcrumbs, SfContentPages } from '@storefront-ui/vue';
+import { ref } from '@vue/composition-api';
 import MyProfile from './MyAccount/MyProfile';
 import ShippingDetails from './MyAccount/ShippingDetails';
 import LoyaltyCard from './MyAccount/LoyaltyCard';
 import MyNewsletter from './MyAccount/MyNewsletter';
 import OrderHistory from './MyAccount/OrderHistory';
+import OrderDetails from './MyAccount/OrderDetails';
 import MyReviews from './MyAccount/MyReviews';
 import auth from '../middleware/auth';
 
@@ -63,10 +68,36 @@ export default {
     LoyaltyCard,
     MyNewsletter,
     OrderHistory,
+    OrderDetails,
     MyReviews
   },
-  data() {
+  setup(props, context) {
+    const { $route, $router } = context.root;
+    const activePage = ref('My profile');
+    const entityId = ref(null);
+
+    const changeActivePage = (title) => {
+      if (title === 'Log out') {
+        return;
+      }
+
+      $router.push(`/my-account/${title.toLowerCase().replace(' ', '-')}`);
+    };
+
+    const { pageName, id } = $route.params;
+
+    if (pageName) {
+      activePage.value = (pageName.charAt(0).toUpperCase() + pageName.slice(1)).replace('-', ' ');
+    }
+
+    if (id) {
+      entityId.value = id;
+    }
+
     return {
+      changeActivePage,
+      activePage,
+      entityId,
       breadcrumbs: [
         {
           text: 'Home',
@@ -118,26 +149,6 @@ export default {
         ]
       }
     };
-  },
-  computed: {
-    activePage() {
-      const { pageName } = this.$route.params;
-
-      if (pageName) {
-        return (pageName.charAt(0).toUpperCase() + pageName.slice(1)).replace('-', ' ');
-      }
-
-      return 'My profile';
-    }
-  },
-  methods: {
-    changeActivePage(title) {
-      if (title === 'Log out') {
-        return;
-      }
-
-      this.$router.push(`/my-account/${title.toLowerCase().replace(' ', '-')}`);
-    }
   }
 };
 </script>

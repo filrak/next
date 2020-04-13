@@ -1,5 +1,5 @@
-import { UserOrderGetters, AgnosticOrderStatus } from '@vue-storefront/interfaces';
-import { Order, OrderState } from './../types/GraphQL';
+import { UserOrderGetters, AgnosticOrderStatus, AgnosticPrice } from '@vue-storefront/interfaces';
+import { Order, OrderState, LineItem, Money, Address } from './../types/GraphQL';
 
 export const getOrderDate = (order: Order): string => order?.createdAt || '';
 
@@ -12,15 +12,33 @@ const orderStatusMap = {
   [OrderState.Cancelled]: AgnosticOrderStatus.Cancelled
 };
 
+const getPrice = (money: Money): AgnosticPrice => ({
+  regular: money?.centAmount ? money.centAmount / 100 : 0
+});
+
 export const getOrderStatus = (order: Order): AgnosticOrderStatus | '' => order?.orderState ? orderStatusMap[order.orderState] : '';
 
-export const getOrderPrice = (order: Order): number | null => order ? order.totalPrice.centAmount / 100 : null;
+export const getOrderItems = (order: Order): LineItem[] => order?.lineItems || [];
 
-const orderGetters: UserOrderGetters<Order> = {
+export const getOrderPrice = (order: Order): AgnosticPrice => getPrice(order?.totalPrice);
+
+// TODO: billing and shipping addresses are returned as string temporary. It's a part of discussion now: https://github.com/DivanteLtd/next/pull/361
+const transformAddressToString = (address: Address): string => (
+  `${address.country}, ${address.postalCode}, ${address.city}, ${address.streetName}, ${address.streetNumber}`
+);
+
+export const getOrderBillingAddress = (order: Order): string => transformAddressToString(order?.billingAddress || {} as Address);
+
+export const getOrderShippingAddress = (order: Order): string => transformAddressToString(order?.shippingAddress || {} as Address);
+
+const orderGetters: UserOrderGetters<Order, LineItem> = {
   getDate: getOrderDate,
   getId: getOrderId,
   getStatus: getOrderStatus,
-  getPrice: getOrderPrice
+  getPrice: getOrderPrice,
+  getItems: getOrderItems,
+  getBillingAddress: getOrderBillingAddress,
+  getShippingAddress: getOrderShippingAddress
 };
 
 export default orderGetters;

@@ -30,7 +30,9 @@
           </SfTableData>
           <SfTableData class="orders__view">
             <SfButton class="sf-button--text color-secondary mobile-only">Download</SfButton>
-            <SfButton class="sf-button--text color-secondary desktop-only">VIEW</SfButton>
+            <nuxt-link :to="{ path: `/my-account/order-details/${orderGetters.getId(order)}`}">
+              <SfButton class="sf-button--text color-secondary desktop-only">VIEW</SfButton>
+            </nuxt-link>
           </SfTableData>
         </SfTableRow>
       </SfTable>

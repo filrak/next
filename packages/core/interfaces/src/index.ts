@@ -207,11 +207,14 @@ export interface CheckoutGetters<SHIPPING_METHOD> {
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
-export interface UserOrderGetters<ORDER> {
+export interface UserOrderGetters<ORDER, ORDER_ITEM> {
   getDate: (order: ORDER) => string;
   getId: (order: ORDER) => string;
   getStatus: (order: ORDER) => string;
-  getPrice: (order: ORDER) => number;
+  getPrice: (order: ORDER) => AgnosticPrice;
+  getItems: (order: ORDER) => ORDER_ITEM[];
+  getBillingAddress: (address: ORDER) => string;
+  getShippingAddress: (address: ORDER) => string;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 

@@ -95,7 +95,7 @@ module.exports = function DefaultThemeModule(moduleOptions) {
     });
     routes.push({
       name: 'my-account',
-      path: '/my-account/:pageName?',
+      path: '/my-account/:pageName?/:id?',
       component: resolve(projectLocalThemeDir, 'pages/MyAccount.vue')
     });
     routes.push({

@@ -133,6 +133,7 @@ export const CartFragment = `
 
 export const OrderFragment = `
   ${LineItemFragment}
+  ${AddressFragment}
 
   fragment DefaultOrder on Order {
     lineItems {
@@ -141,7 +142,29 @@ export const OrderFragment = `
     totalPrice {
       centAmount
     }
+    billingAddress {
+      ...DefaultAddress
+    }
+    shippingAddress {
+      ...DefaultAddress
+    }
+    orderNumber
     orderState
+    taxedPrice {
+      totalNet {
+        centAmount
+      }
+      totalGross {
+        centAmount
+      }
+      taxPortions {
+        rate
+        amount {
+          centAmount
+        }
+        name
+      }
+    }
     id
     version
     createdAt
