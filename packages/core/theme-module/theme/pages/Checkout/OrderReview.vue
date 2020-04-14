@@ -94,7 +94,8 @@
         <SfTableData class="table__data">{{ cartGetters.getItemQty(product) }}</SfTableData>
         <SfTableData class="table__data">
           <SfPrice
-            :regular="cartGetters.getItemPrice(product).regular"
+            :regular="cartGetters.formatPrice(cartGetters.getItemPrice(product).regular)"
+            :special="cartGetters.formatPrice(cartGetters.getItemPrice(product).special)"
             class="product-price"
           />
         </SfTableData>

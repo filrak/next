@@ -40,7 +40,8 @@
           />
           <div class="product-details__sub">
             <SfPrice
-              :regular="'$' + productGetters.getPrice(product).regular"
+              :regular="productGetters.formatPrice(productGetters.getPrice(product).regular)"
+              :special="productGetters.formatPrice(productGetters.getPrice(product).special)"
               class="product-details__sub-price"
             />
             <div class="product-details__sub-rating">
