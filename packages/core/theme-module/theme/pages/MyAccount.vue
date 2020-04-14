@@ -51,6 +51,7 @@ import MyNewsletter from './MyAccount/MyNewsletter';
 import OrderHistory from './MyAccount/OrderHistory';
 import MyReviews from './MyAccount/MyReviews';
 
+// protect this route: https://github.com/DivanteLtd/next/issues/379
 export default {
   name: 'MyAccount',
   components: {
