@@ -58,10 +58,10 @@ export const getVariantByAttributes = (products: ProductVariant[] | Readonly<Pro
   });
 };
 
-export const createPrice = (product: ProductVariant | LineItem): AgnosticPrice => {
-  const getPrice = (price: ProductPrice | DiscountedProductPriceValue) => price ? price.value.centAmount / 100 : null;
-  const getDiscount = (product: ProductVariant | LineItem) => product.price?.discounted;
+const getPrice = (price: ProductPrice | DiscountedProductPriceValue) => price ? price.value.centAmount / 100 : null;
+const getDiscount = (product: ProductVariant | LineItem) => product.price?.discounted;
 
+export const createPrice = (product: ProductVariant | LineItem): AgnosticPrice => {
   if (!product) {
     return { regular: null, special: null };
   }
