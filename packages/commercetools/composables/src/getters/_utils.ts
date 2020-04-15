@@ -59,8 +59,9 @@ export const getVariantByAttributes = (products: ProductVariant[] | Readonly<Pro
 };
 
 export const createPrice = (product: ProductVariant | LineItem): AgnosticPrice => {
-  const getPrice = (price: ProductPrice | DiscountedProductPriceValue) => price?.value.centAmount / 100;
+  const getPrice = (price: ProductPrice | DiscountedProductPriceValue) => price ? price.value.centAmount / 100 : null;
   const getDiscount = (product: ProductVariant | LineItem) => product.price?.discounted;
+
   if (!product) {
     return { regular: null, special: null };
   }

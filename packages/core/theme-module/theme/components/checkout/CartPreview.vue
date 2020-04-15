@@ -56,17 +56,17 @@
       />
       <SfProperty
         name="Subtotal"
-        :value="totals.subtotal"
+        :value="checkoutGetters.formatPrice(totals.subtotal)"
         class="sf-property--full-width property"
       />
       <SfProperty
         name="Shipping"
-        :value="checkoutGetters.getShippingMethodPrice(chosenShippingMethod)"
+        :value="checkoutGetters.formatPrice(checkoutGetters.getShippingMethodPrice(chosenShippingMethod))"
         class="sf-property--full-width property"
       />
       <SfProperty
         name="Total"
-        :value="totals.total + checkoutGetters.getShippingMethodPrice(chosenShippingMethod)"
+        :value="checkoutGetters.formatPrice(totals.total + checkoutGetters.getShippingMethodPrice(chosenShippingMethod))"
         class="sf-property--full-width property-total"
       />
     </div>
