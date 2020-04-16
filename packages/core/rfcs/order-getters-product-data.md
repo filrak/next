@@ -16,7 +16,7 @@ export interface UserOrderGetters<ORDER, ORDER_ITEM> {
   getDate: (order: ORDER) => string;
   getId: (order: ORDER) => string;
   getStatus: (order: ORDER) => string;
-  getPrice: (order: ORDER) => AgnosticPrice;
+  getPrice: (order: ORDER) => number;
   getItems: (order: ORDER) => ORDER_ITEM[];
   getItemSku: (item: ORDER_ITEM) => string;
   getItemName: (item: ORDER_ITEM) => string;
