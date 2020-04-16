@@ -51,7 +51,7 @@ export const getCartTotalItems = (cart: Cart): number => {
   return cart.lineItems.reduce((previous, current) => previous + current.quantity, 0);
 };
 
-export const formatPrice = (price: number) => createFormatPrice(price);
+export const getFormattedPrice = (price: number) => createFormatPrice(price);
 
 const cartGetters: CartGetters<Cart, LineItem> = {
   getTotals: getCartTotals,
@@ -64,7 +64,7 @@ const cartGetters: CartGetters<Cart, LineItem> = {
   getItemAttributes: getCartItemAttributes,
   getItemSku: getCartItemSku,
   getTotalItems: getCartTotalItems,
-  formatPrice
+  getFormattedPrice
 };
 
 export default cartGetters;

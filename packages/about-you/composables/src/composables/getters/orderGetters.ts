@@ -16,14 +16,14 @@ export const getStatus = (order: BapiOrder): string => '';
 export const getPrice = (order: BapiOrder): number | null => 0;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const formatPrice = (price: number) => String(price);
+export const getFormattedPrice = (price: number) => String(price);
 
 const orderGetters: UserOrderGetters<BapiOrder> = {
   getDate,
   getId,
   getStatus,
   getPrice,
-  formatPrice
+  getFormattedPrice
 };
 
 export default orderGetters;

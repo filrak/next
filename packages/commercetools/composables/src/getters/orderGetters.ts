@@ -17,14 +17,14 @@ export const getOrderStatus = (order: Order): AgnosticOrderStatus | '' => order?
 
 export const getOrderPrice = (order: Order): number | null => order ? order.totalPrice.centAmount / 100 : null;
 
-export const formatPrice = (price: number) => createFormatPrice(price);
+export const getFormattedPrice = (price: number) => createFormatPrice(price);
 
 const orderGetters: UserOrderGetters<Order> = {
   getDate: getOrderDate,
   getId: getOrderId,
   getStatus: getOrderStatus,
   getPrice: getOrderPrice,
-  formatPrice
+  getFormattedPrice
 };
 
 export default orderGetters;

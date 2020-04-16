@@ -16,14 +16,14 @@ export const getShippingMethodDescription = (shippingMethod: ShippingMethod): st
 export const getShippingMethodPrice = (shippingMethod: ShippingMethod): number => 0;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const formatPrice = (price: number) => String(price);
+export const getFormattedPrice = (price: number) => String(price);
 
 const checkoutGetters: CheckoutGetters<ShippingMethod> = {
   getShippingMethodId,
   getShippingMethodName,
   getShippingMethodDescription,
   getShippingMethodPrice,
-  formatPrice
+  getFormattedPrice
 };
 
 export default checkoutGetters;

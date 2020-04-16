@@ -16,8 +16,8 @@
                 :key="cartGetters.getItemSku(product)"
                 :image="cartGetters.getItemImage(product)"
                 :title="cartGetters.getItemName(product)"
-                :regular-price="cartGetters.formatPrice(cartGetters.getItemPrice(product).regular)"
-                :special-price="cartGetters.formatPrice(cartGetters.getItemPrice(product).special)"
+                :regular-price="cartGetters.getFormattedPrice(cartGetters.getItemPrice(product).regular)"
+                :special-price="cartGetters.getFormattedPrice(cartGetters.getItemPrice(product).special)"
                 :stock="99999"
                 :qty="cartGetters.getItemQty(product)"
                 @input="updateQuantity(product, $event)"
@@ -48,7 +48,7 @@
               <span class="sf-property__name">TOTAL</span>
             </template>
             <template #value>
-              <SfPrice :regular="cartGetters.formatPrice(totals.subtotal)" />
+              <SfPrice :regular="cartGetters.getFormattedPrice(totals.subtotal)" />
             </template>
           </SfProperty>
           <nuxt-link to="/checkout/personal-details">

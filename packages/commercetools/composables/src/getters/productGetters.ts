@@ -85,7 +85,7 @@ export const getProductCategoryIds = (product: ProductVariant): string[] => (pro
 
 export const getProductId = (product: ProductVariant): string => (product as any)._id;
 
-export const formatPrice = (price: number) => createFormatPrice(price);
+export const getFormattedPrice = (price: number) => createFormatPrice(price);
 
 const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getName: getProductName,
@@ -98,7 +98,7 @@ const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getDescription: getProductDescription,
   getCategoryIds: getProductCategoryIds,
   getId: getProductId,
-  formatPrice
+  getFormattedPrice
 };
 
 export default productGetters;

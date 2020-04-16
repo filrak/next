@@ -47,7 +47,7 @@ export const getProductCategoryIds = (product: ProductVariant): string[] => (pro
 export const getProductId = (product: ProductVariant): string => (product as any)._id;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const formatPrice = (price: number) => String(price);
+export const getFormattedPrice = (price: number) => String(price);
 
 const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getName: getProductName,
@@ -60,7 +60,7 @@ const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getDescription: getProductDescription,
   getCategoryIds: getProductCategoryIds,
   getId: getProductId,
-  formatPrice
+  getFormattedPrice
 };
 
 export default productGetters;

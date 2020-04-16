@@ -44,7 +44,7 @@ export const getCartShippingPrice = (cart: Cart): number => 0;
 export const getCartTotalItems = (cart: Cart): number => 0;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const formatPrice = (price: number) => String(price);
+export const getFormattedPrice = (price: number) => String(price);
 
 const cartGetters: CartGetters<Cart, LineItem> = {
   getTotals: getCartTotals,
@@ -57,7 +57,7 @@ const cartGetters: CartGetters<Cart, LineItem> = {
   getItemAttributes: getCartItemAttributes,
   getItemSku: getCartItemSku,
   getTotalItems: getCartTotalItems,
-  formatPrice
+  getFormattedPrice
 };
 
 export default cartGetters;

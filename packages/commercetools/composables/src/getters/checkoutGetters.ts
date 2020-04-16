@@ -18,14 +18,14 @@ export const getShippingMethodPrice = (shippingMethod: ShippingMethod): number =
   return shippingMethod.zoneRates[0].shippingRates[0].price.centAmount / 100;
 };
 
-export const formatPrice = (price: number) => createFormatPrice(price);
+export const getFormattedPrice = (price: number) => createFormatPrice(price);
 
 const checkoutGetters: CheckoutGetters<ShippingMethod> = {
   getShippingMethodId,
   getShippingMethodName,
   getShippingMethodDescription,
   getShippingMethodPrice,
-  formatPrice
+  getFormattedPrice
 };
 
 export default checkoutGetters;
