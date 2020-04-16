@@ -188,7 +188,7 @@ export default {
 <style lang="scss" scoped>
 @import "~@storefront-ui/vue/styles";
 .title {
-  margin: 0 0 var(--spacer-extra-big);
+  margin: 0 0 var(--spacer-2xl);
 }
 .form {
   @include for-desktop {
@@ -197,7 +197,7 @@ export default {
     align-items: center;
   }
   &__element {
-    margin: 0 0 var(--spacer-extra-big) 0;
+    margin: 0 0 var(--spacer-2xl) 0;
     @include for-desktop {
       flex: 0 0 100%;
     }
@@ -207,7 +207,7 @@ export default {
       }
       &-even {
         @include for-desktop {
-          padding: 0 0 0 var(--spacer-extra-big);
+          padding: 0 0 0 var(--spacer-2xl);
         }
       }
     }
@@ -224,7 +224,7 @@ export default {
   }
   &__action-button {
     &--secondary {
-      margin: var(--spacer-big) 0;
+      margin: var(--spacer-xl) 0;
       @include for-desktop {
         order: -1;
         --button-margin: 0;
@@ -240,13 +240,13 @@ export default {
   }
   &__radio-group {
     flex: 0 0 100%;
-    margin: 0 0 var(--spacer-extra-big) 0;
+    margin: 0 0 var(--spacer-2xl) 0;
   }
 }
 .payment-methods {
   @include for-desktop {
     display: flex;
-    padding: var(--spacer-big) 0;
+    padding: var(--spacer-xl) 0;
     border: 1px solid var(--c-light);
     border-width: 1px 0;
   }
@@ -254,7 +254,7 @@ export default {
 .payment-method {
   --radio-container-align-items: center;
   --ratio-content-margin: 0 0 0 var(--spacer);
-  --radio-label-font-size: var(--font-size-regular);
+  --radio-label-font-size: var(--font-base);
   white-space: nowrap;
   border: 1px solid var(--c-light);
   border-width: 1px 0 0 0;
@@ -270,7 +270,7 @@ export default {
   }
 }
 .credit-card-form {
-  margin: 0 0 var(--spacer-big) 0;
+  margin: 0 0 var(--spacer-xl) 0;
   @include for-desktop {
     flex: 0 0 66.666%;
     padding: 0 calc((100% - 66.666%) / 2);
@@ -279,11 +279,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 0 var(--spacer-big) 0;
+    margin: 0 0 var(--spacer-xl) 0;
   }
   &__label {
     flex: unset;
-    font: 300 var(--font-size-regular) / 1.6 var(--body-font-family-secondary);
+    font: 300 var(--font-base) / 1.6 var(--font-family-secondary);
   }
   &__element {
     display: flex;
@@ -295,7 +295,7 @@ export default {
       flex: 0 0 46.666%;
     }
     & + & {
-      margin: 0 0 0 var(--spacer-big);
+      margin: 0 0 0 var(--spacer-xl);
     }
   }
 }

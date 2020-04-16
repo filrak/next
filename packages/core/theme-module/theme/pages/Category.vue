@@ -480,19 +480,19 @@ export default {
   }
 }
 .section {
-  padding: 0 var(--spacer-big);
+  padding: 0 var(--spacer-xl);
   @include for-desktop {
     padding: 0;
   }
 }
 .breadcrumbs {
-  padding: var(--spacer-big) var(--spacer-extra-big) var(--spacer-extra-big)
-    var(--spacer-extra-big);
+  padding: var(--spacer-xl) var(--spacer-2xl) var(--spacer-2xl)
+    var(--spacer-2xl);
 }
 .navbar {
   position: relative;
   display: flex;
-  font: 300 var(--font-size-small) / 1.6 var(--body-font-family-primary);
+  font: 300 var(--font-sm) / 1.6 var(--font-family-primary);
   @include for-desktop {
     border: 1px solid var(--c-light);
     border-width: 1px 0 1px 0;
@@ -500,8 +500,8 @@ export default {
   &::after {
     position: absolute;
     bottom: 0;
-    left: var(--spacer-big);
-    width: calc(100% - calc(var(--spacer-big) * 2));
+    left: var(--spacer-xl);
+    width: calc(100% - calc(var(--spacer-xl) * 2));
     height: 1px;
     background: var(--c-light);
     content: "";
@@ -513,16 +513,16 @@ export default {
   &__main {
     display: flex;
     align-items: center;
-    padding: var(--spacer-medium) 0;
-    font-size: var(--font-size-small);
+    padding: var(--spacer-lg) 0;
+    font-size: var(--font-sm);
     line-height: 1.6;
     @include for-desktop {
-      padding: var(--spacer-big) 0;
+      padding: var(--spacer-xl) 0;
     }
   }
   &__aside {
     flex: 0 0 15%;
-    padding: var(--spacer-big) var(--spacer-extra-big);
+    padding: var(--spacer-xl) var(--spacer-2xl);
     border: 1px solid var(--c-light);
     border-width: 0 1px 0 0;
   }
@@ -531,20 +531,19 @@ export default {
   }
   &__title {
     padding: 0;
-    font-size: var(--font-size-big);
-    font-family: var(--body-font-family-secondary);
+    font-size: var(--font-lg);
+    font-family: var(--font-family-secondary);
     font-weight: 500;
     line-height: 1.6;
   }
   &__filters-button {
     --button-text-decoration: none;
-    --button-font-weight: var(--body-font-weight-secondary);
     --button-color: var(--c-text);
     --button-transition: all 150ms linear;
     display: flex;
     align-items: center;
     @include for-desktop {
-      margin: 0 0 0 var(--spacer-extra-big);
+      margin: 0 0 0 var(--spacer-2xl);
     }
     svg {
       fill: var(--c-text-muted);
@@ -562,8 +561,8 @@ export default {
   &__sort {
     display: flex;
     align-items: center;
-    margin: 0 auto 0 var(--spacer-extra-big);
-    --select-font-size: var(--font-size-small);
+    margin: 0 auto 0 var(--spacer-2xl);
+    --select-font-size: var(--font-sm);
   }
   &__counter {
     margin: auto;
@@ -574,9 +573,9 @@ export default {
   &__view {
     display: flex;
     align-items: center;
-    margin: 0 var(--spacer-extra-big);
+    margin: 0 var(--spacer-2xl);
     @include for-desktop {
-      margin: var(--spacer-big);
+      margin: var(--spacer-xl);
     }
     &-icon {
       margin: 0 0 0 0.625rem;
@@ -595,7 +594,7 @@ export default {
 }
 .sidebar {
   flex: 0 0 15%;
-  padding: var(--spacer-extra-big);
+  padding: var(--spacer-2xl);
   border: 1px solid var(--c-light);
   border-width: 0 1px 0 0;
 }
@@ -604,7 +603,7 @@ export default {
   flex: 1;
   margin: 0 calc(var(--spacer) * -1);
   @include for-desktop {
-    margin: var(--spacer-big);
+    margin: var(--spacer-xl);
   }
   @include for-mobile {
     display: flex;
@@ -626,7 +625,7 @@ export default {
     --product-card-padding: var(--spacer);
     flex: 1 1 50%;
     @include for-desktop {
-      --product-card-padding: var(--spacer-big);
+      --product-card-padding: var(--spacer-xl);
       flex: 1 1 25%;
     }
   }
@@ -650,7 +649,7 @@ export default {
     --product-card-horizontal-padding: var(--spacer);
     flex: 0 0 100%;
     @include for-desktop {
-      --product-card-horizontal-padding: var(--spacer-big);
+      --product-card-horizontal-padding: var(--spacer-xl);
     }
   }
   &__slide-enter {
@@ -665,18 +664,18 @@ export default {
     @include for-desktop {
       display: flex;
       justify-content: center;
-      margin: var(--spacer-extra-big) 0 0 0;
+      margin: var(--spacer-2xl) 0 0 0;
     }
   }
 }
 .filters {
-  padding: var(--spacer-big);
+  padding: var(--spacer-xl);
   &__title {
-    margin: calc(var(--spacer-big) * 3) 0 var(--spacer-big) 0;
-    font: 400 var(--font-size-extra-big) / 1.6 var(--body-font-family-secondary);
+    margin: calc(var(--spacer-xl) * 3) 0 var(--spacer-xl) 0;
+    font: 400 var(--font-size-extra-big) / 1.6 var(--font-family-secondary);
     line-height: 1.6;
     &:first-child {
-      margin: 0 0 var(--spacer-big) 0;
+      margin: 0 0 var(--spacer-xl) 0;
     }
   }
   &__colors {
@@ -689,7 +688,7 @@ export default {
     margin: var(--spacer) 0;
   }
   &__buttons {
-    margin: calc(var(--spacer-big) * 3) 0 0 0;
+    margin: calc(var(--spacer-xl) * 3) 0 0 0;
   }
   &__button-clear {
     --button-background: var(--c-light);
