@@ -1,5 +1,7 @@
 const fs = require('fs');
 
+const parentDirectory = __dirname.replace(/(\/\w*)$/g, '');
+
 /**
  *
  * @param {string} dirPath
@@ -12,7 +14,7 @@ const getAllFilesFromDir = (dirPath, arrayOfFiles = []) => {
     if (fs.statSync(dirPath + '/' + file).isDirectory()) {
       arrayOfFiles = getAllFilesFromDir(dirPath + '/' + file, arrayOfFiles);
     } else {
-      arrayOfFiles.push((dirPath + '/' + file).split(__dirname + '/').pop());
+      arrayOfFiles.push((dirPath + '/' + file).split(parentDirectory + '/').pop());
     }
   });
 

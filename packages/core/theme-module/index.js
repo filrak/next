@@ -3,9 +3,9 @@ const fs = require('fs');
 const consola = require('consola');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
-const compileTemplate = require('./compileTemplate');
-const { copyThemeFile, copyThemeFiles } = require('./copyThemeFiles');
-const getAllFilesFromDir = require('./getAllFilesFromDir');
+const compileTemplate = require('./scripts/compileTemplate');
+const { copyThemeFile, copyThemeFiles } = require('./scripts/copyThemeFiles');
+const getAllFilesFromDir = require('./scripts/getAllFilesFromDir');
 
 const log = {
   info: (message) => consola.info(chalk.bold('VSF'), message),
@@ -23,6 +23,8 @@ module.exports = async function DefaultThemeModule(moduleOptions) {
   const themePagesDir = path.join(this.options.rootDir, 'components');
   const themeHelpersDir = path.join(this.options.rootDir, 'helpers');
   const themeFiles = getAllFilesFromDir(baseThemeDir).filter(file => !file.includes('/static/'));
+
+  console.log(themeFiles);
 
   const compileAgnosticTemplate = (filePath) => {
     return compileTemplate(
