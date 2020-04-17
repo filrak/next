@@ -1,4 +1,4 @@
-import {UseUserFactoryParams} from '@vue-storefront/factories';
+import {UseUserFactoryParams} from '@vue-storefront/core';
 import {Customer} from '@vue-storefront/commercetools-api/lib//types/GraphQL';
 import { authenticate } from './authenticate';
 import {
@@ -24,7 +24,6 @@ export const params: UseUserFactoryParams<Customer, any, any> = {
     }
   },
   logOut: async () => {
-    await useCart().refreshCart();
     await apiCustomerSignOut();
   },
   updateUser: async ({currentUser, updatedUserData}): Promise<Customer> => {

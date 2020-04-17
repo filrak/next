@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { ref, Ref, computed, watch } from '@vue/composition-api';
 import {
   countries,
@@ -9,9 +11,13 @@ import {
   cookies,
   setup
 } from '@vue-storefront/commercetools-api';
-import { LocaleItem } from '@vue-storefront/commercetools-api/lib//types/setup';
+import { LocaleItem } from '@vue-storefront/commercetools-api/lib/types/setup';
 import Cookies from 'js-cookie';
-import { UseLocale } from '@vue-storefront/interfaces';
+
+/*
+  This is the old version of that component.
+  Waiting for core useLocaleFactory.
+*/
 
 type Locale = Ref<string>
 type Country = Ref<string>
@@ -20,8 +26,9 @@ type AvailableLocales = Ref<Readonly<LocaleItem[]>>
 type AvailableCountries = Ref<Readonly<LocaleItem[]>>
 type AvailableCurrencies = Ref<Readonly<LocaleItem[]>>
 
-export default function useLocale(): UseLocale<Locale, Country, Currency, AvailableLocales, AvailableCountries, AvailableCurrencies> {
+export default function useLocale() {
   const loading = ref(false);
+  const error = ref(null);
   const locale: Locale = ref(null);
   const country: Country = ref(null);
   const currency: Currency = ref(null);
@@ -38,17 +45,13 @@ export default function useLocale(): UseLocale<Locale, Country, Currency, Availa
   });
 
   watch(country, () => {
-    if (!country.value) {
-      return;
-    }
+    if (!country.value) return;
     Cookies.set(cookies.countryCookieName, country.value);
     setup({ country: country.value });
   });
 
   watch(currency, () => {
-    if (!currency.value) {
-      return;
-    }
+    if (!currency.value) return;
     Cookies.set(cookies.currencyCookieName, currency.value);
     setup({ currency: currency.value });
   });
@@ -60,6 +63,7 @@ export default function useLocale(): UseLocale<Locale, Country, Currency, Availa
     availableLocales,
     availableCountries,
     availableCurrencies,
-    loading: computed(() => loading.value)
+    loading,
+    error
   };
 }

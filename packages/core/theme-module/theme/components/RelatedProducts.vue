@@ -6,8 +6,9 @@
           <SfProductCard
             :title="productGetters.getName(product)"
             :image="productGetters.getCoverImage(product)"
-            :regular-price="productGetters.getPrice(product).regular"
-            :link="`/p/${productGetters.getSlug(product)}`"
+            :regular-price="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
+            :special-price="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
+            :link="`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`"
             class="product-card"
           />
         </SfCarouselItem>

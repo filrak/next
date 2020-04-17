@@ -40,7 +40,8 @@
           />
           <div class="product-details__sub">
             <SfPrice
-              :regular="'$' + productGetters.getPrice(product).regular"
+              :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
+              :special="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
               class="product-details__sub-price"
             />
             <div class="product-details__sub-rating">
@@ -227,14 +228,14 @@ import InstagramFeed from '~/components/InstagramFeed.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
 import { ref, computed } from '@vue/composition-api';
 import { useProduct, useCart, productGetters } from '<%= options.composables %>';
-import { onSSR } from '@vue-storefront/utils';
+import { onSSR } from '@vue-storefront/core';
 
 export default {
   name: 'Product',
   transition: 'fade',
   setup(props, context) {
     const qty = ref(1);
-    const { slug } = context.root.$route.params;
+    const { id } = context.root.$route.params;
     const { products, search } = useProduct('products');
     const { products: relatedProducts, search: searchRelatedProducts, loading: relatedLoading } = useProduct('relatedProducts');
     const { addToCart, loading } = useCart();
@@ -245,7 +246,7 @@ export default {
     const categories = computed(() => productGetters.getCategoryIds(product.value));
 
     onSSR(async () => {
-      await search({ slug });
+      await search({ id });
       await searchRelatedProducts({ catId: [categories.value[0]] });
     });
 

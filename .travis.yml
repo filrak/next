@@ -19,12 +19,8 @@ cache:
     - packages/about-you/api-client/lib
     - packages/about-you/composables/node_modules
     - packages/about-you/composables/lib
-    - packages/core/utils/node_modules
-    - packages/core/utils/lib
-    - packages/core/factories/node_modules
-    - packages/core/factories/lib
-    - packages/core/interfaces/node_modules
-    - packages/core/interfaces/lib
+    - packages/core/core/node_modules
+    - packages/core/core/lib
     - packages/prismic/node_modules
     - packages/prismic/lib
 
@@ -53,54 +49,56 @@ jobs:
       script:
         - yarn build:ay
 
-    - stage: test core
+    - stage: unit tests
       script: yarn test:core --coverage
       name: Test core packages
       after_script:
         - cat ./packages/core/coverage/lcov.info | coveralls
 
-    - stage: test commercetools
+    - stage: unit tests
       script: yarn test:ct:api-client --coverage
-      name: Test api-client
+      name: Test CT api-client
       after_script:
         - cat ./packages/commercetools/api-client/coverage/lcov.info | coveralls
 
-    - stage: test commercetools
+    - stage: unit tests
       script: yarn test:ct:composables --coverage
-      name: Test composables
+      name: Test CT composables
       after_script:
         - cat ./packages/commercetools/composables/coverage/lcov.info | coveralls
 
-    - stage: test about you
+    - stage: unit tests
       script: yarn test:ay:api-client --coverage
-      name: Test api-client
+      name: Test AY api-client
       after_script:
         - cat ./packages/about-you/api-client/coverage/lcov.info | coveralls
 
-    - stage: test about you
+    - stage: unit tests
       script: yarn build:ay:api-client && yarn test:ay:composables --coverage
-      name: Test composables
+      name: Test AY composables
       after_script:
         - cat ./packages/about-you/composables/coverage/lcov.info | coveralls
 
-    - stage: test prismic
+    - stage: unit tests
       script: yarn test:prismic --coverage
-      name: Test prismic
+      name: Test Prismic
       after_script:
         - cat ./packages/prismic/coverage/lcov.info | coveralls
 
-    - stage: lighthouse
-      name: commercetools
-      script: lhci autorun --rc-overrides.upload.target=temporary-public-storage --collect.startServerCommand="yarn start:ct" --collect.url=http://localhost:3000
+    # - stage: lighthouse
+    #   name: commercetools
+    #   script: lhci autorun --rc-overrides.upload.target=temporary-public-storage --collect.startServerCommand="yarn start:ct" --collect.url=http://localhost:3000 --collect.startServerReadyPattern="Listening"
 
     - build_image:
       if: branch = master AND type != pull_request
       name: "Build docker image"
-      stage: docker_build
+      stage: docker build
       script:
-        - docker build --build-arg COMMIT -t registry.storefrontcloud.io/vsf-next-demo-storefrontcloud-io/vue-storefront:$COMMIT -f dev/docker/Dockerfile .
+        - travis_wait 30 docker build --build-arg COMMIT -t registry.storefrontcloud.io/vsf-next-demo-storefrontcloud-io/vue-storefront:$COMMIT -f dev/docker/Dockerfile .
         - echo $DOCKER_PASSWORD | docker login  -u="$DOCKER_USERNAME" --password-stdin registry.storefrontcloud.io
         - docker push registry.storefrontcloud.io/vsf-next-demo-storefrontcloud-io/vue-storefront:$COMMIT
+        - curl $COMMIT.vsf-next-demo.preview.storefrontcloud.io
+        - echo "This commit preview is available here $COMMIT.vsf-next-demo.preview.storefrontcloud.io"
 
     - deploy_to_storefrontcloud:
       if: branch = master AND type != pull_request

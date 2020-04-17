@@ -1,5 +1,5 @@
 {
-  "name": "@vue-storefront/about-you-composables",
+  "name": "@vue-storefront/about-you",
   "version": "0.0.3",
   "sideEffects": false,
   "main": "lib/index.cjs.js",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@vue-storefront/about-you-api": "^0.0.1",
     "@vue/composition-api": "^0.3.4",
-    "@vue-storefront/factories": "^0.0.1",
+    "@vue-storefront/core": "^2.0.0",
     "vue": "^2.6.x"
   },
   "devDependencies": {
@@ -21,7 +21,7 @@
     "vue-template-compiler": "^2.6.x"
   },
   "peerDependencies": {
-    "@aboutyou/backbone": "^4.0.1"
+    "@aboutyou/backbone": "^4.1.0"
   },
   "files": [
     "lib/**/*"

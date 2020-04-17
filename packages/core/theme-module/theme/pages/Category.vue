@@ -158,12 +158,13 @@
             :style="{ '--index': i }"
             :title="productGetters.getName(product)"
             :image="productGetters.getCoverImage(product)"
-            :regular-price="'$' + productGetters.getPrice(product).regular"
+            :regular-price="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
+            :special-price="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
             :max-rating="5"
             :score-rating="3"
             :isOnWishlist="false"
             @click:wishlist="toggleWishlist(i)"
-            :link="`/p/${productGetters.getSlug(product)}`"
+            :link="`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`"
             class="products__product-card"
           />
         </transition-group>
@@ -181,20 +182,21 @@
             :title="productGetters.getName(product)"
             :description="productGetters.getDescription(product)"
             :image="productGetters.getCoverImage(product)"
-            :regular-price="'$' + productGetters.getPrice(product).regular"
+            :regular-price="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
+            :special-price="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
             :max-rating="5"
             :score-rating="3"
             :is-on-wishlist="false"
             class="products__product-card-horizontal"
             @click:wishlist="toggleWishlist(i)"
-            :link="`/p/${productGetters.getSlug(product)}`"
+            :link="`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`"
           />
         </transition-group>
         <SfPagination
           v-show="totalPages > 1"
-          class="products__pagination desktop-only"
+          class="products__pagination"
           :current="currentPage"
-          @click="page => currentPage = page"
+          @click="goToPage"
           :total="totalPages"
           :visible="5"
         />
@@ -310,13 +312,7 @@ import {
 } from '@storefront-ui/vue';
 import { computed, ref, watch } from '@vue/composition-api';
 import { useCategory, useProduct, productGetters, categoryGetters } from '<%= options.composables %>';
-import { onSSR } from '@vue-storefront/utils';
-
-// TODO: move to composable when core is ready: https://github.com/DivanteLtd/next/issues/296
-const defaultPagination = {
-  page: 1,
-  itemsPerPage: 20
-};
+import { onSSR } from '@vue-storefront/core';
 
 const perPageOptions = [20, 40, 100];
 
@@ -385,8 +381,8 @@ export default {
 
     const { categories, search, loading } = useCategory('categories');
     const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('categoryProducts');
-    const currentPage = ref(parseInt(query.page, 10) || defaultPagination.page);
-    const itemsPerPage = ref(parseInt(query.items, 10) || defaultPagination.itemsPerPage);
+    const currentPage = ref(parseInt(query.page, 10) || 1);
+    const itemsPerPage = ref(parseInt(query.items, 10) || perPageOptions[0]);
 
     onSSR(async () => {
       await search({ slug: lastSlug });
@@ -405,8 +401,8 @@ export default {
           perPage: itemsPerPage.value
         });
         context.root.$router.push({ query: {
-          items: itemsPerPage.value !== defaultPagination.itemsPerPage ? itemsPerPage.value : undefined,
-          page: currentPage.value !== defaultPagination.page ? currentPage.value : undefined
+          items: itemsPerPage.value !== perPageOptions[0] ? itemsPerPage.value : undefined,
+          page: currentPage.value !== 1 ? currentPage.value : undefined
         }});
       }
     });
@@ -425,6 +421,11 @@ export default {
       products.value[index].isOnWishlist = !this.products.value[index].isOnWishlist;
     }
 
+    const goToPage = (pageNumber) => {
+      currentPage.value = pageNumber;
+      context.root.$scrollTo(context.root.$el, 2000);
+    };
+
     return {
       products,
       productsLoading,
@@ -437,7 +438,7 @@ export default {
       totalPages: computed(() => Math.ceil(totalProducts.value / itemsPerPage.value)),
       currentPage,
       itemsPerPage,
-      perPageOptions,
+      perPageOptions: computed(() => perPageOptions),
       sortBy,
       isFilterSidebarOpen,
       sortByOptions: computed(() => sortByOptions),
@@ -446,7 +447,8 @@ export default {
       updateFilter,
       clearAllFilters,
       toggleWishlist,
-      isGridView
+      isGridView,
+      goToPage
     };
   },
   components: {
@@ -604,6 +606,17 @@ export default {
   @include for-desktop {
     margin: var(--spacer-big);
   }
+  @include for-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+
+    &__pagination {
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
   &__grid,
   &__list {
     display: flex;
@@ -617,7 +630,7 @@ export default {
       flex: 1 1 25%;
     }
   }
-  // TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941
+  // TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941, https://github.com/DivanteLtd/storefront-ui/issues/1001
   &__pagination__options {
     display: flex;
     justify-content: center;
