@@ -11,16 +11,16 @@ Since there are several factors that the filters depend on (product's type, cate
 **New interface**:
 
 ```ts
-export interface UseProduct<PRODUCT, PRODUCT_FILTER> {
+export interface UseProduct<PRODUCT, PRODUCT_FILTERS> {
   products: ComputedProperty<PRODUCT[]>;
   totalProducts: ComputedProperty<number>;
-  availableFilters: ComputedProperty<PRODUCT_FILTER[]>;
+  availableFilters: ComputedProperty<PRODUCT_FILTERS>;
   search: (params: {
     perPage?: number;
     page?: number;
     sort?: any;
     term?: any;
-    filters?: PRODUCT_FILTER[];
+    filters?: PRODUCT_FILTERS;
     [x: string]: any;
   }) => Promise<void>;
   loading: ComputedProperty<boolean>;
@@ -33,10 +33,10 @@ export interface UseProduct<PRODUCT, PRODUCT_FILTER> {
 Loading filters, their possible values, counts, etc. will require an integration-specific logic that will be part of the search function, so the factory params interface needs a new interface for search function result:
 
 ```ts
-export interface ProductsSearchResult<PRODUCT, PRODUCT_FILTER> {
+export interface ProductsSearchResult<PRODUCT, PRODUCT_FILTERS> {
   data: PRODUCT[],
   total: number,
-  availableFilters?: PRODUCT_FILTER[];
+  availableFilters?: PRODUCT_FILTERS;
 }
 ```
 
