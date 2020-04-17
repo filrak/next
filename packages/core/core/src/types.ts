@@ -170,6 +170,7 @@ export interface ProductGetters<PRODUCT, PRODUCT_FILTER> {
   getDescription: (product: PRODUCT) => string;
   getCategoryIds: (product: PRODUCT) => string[];
   getId: (product: PRODUCT) => string;
+  getFormattedPrice: (price: number) => string;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
@@ -184,6 +185,7 @@ export interface CartGetters<CART, CART_ITEM> {
   getTotals: (cart: CART) => AgnosticTotals;
   getShippingPrice: (cart: CART) => number;
   getTotalItems: (cart: CART) => number;
+  getFormattedPrice: (price: number) => string;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
@@ -204,6 +206,7 @@ export interface CheckoutGetters<SHIPPING_METHOD> {
   getShippingMethodName: (shippingMethod: SHIPPING_METHOD) => string;
   getShippingMethodDescription: (shippingMethod: SHIPPING_METHOD) => string;
   getShippingMethodPrice: (shippingMethod: SHIPPING_METHOD) => number;
+  getFormattedPrice: (price: number) => string;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 
@@ -216,6 +219,7 @@ export interface UserOrderGetters<ORDER, ORDER_ITEM> {
   getItemSku: (item: ORDER_ITEM) => string;
   getItemName: (item: ORDER_ITEM) => string;
   getItemQty: (item: ORDER_ITEM) => number;
+  getFormattedPrice: (price: number) => string;
   [getterName: string]: (element: any, options?: any) => unknown;
 }
 

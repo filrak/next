@@ -158,7 +158,8 @@
             :style="{ '--index': i }"
             :title="productGetters.getName(product)"
             :image="productGetters.getCoverImage(product)"
-            :regular-price="'$' + productGetters.getPrice(product).regular"
+            :regular-price="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
+            :special-price="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
             :max-rating="5"
             :score-rating="3"
             :isOnWishlist="false"
@@ -181,7 +182,8 @@
             :title="productGetters.getName(product)"
             :description="productGetters.getDescription(product)"
             :image="productGetters.getCoverImage(product)"
-            :regular-price="'$' + productGetters.getPrice(product).regular"
+            :regular-price="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
+            :special-price="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
             :max-rating="5"
             :score-rating="3"
             :is-on-wishlist="false"
@@ -310,6 +312,7 @@ import {
 } from '@storefront-ui/vue';
 import { computed, ref, watch } from '@vue/composition-api';
 import { useCategory, useProduct, productGetters, categoryGetters } from '<%= options.composables %>';
+import { getCategorySearchParameters } from '~/helpers/category/getCategorySearchParameters';
 import { onSSR } from '@vue-storefront/core';
 
 const perPageOptions = [20, 40, 100];
@@ -375,15 +378,13 @@ export default {
   setup(props, context) {
     const { params, query } = context.root.$route;
 
-    const lastSlug = Object.keys(params).reduce((prev, curr) => params[curr] || prev, params.slug_1);
-
     const { categories, search, loading } = useCategory('categories');
     const { products: categoryProducts, totalProducts, search: productsSearch, loading: productsLoading } = useProduct('categoryProducts');
     const currentPage = ref(parseInt(query.page, 10) || 1);
     const itemsPerPage = ref(parseInt(query.items, 10) || perPageOptions[0]);
 
     onSSR(async () => {
-      await search({ slug: lastSlug });
+      await search(getCategorySearchParameters(context));
       await productsSearch({
         catId: (categories.value[0] || {}).id,
         page: currentPage.value,
