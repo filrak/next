@@ -6,7 +6,8 @@ import {
   getOrderItems,
   getOrderItemSku,
   getOrderItemName,
-  getOrderItemQty
+  getOrderItemQty,
+  getFormattedPrice
 } from './../../src/getters/orderGetters';
 import { OrderState, Order } from './../../src/types/GraphQL';
 
@@ -42,6 +43,7 @@ describe('[commercetools-getters] order getters', () => {
     expect(getOrderItemSku(null)).toBe('');
     expect(getOrderItemName(null)).toBe('');
     expect(getOrderItemQty(null)).toBe(0);
+    expect(getFormattedPrice(null)).toBe(null);
   });
 
   it('returns date', () => {
