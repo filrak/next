@@ -19,7 +19,7 @@ const createAuthClient = (config: ApiConfig): SdkAuth =>
     scopes: config.scopes
   });
 
-const isValid = (token: Token) => token && Boolean(token.refresh_token);
+const isValid = (token: Token) => Boolean(token && token.refresh_token);
 
 const getCurrentToken = (options: FlowOptions = {}) => {
   if (currentToken) {
