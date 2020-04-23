@@ -1,8 +1,8 @@
 import { getProduct } from '@vue-storefront/boilerplate-api';
-import { useProductFactory, SearchResult } from '@vue-storefront/core';
+import { useProductFactory, ProductsSearchResult } from '@vue-storefront/core';
 import { UseProduct, Product } from '../../types';
 
-const productsSearch = async (params): Promise<SearchResult<Product>> => {
+const productsSearch = async (params): Promise<ProductsSearchResult<Product>> => {
   const searchParams = {
     ids: params.ids,
     with: params.term,
